@@ -1,3 +1,59 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.box_padx {
+	padding: 5px;
+}
+.banner_box {
+	margin: 10px;
+}
+.banner_box img {
+	max-width: 1140px;
+	max-height: 450px;
+	min-height: 100%;
+}
+.imgC_margin {
+	margin-top:15px;
+}
+
+.br-addr { line-height:160%; }
+	.box_marginM {
+		/*모바일 버전을 위한 마진*/
+		margin: 3px;
+	}
+	.id-ibox {
+		width: 160px;
+	}
+	.name-ibox {
+		width: 200px;
+	}
+	.pw-ibox {
+		width: 220px;
+	}
+	.pw-qusetion {
+		width:330px;
+	}
+	.pw-aqusetion {
+		width: 400px;
+	}
+	.post-addr {
+		width: 400px;
+	}
+	.post-code {
+		width: 48px;
+	}
+	.sel-tNumber {
+		width: 100px;
+	}
+	.number-input {
+		width: 90px;
+	}
+	.email-input {
+		width: 400px;
+	}
+	.pad-left-10 {
+		padding-left: 10px;
+	}
+	.iblock {
+		display: inline-block;
+	}

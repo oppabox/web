@@ -12,3 +12,21 @@
  *= require bootstrap.min
  *= require_self
  */
+.box_ {
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
+    border-radius: 3px;
+    margin: 1px;
+}
+.footer {
+	background:#808080; 
+	font-weight:bold;
+}
+.header {
+	min-height: 100%;
+  position: relative;
+}
+.contents {
+	padding-bottom: 50px;
+}
