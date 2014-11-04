@@ -6,15 +6,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">오빠박스</a>
+        <a class="navbar-brand" href="/"><%= image_tag "oppabox_web_logo.png" %></a>
       </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <!-- 세션 검사 해서 로그인일 경우 -->
-        <li><a href="/mypage/">MyPage</a></li>
-        <!-- 아닐 경우 -->
-        <li><a href="/home/login">로그인</a></li>
-        <li><a href="/home/join">회원가입</a></li>
+        <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
+        <li><a href="/home/login"><%= t('menu_login') %></a></li>
+        <li><a href="/home/step1"><%= t('menu_signup') %></a></li>
       </ul>
     </div>
   </div>

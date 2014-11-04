@@ -1,8 +1,9 @@
 <footer>
-    <br>
-    <p class="text-center">주식회사 오빠박스</p>
-    <p class="text-center">서울시 용산구 한남동 1-38번지 에스더하우스 지하1층<br>사업자등록번호 : 261-81-12788<br>개인정보관리책임자 : 전영훈(privacy@oppabox.com)
-    </p>
-    <p class="text-center">© OPPABOX 2014</p>
-    <br>
+<p class="text-center"><%= t('company_name') %> | <%= t('ceo') %></p>
+<% if I18n.locale == :ko %>
+<p class="text-center"><%= t('registration_number') %></p>
+<% end %>
+<p class="text-center"><%= t('company_address') %></p>
+<p class="text-center"><%= t('company_privacy') %></p>
+<p class="text-center"><%= t('company_copyright').html_safe %></p>
 </footer>

@@ -4,8 +4,18 @@ class HomeController < ApplicationController
   end
 
   def join
+
   end
 
   def login
+
+  end
+
+  def step1
+
+  end
+  
+  def step2
+
   end
 end
