@@ -1,90 +1,90 @@
 // Place all the styles related to the item controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-	.product_box {
-		padding: 5px 10px 5px 10px;
-		background: #fff;
-		box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
-		border-radius: 3px;
-		margin : 1px;
-	}
+.product_box {
+	padding: 5px 10px 5px 10px;
+	background: #fff;
+	box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
+	border-radius: 3px;
+	margin : 1px;
+}
 
-	.product_box h4 {
-		padding-top: 20px;
-		padding-bottom: 20px;
-		border-bottom: 2px solid;
-	}
+.product_box h4 {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 2px solid;
+}
 
-	.product_box h4 span {
-		margin-top: 35px;
-		margin-left: 15px;
+.product_box h4 span {
+	margin-top: 35px;
+	margin-left: 15px;
 
-	}
+}
 
-	.product_img {
-		text-align: center;
-		margin-top: 75px;
-		line-height: 60px;
-	}
+.product_img {
+	text-align: center;
+	margin-top: 75px;
+	line-height: 60px;
+}
 
-	.big_img {
+.big_img {
 
-		padding: 0;
-	}
+	padding: 0;
+}
 
-	.padx {
-		padding: 0;
-		margin-top: 10px;
-	}
+.padx {
+	padding: 0;
+	margin-top: 10px;
+}
 
-	.on {
-		list-style: none;
-		display: inline;
-		cursor: pointer;
-		margin: 0;
-		padding: 0;
-	}
+.on {
+	list-style: none;
+	display: inline;
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+}
 
-	.product_info {
-		padding: 20px 0 40px 0;
-	}
+.product_info {
+	padding: 20px 0 40px 0;
+}
 
-	.price_ {
-		background: #f7f7f7;
-		border-top: 1px solid #e4e4e4;
-		border-bottom: 1px solid #e4e4e4;
-	}
-	.price_1 {
-		height: 38px;
-		font-size: 14px;
-		padding-top: 15px;
-	}
+.price_ {
+	background: #f7f7f7;
+	border-top: 1px solid #e4e4e4;
+	border-bottom: 1px solid #e4e4e4;
+}
+.price_1 {
+	height: 38px;
+	font-size: 14px;
+	padding-top: 15px;
+}
 
-	.price_2 {
-		text-align: right;
-		padding: 15px 10px 0px 10px;
-		font-size: 16px;
-		color: #f14949;
-		font-weight: bold;
-	}
-	.price_3 {
-		text-align: right;
-		padding: 5px 10px 0px 0px;
-		font-size: 13px;
-		font-weight: bold;
-		margin-right: 15px;
-	}
+.price_2 {
+	text-align: right;
+	padding: 15px 10px 0px 10px;
+	font-size: 16px;
+	color: #f14949;
+	font-weight: bold;
+}
+.price_3 {
+	text-align: right;
+	padding: 5px 10px 0px 0px;
+	font-size: 13px;
+	font-weight: bold;
+	margin-right: 15px;
+}
 
-	#product img {
-		margin: 0 auto;
-	}
+#product img {
+	margin: 0 auto;
+}
 
-	.mar-left {
-		margin-left: 5px;
-	}
-	.mar-right {
-		margin-right: 5px;
-	}
-	.btn-width {
-		width: 100%;
-	}
+.mar-left {
+	margin-left: 5px;
+}
+.mar-right {
+	margin-right: 5px;
+}
+.btn-width {
+	width: 100%;
+}

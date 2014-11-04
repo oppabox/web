@@ -1,139 +1,139 @@
 // Place all the styles related to the pay controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-	.tit_order{
-		font-size: 15px;
-		font-weight: bold;
-		color: #5A626B;
-		line-height: 19px;
-		padding: 13px 17px;
-		border: 1px solid #D9D9DA;
-		border-color: #D9D9DA #D3D3D4 #C9C9CA;
-		background: #F1F2F3; 
-		margin-bottom: 18px;
-		margin-left: 10px;
-		margin-right: 10px;
-		margin-top:0;
-	}
+.tit_order{
+  font-size: 15px;
+  font-weight: bold;
+  color: #5A626B;
+  line-height: 19px;
+  padding: 13px 17px;
+  border: 1px solid #D9D9DA;
+  border-color: #D9D9DA #D3D3D4 #C9C9CA;
+  background: #F1F2F3;
+  margin-bottom: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top:0;
+}
 
-	.tit_order_info {
-		font-size: 13px;
-		font-weight: bold;
-		color: #5A626B;
-		text-shadow: 0 1px 0 #FFF;
-		line-height: 15px;
-		margin-top: 0;
-		padding: 13px 17px;
-		border-bottom: 1px solid #D9D9DA;
-		border-color: #D9D9DA #D3D3D4 #C9C9CA;
-		border-radius: 5px 5px 0 0;
-		background: #F1F2F3; 
-	}
+.tit_order_info {
+  font-size: 13px;
+  font-weight: bold;
+  color: #5A626B;
+  text-shadow: 0 1px 0 #FFF;
+  line-height: 15px;
+  margin-top: 0;
+  padding: 13px 17px;
+  border-bottom: 1px solid #D9D9DA;
+  border-color: #D9D9DA #D3D3D4 #C9C9CA;
+  border-radius: 5px 5px 0 0;
+  background: #F1F2F3;
+}
 
-	.delivery_info {
-		margin-left: 0px;
-		margin-right: 0px;
-		border: 1px solid #D9D9DA; 
-		border-color: #D9D9DA #D3D3D4 #C9C9CA; 
-		border-radius: 5px 5px 0 0;
-	}
-	.product_item_box {
-		padding-left:0px; padding-right:0px;
-	}
-	.product_item_info {
-		margin-top:15px; padding-left:25px; padding-right:0px;
-	}
+.delivery_info {
+  margin-left: 0px;
+  margin-right: 0px;
+  border: 1px solid #D9D9DA;
+  border-color: #D9D9DA #D3D3D4 #C9C9CA;
+  border-radius: 5px 5px 0 0;
+}
+.product_item_box {
+  padding-left:0px; padding-right:0px;
+}
+.product_item_info {
+  margin-top:15px; padding-left:25px; padding-right:0px;
+}
 
-	.total{
-		padding: 9px 0 12px;
-		position: relative;
-		top: 9px;
-		border-top: 2px solid #ECEEF0;
-	}
-	.left {
-		float: left;
-	}
-	.right {
-		float: right;
-	}
-	#pImg img {
-  		width: inherit;
-  		width: 150px;
-  		height: 150px;
-	}
-	.line {
-		height: 20%;
-		border-left: 2px solid #EBEBED;	
-	}
-	.figure {
-		color: #383d48;
-	}
-	.figure_img {
-		top: 0;
-		left: -146px;
-		overflow: hidden;
-	}
-	.figcaption {
-		display: block;
-		color: #383d48;
-		padding-bottom: 8px;
-		padding-left:20px;
-	}
-	.detail {
-		display: block;
-		padding: 0 0 4px;
-	}
-	.detail em {
-		display: block;
-		font-size: 12px;
-		line-height: 23px;
-	}
-	.detail .embo-select {
-		width: 130px;
-		font-size: 12px;
-		margin-top: -3px;
-	}
-	.detail em {
-		display: block;
-		font-size: 12px;
-		line-height: 23px;
-	}
+.total{
+  padding: 9px 0 12px;
+  position: relative;
+  top: 9px;
+  border-top: 2px solid #ECEEF0;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+#pImg img {
+  width: inherit;
+  width: 150px;
+  height: 150px;
+}
+.line {
+  height: 20%;
+  border-left: 2px solid #EBEBED;
+}
+.figure {
+  color: #383d48;
+}
+.figure_img {
+  top: 0;
+  left: -146px;
+  overflow: hidden;
+}
+.figcaption {
+  display: block;
+  color: #383d48;
+  padding-bottom: 8px;
+  padding-left:20px;
+}
+.detail {
+  display: block;
+  padding: 0 0 4px;
+}
+.detail em {
+  display: block;
+  font-size: 12px;
+  line-height: 23px;
+}
+.detail .embo-select {
+  width: 130px;
+  font-size: 12px;
+  margin-top: -3px;
+}
+.detail em {
+  display: block;
+  font-size: 12px;
+  line-height: 23px;
+}
 
-	.detail small {
-		color: #91969c;
-		font-size: 12px;
-	}
+.detail small {
+  color: #91969c;
+  font-size: 12px;
+}
 
-	.img_product_item {
-		width:131px; height:132px;
-	}
-	.iblock {
-		display: inline-block;
-	}
+.img_product_item {
+  width:131px; height:132px;
+}
+.iblock {
+  display: inline-block;
+}
 
-	.box_tf {
-		width: 100%;
-		margin: 0px; 
-		height: 80px;
-		resize:none;
-	}
+.box_tf {
+  width: 100%;
+  margin: 0px;
+  height: 80px;
+  resize:none;
+}
 
-	.vertical-middle {
-		vertical-align: middle;
-	}
+.vertical-middle {
+  vertical-align: middle;
+}
 
-	.item_img {
-		padding-left:10px; padding-right:0px;
-	}
+.item_img {
+  padding-left:10px; padding-right:0px;
+}
 
-	.li_none {
-		list-style-type: none;
-	}
+.li_none {
+  list-style-type: none;
+}
 
-	.btn_present {
-	/*	background-image: ;*/
-	}
-	.modal-body label {
-		padding-left: 0;
-		line-height: 30px;
-	}
+.btn_present {
+  /*  background-image: ;*/
+}
+.modal-body label {
+  padding-left: 0;
+  line-height: 30px;
+}
