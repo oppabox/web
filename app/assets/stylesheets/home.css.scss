@@ -4,7 +4,6 @@
 .box_view {
   padding: 10px;
   background: #fff;
-  box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
   border-radius: 3px;
   margin: 2px;
   overflow:hidden;
@@ -29,18 +28,21 @@
 /* 회원가입 */
 
 .post_box {
-  float:left; width:60px;
+  float:left;
+  width:60px;
   margin-bottom: 10px;
 }
 
 .post_span {
-  float:left; width:18px;
+  float:left;
+  width:18px;
   margin-bottom: 10px;
   margin-top: 5px;
 }
 
 .post_button {
-  float:left; margin-left:20px;
+  float:left;
+  margin-left:20px;
   margin-bottom: 10px;
 }
 
@@ -49,7 +51,8 @@
 }
 
 .number_box {
-  float:left; width:75px;
+  float:left;
+  width:75px;
   margin-bottom: 10px;
 }
 .email_box {

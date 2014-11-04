@@ -26,7 +26,6 @@
   padding: 13px 17px;
   border-bottom: 1px solid #D9D9DA;
   border-color: #D9D9DA #D3D3D4 #C9C9CA;
-  border-radius: 5px 5px 0 0;
   background: #F1F2F3;
 }
 
@@ -35,7 +34,6 @@
   margin-right: 0px;
   border: 1px solid #D9D9DA;
   border-color: #D9D9DA #D3D3D4 #C9C9CA;
-  border-radius: 5px 5px 0 0;
 }
 .product_item_box {
   padding-left:0px; padding-right:0px;
@@ -107,9 +105,6 @@
 .img_product_item {
   width:131px; height:132px;
 }
-.iblock {
-  display: inline-block;
-}
 
 .box_tf {
   width: 100%;
@@ -118,12 +113,9 @@
   resize:none;
 }
 
-.vertical-middle {
-  vertical-align: middle;
-}
-
 .item_img {
-  padding-left:10px; padding-right:0px;
+  padding-left:10px;
+  padding-right:0px;
 }
 
 .li_none {
