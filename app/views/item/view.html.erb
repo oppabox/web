@@ -16,15 +16,11 @@
 								<img src="http://vivalaliga.co.kr/xe/files/attach/images/108/660/131/d43168fb4db538bfb628b6cd2adde6e1.jpg" class="img-thumbnail">
 							</p>
 							<ul class="padx">
+								<% 0.upto(1) do %>
 								<li class="on">
 									<img src="http://vivalaliga.co.kr/xe/files/attach/images/108/660/131/d43168fb4db538bfb628b6cd2adde6e1.jpg" width="80" height="80" class="img-thumbnail">
 								</li>
-								<li class="on">
-									<img src="http://image.slidesharecdn.com/railsroutingfromtheoutsidein-140918063702-phpapp02/95/rails-routing-from-the-outside-in-1-638.jpg?cb=1411085929" width="80" height="80" class="img-thumbnail">
-								</li>
-								<li class="on">
-									<img src="http://image.slidesharecdn.com/railsroutingfromtheoutsidein-140918063702-phpapp02/95/rails-routing-from-the-outside-in-1-638.jpg?cb=1411085929" width="80" height="80" class="img-thumbnail">
-								</li>
+								<% end %>
 							</ul>
 						</div>
 					</div>
@@ -167,10 +163,11 @@
 			<!--  가격 정보 및 구매, 장바구니 버튼 END -->
 		</div>
 		<!-- end -->
-
+		<br>
+		
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10" >
-				<div class="row  box_" style="margin:1px;">
+				<div class="row  box_wrap" style="margin:1px;">
 					<!-- 상품정보  -->
 					<ul class="nav nav-tabs nav-justified" role="tablist">
 						<li class ="active">

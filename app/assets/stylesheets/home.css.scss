@@ -1,56 +1,57 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.box_padx {
-	padding: 5px;
+.box_view {
+	padding: 10px;
+    	background: #fff;
+    	box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
+    	border-radius: 3px;
+    	margin: 2px;
+    	overflow:hidden;
 }
 .banner_box {
 	margin: 15px;
 }
-.imgC_margin {
+.index_img_margin {
 	margin-top:15px;
 }
 .padx_left {
 	padding-left:0px;
 }
 
-.br-addr { line-height:160%; }
-	.box_marginM {
-		margin: 3px;
-	}
-	.id-ibox {
-		width: 160px;
-	}
-	.name-ibox {
-		width: 200px;
-	}
-	.pw-ibox {
-		width: 220px;
-	}
-	.pw-qusetion {
-		width:330px;
-	}
-	.pw-aqusetion {
-		width: 400px;
-	}
-	.post-addr {
-		width: 400px;
-	}
-	.post-code {
-		width: 48px;
-	}
-	.sel-tNumber {
-		width: 100px;
-	}
-	.number-input {
-		width: 90px;
-	}
-	.email-input {
-		width: 400px;
-	}
-	.pad-left-10 {
-		padding-left: 10px;
-	}
-	.iblock {
-		display: inline-block;
-	}
+.pad-left-10 {
+	padding-left: 10px;
+}
+.iblock {
+	display: inline-block;
+}
+
+/* 회원가입 */
+
+.post_box {
+	float:left; width:60px;
+	margin-bottom: 10px;
+}
+
+.post_span {
+	float:left; width:18px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.post_button {
+	float:left; margin-left:20px;
+	margin-bottom: 10px;
+}
+
+.post-addr {
+	margin-bottom:10px;
+}
+
+.number_box {
+	float:left; width:75px;
+	margin-bottom: 10px;
+}
+.email_box {
+	padding-left: 0;
+}

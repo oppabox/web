@@ -13,19 +13,28 @@
  *= require_self
  */
  body {
- 	padding-top: 100px;
+ 	padding-top: 70px;
  }
  
-.box_ {
+.box_wrap {
     padding: 20px;
     background: #fff;
     box-shadow: 0 0 3px 1px rgba(0,0,0,.05),0 1px 2px 0px rgba(0,0,0,.1);
     border-radius: 3px;
-    margin: 1px;
+    margin: 2px;
+    overflow:hidden;
 }
 
 footer {
 	margin-top: 50px;
 	background: silver; 
 	font-weight:bold;
+}
+
+.box_padx {
+	padding: 0;
+}
+
+.hide_field {
+	display: none;
 }
