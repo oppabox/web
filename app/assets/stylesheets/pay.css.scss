@@ -39,7 +39,7 @@
   padding-left:0px; padding-right:0px;
 }
 .product_item_info {
-  margin-top:15px; padding-left:25px; padding-right:0px;
+  margin-top:15px; padding-left:15px; padding-right:0px;
 }
 
 .total{
@@ -109,7 +109,7 @@
 .box_tf {
   width: 100%;
   margin: 0px;
-  height: 80px;
+  height: 60px;
   resize:none;
 }
 
@@ -125,7 +125,28 @@
 .btn_present {
   /*  background-image: ;*/
 }
+
+.box-present {
+  min-height:10px;
+}
+
 .modal-body label {
   padding-left: 0;
   line-height: 30px;
+}
+.iblock {
+	display:inline-block;
+}
+.radio {
+	margin-top:0px;
+}
+
+
+.modal-dialog {
+	margin-top:15%;
+}
+.card_yy_mm {
+	margin-right:10px;
+	width:75px;
+	float:left;
 }

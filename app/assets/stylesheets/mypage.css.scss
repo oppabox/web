@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .tit_box{
-  color: #5A626B;
   line-height: 3px;
   padding: 18px 15px;
   border: 1px solid #D9D9DA;
@@ -29,6 +28,7 @@
   margin-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  overflow:hidden;
 }
 
 .mag_bot_0 {
@@ -36,4 +36,16 @@
 }
 .mag_top_0 {
   margin-top: 0;
+}
+
+.products_img {
+  top: 0;
+  left: -146px;
+  overflow: hidden;
+}
+.detail_info {
+  display: block;
+  color: #383d48;
+  padding-bottom: 8px;
+  padding-left:5px;
 }

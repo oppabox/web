@@ -2,14 +2,14 @@
   <div class="row" >
     <h3 class="tit_order box">주문내역</h3>
   </div>
-  <br>
+
   <div class="row delivery_info box_wrap" style="padding:0px;">
     <h3 class="tit_order_info">배송정보</h3>
     <!-- div -->
     <form method="post" action="">
       <!-- 아이템 -->
       <div class="col-md-8 product_leftbox">
-        <!----------------------- 아이템/가격/수량/총계 ------------------------>
+				<!-- 가격수량총계 -->
         <div class="col-md-12 product_item_box">
           <div class="col-md-7 col-sm-7 product_item_info">
             <label>아이템</label>
@@ -75,7 +75,7 @@
             </div>
           </div>
         </div>
-        <!----------------------- 아이템/가격/수량/총계 ------------------------>
+        <!-- 아이템/가격/수량/총계-->
 
         <div class="col-md-12" >
           <div class="row">
@@ -141,9 +141,11 @@
             <dt>배송 방법</dt>
             <dd>
               <div>
-                <div class="col-xs-12 radio">
-                  <div style="margin-left:10px;">
-                    <input type="radio" name="carry_q" value="Tcarry" CHECKED>택배(이미지)
+                <div class="col-xs-12 padx">
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="carry_q" value="Tcarry" CHECKED>택배(이미지)
+										</label>
                   </div>
                 </div>
               </div>
@@ -153,14 +155,23 @@
             <dt>결제 방법</dt>
             <dd>
               <div>
-                <div class="col-xs-12">
-                  <div class="radio" style="margin-left:10px;">
-                    <input type="radio" name="card" value="Card" CHECKED>신용카드
+                <div class="col-xs-12 padx">
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="pay" value="Card" CHECKED>신용카드
+										</label>
                     <a href="#credit" data-toggle="modal">카드정보 입력</a>
                   </div>
-                  <div class="radio" style="margin-left:10px;">
-                    <input type="radio" name="card" value="Che">계좌이체
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="pay" value="HomeBank">계좌이체
+										</label>
                   </div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="pay" value="ATM">무통장 입금
+										</label>
+									</div>
                 </div>
               </div>
             </dd>
@@ -173,7 +184,7 @@
           </dl>
 
           <!-- total -->
-          <ul class="box_padx">
+          <ul class="padx">
             <li class="li_none">
               <span class="left">소계</span>
               <span class="right">$1000 <small>USD</small></span><br>
@@ -218,7 +229,7 @@
 
 <!-- 신용카드 정보 수정-->
 <div class="modal fade" id="credit" >
-  <div class="modal-dialog" style="margin-top: 15%;">
+  <div class="modal-dialog">
     <div class="modal-content">
       <!-- header -->
       <div class="modal-header">
@@ -242,7 +253,7 @@
             <br>
             <label for="ncard2">Expiration (MM/YY) <span class="required">*</span></label>
             <br>
-            <select class="form-control" name="ncard2" id="ncard2" style="width:75px; float:left; margin-right:10px;">
+            <select class="form-control card_yy_mm" name="ncard2" id="ncard2">
               <option>01</option>
               <option>02</option>
               <option>03</option>
@@ -256,7 +267,7 @@
               <option>11</option>
               <option>12</option>
             </select>
-            <select class="form-control" style="width:75px;float:left">
+            <select class="form-control card_yy_mm">
               <option>14</option>
               <option>15</option>
               <option>16</option>
@@ -275,4 +286,4 @@
       </div>
     </div>
   </div>
-</div>
+</div><!-- /신용카드 정보 수정 -->
