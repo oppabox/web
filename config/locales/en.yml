@@ -12,5 +12,6 @@ en:
   login_password_confirm: "Password Confirm"
   signup_step1: "Terms of Agreement"
   signup_step2: "Create your Account"
+  signup_step3: "Additional Information"
   toa_aggreement: "Agree"
   toa_disaggreement: "Disagree"
