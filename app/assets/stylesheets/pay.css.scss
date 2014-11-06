@@ -54,11 +54,7 @@
 .right {
   float: right;
 }
-#pImg img {
-  width: inherit;
-  width: 150px;
-  height: 150px;
-}
+
 .line {
   height: 20%;
   border-left: 2px solid #EBEBED;
@@ -104,6 +100,7 @@
 
 .img_product_item {
   width:131px; height:132px;
+  vertical-align:top;
 }
 
 .box_tf {
@@ -140,13 +137,24 @@
 .radio {
 	margin-top:0px;
 }
-
-
-.modal-dialog {
-	margin-top:15%;
-}
 .card_yy_mm {
 	margin-right:10px;
 	width:75px;
 	float:left;
+}
+
+.btn-billok {
+  width:60%;
+}
+
+.request {
+  clear:both;
+  margin-top:10px;
+}
+
+/* success --> */
+
+.address_ok {
+
+  vertical-align: middle;
 }

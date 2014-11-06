@@ -1,2 +1,168 @@
-<h1>Pay#success</h1>
-<p>Find me in app/views/pay/success.html.erb</p>
+<div class="container">
+	<div class="row delivery_info box_wrap" style="padding:0px;">
+    <h3 class="tit_order_info">결제완료!!</h3>
+    <!-- div -->
+      <!-- 아이템 -->
+      <div class="col-md-12 product_leftbox">
+				<!-- 가격수량총계 -->
+        <div class="col-md-12 product_item_box">
+          <div class="col-md-7 col-sm-7 product_item_info">
+            <label>아이템</label>
+            <div class="row">
+              <div class="col-md-12 item_img">
+                <a href="/home/view" class="figure">
+                  <span class="figure_img">
+                    <img class="img_product_item"src="http://image.slidesharecdn.com/railsroutingfromtheoutsidein-140918063702-phpapp02/95/rails-routing-from-the-outside-in-1-638.jpg?cb=1411085929">
+                  </span>
+                </a>
+
+                <b class="figcaption iblock">Galleryl Dress Pump by Steve Madden
+                  <span class="detail ">
+                    <em>
+                      <small>선택사항</small>
+                      <label>US Women's Size 6</label>
+                    </em>
+                  </span>
+                </b>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2 " style="margin-top:15px; padding-right:0px;">
+            <div class="row">
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center">
+                <label>가격</label>
+              </div>
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center">
+                <p>56,000\</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-1 col-sm-1 " style="margin-top:15px; padding-right:0px;">
+            <div class="row">
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center" style="padding-left:0px; padding-right:0px;">
+                <label>수량</label>
+              </div>
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center" style="padding-left:0px; padding-right:0px;">
+                <label> 10 </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2  col-sm-2" style="margin-top:15px;">
+            <div class="row">
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center">
+                <label>총계</label>
+              </div>
+              <div class="col-xs-3 col-sm-12 col-md-12 text-center" style="padding-left:0px; padding-right:0px;">
+                <p>56,000\</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 아이템/가격/수량/총계-->
+        <hr class="hide_field">
+        <!-- 배송지 선택 -->
+      <div class="col-md-12" style="margin-top:0px; height:100%;">
+        <div class="col-md-12" style="padding:15px;">
+          <dl>
+            <dt>배송지 정보</dt>
+            <dd>
+              <div>
+                <p>
+                	000-000 서울특별시 OO구 OO동 000-0 OO빌라 000호
+                </p>
+              </div>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>배송 방법</dt>
+            <dd>
+              <div>
+                <div class="col-xs-12 padx">
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="carry_q" value="Tcarry" CHECKED>택배(이미지)
+										</label>
+                  </div>
+                </div>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt>결제 방법</dt>
+            <dd>
+              <div>
+                <div class="col-xs-12 padx">
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="pay" value="Card" CHECKED>신용카드
+										</label>
+                  </div>
+                  <div class="radio">
+										<label>
+                    	<input type="radio" name="pay" value="HomeBank" DISABLED>계좌이체
+										</label>
+                  </div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="pay" value="ATM" DISABLED>무통장 입금
+										</label>
+									</div>
+                </div>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt> 쿠폰 </dt>
+            <dd>
+              <p>
+              	이미지 또는 쿠폰 이름 및 가격
+              </p>
+            </dd>
+          </dl>
+
+          <!-- total -->
+          <ul class="padx">
+            <li class="li_none">
+              <span class="left">소계</span>
+              <span class="right">$1000 <small>USD</small></span><br>
+            </li>
+            <li class="li_none">
+              <span class="left">배송</span>
+              <span class="right">$25 <small>USD</small></span><br>
+            </li>
+            <li class="li_none">
+              <span class="left">세금</span>
+              <span class="right">$0 <small>USD</small></span><br>
+            </li>
+            <li class="li_none">
+              <span class="left">쿠폰</span>
+              <span class="right">- $0 <small>USD</small></span><br>
+            </li>
+
+            <li class="total li_none" data-totalprice="">
+              <em class="after">
+                <span class="left"><b>총 주문 내역</b></span>
+                <span class="right"><b>$1025.00</b> <small>USD</small></span><br>
+              </em>
+            </li>
+          </ul>
+          <div class="form-group">
+            <div class="text-center ">
+            <!-- billing.erb에서 넘어온 값들 input hiidden으로 넣은 후 다시 post로 전송-->
+            	<form method="POST" action="">
+            		<input type="hidden" value="">
+            		<input type="hidden" value="">
+            		<input type="hidden" value="">
+              	<button type="submit" class="btn btn-primary btn-billok">구매하기</button>
+              </form>
+            </div>
+          </div>
+          <!-- total end -->
+        </div>
+      </div>
+      <!--div-->
+  </div>
+</div>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
 	get "pay/billing"
-  post "pay/success"
+  get "pay/success"
 
   get "item/:number", to: "item#view"
 

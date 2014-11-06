@@ -3,10 +3,10 @@
     <h3 class="tit_order box">주문내역</h3>
   </div>
 
-  <div class="row delivery_info box_wrap" style="padding:0px;">
+  <div class="row delivery_info" style="padding:0px;">
     <h3 class="tit_order_info">배송정보</h3>
     <!-- div -->
-    <form method="post" action="">
+    <form method="GET" action="/pay/success">
       <!-- 아이템 -->
       <div class="col-md-8 product_leftbox">
 				<!-- 가격수량총계 -->
@@ -75,48 +75,18 @@
             </div>
           </div>
         </div>
-        <!-- 아이템/가격/수량/총계-->
+        <!-- /아이템/가격/수량/총계-->
 
-        <div class="col-md-12" >
-          <div class="row">
-            <div class="col-xs-10 col-sm-10">
-              <img src="http://image.slidesharecdn.com/railsroutingfromtheoutsidein-140918063702-phpapp02/95/rails-routing-from-the-outside-in-1-638.jpg?cb=1411085929" width="40" height="40">
-              <p class="iblock" style="padding-left:30px;">
-                선물하기
-                <br>
-                <small>선물</small>
-                <br>
-              </p>
-            </div>
-            <div class="col-xs-2 col-sm-2">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" class="btn_present">
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-xs-12">
-                <textarea maxlengh="1000" class="box_tf" > display:none 해야함 </textarea>
-              </div>
-            </div>
+        <div class="col-md-12 request">
+          <label>배송시 요청사항</label>
+          <div class="col-md-12  padx_left">
+            <textarea maxlengh="1000" class="box_tf"></textarea>
           </div>
         </div>
-        <div class="col-md-12" >
-          <div class="row">
-            <div class="col-md-12">
-              <label>배송시 요청사항</label>
-              <div class="col-md-12  padx_left">
-                <textarea maxlengh="1000" class="box_tf"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <hr class="hide_field">
+        
       </div>
-
 
       <!-- 배송지 선택 -->
       <div class="col-md-4" style="margin-top:0px; height:100%;">

@@ -23,7 +23,6 @@
   border-right: 1px solid #D9D9DA;
   border-color: #D9D9DA #D3D3D4 #C9C9CA;
   background: #fff;
-  margin-bottom: 2px;
   margin-left: 10px;
   margin-right: 10px;
   padding-top: 10px;
@@ -44,9 +43,35 @@
   overflow: hidden;
 }
 .detail_info {
-  display: block;
+  display: inline-block;
   color: #383d48;
-  padding-bottom: 8px;
-  padding-top:15px;
+  margin-top:15px;
   padding-left:5px;
+  line-height:25px;
+}
+
+.list_img_pad {
+  padding-left:15px;
+  padding-right:0px;
+  padding-top:10px;
+}
+
+.btn-mag {
+  margin-left:10px;
+}
+
+.nav_mid {
+  margin-top:7px;
+}
+
+.info_label_pad {
+  margin-top:5px;
+}
+.total_price {
+  float: right;
+  padding-right: 20px;
+}
+
+.hr-height {
+  margin-top: 10px;
 }
