@@ -1,44 +1,31 @@
 <div class="container">
   <h2 class="text-center form-signin-heading"><%= t('signup_step3') %></h2>
   <hr>
-  <form class="form-signin" role="form">
+  <form class="form-signin" role="form" style="max-width:480px;">
+    <label><%= t('signup_step3_nationality') %></label>
+    <select class="form-control" style="width:350px;" autofocus>
+      <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+        <% selected = "" %>
+        <% if n.to_s == "KR" %>
+          <% selected = %Q[selected="selected"] %>
+        <% end %>
+        <option value="<%= n %>" <%= selected %>><%= m %></option>
+      <% end %>
+    </select>
+    <div style="height:20px;">&nbsp;</div>
+    <label><%= t('signup_step3_phonenumber') %></label>
+    <input style="width:150px" type="text" class="form-control" placeholder="<%= t('login_password_confirm') %>" required>
+    <div style="height:20px;">&nbsp;</div>
+    <label><%= t('signup_step3_postcode') %></label>
+    <input style="width:150px;" type="text" class="form-control" placeholder="<%= t('login_email_address') %>" required>
+    <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_address') %></label>
-    <input type="email" class="form-control" placeholder="<%= t('login_email_address') %>" required autofocus>
-    <div style="height:20px;">&nbsp;</div>
-    <label><%= t('login_password') %></label>
-    <input style="width:400px;" type="text" class="form-control" placeholder="<%= t('login_password') %>" required>
-    <div style="height:20px;">&nbsp;</div>
-    <label><%= t('login_password_confirm') %></label>
-    <input type="password" class="form-control" placeholder="<%= t('login_password_confirm') %>" required>
-    <button class="btn btn-lg btn-primary btn-block" id="signin_button" type="submit"><%= t('menu_signup') %></button>
+    <input type="text" class="form-control" placeholder="<%= t('login_email_address') %>" required>
+    <div class="text-center" style="margin-top:30px;margin-bottom:50px;">
+      <a href="/"><button type="button" class="btn btn-lg btn-default"><%= t('signup_step3_incomplete') %></button></a>
+      &nbsp; &nbsp; &nbsp;
+      <a href="/"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('signup_step3_complete')%>&nbsp;</button></a>
+    </div>
   </form>
 </div>
 
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Sign in</button>
-    </div>
-  </div>
-</form>

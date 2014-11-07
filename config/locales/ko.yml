@@ -13,8 +13,14 @@ ko:
   login_password_confirm: "비밀번호 확인"
   signup_step1: "오빠박스 약관동의"
   signup_step2: "기본 입력 사항"
-  signup_step3: "추가 입력 사항"
+  signup_step3: "배송 정보 입력"
   toa_aggreement: "동의합니다"
   toa_disaggreement: "동의하지 않습니다"
   signup_step3_address: "주소입력"
+  signup_step3_postcode: "우편번호 입력"
+  signup_step3_phonenumber: "전화번호 입력"
+  signup_step3_complete: "입력완료"
+  signup_step3_incomplete: "다음에 입력"
+  signup_step3_nationality: "국가선택"
+
 
