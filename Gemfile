@@ -3,8 +3,12 @@ source 'https://rubygems.org'
 #user management
 gem 'devise'
 
+#debugger
+gem 'pry'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'
+gem 'rails-i18n'
 gem 'rails', '4.1.6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

@@ -6,12 +6,15 @@ Rails.application.routes.draw do
   get "pay/success"
 
   get "item/:number", to: "item#view"
-
+  #home
   get "home/main"
   get "home/step1"
   get "home/step2"
   get "home/step3"
   get "home/login"
+  post "home/api_step2"
+  post "home/api_step3"
+  post "home/api_login"
 
   get "mypage/" => "mypage#list"
   get "mypage/list"
