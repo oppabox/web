@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+#user management
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'
