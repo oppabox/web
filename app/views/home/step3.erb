@@ -1,9 +1,9 @@
 <div class="container">
   <h2 class="text-center form-signin-heading"><%= t('signup_step3') %></h2>
   <hr>
-  <form class="form-signin" role="form" style="max-width:480px;">
+  <div class="form-signin" role="form" style="max-width:480px;">
     <label><%= t('signup_step3_nationality') %></label>
-    <select class="form-control" style="width:350px;" autofocus>
+    <select id="signup_country" class="form-control" style="width:350px;" autofocus>
       <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
         <% selected = "" %>
         <% if n.to_s == "KR" %>
@@ -14,18 +14,19 @@
     </select>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_phonenumber') %></label>
-    <input style="width:150px" type="text" class="form-control" placeholder="<%= t('login_password_confirm') %>" required>
+    <input id="signup_phonenumber" style="width:150px" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_postcode') %></label>
-    <input style="width:150px;" type="text" class="form-control" placeholder="<%= t('login_email_address') %>" required>
+    <input id="signup_postcode" style="width:150px;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_address') %></label>
-    <input type="text" class="form-control" placeholder="<%= t('login_email_address') %>" required>
+    <input id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
     <div class="text-center" style="margin-top:30px;margin-bottom:50px;">
       <a href="/"><button type="button" class="btn btn-lg btn-default"><%= t('signup_step3_incomplete') %></button></a>
       &nbsp; &nbsp; &nbsp;
-      <a href="/"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('signup_step3_complete')%>&nbsp;</button></a>
+      <button id="signup_step3_button" type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('signup_step3_complete')%>&nbsp;</button>
     </div>
-  </form>
+  </div>
 </div>
 
+<%=javascript_include_tag "home"%>

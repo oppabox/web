@@ -10,9 +10,14 @@
       </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
-        <li><a href="/home/login"><%= t('menu_login') %></a></li>
-        <li><a href="/home/step1"><%= t('menu_signup') %></a></li>
+        <%if user_signed_in?%>
+          <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
+          <li><%= link_to t('menu_logout'), destroy_user_session_path, method: :delete%></a></li>
+        <%else%>
+          <li><a href="/home/login"><%= t('menu_login') %></a></li>
+          <li><a href="/home/step1"><%= t('menu_signup') %></a></li>
+        <%end%>
+
       </ul>
     </div>
   </div>

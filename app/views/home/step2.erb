@@ -1,15 +1,16 @@
 <div class="container">
   <h2 class="text-center form-signin-heading"><%= t('signup_step2') %></h2>
   <hr>
-  <form class="form-signin" role="form" action="/home/step3">
+  <div class="form-signin" role="form" >
     <label><%= t('login_email_address') %></label>
-    <input type="email" class="form-control" required autofocus>
+    <input id="signup_email" type="email" class="form-control" required autofocus>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('login_password') %></label>
-    <input type="password" class="form-control" required>
+    <input id="signup_password" type="password" class="form-control" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('login_password_confirm') %></label>
-    <input type="password" class="form-control" required>
-    <button class="btn btn-lg btn-primary btn-block" id="signin_button" type="submit"><%= t('menu_signup') %></button>
-  </form>
+    <input id="signup_password_confirm" type="password" class="form-control" required>
+    <div style="height:20px;">&nbsp;</div>
+    <button class="btn btn-lg btn-primary btn-block" id="signup_step2_button"><%= t('menu_signup') %></button>
+  </div>
 </div>
