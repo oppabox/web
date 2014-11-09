@@ -14,6 +14,11 @@
 ActiveRecord::Schema.define(version: 20141108060639) do
 
   create_table "addresses", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.string   "addr_1"
+    t.string   "addr_2"
+    t.string   "addr_3"
+    t.string   "postcode"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get "home/step2"
   get "home/step3"
   get "home/login"
+
+  get "home/reset_password"
+  get "home/renew_password"
+
   post "home/api_step2"
   post "home/api_step3"
   post "home/api_login"

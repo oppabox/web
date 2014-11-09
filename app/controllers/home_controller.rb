@@ -71,4 +71,12 @@ class HomeController < ApplicationController
   def step3
 
   end
+
+  def reset_password
+
+  end
+
+  def renew_password
+
+  end
 end
