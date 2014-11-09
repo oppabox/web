@@ -4,8 +4,14 @@ Rails.application.routes.draw do
 
 	get "pay/billing"
   get "pay/success"
-
-  get "item/:number", to: "item#view"
+	
+	#상품 테스트
+  #get "item/:number", to: "item#view"
+	get "item/view"
+	get "item/skinrx_set1"
+	get "item/skinrx_set2"
+	get "item/skinrx_set3"
+	get "item/skinrx_set4"
 
   #home
   get "home/main"
