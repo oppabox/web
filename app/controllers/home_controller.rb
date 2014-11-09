@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-
+    @boxes = Box.all
   end
 
   def join

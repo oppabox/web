@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+["STAR BOX", "JEWELRY BOX", "BEAUTY BOX", "DESIGN BOX", "KTICHEN BOX"].each do |x|
+  Box.create(display_name: x, path: x.gsub(" ", "_").downcase )
+end

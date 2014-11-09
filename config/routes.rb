@@ -6,12 +6,16 @@ Rails.application.routes.draw do
   get "pay/success"
 
   get "item/:number", to: "item#view"
+
   #home
   get "home/main"
   get "home/step1"
   get "home/step2"
   get "home/step3"
   get "home/login"
+
+  #box
+  get "box/:name", to: "box#index"
 
   get "home/reset_password"
   get "home/renew_password"

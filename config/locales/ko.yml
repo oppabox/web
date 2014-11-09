@@ -38,5 +38,8 @@ ko:
   renew_password: "새 비밀번호 입력"
   renew_password_confirm: "새 비밀번호 확인"
   renew_password_button: "바꾸기"
+  mypage_title: "내 정보"
+  mypage_info: ""
+  mypage_list: ""
 
 

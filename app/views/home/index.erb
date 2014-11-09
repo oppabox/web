@@ -9,14 +9,14 @@
   <div class="row">
     <div class="col-md-12">
 
-    <% 0.upto(7) do %>
-      <div class="col-md-3 col-xs-6 text-center">
+    <% @boxes.each do |x| %>
+      <div class="col-md-4 col-xs-6 text-center">
         <div class="box_view">
-          <a href="/item/view">
+          <a href="/box/<%= x.path %>">
            <img src="img/300x300.png" class="img-responsive">
          </a>
-          <a href="/item/view">
-            <h4 class="product_title">BOX</h4>
+          <a href="/box/<%= x.path %>">
+            <h4 class="product_title"><%= x.display_name %></h4>
           </a>
         </div>
       </div>
