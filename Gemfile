@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 #user management
 gem 'devise'
+gem 'devise-async'
+gem 'sidekiq'
 
 #debugger
 gem 'pry'
