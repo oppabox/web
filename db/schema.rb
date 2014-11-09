@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20141109090400) do
   end
 
   create_table "items", force: true do |t|
+    t.integer  "box_id"
+    t.string   "display_name"
+    t.string   "path"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
