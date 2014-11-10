@@ -2,8 +2,16 @@ class CreateItems < ActiveRecord::Migration
   def change
     create_table :items do |t|
       t.integer     :box_id
-      t.string      :display_name
       t.string      :path
+
+      t.string      :logo_path
+
+      t.integer     :original_price
+      t.integer     :sale_price
+      t.boolean     :show_original_price
+
+      t.integer     :quantity
+      t.boolean     :limited,     :default => false
 
       t.timestamps
     end

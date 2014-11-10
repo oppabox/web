@@ -6,12 +6,7 @@ Rails.application.routes.draw do
   get "pay/success"
 	
 	#상품 테스트
-  #get "item/:number", to: "item#view"
-	get "item/view"
-	get "item/skinrx_set1"
-	get "item/skinrx_set2"
-	get "item/skinrx_set3"
-	get "item/skinrx_set4"
+  get "item/:name", to: "item#view"
 
   #home
   get "home/main"
