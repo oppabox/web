@@ -2,168 +2,23 @@
   <div class="row">
     <div class="col-md-offset-1 col-md-10">
       <div class="row product_box" >
-        <h4><span>손상 피부 개선 셋트</span></h4>
-
-        <div class="col-md-5">
-          <div class="product_img">
-            <img src="<%= asset_path 'skinrx/set1/thumb_moisturizing.jpg' %>" class="img-responsive" width="350" height="350">
-          </div>
-        </div>
-
-        <div class="col-md-7 product_info">
-          <div class="row mar-left">
-            <div class="col-xs-4 col-md-3">
-              <label>제품명</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <p>피부 진정 & 보습세트</p>
-            </div>
-          </div>
-          <hr>
-          <!-- 판매가, 할인적용가 -->
-          <div class="row mar-left">
-            <div class="col-xs-4 col-md-3">
-              <label>정상가</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <p>52,000</p>
-            </div>
-          </div>
-          <div class="row mar-left">
-            <div class="col-xs-4 col-md-3">
-              <label>할인가</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <p style="font-weight:bold; font-size:15px;">50,000</p>
-            </div>
-          </div>
-          <hr>
-          <!-- 배송비, 배송일, 배송유형, 가능지역 -->
-          <div class="row mar-left">
-            <div class="col-xs-4 col-md-3">
-              <label>배송비</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <p> 무료 </p>
-            </div>
-          </div>
-          <hr>
-
-          <!-- 구매 수량 -->
-          <div class="row mar-left">
-            <div class="col-xs-4 col-md-3">
-              <label>남은수량</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <p>20개</p>
-            </div>
-            <div class="col-xs-4 col-md-3">
-              <label>구매수량</label>
-            </div>
-            <div class="col-xs-8 col-md-9">
-              <input type="number" style="width:60px;" min="1" max="1000"  value="1">
-            </div>
-          </div>
-
-          <div style="height:20px;"></div>
-
-          <div class="row mar-left mar-right">
-            <div class="col-xs-12 col-md-12  price_wrap">
-              <div class="row">
-                <div class="col-xs-4 col-md-3">
-                  <label class="price_1">주문금액</label>
-                </div>
-                <div class="col-xs-8 col-md-9 price_detail">
-                  <p class="price_2" >50,000원</p>
-                  <p class="price_3" >VAT 포함</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="height:20px;"></div>
-
-          <div class="row mar-left mar-right">
-            <div class="col-md-offset-7 col-md-5">
-              <button type="submit" class="btn btn-danger btn btn-width">구매하기</button>
-            </div>
-          </div>
-        </div>
-        <!-- end -->
+        <%= render :partial => "product_info" %>
       </div>
     </div>
-    <!--  가격 정보 및 구매, 장바구니 버튼 END -->
   </div>
 
-  <!-- end -->
   <div style="height:40px;"></div>
 
   <div class="row">
     <div class="col-md-offset-1 col-md-10" >
       <div class="row  box_wrap" style="margin:1px;">
-        <!-- 상품정보  -->
-        <ul class="nav nav-tabs nav-justified" role="tablist">
-          <li class ="active">
-            <a href="#T_product_info" data-toggle="tab">상품정보</a>
-          </li>
-          <li>
-            <a href="#T_carry_info" data-toggle="tab">배송안내</a>
-          </li>
-          <li>
-            <a href="#T_billing_info" data-toggle="tab">결제안내</a>
-          </li>
-          <li>
-            <a href="#T_info" data-toggle="tab">교환 / 반품</a>
-          </li>
-        </ul>
-        <br>
+        <%= render :partial => 'foot_navi' %>
+        <div style="height:40px;"></div>
         <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade active in" id="T_product_info">
-            <p stlye="line-height:120%;">
-              <img src="<%= asset_path 'skinrx/set1/main_moisturizing.jpg' %>" align="center" class="img-responsive img-center" >
-            </p>
-          </div>
-          <div class="tab-pane fade" id="T_carry_info">
-            <div class="row">
-              <div class="col-xs-12">
-                <br>
-                <ul>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-pane fade" id="T_billing_info">
-            <div class="row">
-              <div class="col-xs-12">
-                <br>
-                <ul>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-pane fade" id="T_info">
-            <div class="row">
-              <div class="col-xs-12">
-                <br>
-                <ul>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                  <li> 안녕하세요 </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <%= render :partial => 'product' %>
+          <%= render :partial => 'delivery' %>
+          <%= render :partial => 'billing' %>
+          <%= render :partial => 'refund' %>
         </div>
       </div>
     </div>
