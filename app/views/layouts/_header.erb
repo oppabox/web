@@ -11,6 +11,7 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <%if user_signed_in?%>
+          <li><a href="/home/renew_password"><%= t('menu_renew_password') %></a></li>
           <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
           <li><%= link_to t('menu_logout'), destroy_user_session_path, method: :delete%></a></li>
         <%else%>
