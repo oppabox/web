@@ -1,6 +1,16 @@
 // Place all the styles related to the pay controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@media screen and (max-width:768px) {
+  .temp_text_left{
+    text-align:left !important;
+    padding-left:0px;
+    padding-right:0px;
+  }
+  .temp_row{
+    margin-left:0px;
+  }
+}
 .tit_order{
   font-size: 15px;
   font-weight: bold;
@@ -41,7 +51,7 @@
 }
 
 .product_item_box {
-  padding-left:0px; padding-right:0px;
+  padding-left:0px; padding-right:0px; margin-bottom:20px;
 }
 .product_item_info {
   margin-top:15px; padding-left:15px; padding-right:0px;
@@ -165,8 +175,12 @@
   height:30px;
 }
 
-.delivery_info .address .form-group .col-xs-4:last-child p input {
-  width:300px;
+.delivery_info .address .form-group .col-sm-4 p input, .delivery_info .address .form-group .col-sm-7 p input {
+  height:25px;
+}
+
+.delivery_info .address .form-group label {
+  margin-top:0px;
 }
 /* success --> */
 
