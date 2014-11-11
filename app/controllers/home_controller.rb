@@ -12,14 +12,17 @@ class HomeController < ApplicationController
   end
 
   def api_login
-    ret = Hash.new
-    ret[:result] = false
-    user = User.where(:email => params[:email]).first
-    if !user.nil? and user.valid_password?(params[:password])
-      sign_in(:user, user)
-      ret[:result] = true
-    else
-      ret[:message] = t("cannot_signin")
+    ret = User.check_sign_params params[:email], params[:password]
+
+    if ret[:result]
+      user = User.where(:email => params[:email]).first
+      if !user.nil? and user.valid_password?(params[:password])
+        sign_in(:user, user)
+        ret[:result] = true
+      else
+        ret[:result] = false
+        ret[:message] = t("cannot_signin")
+      end
     end
 
     render :json => ret
@@ -34,25 +37,27 @@ class HomeController < ApplicationController
   end
    
   def api_step2
-    ret = Hash.new
-    ret[:result] = true
-    unless User.where(:email => params[:email]).first.nil?
-      ret[:result] = false
-      ret[:message] = t("duplicated_email")
-    else
-
-      user = User.create!({:email => params[:email],
-                           :password => params[:password],
-                           :password_confirmation => params[:password]})
-      if user == false
+    ret = User.check_sign_params params[:email], params[:password]
+    if ret[:result]
+      unless User.where(:email => params[:email]).first.nil?
         ret[:result] = false
-        ret[:message] = t("cannot_signup")
+        ret[:message] = t("duplicated_email")
       else
-        sign_in(user)
+
+        user = User.create!({:email => params[:email],
+                             :password => params[:password],
+                             :password_confirmation => params[:password]})
+        if user == false
+          ret[:result] = false
+          ret[:message] = t("cannot_signup")
+        else
+          sign_in(user)
+          ret[:result] = true
+        end
       end
     end
+
     render :json => ret
-    
   end
 
   def api_step3
@@ -78,5 +83,24 @@ class HomeController < ApplicationController
 
   def renew_password
 
+  end
+
+  def api_renew_password
+    ret = Hash.new
+    if current_user.nil?
+      ret[:result] = false
+      ret[:message] = t('must_user_login')
+    else
+      ret = User.check_sign_params(current_user.email,
+                                   params[:password],
+                                   params[:password_confirmation])
+      if ret[:result]
+        ret[:result] = current_user.update(:password => params[:password],
+                                            :password_confirmation => params[:password_confirm])
+        ret[:message] = t('renew_password_success')
+      end
+    end
+
+    render :json => ret
   end
 end
