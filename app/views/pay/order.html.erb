@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row product_box" >
+        <h4>주문확인</h4>
+        <%= render :partial => 'order_confirm' %>
+        <h4>배송 정보 확인</h4>
+        <%= render :partial => 'address_confirm' %>
+        <h4>총 결제 비용 확인</h4>
+        <%= render :partial => 'total_payment' %>
+        <div style="height:40px;"></div>
+        <h4>장바구니</h4>
+        <%= render :partial => 'basket_list' %>
+      </div>
+    </div>
+  </div>
+</div>

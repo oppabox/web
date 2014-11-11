@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-	get "pay/billing"
-  get "pay/success"
+	post "pay/billing"
+  post "pay/success"
+
+  post "pay/order"
 	
 	#상품 테스트
   get "item/:name", to: "item#view"

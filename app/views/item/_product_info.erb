@@ -1,4 +1,4 @@
-<h4><span><%= @item.display_name %></span></h4>
+<h4><span><a href="/box/<%= @item.box.path %>"><%= @item.box.display_name %></a> / <%= @item.display_name %></span></h4>
 
 <div class="col-md-5">
   <div class="product_img">
@@ -6,6 +6,7 @@
   </div>
 </div>
 
+<form action="/pay/order" method="POST">
 <div class="col-md-7 product_info">
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
@@ -50,7 +51,7 @@
       <label>배송비</label>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p>무료</p>
+      <p>하단 배송안내 참고</p>
     </div>
   </div>
   <hr>
@@ -89,7 +90,8 @@
   <div style="height:20px;"></div>
 
   <div class="row mar-left mar-right text-right">
-      <button type="submit" class="btn btn-default btn btn-width">장바구니 담기</button>
+      <button type="submit" class="btn btn-default btn btn-width">장바구니 담기</button>&nbsp;&nbsp;
       <button type="submit" class="btn btn-danger btn btn-width">구매하기</button>
   </div>
 </div>
+</form>

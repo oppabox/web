@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_phonenumber') %></label>
+    <input id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+  </div>
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_postcode') %></label>
+    <input id="signup_postcode" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+  </div>
+</div>
+<div style="height:20px;">&nbsp;</div>
+<label><%= t('signup_step3_nationality') %></label>
+<select id="signup_country" class="form-control">
+  <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+    <% selected = "" %>
+    <% if n.to_s == "KR" %>
+      <% selected = %Q[selected="selected"] %>
+    <% end %>
+    <option value="<%= n %>" <%= selected %>><%= m %></option>
+  <% end %>
+</select>
+<div style="height:20px;">&nbsp;</div>
+<label><%= t('signup_step3_address') %></label>
+<input id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
