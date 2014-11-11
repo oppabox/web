@@ -6,21 +6,27 @@
     <select id="signup_country" class="form-control" style="width:350px;" autofocus>
       <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
         <% selected = "" %>
-        <% if n.to_s == "KR" %>
-          <% selected = %Q[selected="selected"] %>
+        <% if current_user.country.nil?%>
+          <% if n.to_s == "KR" %>
+            <% selected = %Q[selected="selected"] %>
+          <% end %>
+        <% else %>
+          <% if n.to_s == current_user.country %>
+            <% selected = %Q[selected="selected"] %>
+          <% end %>
         <% end %>
         <option value="<%= n %>" <%= selected %>><%= m %></option>
       <% end %>
     </select>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_phonenumber') %></label>
-    <input id="signup_phonenumber" style="width:150px" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+    <input id="signup_phonenumber" style="width:150px" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" value="<%= current_user.phonenumber %>" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_postcode') %></label>
-    <input id="signup_postcode" style="width:150px;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+    <input id="signup_postcode" style="width:150px;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" value="<%= current_user.postcode %>" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_address') %></label>
-    <input id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+    <input id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" value="<%= current_user.address %>" required>
     <div class="text-center" style="margin-top:30px;margin-bottom:50px;">
       <a href="/"><button type="button" class="btn btn-lg btn-default"><%= t('signup_step3_incomplete') %></button></a>
       &nbsp; &nbsp; &nbsp;
