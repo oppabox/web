@@ -1,0 +1,195 @@
+<div class="container">
+  <!-- 제품 설명 박스 -->
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+      <!-- 제품 이미지 및 구매 -->
+      <div class="row product_box" >
+        <h4 style="font-weight:bold;">
+          <span>오빠박스 Low Price 2</span>
+        </h4>
+
+        <!-- 제품 이미지 -->
+        <div class="col-md-5">
+          <div class="product_img">
+            <p class="big_img">
+              <img src="<%= asset_path 'designbox/low2/2.jpg' %>" class="img-responsive img-center" align="center" width="350" height="350">
+            </p>
+          </div>
+        </div>
+        <!-- 제품이미지 END -->
+
+        <!-- 가격 정보 및 구매, 장바구니 버튼 -->
+        <div class="col-md-7 padx">
+          <form action="/pay/billing" method="get">
+            <div class="product_info">
+              <!-- 제품명, 제조원 -->
+              <div class="row mar-left">
+                <div class="form-group">
+                  <div class="col-xs-4 col-md-3">
+                    <label>제품명</label>
+                  </div>
+                  <div class="col-xs-8 col-md-9">
+                    <p>Low Price 2</p>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!-- 판매가, 할인적용가 -->
+              <div class="row mar-left">
+                <div class="form-group">
+                  <div class="col-xs-4 col-md-3">
+                    <label>판매가</label>
+                  </div>
+                  <div class="col-xs-8 col-md-9">
+                    <p style="font-weight:bold; font-size:15px;">48,500원</p>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!-- 배송비, 배송일, 배송유형, 가능지역 -->
+              <div class="row mar-left">
+                <div class="form-group">
+                  <div class="col-xs-4 col-md-3">
+                    <label>배송비</label>
+                  </div>
+                  <div class="col-xs-8 col-md-9">
+                    <p>무료</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mar-left">
+                <div class="form-group">
+                  <div class="col-xs-4 col-md-3">
+                    <label>배송유형</label>
+                  </div>
+                  <div class="col-xs-8 col-md-9">
+                    <p>택배</p>
+                  </div>
+                </div>
+              </div>
+              <hr>
+
+              <!-- 구매 수량 -->
+              <div class="row mar-left">
+                <div class="form-group">
+                  <div class="col-xs-4 col-md-3">
+                    <label>구매수량</label>
+                  </div>
+                  <div class="col-xs-8 col-md-9">
+                    <input type="number" style="width:60px;" min="1" max="1000"  value="1">
+                    <smal style="font-size:12px; padding-left:10px;">남은수량 : 0개</small>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <!-- 주문 금액 -->
+                <div class="row mar-left mar-right">
+                  <div class="form-group">
+                    <div class="col-xs-12 col-md-12  price_">
+                      <div class="row">
+                        <div class="col-xs-4 col-md-3">
+                          <label class="price_1">주문금액</label>
+                        </div>
+                        <div class="col-xs-8 col-md-9">
+                          <p class="price_2">48,500원</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row mar-left mar-right">
+                  <div class="form-group">
+                    <div class="col-md-offset-7 col-md-5">
+                      <button type="submit" class="btn btn-danger btn btn-width">구매하기</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- end -->
+          </div>
+        </div>
+      </div>
+      <!--  가격 정보 및 구매, 장바구니 버튼 END -->
+    </div>
+    <!-- end -->
+    <br><br>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10" >
+        <div class="row  box_wrap" style="margin:1px;">
+          <!-- 상품정보  -->
+          <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li class ="active">
+              <a href="#T_product_info" data-toggle="tab">상품정보</a>
+            </li>
+            <li>
+              <a href="#T_carry_info" data-toggle="tab">배송안내</a>
+            </li>
+            <li>
+              <a href="#T_billing_info" data-toggle="tab">결제안내</a>
+            </li>
+            <li>
+              <a href="#T_info" data-toggle="tab">교환 / 반품</a>
+            </li>
+          </ul>
+          <br>
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="T_product_info">
+              <p stlye="line-height:120%;">
+                <img src="<%= asset_path 'designbox/low2/1.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/2.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/3.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/4.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/5.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/6.jpg' %>" align="center" class="img-responsive img-center" width="760">
+                <img src="<%= asset_path 'designbox/low2/7.jpg' %>" align="center" class="img-responsive img-center" width="760">
+              </p>
+            </div>
+            <div class="tab-pane fade" id="T_carry_info">
+              <div class="row">
+                <div class="col-xs-12">
+                  <br>
+                  <ul>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="T_billing_info">
+              <div class="row">
+                <div class="col-xs-12">
+                  <br>
+                  <ul>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="T_info">
+              <div class="row">
+                <div class="col-xs-12">
+                  <br>
+                  <ul>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                    <li> 안녕하세요 </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
