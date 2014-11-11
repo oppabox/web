@@ -1,27 +1,2 @@
-<div class="container" id="main_image">
-  <div class="row">
-    <img src="img/1100x450.png" class="center-block img-thumbnail">
-  </div>
-</div>
-  
-<!-- 이미지 -->
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-
-    <% @boxes.each do |x| %>
-      <div class="col-md-4 col-xs-6 text-center">
-        <div class="box_view">
-          <a href="/box/<%= x.path %>">
-           <img src="img/300x300.png" class="img-responsive">
-         </a>
-          <a href="/box/<%= x.path %>">
-            <h4 class="product_title"><%= x.display_name %></h4>
-          </a>
-        </div>
-      </div>
-    <% end %>
-
-    </div>
-  </div>
-</div>
+<%= image_head HOME_IMAGE %>
+<%= item_body @boxes, "box" %>

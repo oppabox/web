@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 
 	get "pay/billing"
   get "pay/success"
-
-  get "item/:number", to: "item#view"
+	
+	#상품 테스트
+  get "item/:name", to: "item#view"
 
   #home
   get "home/main"

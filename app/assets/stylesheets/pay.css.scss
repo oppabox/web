@@ -35,6 +35,11 @@
   border: 1px solid #D9D9DA;
   border-color: #D9D9DA #D3D3D4 #C9C9CA;
 }
+.delivery_info .address {
+  margin-left: 15px;
+  clear:both; overflow:hidden;
+}
+
 .product_item_box {
   padding-left:0px; padding-right:0px;
 }
@@ -152,6 +157,17 @@
   margin-top:10px;
 }
 
+.location_info {
+  clear:both;
+}
+
+.delivery_info .address .col-xs-4 {
+  height:30px;
+}
+
+.delivery_info .address .form-group .col-xs-4:last-child p input {
+  width:300px;
+}
 /* success --> */
 
 .address_ok {

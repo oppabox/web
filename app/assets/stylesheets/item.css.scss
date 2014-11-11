@@ -4,13 +4,14 @@
 .product_box {
 	padding: 5px 10px 5px 10px;
 	background: #fff;
-	margin : 1px;
+	margin: 1px;
 }
 
 .product_box h4 {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	border-bottom: 2px solid;
+  font-weight:bold;
 }
 
 .product_box h4 span {
@@ -20,14 +21,8 @@
 }
 
 .product_img {
-	text-align: center;
-	margin-top: 75px;
-	line-height: 60px;
-}
-
-.big_img {
-
-	padding: 0;
+	margin-top: 30px;
+	margin-bottom: 20px;
 }
 
 .padx {
@@ -44,10 +39,10 @@
 }
 
 .product_info {
-	padding: 20px 0 40px 0;
+	padding: 30px 0 30px 0;
 }
 
-.price_ {
+.price_wrap {
 	background: #f7f7f7;
 	border-top: 1px solid #e4e4e4;
 	border-bottom: 1px solid #e4e4e4;
@@ -55,36 +50,30 @@
 .price_1 {
 	height: 38px;
 	font-size: 14px;
-	padding-top: 15px;
+	margin-top: 15px;
 }
 
-.price_2 {
+.price_detail{
 	text-align: right;
-	padding: 15px 10px 0px 10px;
+	font-weight: bold;
+}
+.price_2 {
+  margin-top:15px;
 	font-size: 16px;
 	color: #f14949;
-	font-weight: bold;
 }
 .price_3 {
-	text-align: right;
-	padding: 5px 10px 0px 0px;
 	font-size: 13px;
-	font-weight: bold;
-	margin-right: 15px;
-}
-
-#product img {
-	margin: 0 auto;
 }
 
 .mar-left {
 	margin-left: 5px;
 }
 .mar-right {
-	margin-right: 5px;
+	margin-right: 20px;
 }
 .btn-width {
-	width: 100%;
+	width: 130px;
 }
 
 .img-center {

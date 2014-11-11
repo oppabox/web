@@ -74,50 +74,47 @@
               </div>
             </div>
           </div>
+          <div class="address">
+            <label class=""> 배송지 정보 </label>
+            <div class="form-group">
+              <label for="inputName3" class="col-xs-3 col-sm-5 col-md-5 control-label">이 름</label>
+              <div class="col-xs-4">
+                <p> 김영중 </p>
+              </div>
+              
+              <label for="" class="col-xs-3 col-sm-5 col-md-5 control-label location_info" style="padding-right:0px; padding-top:1px;">전화번호</label> <!--location_info 는 항목들을 종으로 정렬해주기 위한 clear:both가 들어가있음 -->
+              <div class="col-xs-4">
+              	<p> <input type="tel"> </p>
+              </div>
+              
+              <label for="" class="col-xs-3 col-sm-5 col-md-5 control-label location_info" style="padding-right:0px; padding-top:2px;">우편번호</label>
+              <div class="col-xs-4">
+              	<p> <input type="text"> </p>
+              </div>
+              
+              <label for="" class="col-xs-3 col-sm-5 col-md-5 control-label location_info" style="padding-top:3px;">주소</label>
+              <div class="col-xs-4">
+              	<p> <input type="text"> </p>
+              </div>
+            </div>
+          </div> 
         </div>
         <!-- /아이템/가격/수량/총계-->
-
-        <div class="col-md-12 request">
-          <label>배송시 요청사항</label>
-          <div class="col-md-12  padx_left">
-            <textarea maxlengh="1000" class="box_tf"></textarea>
-          </div>
-        </div>
-
         <hr class="hide_field">
-        
       </div>
 
       <!-- 배송지 선택 -->
       <div class="col-md-4" style="margin-top:0px; height:100%;">
         <div class="col-md-12" style="padding:15px;">
           <dl>
-            <dt>배송지 선택</dt>
-            <dd>
-              <div>
-                <input type="hidden" name="shipping_addr_wallet" value="">
-                <select id="address-cart-616001" class="embo-select" name="shipping_addr" cid="2212557" data-address="[Google Wallet 주소를 선택]">
-                  <option value="986169" selected="" data-country="">Home</option>
-                  <option value="use_gw_address">[Google Wallet 주소를 선택]</option>
-                </select>
-                <br>
-                <a href="#" class="edit">주소 수정</a>
-              </div>
-              <a href="#" class="add">새로운 주소 추가</a>
-            </dd>
-          </dl>
-
-          <dl>
             <dt>배송 방법</dt>
             <dd>
               <div>
-                <div class="col-xs-12 padx">
                   <div class="radio">
 										<label>
                     	<input type="radio" name="carry_q" value="Tcarry" CHECKED>택배(이미지)
 										</label>
                   </div>
-                </div>
               </div>
             </dd>
           </dl>
@@ -125,12 +122,10 @@
             <dt>결제 방법</dt>
             <dd>
               <div>
-                <div class="col-xs-12 padx">
                   <div class="radio">
 										<label>
                     	<input type="radio" name="pay" value="Card" CHECKED>신용카드
 										</label>
-                    <a href="#credit" data-toggle="modal">카드정보 입력</a>
                   </div>
                   <div class="radio">
 										<label>
@@ -142,14 +137,7 @@
 											<input type="radio" name="pay" value="ATM">무통장 입금
 										</label>
 									</div>
-                </div>
               </div>
-            </dd>
-          </dl>
-          <dl>
-            <dt> 쿠폰 </dt>
-            <dd>
-              <a href="#cupon" class="btn btn-primary btn-width">쿠폰적용</a>
             </dd>
           </dl>
 
@@ -166,10 +154,6 @@
             <li class="li_none">
               <span class="left">세금</span>
               <span class="right">$0 <small>USD</small></span><br>
-            </li>
-            <li class="li_none">
-              <span class="left">쿠폰</span>
-              <span class="right">- $0 <small>USD</small></span><br>
             </li>
 
             <li class="total li_none" data-totalprice="">
@@ -196,64 +180,3 @@
     <!--div-->
   </div>
 </div>
-
-<!-- 신용카드 정보 수정-->
-<div class="modal fade" id="credit" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- header -->
-      <div class="modal-header">
-        <!-- 닫기(x) 버튼 -->
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <!-- header title -->
-        <h4 class="bold">CART DETAILS</h4>
-      </div>
-      <!-- body -->
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
-            <label for="cardnumber">Card Number <span class="">*</span></label>
-            <input type="text" name="cardnumber" id="cardnumber" class="form-control" placeholder="Your card number">
-            <br>
-            <label for="cvc">CVC <span class="required">*</span></label>
-            <input type="text" name="cvc" id="cvc" class="form-control" placeholder="Security code">
-            <br>
-            <label for="ncard">Name on the Card <span class="required">*</span></label>
-            <input type="text" name="ncard" id="ncard" class="form-control" placeholder="Name on the card">
-            <br>
-            <label for="ncard2">Expiration (MM/YY) <span class="required">*</span></label>
-            <br>
-            <select class="form-control card_yy_mm" name="ncard2" id="ncard2">
-              <option>01</option>
-              <option>02</option>
-              <option>03</option>
-              <option>04</option>
-              <option>05</option>
-              <option>06</option>
-              <option>07</option>
-              <option>08</option>
-              <option>09</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-            </select>
-            <select class="form-control card_yy_mm">
-              <option>14</option>
-              <option>15</option>
-              <option>16</option>
-              <option>17</option>
-              <option>18</option>
-              <option>19</option>
-            </select>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-      </div>
-      <!-- Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div>
-</div><!-- /신용카드 정보 수정 -->

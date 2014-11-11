@@ -1,0 +1,86 @@
+<h4><span><%= @item.display_name %></span></h4>
+
+<div class="col-md-5">
+  <div class="product_img">
+    <img src="<%= @item.logo_path %>" class="img-responsive" width="350" height="350">
+  </div>
+</div>
+
+<div class="col-md-7 product_info">
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <label>제품명</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p><%= @item.display_name %></p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <label>정상가</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p><%= @item.original_price %></p>
+    </div>
+  </div>
+
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <label>판매가</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p style="font-weight:bold; font-size:15px;"><%= @item.sale_price %></p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <label>배송비</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p>무료</p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <label>남은수량</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p>20개</p>
+    </div>
+    <div class="col-xs-4 col-md-3">
+      <label>구매수량</label>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <input type="number" style="width:60px;" min="1" max="1000"  value="1">
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+
+  <div class="row mar-left mar-right">
+    <div class="col-xs-12 col-md-12  price_wrap">
+      <div class="row">
+        <div class="col-xs-4 col-md-3">
+          <label class="price_1">주문금액</label>
+        </div>
+        <div class="col-xs-8 col-md-9 price_detail">
+          <p class="price_2" ><%= @item.sale_price -%></p>
+          <p class="price_3" >VAT 포함</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+
+  <div class="row mar-left mar-right text-right">
+      <button type="submit" class="btn btn-default btn btn-width">장바구니 담기</button>
+      <button type="submit" class="btn btn-danger btn btn-width">구매하기</button>
+  </div>
+</div>
