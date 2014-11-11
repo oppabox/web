@@ -6,7 +6,10 @@ gem 'devise-async'
 gem 'sidekiq'
 
 #debugger
-gem 'pry'
+gem 'pry', :group => :development
+
+#enviroment variables management
+gem 'figaro'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'

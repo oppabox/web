@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :async #password reset
 
-  def self.check_sign_params email, password, password_confirm = nil
+  def self.check_sign_params email, password = nil, password_confirm = nil
+    if password.nil?
+      password = "password123" #Temporary password
+    end
     if password_confirm.nil?
       password_confirm = password
     end

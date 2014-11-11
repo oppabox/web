@@ -81,6 +81,23 @@ class HomeController < ApplicationController
 
   end
 
+  def api_reset_password
+    ret = Hash.new
+    ret = User.check_sign_params(params[:email])
+    if ret[:result]
+      user = User.where(:email => params[:email]).first
+      if user.nil?
+        ret[:result] = false
+        ret[:message] = t('reset_password_no_email')
+      else
+        ret[:result] = true
+        ret[:message] = t('reset_password_success')
+        user.send_reset_password_instructions
+      end
+    end
+    render :json => ret
+  end
+
   def renew_password
 
   end

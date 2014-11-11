@@ -95,5 +95,24 @@ $(function(){
       }
     })
   })
+  $("#reset_password_button").on("click",function(){
+    var email = $("#reset_password_email").val()
+    $.ajax({
+      url: "/home/api_reset_password/",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        email: email
+      },
+      success: function(data) {
+        alert(data["message"])
+        if(data["result"]){
+          location.href = "/"
+        }
+        
+      }
+    })
+
+  })
 })
 

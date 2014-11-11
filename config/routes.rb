@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post "home/api_step3"
   post "home/api_login"
   post "home/api_renew_password"
+  post "home/api_reset_password"
 
   get "mypage/" => "mypage#list"
   get "mypage/list"
