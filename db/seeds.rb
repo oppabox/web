@@ -140,6 +140,214 @@ m.save
 
 #DESIGN BOX
 b = Box.where(:path => "design_box").first
+#LOW 1
+i = Item.new
+i.box = b
+i.path = "design_low1"
+i.logo_path = "/items/design_box/logo.jpg"
+i.original_price = "56300"
+i.sale_price = "52500"
+i.show_original_price = true
+i.quantity = -1
+i.limited = false
+i.save
+
+#LOW 1 : LOCALE NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "Low Price 1"
+n.save
+
+#LOW 1 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/low1/1.jpg"
+m.path = "/items/design_box/low1/2.jpg"
+m.path = "/items/design_box/low1/3.jpg"
+m.path = "/items/design_box/low1/4.jpg"
+m.path = "/items/design_box/low1/5.jpg"
+m.path = "/items/design_box/low1/6.jpg"
+m.path = "/items/design_box/low1/7.jpg"
+m.path = "/items/design_box/low1/8.jpg"
+m.path = "/items/design_box/low1/9.jpg"
+m.path = "/items/design_box/low1/10.jpg"
+m.save
+
+#LOW 1 : OPTIONS
+#NONE
+
+#LOW 2
+i = Item.new
+i.box = b
+i.path = "design_low2"
+i.logo_path = "/items/design_box/logo.jpg"
+i.original_price = "51300"
+i.sale_price = "48500"
+i.show_original_price = true
+i.quantity = -1
+i.limited = false
+i.save
+
+#LOW 2 : LOCALE NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "Low Price 2"
+n.save
+
+#LOW 2 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/low2/1.jpg"
+m.path = "/items/design_box/low2/2.jpg"
+m.path = "/items/design_box/low2/3.jpg"
+m.path = "/items/design_box/low2/4.jpg"
+m.path = "/items/design_box/low2/5.jpg"
+m.path = "/items/design_box/low2/6.jpg"
+m.path = "/items/design_box/low2/7.jpg"
+m.save
+
+#LOW 2 :OPTIONS
+#NONE
+
+#MIDDLE 1
+i = Item.new
+i.box = b
+i.path = "design_middle1"
+i.logo_path = "/items/desgin_box/logo.jpg"
+i.original_price = "70800"
+i.sale_price = "67500"
+i.quantity = -1
+i.limited = false
+i.save
+
+#MIDDLE 1 : LOCALE NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "Middle Price 1"
+n.save
+
+#MIDDLE 1 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/middle1/1.jpg"
+m.path = "/items/design_box/middle1/2.jpg"
+m.path = "/items/design_box/middle1/3.jpg"
+m.path = "/items/design_box/middle1/4.jpg"
+m.path = "/items/design_box/middle1/5.jpg"
+m.path = "/items/design_box/middle1/6.jpg"
+m.path = "/items/design_box/middle1/7.jpg"
+m.path = "/items/design_box/middle1/8.jpg"
+m.path = "/items/design_box/middle1/9.jpg"
+m.path = "/items/design_box/middle1/10.jpg"
+m.path = "/items/design_box/middle1/11.jpg"
+m.save
+
+#MIDDLE 1 : OPTIONS
+#NONE
+
+#MIDDLE 2
+i = Item.new
+i.box = b
+i.path = "design_middle2"
+i.logo_path = "/items/design_box/logo.jpg"
+i.original_price = "70800"
+i.sale_price = "67500"
+i.quantity = -1
+i.limited = false
+i.save
+
+#MIDDLE 2 : LOCALE NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "Middle Price 2"
+n.save
+
+#MIDDLE 2 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/middle2/1.jpg"
+m.path = "/items/design_box/middle2/2.jpg"
+m.path = "/items/design_box/middle2/3.jpg"
+m.path = "/items/design_box/middle2/4.jpg"
+m.path = "/items/design_box/middle2/5.jpg"
+m.path = "/items/design_box/middle2/6.jpg"
+m.path = "/items/design_box/middle2/7.jpg"
+m.path = "/items/design_box/middle2/8.jpg"
+m.path = "/items/design_box/middle2/9.jpg"
+m.path = "/items/design_box/middle2/10.jpg"
+m.save
+
+#MIDDLE 2 : OPTIONS
+#NONE
+
+#HIGH 1
+i = Item.new
+i.box = b
+i.path = "design_high1"
+i.logo_path = "/items/design_box/logo.jpg"
+i.original_price = "100800"
+i.sale_price = "92500"
+i.quantity = -1
+i.limited = false
+i.save
+
+#HIGH 1 : LOCALE NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "High Price 1"
+n.save
+
+#HIGH 1 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/high1/1.jpg"
+m.path = "/items/design_box/high1/2.jpg"
+m.path = "/items/design_box/high1/3.jpg"
+m.path = "/items/design_box/high1/4.jpg"
+m.path = "/items/design_box/high1/5.jpg"
+m.path = "/items/design_box/high1/6.jpg"
+m.save
+
+#HIGH 2
+i = Item.new
+i.box = b
+i.path = "design_high2"
+i.logo_path = "/items/design_box/logo.jpg"
+i.original_price = "111000"
+i.sale_price = "98800"
+i.quantity = -1
+i.limited = false
+i.save
+
+#HIGH 2 : LOCAL NAME
+n = ItemName.new
+n.item = i
+n.locale = "ko"
+n.name = "High Price 2"
+n.save
+
+#HIGH 2 : IMAGES
+m = ItemImage.new
+m.item = i
+m.path = "/items/design_box/high2/1.jpg"
+m.path = "/items/design_box/high2/2.jpg"
+m.path = "/items/design_box/high2/3.jpg"
+m.path = "/items/design_box/high2/4.jpg"
+m.path = "/items/design_box/high2/5.jpg"
+m.path = "/items/design_box/high2/6.jpg"
+m.path = "/items/design_box/high2/7.jpg"
+m.path = "/items/design_box/high2/8.jpg"
+m.path = "/items/design_box/high2/9.jpg"
+m.path = "/items/design_box/high2/10.jpg"
+m.save
+
+#HIGH 2 : OPTIONS
+#NONE
 
 #KITCHEN BOX
 b = Box.where(:path => "kitchen_box").first

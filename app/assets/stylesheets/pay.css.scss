@@ -157,6 +157,17 @@
   margin-top:10px;
 }
 
+.location_info {
+  clear:both;
+}
+
+.delivery_info .address .col-xs-4 {
+  height:30px;
+}
+
+.delivery_info .address .form-group .col-xs-4:last-child p input {
+  width:300px;
+}
 /* success --> */
 
 .address_ok {
