@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   has_many    :options 
   has_many    :item_images
   has_many    :item_names
+  has_many    :orders
 
   def display_name
     self.item_names.where(:locale => I18n.locale.to_s).first.name
