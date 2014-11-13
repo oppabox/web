@@ -11,9 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109090400) do
+ActiveRecord::Schema.define(version: 20141111114738) do
 
   create_table "addresses", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.string   "addr_1"
+    t.string   "addr_2"
+    t.string   "addr_3"
+    t.string   "postcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "baskets", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,12 +35,61 @@ ActiveRecord::Schema.define(version: 20141109090400) do
     t.datetime "updated_at"
   end
 
+  create_table "item_images", force: true do |t|
+    t.integer  "item_id"
+    t.string   "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "item_names", force: true do |t|
+    t.integer  "item_id"
+    t.string   "locale"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "items", force: true do |t|
+    t.integer  "box_id"
+    t.string   "path"
+    t.string   "logo_path"
+    t.integer  "original_price"
+    t.integer  "sale_price"
+    t.boolean  "show_original_price"
+    t.integer  "quantity"
+    t.boolean  "limited",             default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "options", force: true do |t|
+    t.integer  "item_id"
+    t.string   "title"
+    t.string   "name"
+    t.integer  "option_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_options", force: true do |t|
+    t.integer  "option_id"
+    t.integer  "order_id"
+    t.string   "option_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "orders", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "user_id"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "address_3"
+    t.string   "postcode"
+    t.string   "phone_number"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,6 +100,8 @@ ActiveRecord::Schema.define(version: 20141109090400) do
     t.string   "phonenumber"
     t.string   "postcode"
     t.string   "address"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",                  default: "",    null: false

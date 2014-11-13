@@ -2,8 +2,17 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :async #password reset
+         :recoverable, :rememberable, :trackable, :validatable
+
+  def send_password_reset
+    enc = Devise.token_generator.generate(self.class, :reset_password_token)
+
+    self.reset_password_token   = enc[1]
+    self.reset_password_sent_at = Time.now.utc
+    self.save!
+
+    UserMailer.password_reset(self).deliver
+  end
 
   def self.check_sign_params email, password = nil, password_confirm = nil
     if password.nil?

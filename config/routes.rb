@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get "box/:name", to: "box#index"
 
   get "home/reset_password"
-  get "home/renew_password"
+  get "home/renew_password(/:reset_password_token)" => "home#renew_password", as: :renew_password
 
   post "home/api_step2"
   post "home/api_step3"

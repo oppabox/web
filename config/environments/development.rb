@@ -38,13 +38,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :authentication => :plain,
-    :address => "smtp.mailgun.org",
-    :port => 587,
-    :domain => "oppabox.org",
-    :user_name => "postmaster@oppabox.com",
-    :password => ENV["mailgun_password"]
-  } 
-end
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+          api_key: 'key-14f5f2d8f85c40f92bea0cb900b56703',
+          domain: 'oppabox.com'
+  }
+
+ end

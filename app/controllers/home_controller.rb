@@ -37,7 +37,7 @@ class HomeController < ApplicationController
   end
    
   def api_step2
-    ret = User.check_sign_params params[:email], params[:password]
+    ret = User.check_sign_params params[:email], params[:password], params[:password_confirm]
     if ret[:result]
       unless User.where(:email => params[:email]).first.nil?
         ret[:result] = false
@@ -46,7 +46,7 @@ class HomeController < ApplicationController
 
         user = User.create!({:email => params[:email],
                              :password => params[:password],
-                             :password_confirmation => params[:password]})
+                             :password_confirmation => params[:password_confirm]})
         if user == false
           ret[:result] = false
           ret[:message] = t("cannot_signup")
@@ -78,7 +78,6 @@ class HomeController < ApplicationController
   end
 
   def reset_password
-
   end
 
   def api_reset_password
@@ -92,29 +91,38 @@ class HomeController < ApplicationController
       else
         ret[:result] = true
         ret[:message] = t('reset_password_success')
-        user.send_reset_password_instructions
+        user.send_password_reset
       end
     end
     render :json => ret
   end
 
   def renew_password
+    @user = User.where(:reset_password_token => session[:reset_password_token]).first
 
+    session[:reset_password_token] = params[:reset_password_token]
   end
 
   def api_renew_password
     ret = Hash.new
-    if current_user.nil?
+    if session[:reset_password_token].nil?
       ret[:result] = false
       ret[:message] = t('must_user_login')
     else
-      ret = User.check_sign_params(current_user.email,
-                                   params[:password],
-                                   params[:password_confirmation])
-      if ret[:result]
-        ret[:result] = current_user.update(:password => params[:password],
-                                            :password_confirmation => params[:password_confirm])
-        ret[:message] = t('renew_password_success')
+      user = User.where(:reset_password_token => session[:reset_password_token]).first
+      if user.nil?
+        ret[:result] = false
+        ret[:message] = t('must_user_login')
+      else
+        ret = User.check_sign_params(user.email,
+                                     params[:password],
+                                     params[:password_confirmation])
+
+        if ret[:result]
+          ret[:result] = user.update(:password => params[:password],
+                                     :password_confirmation => params[:password_confirm])
+          ret[:message] = t('renew_password_success')
+        end
       end
     end
 

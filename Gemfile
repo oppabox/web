@@ -2,14 +2,10 @@ source 'https://rubygems.org'
 
 #user management
 gem 'devise'
-gem 'devise-async'
-gem 'sidekiq'
+gem 'mailgun_rails'
 
 #debugger
 gem 'pry', :group => :development
-
-#enviroment variables management
-gem 'figaro'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'
