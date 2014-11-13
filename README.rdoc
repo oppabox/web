@@ -1,28 +1,8 @@
-== README
+-이메일 발송(비밀번호 변경 등)
+redis를 실행시키고, bundle exec sidekiq -q mailer -e production
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+-환경 변수(mailgun password 등)
+figaro install 하고 config/application.yml에 환경 변수 등록하기
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+

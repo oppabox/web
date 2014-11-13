@@ -3,14 +3,15 @@
   <hr>
   <div class="form-signin" role="form" >
     <label><%= t('login_email_address') %></label>
-    <input id="signup_email" type="email" class="form-control" required autofocus>
+    <input id="signup_email" type="email" class="form-control user-info-input" required autofocus>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('login_password') %></label>
-    <input id="signup_password" type="password" class="form-control" required>
+    <input id="signup_password" type="password" class="form-control user-info-input" required>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('login_password_confirm') %></label>
-    <input id="signup_password_confirm" type="password" class="form-control" required>
+    <input id="signup_password_confirm" type="password" class="form-control user-info-input" required>
     <div style="height:20px;">&nbsp;</div>
-    <button class="btn btn-lg btn-primary btn-block" id="signup_step2_button"><%= t('menu_signup') %></button>
+    <button class="btn btn-lg btn-primary btn-block user-info-submit" id="signup_step2_button"><%= t('menu_signup') %></button>
   </div>
 </div>
+<%=javascript_include_tag "home"%>

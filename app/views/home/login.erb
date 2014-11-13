@@ -3,11 +3,13 @@
   <hr>
   <div class="form-signin" role="form">
     <label><%= t('login_email_address') %></label>
-    <input id="signin_email" type="email" class="form-control" required autofocus>
+    <input id="signin_email" type="email" class="form-control user-info-input" required autofocus>
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('login_password')%></label>
-    <input id="signin_password" type="password" class="form-control" required>
-    <a href="/home/reset_password"><p class="text-right" style="font-size:11px;"><%= t('forget_password') %></p></a>
-    <button class="btn btn-lg btn-primary btn-block" id="signin_button"><%= t('menu_login') %></button>
+    <input id="signin_password" type="password" class="form-control user-info-input" required>
+    <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
+    <button class="btn btn-lg btn-primary btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
   </div>
 </div> <!-- /container -->
+
+<%=javascript_include_tag "home"%>

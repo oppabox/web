@@ -2,9 +2,10 @@ source 'https://rubygems.org'
 
 #user management
 gem 'devise'
+gem 'mailgun_rails'
 
 #debugger
-gem 'pry'
+gem 'pry', :group => :development
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'

@@ -6,6 +6,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :phonenumber
       t.string :postcode
       t.string :address
+      t.string :password_reset_token
+      t.datetime :password_reset_sent_at
 
       t.timestamps
     end
