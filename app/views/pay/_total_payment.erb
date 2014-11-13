@@ -1,0 +1,26 @@
+<div style="height:20px;"></div>
+<div class="row">
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px">총 상품 비용</p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(5000) -%></p> </div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px">총 배송 비용</p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(5000) -%></p></div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3 col-md-6 col-md-offset-3" style="height:20px;border-bottom:1px solid black;margin-bottom:20px;"></div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-md-6">
+    <p class="text-right" style="font-weight:bold;font-size:17px;margin-right:20px;">총 결제 금액</p> 
+  </div>
+  <div class="col-xs-6 col-md-6"> 
+    <p class="text-left" style="font-weight:bold;font-size:17px;margin-left:20px;"><%= number_with_delimiter(5000) -%></p> 
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-6 col-md-6 col-xs-offset-3 col-md-offset-3"> 
+    <button type="submit" class="btn btn-primary" style="width:100%">결제하기</button>
+  </div>
+</div>

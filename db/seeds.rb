@@ -160,19 +160,12 @@ n.name = "Low Price 1"
 n.save
 
 #LOW 1 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/low1/1.jpg"
-m.path = "/items/design_box/low1/2.jpg"
-m.path = "/items/design_box/low1/3.jpg"
-m.path = "/items/design_box/low1/4.jpg"
-m.path = "/items/design_box/low1/5.jpg"
-m.path = "/items/design_box/low1/6.jpg"
-m.path = "/items/design_box/low1/7.jpg"
-m.path = "/items/design_box/low1/8.jpg"
-m.path = "/items/design_box/low1/9.jpg"
-m.path = "/items/design_box/low1/10.jpg"
-m.save
+1.upto(9) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/low1/#{x}.jpg"
+  m.save
+end
 
 #LOW 1 : OPTIONS
 #NONE
@@ -197,16 +190,12 @@ n.name = "Low Price 2"
 n.save
 
 #LOW 2 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/low2/1.jpg"
-m.path = "/items/design_box/low2/2.jpg"
-m.path = "/items/design_box/low2/3.jpg"
-m.path = "/items/design_box/low2/4.jpg"
-m.path = "/items/design_box/low2/5.jpg"
-m.path = "/items/design_box/low2/6.jpg"
-m.path = "/items/design_box/low2/7.jpg"
-m.save
+1.upto(6) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/low2/#{x}.jpg"
+  m.save
+end
 
 #LOW 2 :OPTIONS
 #NONE
@@ -230,20 +219,12 @@ n.name = "Middle Price 1"
 n.save
 
 #MIDDLE 1 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/middle1/1.jpg"
-m.path = "/items/design_box/middle1/2.jpg"
-m.path = "/items/design_box/middle1/3.jpg"
-m.path = "/items/design_box/middle1/4.jpg"
-m.path = "/items/design_box/middle1/5.jpg"
-m.path = "/items/design_box/middle1/6.jpg"
-m.path = "/items/design_box/middle1/7.jpg"
-m.path = "/items/design_box/middle1/8.jpg"
-m.path = "/items/design_box/middle1/9.jpg"
-m.path = "/items/design_box/middle1/10.jpg"
-m.path = "/items/design_box/middle1/11.jpg"
-m.save
+1.upto(10) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/middle1/#{x}.jpg"
+  m.save
+end
 
 #MIDDLE 1 : OPTIONS
 #NONE
@@ -267,19 +248,12 @@ n.name = "Middle Price 2"
 n.save
 
 #MIDDLE 2 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/middle2/1.jpg"
-m.path = "/items/design_box/middle2/2.jpg"
-m.path = "/items/design_box/middle2/3.jpg"
-m.path = "/items/design_box/middle2/4.jpg"
-m.path = "/items/design_box/middle2/5.jpg"
-m.path = "/items/design_box/middle2/6.jpg"
-m.path = "/items/design_box/middle2/7.jpg"
-m.path = "/items/design_box/middle2/8.jpg"
-m.path = "/items/design_box/middle2/9.jpg"
-m.path = "/items/design_box/middle2/10.jpg"
-m.save
+1.upto(10) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/middle2/#{x}.jpg"
+  m.save
+end
 
 #MIDDLE 2 : OPTIONS
 #NONE
@@ -303,15 +277,12 @@ n.name = "High Price 1"
 n.save
 
 #HIGH 1 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/high1/1.jpg"
-m.path = "/items/design_box/high1/2.jpg"
-m.path = "/items/design_box/high1/3.jpg"
-m.path = "/items/design_box/high1/4.jpg"
-m.path = "/items/design_box/high1/5.jpg"
-m.path = "/items/design_box/high1/6.jpg"
-m.save
+1.upto(6) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/high1/#{x}.jpg"
+  m.save
+end
 
 #HIGH 2
 i = Item.new
@@ -332,19 +303,12 @@ n.name = "High Price 2"
 n.save
 
 #HIGH 2 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/design_box/high2/1.jpg"
-m.path = "/items/design_box/high2/2.jpg"
-m.path = "/items/design_box/high2/3.jpg"
-m.path = "/items/design_box/high2/4.jpg"
-m.path = "/items/design_box/high2/5.jpg"
-m.path = "/items/design_box/high2/6.jpg"
-m.path = "/items/design_box/high2/7.jpg"
-m.path = "/items/design_box/high2/8.jpg"
-m.path = "/items/design_box/high2/9.jpg"
-m.path = "/items/design_box/high2/10.jpg"
-m.save
+1.upto(10) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/design_box/high2/#{x}.jpg"
+  m.save
+end
 
 #HIGH 2 : OPTIONS
 #NONE
