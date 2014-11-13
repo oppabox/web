@@ -9,4 +9,8 @@ class PayController < ApplicationController
   def order
 
   end
+
+  def submit_item
+    render :text => "success"
+  end
 end

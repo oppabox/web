@@ -109,7 +109,6 @@ $(function(){
         if(data["result"]){
           location.href = "/"
         }
-        
       }
     })
   })
