@@ -1,5 +1,5 @@
 #encoding=utf-8
-class AllatUtil
+module AllatUtil
   require 'socket'
 
   Util_lang = "PHP"
