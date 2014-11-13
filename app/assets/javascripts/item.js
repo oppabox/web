@@ -1,3 +1,3 @@
 $("#purchase").click(function(){
-    alert("HI");
-    }
+  alert("HI");
+}
