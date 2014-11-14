@@ -62,6 +62,7 @@ class HomeController < ApplicationController
 
   def api_step3
     current_user.option_flag = true
+    current_user.name = params[:name]
     current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]

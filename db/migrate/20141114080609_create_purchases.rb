@@ -10,6 +10,8 @@ class CreatePurchases < ActiveRecord::Migration
       t.string :postcode
       t.string :phonenumber
 
+      t.string :status, default: "ordering" # "prepay", "paid", "shipping"
+
       t.timestamps
     end
   end
