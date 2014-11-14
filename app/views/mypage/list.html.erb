@@ -5,10 +5,11 @@
     <div class="col-sm-10">
       <h4>구매 내역</h4>
       <hr>
-      <% if current_user.orders.empty? %>
+      <% if current_user.purchases.empty? %>
         <%= t('mypage_no_order') %>
       <% end %>
-      <% current_user.orders.each do |order|%>
+      <% current_user.purchases.each do |p| %>
+      <% p.orders.each do |order|%>
         <% item = order.item %>
         <!-- 주문한 상품 정보 -->
         <div class="row padx">
@@ -52,6 +53,7 @@
 
         </div>
         <!-- /주문한 상품 정보 -->
+      <%end%>
       <%end%>
     </div>
   </div>

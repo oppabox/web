@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   has_many :purchases
 
   def orders
-    self.purchases.where(status: "ordering").take.orders
+    p = self.purchases.where(status: "ordering").take
+    p.nil? ? [] : p.orders
   end
 
   def send_password_reset

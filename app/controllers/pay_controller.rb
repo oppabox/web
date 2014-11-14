@@ -60,14 +60,14 @@ class PayController < ApplicationController
       ticket_pay_type  = getValue("ticket_pay_type",at_txt)
       ticket_name      = getValue("ticket_nm",at_txt)
 
-      result += "결과코드              : " + replycd + "<br>"
-      result += "결과메세지            : " + replymsg + "<br>"
-      result += "주문번호              : " + order_no + "<br>"
-      result += "승인금액              : " + amt + "<br>"
-      result += "지불수단              : " + pay_type + "<br>"
-      result += "승인일시              : " + approval_ymdhms + "<br>"
-      result += "거래일련번호          : " + seq_no + "<br>"
-      result += "에스크로 적용 여부    : " + escrow_yn + "<br>"
+      result += "결과코드              : " + replycd + "\n"
+      result += "결과메세지            : " + replymsg + "\n"
+      result += "주문번호              : " + order_no + "\n"
+      result += "승인금액              : " + amt + "\n"
+      result += "지불수단              : " + pay_type + "\n"
+      result += "승인일시              : " + approval_ymdhms + "\n"
+      result += "거래일련번호          : " + seq_no + "\n"
+      result += "에스크로 적용 여부    : " + escrow_yn + "\n"
       p.replycd = replycd
       p.replymsg = replymsg
       p.order_no = order_no
@@ -75,35 +75,36 @@ class PayController < ApplicationController
       p.pay_type = pay_type
       p.approval_ymdhms = approval_ymdhms
       p.seq_no = seq_no
-      result += "=============== 신용 카드 ===============================<br>"
-      result += "승인번호              : " + approval_no + "<br>"
-      result += "카드ID                : " + card_id + "<br>"
-      result += "카드명                : " + card_nm + "<br>"
-      result += "할부개월              : " + sell_mm + "<br>"
-      result += "무이자여부            : " + zerofee_yn + "<br>";   #무이자(Y),일시불(N
-      result += "인증여부              : " + cert_yn + "<br>";      #인증(Y),미인증(N
-      result += "직가맹여부            : " + contract_yn + "<br>";  #3자가맹점(Y),대표가맹점(N
-      result += "세이브 결제 금액      : " + save_amt + "<br>"
-      result += "=============== 계좌 이체 / 가상계좌 ====================<br>"
-      result += "은행ID                : " + bank_id + "<br>"
-      result += "은행명                : " + bank_nm + "<br>"
-      result += "현금영수증 일련 번호  : " + cash_bill_no + "<br>"
-      result += "=============== 가상계좌 ================================<br>"
-      result += "계좌번호              : " + account_no + "<br>"
-      result += "입금계좌명            : " + income_acc_nm + "<br>"
-      result += "입금자명              : " + account_nm + "<br>"
-      result += "입금기한일            : " + income_limit_ymd + "<br>"
-      result += "입금예정일            : " + income_expect_ymd + "<br>"
-      result += "현금영수증신청 여부   : " + cash_yn + "<br>"
-      result += "=============== 휴대폰 결제 =============================<br>"
-      result += "이동통신사구분        : " + hp_id + "<br>"
-      result += "=============== 상품권 결제 =============================<br>"
-      result += "상품권 ID             : " + ticket_id + "<br>"
-      result += "상품권 이름           : " + ticket_name + "<br>"
-      result += "결제구분              : " + ticket_pay_type + "<br>"
+      p.status = "paid"
+      result += "=============== 신용 카드 ===============================\n"
+      result += "승인번호              : " + approval_no + "\n"
+      result += "카드ID                : " + card_id + "\n"
+      result += "카드명                : " + card_nm + "\n"
+      result += "할부개월              : " + sell_mm + "\n"
+      result += "무이자여부            : " + zerofee_yn + "\n";   #무이자(Y),일시불(N
+      result += "인증여부              : " + cert_yn + "\n";      #인증(Y),미인증(N
+      result += "직가맹여부            : " + contract_yn + "\n";  #3자가맹점(Y),대표가맹점(N
+      result += "세이브 결제 금액      : " + save_amt + "\n"
+      result += "=============== 계좌 이체 / 가상계좌 ====================\n"
+      result += "은행ID                : " + bank_id + "\n"
+      result += "은행명                : " + bank_nm + "\n"
+      result += "현금영수증 일련 번호  : " + cash_bill_no + "\n"
+      result += "=============== 가상계좌 ================================\n"
+      result += "계좌번호              : " + account_no + "\n"
+      result += "입금계좌명            : " + income_acc_nm + "\n"
+      result += "입금자명              : " + account_nm + "\n"
+      result += "입금기한일            : " + income_limit_ymd + "\n"
+      result += "입금예정일            : " + income_expect_ymd + "\n"
+      result += "현금영수증신청 여부   : " + cash_yn + "\n"
+      result += "=============== 휴대폰 결제 =============================\n"
+      result += "이동통신사구분        : " + hp_id + "\n"
+      result += "=============== 상품권 결제 =============================\n"
+      result += "상품권 ID             : " + ticket_id + "\n"
+      result += "상품권 이름           : " + ticket_name + "\n"
+      result += "결제구분              : " + ticket_pay_type + "\n"
     else
-      result += "결과코드  : " + replycd.inspect + "<br>";
-      result += "결과메세지: " + replymsg.inspect + "<br>";
+      result += "결과코드  : " + replycd.inspect + "\n";
+      result += "결과메세지: " + replymsg.inspect + "\n";
       p.replycd = replycd
       p.replymsg = replymsg
     end

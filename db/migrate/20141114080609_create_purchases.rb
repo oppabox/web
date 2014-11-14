@@ -10,7 +10,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.string :postcode
       t.string :phonenumber
 
-      t.string :status, default: "ordering" # "prepay", "paid", "shipping"
+      t.string :status, default: "ordering" # "paid", "shipping"
 
       # 결제 완료 후
       t.string :replycd
