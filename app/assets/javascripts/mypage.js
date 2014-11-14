@@ -1,3 +1,4 @@
+$(function(){
   $("#info_button").on("click",function(){
     var country = $("#info_country").val()
     var phonenumber = $("#info_phonenumber").val()
@@ -22,4 +23,5 @@
       }
     })
   })
+}) 
 
