@@ -1,4 +1,7 @@
 class MypageController < ApplicationController
+  def info
+  end
+
   def list
   end
 

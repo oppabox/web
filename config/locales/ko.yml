@@ -46,9 +46,14 @@ ko:
   renew_password_success: "비밀번호 변경이 완료되었습니다."
   renew_password_link_invalid: "해당 사용자가 없습니다. 링크를 확인하십시오."
   mypage_title: "내 정보"
-  mypage_info: ""
-  mypage_list: ""
+  mypage_info: "회원 정보"
+  mypage_list: "구매 내역"
+  mypage_carry: "배송 정보"
+  mypage_no_order: "주문하신 물건이 없습니다."
 
   must_user_login: "로그인을 해야합니다."
   something_wrong: "서버에 문제가 있습니다."
 
+  item_display_name: "상품명"
+  order_quantity: "수량"
+  order_unit: "개"

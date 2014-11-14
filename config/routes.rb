@@ -30,7 +30,8 @@ Rails.application.routes.draw do
   post "home/api_renew_password"
   post "home/api_reset_password"
 
-  get "mypage/" => "mypage#list"
+  get "mypage/" => "mypage#info"
+  get "mypage/info" => "mypage#info"
   get "mypage/list"
   get "mypage/carry"
 end
