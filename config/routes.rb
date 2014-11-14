@@ -4,12 +4,13 @@ Rails.application.routes.draw do
 
 	post "pay/billing"
   post "pay/success"
-  post "pay/order"
 
   #테스트용
 	get "pay/billing"
   get "pay/success"
   get "pay/order"
+
+  post "pay/submit_item"
 	
 	#상품 테스트
   get "item/:name", to: "item#view"

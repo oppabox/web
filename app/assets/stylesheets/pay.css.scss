@@ -2,6 +2,33 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// success
+#success_txt strong {
+  font-size: 25px;
+}
+#success_txt p {
+  margin-top: 20px;
+  font-size: 20px;
+}
+#success_txt hr {
+  margin-bottom: 40px;
+}
+
+.success_label {
+  font-size:40px;
+}
+.recommend {
+  margin-top:30px;
+  padding-left:10px;
+  padding-right:10px;
+}
+.recommend_label {
+  padding-left:15px;
+  font-size:20px;
+}
+
+// order
+
 .order_link{
   color:#888;
   margin-left:20px;

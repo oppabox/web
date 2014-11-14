@@ -2,11 +2,10 @@
 
 <div class="col-md-5">
   <div class="product_img">
-    <img src="<%= @item.logo_path %>" class="img-responsive" width="350" height="350">
+    <img src="<%= @item.logo_path %>" class="img-responsive img-center" width="350" height="350">
   </div>
 </div>
 
-<form action="/pay/order" method="POST">
 <div class="col-md-7 product_info">
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
@@ -91,7 +90,6 @@
 
   <div class="row mar-left mar-right text-right">
       <button type="submit" class="btn btn-default btn btn-width">장바구니 담기</button>&nbsp;&nbsp;
-      <button type="submit" class="btn btn-danger btn btn-width">구매하기</button>
+      <button type="submit" id="purchase" class="btn btn-danger btn btn-width">구매하기</button>
   </div>
 </div>
-</form>

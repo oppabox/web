@@ -204,7 +204,7 @@ end
 i = Item.new
 i.box = b
 i.path = "design_middle1"
-i.logo_path = "/items/desgin_box/logo.jpg"
+i.logo_path = "/items/design_box/logo.jpg"
 i.original_price = "70800"
 i.sale_price = "67500"
 i.quantity = -1
