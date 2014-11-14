@@ -7,7 +7,8 @@
       <table cellspacing="0" cellpadding="0" width="725"class="table table-bordered th-center">
         <colgroup>
         <col width="76">
-        <col width="284">
+        <col width="184">
+        <col width="100">
         <col width="80">
         <col width="40">
         <col width="80">
@@ -16,17 +17,30 @@
       </colgroup>
       <tbody >
         <tr class="active" >
-          <th>주문번호</th>
-          <th>배송택배 / 배송번호</th>
-          <th>판매단가</th>
-          <th>수량</th>
-          <th>소계금액</th>
-          <th>주문현황</th>
-          <th>배송확인</th>
+          <th><%=t('order_number')%></th>
+          <th><%=t('item_display_name')%></th>
+          <th><%=t('carry_number')%></th>
+          <th><%=t('carry_price')%></th>
+          <th><%=t('carry_quantity')%></th>
+          <th><%=t('carry_total_price')%></th>
+          <th><%=t('order_state')%></th>
+          <th><%=t('carry_check')%></th>
         </tr>
+        <% current_user.orders.each do |order|%>
         <tr>
+        <% if current_user.orders.empty? %>
           <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
+        <% end %>
+          <td></td>
+          <td><%= order.item.display_name %></td>
+          <td></td>
+          <td></td>
+          <td><%= order.quantity %></td>
+          <td></td>
+          <td>배송 대기</td>
+          <td></td>
         </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
