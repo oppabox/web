@@ -7,6 +7,9 @@ gem 'mailgun_rails'
 #debugger
 gem 'pry', :group => :development
 
+#encoding
+gem 'iconv'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'i18n'
 gem 'rails-i18n'

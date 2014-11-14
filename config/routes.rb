@@ -2,10 +2,14 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
+	post "pay/billing"
+  post "pay/success"
+
+  #테스트용
 	get "pay/billing"
   get "pay/success"
-
   get "pay/order"
+
   post "pay/submit_item"
 	
 	#상품 테스트
