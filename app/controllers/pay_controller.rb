@@ -5,6 +5,7 @@ class PayController < ApplicationController
 
   def billing
     at_amt = params[:allat_amt] # test
+    purchase_id = params[:purchase_id]
     params[:allat_order_id] # 쇼핑몰에서 사용하는 고유 주문 ID
     params[:allat_product_cd] # 제품 아이디 || 로 구분
     params[:allat_product_nm] # 제품 이름 || 구분
@@ -21,13 +22,14 @@ class PayController < ApplicationController
     replycd = getValue("reply_cd", at_txt) #결과코드
     logger.debug "///// #{replycd} // #{replycd.class}"
     replymsg = getValue("reply_msg", at_txt) #결과 메세지
-#  // 결과값 처리
-#  //--------------------------------------------------------------------------
-#  // 결과 값이 '0000'이면 정상임. 단, allat_test_yn=Y 일경우 '0001'이 정상임.
-#  // 실제 결제   : allat_test_yn=N 일 경우 reply_cd=0000 이면 정상
-#  // 테스트 결제 : allat_test_yn=Y 일 경우 reply_cd=0001 이면 정상
-#  //--------------------------------------------------------------------------
-    result = "<h1>Result<h1><hr>"
+    #  // 결과값 처리
+    #  //--------------------------------------------------------------------------
+    #  // 결과 값이 '0000'이면 정상임. 단, allat_test_yn=Y 일경우 '0001'이 정상임.
+    #  // 실제 결제   : allat_test_yn=N 일 경우 reply_cd=0000 이면 정상
+    #  // 테스트 결제 : allat_test_yn=Y 일 경우 reply_cd=0001 이면 정상
+    #  //--------------------------------------------------------------------------
+    result = ""
+    p = Purchase.find(purchase_id)
     test_flag = params[:allat_test_yn] == "Y" ? "0001" : "0000"
     if replycd == test_flag
       order_no         = getValue("order_no",at_txt)
@@ -66,6 +68,13 @@ class PayController < ApplicationController
       result += "승인일시              : " + approval_ymdhms + "<br>"
       result += "거래일련번호          : " + seq_no + "<br>"
       result += "에스크로 적용 여부    : " + escrow_yn + "<br>"
+      p.replycd = replycd
+      p.replymsg = replymsg
+      p.order_no = order_no
+      p.amt = amt
+      p.pay_type = pay_type
+      p.approval_ymdhms = approval_ymdhms
+      p.seq_no = seq_no
       result += "=============== 신용 카드 ===============================<br>"
       result += "승인번호              : " + approval_no + "<br>"
       result += "카드ID                : " + card_id + "<br>"
@@ -95,7 +104,11 @@ class PayController < ApplicationController
     else
       result += "결과코드  : " + replycd.inspect + "<br>";
       result += "결과메세지: " + replymsg.inspect + "<br>";
+      p.replycd = replycd
+      p.replymsg = replymsg
     end
+    p.save
+    logger.info result
     render :text => result
   end
 
