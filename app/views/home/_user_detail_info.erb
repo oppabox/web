@@ -1,16 +1,23 @@
 <div class="row">
   <div class="col-md-4 col-xs-6">
+    <label>받는 사람</label>
+    <input name="allat_recp_nm" id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+  </div>
+</div>
+<div style="height:20px;">&nbsp;</div>
+<div class="row">
+  <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_phonenumber') %></label>
-    <input id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+    <input name="phonenumber" id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
   </div>
   <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_postcode') %></label>
-    <input id="signup_postcode" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+    <input name="postcode" id="signup_postcode" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
   </div>
 </div>
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_nationality') %></label>
-<select id="signup_country" class="form-control">
+<select name="country" id="signup_country" class="form-control">
   <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
     <% selected = "" %>
     <% if n.to_s == "KR" %>
@@ -21,4 +28,4 @@
 </select>
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_address') %></label>
-<input id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+<input name="allat_recp_addr" id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>

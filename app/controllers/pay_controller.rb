@@ -4,7 +4,14 @@ class PayController < ApplicationController
   AT_SHOP_ID   = "oppabox"       #설정필요
 
   def billing
-    at_amt = 1000 # test
+    at_amt = params[:allat_amt] # test
+    params[:allat_order_id] # 쇼핑몰에서 사용하는 고유 주문 ID
+    params[:allat_product_cd] # 제품 아이디 || 로 구분
+    params[:allat_product_nm] # 제품 이름 || 구분
+    params[:allat_recp_nm] # 수취인 성명
+    params[:allat_recp_addr] # 수취인 주소
+
+
     at_data = "allat_shop_id=" + AT_SHOP_ID +
                "&allat_amt=" + at_amt.to_s +
                "&allat_enc_data=" + params[:allat_enc_data] +
@@ -21,7 +28,8 @@ class PayController < ApplicationController
 #  // 테스트 결제 : allat_test_yn=Y 일 경우 reply_cd=0001 이면 정상
 #  //--------------------------------------------------------------------------
     result = "<h1>Result<h1><hr>"
-    if replycd == "0001"
+    test_flag = params[:allat_test_yn] == "Y" ? "0001" : "0000"
+    if replycd == test_flag
       order_no         = getValue("order_no",at_txt)
       amt              = getValue("amt",at_txt)
       pay_type         = getValue("pay_type",at_txt)
@@ -97,11 +105,9 @@ class PayController < ApplicationController
 
   def order
     @orders = Order.where(:user_id => current_user.id)
-
   end
 
   def submit_item
-
     if !user_signed_in?
       render :nothing => true, :status => 401
     else
@@ -114,46 +120,18 @@ class PayController < ApplicationController
       o.address_1 = current_user.address_1
       o.address_2 = current_user.address_2
       o.address_3 = current_user.address_3
-
       if o.save
         render :nothing => true, :status => 200
       else
         render :text => t(:something_wrong), :status => 500
       end
     end
-
   end
 end
 
-#<?php
-#  // 올앳관련 함수 Include
-#  //----------------------
-#  include "./allatutil.php";
-#
-#  //Request Value Define
-#  //----------------------
-#  /********************* Service Code *********************/
-#                                         //( session, DB 사용 )
-#  /*********************************************************/
-#
-#  // 요청 데이터 설정
-#  //----------------------
-#
-#
-#
 #  // 올앳 결제 서버와 통신 : ApprovalReq->통신함수, $at_txt->결과값
 #  //----------------------------------------------------------------
-#  // 이 부분에서 로그를 남기는 것이 좋습니다.
 #  // (올앳 결제 서버와 통신 후에 로그를 남기면, 통신에러시 빠른 원인파악이 가능합니다.)
-#
-#  // 결제 결과 값 확인
-#  //------------------
-#  if( !strcmp($REPLYCD,"0000") ){
-#    // reply_cd "0000" 일때만 성공
-#
-#
-#  }else{
-#  }
 #    [신용카드 전표출력 예제]
 #
 #    결제가 정상적으로 완료되면 아래의 소스를 이용하여, 고객에게 신용카드 전표를 보여줄 수 있습니다.
