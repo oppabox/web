@@ -7,6 +7,9 @@ gem 'mailgun_rails'
 #debugger
 gem 'pry', :group => :development
 
+#Admin
+gem 'activeadmin', github: 'activeadmin'
+
 #encoding
 gem 'iconv'
 

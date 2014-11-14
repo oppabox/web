@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :orders
+  has_many :purchases
 
   def send_password_reset
     enc = Devise.token_generator.generate(self.class, :reset_password_token)

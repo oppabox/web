@@ -2,6 +2,16 @@
   <div class="row">
     <div class="col-md-offset-1 col-md-10">
       <div class="row product_box" >
+      <%= form_tag("/pay/billing", method: "post") do %>
+        <input type="hidden" name="allat_shop_id" value="oppabox">
+        <input type="hidden" name="allat_order_no" value="201411122400001">
+        <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
+        <input type="hidden" name="allat_product_cd" value="1||2||3||">
+        <input type="hidden" name="allat_product_nm" value="마우스||스킨">
+        <input type="hidden" name="" value="">
+        <input type="hidden" name="" value="">
+        <input type="hidden" name="" value="">
+
         <h4>주문확인</h4>
         <%= render :partial => 'order_confirm' %>
         <h4>배송 정보 확인</h4>
@@ -11,10 +21,12 @@
         <div style="height:40px;"></div>
         <h4>장바구니</h4>
         <%= render :partial => 'basket_list' %>
+      <% end %>
       </div>
     </div>
   </div>
 </div>
+<!-->
 <style><!--
 body { font-family:굴림체; font-size:12px; }
 td   { font-family:굴림체; font-size:12px; }
@@ -23,21 +35,6 @@ td   { font-family:굴림체; font-size:12px; }
 .body { background-color:#FFFFFF; padding: 3 3 0 5  }
 .nbody { background-color:#FFFFCC; padding: 3 3 0 5  }
 //--></style>
-<script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
-<script language=Javascript>
-function ftn_approval(dfm) {
-  var ret;
-  ret = visible_Approval(dfm);//Function 내부에서 submit을 하게 되어있음.
-  if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
-    // 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
-    alert(ret.substring(4,ret.length));     // Message 가져오기
-  }
-  if( ret.substring(0,4)=="9999" ){
-    // 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
-    alert(ret.substring(8,ret.length));     // Message 가져오기
-  }
-}
-</script>
 
     <p align=center class=title><u>New All@Pay™ 승인요청 예제페이지</u></p>
 
@@ -134,14 +131,14 @@ function ftn_approval(dfm) {
     <font color=blue><b>◆ 옵션정보</b>( 값이나 필드가 없을 경우 상점 속성이나 Default값이 반영됨 )</font>
     <tr>
         <td width=140 class="head">신용카드 결제<br>사용 여부</td>
-        <td width=160 class="body"><input type=text name="allat_card_yn" value="" size="19" maxlength=1></td>
+        <td width=160 class="body"><input type=text name="allat_card_yn" value="Y" size="19" maxlength=1></td>
         <td width=70  class="body">1</td>
         <td width=120 class="body">allat_card_yn</td>
         <td class="body">사용(Y),사용하지 않음(N) - Default : 상점속성</td>
     </tr>
     <tr>
         <td class="head">계좌이체 결제<br>사용 여부</td>
-        <td class="body"><input type=text name="allat_bank_yn" value="" size="19" maxlength=1></td>
+        <td class="body"><input type=text name="allat_bank_yn" value="Y" size="19" maxlength=1></td>
         <td class="body">1</td>
         <td class="body">allat_bank_yn</td>
         <td class="body">사용(Y),사용하지 않음(N) - Default : 상점속성</td>
@@ -155,14 +152,14 @@ function ftn_approval(dfm) {
     </tr>
     <tr>
         <td class="head">휴대폰 결제<br>사용 여부</td>
-        <td class="body"><input type=text name="allat_hp_yn" value="" size="19" maxlength=1></td>
+        <td class="body"><input type=text name="allat_hp_yn" value="Y" size="19" maxlength=1></td>
         <td class="body">1</td>
         <td class="body">allat_hp_yn</td>
         <td class="body">사용(Y),사용하지 않음(N) - Default : 상점속성</td>
     </tr>
     <tr>
         <td class="head">상품권 결제<br>사용 여부</td>
-        <td class="body"><input type=text name="allat_ticket_yn" value="" size="19" maxlength=1></td>
+        <td class="body"><input type=text name="allat_ticket_yn" value="Y" size="19" maxlength=1></td>
         <td class="body">1</td>
         <td class="body">allat_ticket_yn</td>
         <td class="body">사용(Y),사용하지 않음(N) - Default : 상점속성</td>
@@ -236,7 +233,7 @@ function ftn_approval(dfm) {
     </tr>
     <tr>
         <td class="head">테스트 여부</td>
-        <td class="body"><input type=text name="allat_test_yn" value="Y" size="19" maxlength=1></td>
+        <td class="body"><input type=text name="allat_test_yn" value="N" size="19" maxlength=1></td>
         <td class="body">1</td>
         <td class="body">allat_test_yn</td>
         <td class="body">테스트(Y),서비스(N) - Default : N
@@ -244,7 +241,7 @@ function ftn_approval(dfm) {
     </tr>
     <tr>
         <td class="head">상품 실물 여부</td>
-        <td class="body"><input type=text name="allat_real_yn" value="N" size="19" maxlength=1></td>
+        <td class="body"><input type=text name="allat_real_yn" value="Y" size="19" maxlength=1></td>
         <td class="body">1</td>
         <td class="body">allat_real_yn</td>
         <td class="body">상품이 실물일 경우 (Y), 상품이 실물이 아닐경우 (N) - Default : N<br>
@@ -321,6 +318,22 @@ function ftn_approval(dfm) {
     </td></tr>
     </table>
     </p>
-    </form>
+  </form>
+-->
 <!---- 수동 설치 설명 Layer를 사용하지 않으시려면, 아래 스크립트를 삭제 해 주시기 바랍니다 ---->
 <script language=Javascript>initCheckOB();</script>
+<script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
+<script language=Javascript>
+function ftn_approval(dfm) {
+  var ret;
+  ret = visible_Approval(dfm);//Function 내부에서 submit을 하게 되어있음.
+  if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
+    // 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+    alert(ret.substring(4,ret.length));     // Message 가져오기
+  }
+  if( ret.substring(0,4)=="9999" ){
+    // 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+    alert(ret.substring(8,ret.length));     // Message 가져오기
+  }
+}
+</script>
