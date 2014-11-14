@@ -23,8 +23,8 @@ i = Item.new
 	i.box = b
 	i.path = "cross"
 	i.logo_path = "/items/jewelry_box/cross/cross.jpg"
-	i.original_price = ""
-	i.sale_price = ""
+	i.original_price = "999990"
+	i.sale_price = "999990"
 	i.show_original_price = true
 	i.quantity = -1
 	i.limited = false
@@ -37,10 +37,12 @@ n.locale = "ko"
 n.name = "925실버 크로스 이니셜팔찌"
 n.save
 #SET 1 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/jewelry_box/cross/main.jpg"
-m.save
+1.upto(3) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/jewelry_box/cross/#{x}.jpg"
+  m.save
+end
 
 #SET 1 : OPTIONS
 #NONE
@@ -51,8 +53,8 @@ i = Item.new
   i.box = b
   i.path = "knot"
   i.logo_path = "/items/jewelry_box/knot/knot.jpg"
-  i.original_price = ""
-  i.sale_price = ""
+  i.original_price = "999990"
+  i.sale_price = "999990"
   i.show_original_price = true
   i.quantity = -1
   i.limited = false
@@ -66,10 +68,12 @@ n.name = "925실버 매듭 셋트"
 n.save
 
 #SET 2 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/items/jewelry_box/knot/main.jpg"
-m.save
+1.upto(3) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/items/jewelry_box/knot/#{x}.jpg"
+  m.save
+end
 
 #SET 2 : OPTIONS
 #NONE
