@@ -30,8 +30,8 @@ class PayController < ApplicationController
     #  //--------------------------------------------------------------------------
     result = ""
     p = Purchase.find(purchase_id)
-    test_flag = params[:allat_test_yn] == "Y" ? "0001" : "0000"
-    if replycd == test_flag
+    success_flag = params[:allat_test_yn] == "Y" ? "0001" : "0000"
+    if replycd == success_flag
       order_no         = getValue("order_no",at_txt)
       amt              = getValue("amt",at_txt)
       pay_type         = getValue("pay_type",at_txt)
@@ -109,7 +109,11 @@ class PayController < ApplicationController
     end
     p.save
     logger.info result
-    render :text => result
+    if replycd == success_flag
+      redirect_to "/mypage/list"
+    else
+      redirect_to "/pay/order"
+    end
   end
 
   def success

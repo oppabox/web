@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :purchases
 
+  def orders
+    self.purchases.where(status: "ordering").take.orders
+  end
+
   def send_password_reset
     enc = Devise.token_generator.generate(self.class, :reset_password_token)
 

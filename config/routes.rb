@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   post "pay/success"
 
   #테스트용
-	get "pay/billing"
   get "pay/success"
   get "pay/order"
 
