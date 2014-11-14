@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 #user management
 gem 'devise'
 gem 'mailgun_rails'
+gem 'therubyracer'
 
 #debugger
 gem 'pry', :group => :development
