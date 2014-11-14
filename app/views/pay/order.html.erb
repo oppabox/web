@@ -8,10 +8,11 @@
         <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
         <input type="hidden" name="allat_product_cd" value="1||2||3||">
         <input type="hidden" name="allat_product_nm" value="마우스||스킨">
-        <input type="hidden" name="" value="">
-        <input type="hidden" name="" value="">
-        <input type="hidden" name="" value="">
-
+        <input type="hidden" name="allat_buyer_nm" value="<%=current_user.name%>">
+        <input type="hidden" name="allat_enc_data" value="">
+        <input type="text" name="allat_test_yn" value="Y">
+        <input type="hidden" name="allat_real_yn" value="Y">
+        <input type="hidden" name="allat_product_img" value="http://">
         <h4>주문확인</h4>
         <%= render :partial => 'order_confirm' %>
         <h4>배송 정보 확인</h4>
@@ -26,7 +27,6 @@
     </div>
   </div>
 </div>
-<!-->
 <style><!--
 body { font-family:굴림체; font-size:12px; }
 td   { font-family:굴림체; font-size:12px; }
@@ -319,7 +319,6 @@ td   { font-family:굴림체; font-size:12px; }
     </table>
     </p>
   </form>
--->
 <!---- 수동 설치 설명 Layer를 사용하지 않으시려면, 아래 스크립트를 삭제 해 주시기 바랍니다 ---->
 <script language=Javascript>initCheckOB();</script>
 <script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
