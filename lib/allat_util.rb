@@ -1,6 +1,8 @@
 #encoding=utf-8
 module AllatUtil
   require 'socket'
+  require 'openssl'
+  require 'iconv'
 
   Util_lang = "PHP"
   Util_ver = "1.0.7.1"
@@ -27,23 +29,22 @@ module AllatUtil
   C2c_esrejectcheck_uri = "POST /servlet/AllatPay/pay/c2c_reject_check.jsp HTTP/1.0\r\n"
   C2c_expressreg_uri = "POST /servlet/AllatPay/pay/c2c_express_reg.jsp HTTP/1.0\r\n"
 
-  Allat_addr_ssl = "ssl://tx.allatpay.com" 
+  Allat_addr_ssl = "ssl://tx.allatpay.com"
   Allat_addr = "tx.allatpay.com"
   Allat_host = "tx.allatpay.com"
 
   def approvalReq at_data, ssl_flag
     ret_txt = "reply_cd=0299\n"
-    if sslflag == "SSL"
+    if ssl_flag == "SSL"
       ret_txt = sendRepo(at_data, Allat_addr_ssl, Approval_uri, Allat_host, 443)
     else
-      isEnc = checkEnc(at_data)
-      if isEnc
+      if checkEnc(at_data)
         ret_txt = sendRepo(at_data, Allat_addr, Approval_uri, Allat_host, 80)
       else
         ret_txt = "reply_cd=0230\nreply_msg=암호화오류\n"
       end
     end
-    return ret_txt
+    ret_txt
   end
 
   def sanctionReq at_data, ssl_flag
@@ -51,52 +52,71 @@ module AllatUtil
     if ssl_flag == "SSL"
       ret_txt = sendRepo(at_data, Allat_addr_ssl, Sanction_uri, Allat_host, 443 )
     else
-      isEnc = checkEnc(at_data);
-      if isEnc
+      if checkEnc(at_data)
         ret_txt = SendRepo(at_data, allat_addr, sanction_uri, allat_host, 80)
       else
         ret_txt = "reply_cd=0230\nreply_msg=암호화오류\n"
       end
     end
-    return ret_txt
+    ret_txt
   end
 
-  def sendRepo srp_data, srp_addr, srp_url, srp_host, srp_port
-    ret_txt = sendReq srp_data, srp_addr, srp_url, srp_host, srp_port
-  end
+private
 
-  def sendReq req_data, req_addr, req_url, req_host, req_port
+  def sendRepo req_data, req_addr, req_url, req_host, req_port
     resp_txt = "reply_cd=0299\n"
     date_time = Time.now.strftime('%Y%m%d%H%M%S')
     util_ver="&allat_opt_lang=" + Util_lang + "&allat_opt_ver=" + Util_ver
     req_data= req_data + "&allat_apply_ymdhms=" + date_time
     send_data = req_data + util_ver
-    at_sock = TCPSocket.open(req_addr, req_port)
+    at_sock = TCPSocket.new(req_host, req_port)
+    ctx = OpenSSL::SSL::SSLContext.new
+    ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    at_sock = OpenSSL::SSL::SSLSocket.new(at_sock, ctx)
+    at_sock.sync = true
+    at_sock.connect
     if at_sock
-      at_sock.print(send_data)
+      logger.debug "SEND_DATA ::\n" + send_data.to_s
+      data = ""
+      data << req_url
+      data << "Host: #{req_host}:#{req_port}\r\n"
+      data << "Content-type: application/x-www-form-urlencoded\r\n"
+      data << "Content-length: #{send_data.length}\r\n"
+      data << "Accept: */*\r\n"
+      data << "\r\n"
+      data << "#{send_data}\r\n\r\n"
+      at_sock.puts(data)
       response = at_sock.read
-      resp_txt = response.split("\r\n\r\n", 2)[1]
+      logger.debug "RESPONSE_LOG ::\n" +  response.to_s
+      conv = Iconv.new('UTF-8//IGNORE', 'EUC-KR')
+      resp_txt_origin = response.split("\r\n\r\n", 2)[1]
+      resp_txt = conv.iconv(resp_txt_origin)
+      logger.debug "RESPONSE_DATA ::\n" + resp_txt
     else
       resp_txt = "reply_cd=0212\nreply_msg=Socket Connect Error:#{"error"}\n"
     end
     return resp_txt
   end
 
-private
   def getValue nameVal, textVal
-    temp = textVal.delete(' ').splite('\n')
+    textVal = textVal || ""
+    temp = textVal.delete(" ").split("\n")
+    ret = ""
     temp.each do |t|
-      retVal = t.splite('=')
-      if retVal[0] = nameVal
-        retVal[1]
+      retVal = t.split('=')
+      if retVal[0] == nameVal
+        ret = retVal[1] || ""
       end
     end
+    return ret
   end
 
   def checkEnc srcstr
-    posno srcstr.index("allat_enc_data=")
+    posno = srcstr.index("allat_enc_data=")
     return false if posno.nil?
-    return false if srcstr[posno + "allat_enc_data=".length + 5] != 1
+    checksum = srcstr[posno + "allat_enc_data=".length + 5]
+    logger.debug "CHECKSUM : " + checksum
+    return false if checksum != "1"
     return true
   end
 end
