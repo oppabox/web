@@ -38,4 +38,5 @@ Rails.application.routes.draw do
   get "mypage/info" => "mypage#info"
   get "mypage/list"
   get "mypage/carry"
+  get "mypage/api_info"
 end
