@@ -1,10 +1,13 @@
-<script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
 <div class="container">
   <div class="row">
     <div class="col-md-offset-1 col-md-10">
       <div class="row product_box" >
-      <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
-        <input type="hidden" name="purchase_id" value="<%=@orders.take.purchase.id%>">
+        <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
+        <% if @orders.empty? %>
+          <input type="hidden" name="purchase_id" value="">
+        <% else %>
+          <input type="hidden" name="purchase_id" value="<%=@orders.take.purchase.id%>">
+        <% end %>
         <input type="hidden" name="allat_shop_id" value="oppabox">
         <input type="hidden" name="allat_order_no" value="201411122400001">
         <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
@@ -31,6 +34,7 @@
   </div>
 </div>
 <!---- 수동 설치 설명 Layer를 사용하지 않으시려면, 아래 스크립트를 삭제 해 주시기 바랍니다 ---->
+<script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
 <script language=Javascript>initCheckOB();</script>
 <script language=Javascript>
 function ftn_approval(dfm) {

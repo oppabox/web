@@ -17,7 +17,7 @@ class ItemController < ApplicationController
           render :text => t(:something_wrong), :status => 500
         end
       else
-        render :text => "이미 장바구니에 담겨있습니다", :status => 300
+        render :text => "이미 장바구니에 담겨있습니다", :status => 200
       end
     end
   end
@@ -28,7 +28,7 @@ class ItemController < ApplicationController
     else
       b = Basket.where(user_id: current_user.id,
                        item_id: params[:item_id]).take
-      if b.destory
+      if b.delete
         render :nothing => true, :status => 200
       else
         render :text => t(:something_wrong), :status => 500
@@ -40,9 +40,8 @@ class ItemController < ApplicationController
     if !user_signed_in?
       render :nothing => true, :status => 401
     else
-      b = Order.where(user_id: current_user.id,
-                       item_id: params[:item_id]).take
-      if b.destory
+      b = current_user.orders.where(item_id: params[:item_id]).take
+      if b.delete
         render :nothing => true, :status => 200
       else
         render :text => t(:something_wrong), :status => 500
@@ -66,10 +65,15 @@ class ItemController < ApplicationController
                             phonenumber: current_user.phonenumber,
                             status: "ordering")
       end
-      o = Order.new
-      o.purchase_id = p.id
-      o.item_id = params[:item_id]
-      o.quantity = params[:quantity]
+      o = Order.where(purchase_id: p.id, item_id: params[:item_id]).take
+      if o.nil?
+        o = Order.new
+        o.purchase_id = p.id
+        o.item_id = params[:item_id]
+        o.quantity = params[:quantity]
+      else
+        o.quantity = o.quantity + 1
+      end
       if o.save
         render :nothing => true, :status => 200
       else

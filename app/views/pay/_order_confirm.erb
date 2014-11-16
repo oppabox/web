@@ -6,14 +6,20 @@
     <div class="col-md-2 col-xs-2 right-border"><p class="text-center">총 금액</p></div>
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
   </div>
-  <% @orders.each do |o|%>
-  <div class="row">
-    <% item = o.item %>
-    <div class="col-md-4 col-xs-4 "><p class="text-center"><a href="/item/<%= item.path-%>"><%= item.display_name %></a></p></div>
-    <div class="col-md-2 col-xs-2 "><p class="text-center"><%= item.sale_price %></p></div>
-    <div class="col-md-2 col-xs-2 "><p class="text-center"><%= o.quantity %></p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center"><%= item.sale_price * o.quantity %></p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#">취소</a></div>
-  </div>
+  <% if @orders.empty? %>
+    <div class="row">
+      <div class="col-md-12 col-xs-12"><p class="text-center">주문 내역이 없습니다</p></div>
+    </div>
+  <% else %>
+    <% @orders.each do |o|%>
+    <div class="row">
+      <% item = o.item %>
+      <div class="col-md-4 col-xs-4"><p class="text-center"><a href="/item/<%= item.path-%>"><%= item.display_name %></a></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><%= item.sale_price %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><%= o.quantity %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><%= item.sale_price * o.quantity %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" onclick="move_to_basket(<%=item.id%>);">취소</a></div>
+    </div>
+    <% end %>
   <% end %>
 </div>
