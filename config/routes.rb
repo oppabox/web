@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   get "pay/success"
   get "pay/order"
 
-  post "pay/submit_item"
+  post "item/add_to_basket"
+  post "item/add_to_order"
+  post "item/del_from_basket"
+  post "item/del_from_order"
 	
 	#상품 테스트
   get "item/:name", to: "item#view"

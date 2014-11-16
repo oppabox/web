@@ -123,35 +123,9 @@ class PayController < ApplicationController
 
   def order
     @orders = current_user.purchases.where(status: "ordering").take.orders
+    @baskets = current_user.baskets
   end
 
-  def submit_item
-    if !user_signed_in?
-      render :nothing => true, :status => 401
-    else
-      p = current_user.purchases.where(status: "ordering").take
-      if p.nil?
-        p = Purchase.create(user_id: current_user.id,
-                            recipient: current_user.name,
-                            country: current_user.country,
-                            address_1: current_user.address_1,
-                            address_2: current_user.address_2,
-                            address_3: current_user.address_3,
-                            postcode: current_user.postcode,
-                            phonenumber: current_user.phonenumber,
-                            status: "ordering")
-      end
-      o = Order.new
-      o.purchase_id = p.id
-      o.item_id = params[:item_id]
-      o.quantity = params[:quantity]
-      if o.save
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
-    end
-  end
 end
 
 #  // 올앳 결제 서버와 통신 : ApprovalReq->통신함수, $at_txt->결과값

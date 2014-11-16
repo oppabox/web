@@ -5,12 +5,18 @@
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
   </div>
-  <% 0.upto(3) do %>
-  <div class="row">
-    <div class="col-md-4 col-xs-4 "><p class="text-center">스킨 브라이트닝 셋트</p></div>
-    <div class="col-md-4 col-xs-4 "><p class="text-center">38,000원</p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#">주문</a></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#">삭제</a></div>
-  </div>
+  <% if @baskets.empty? %>
+    <div class="row">
+      <div class="col-md-12 col-xs-12 "><p class="text-center">장바구니가 비었습니다</p></div>
+    </div>
+  <% else %>
+    <% @baskets.each do |b|%>
+    <div class="row">
+      <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.display_name%></p></div>
+      <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.sale_price%></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="move_to_order" data-id="<%=b.id%>">주문</a></div>
+        <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="del_from_basket" data-id="<%=b.id%>">삭제</a></div>
+    </div>
+    <% end %>
   <% end %>
 </div>
