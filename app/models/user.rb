@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :purchases
+  has_many :baskets
 
   def orders
     p = self.purchases.where(status: "ordering").take
