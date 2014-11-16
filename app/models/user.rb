@@ -7,8 +7,12 @@ class User < ActiveRecord::Base
   has_many :baskets
 
   def orders
-    p = self.purchases.where(status: "ordering").take
+    p = self.purchase
     p.nil? ? [] : p.orders
+  end
+
+  def purchase
+    self.purchases.where(status: "ordering").take
   end
 
   def send_password_reset

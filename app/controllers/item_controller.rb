@@ -53,7 +53,7 @@ class ItemController < ApplicationController
     if !user_signed_in?
       render :nothing => true, :status => 401
     else
-      p = current_user.purchases.where(status: "ordering").take
+      p = current_user.purchase
       if p.nil?
         p = Purchase.create(user_id: current_user.id,
                             recipient: current_user.name,

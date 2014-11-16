@@ -122,8 +122,19 @@ class PayController < ApplicationController
   end
 
   def order
-    @orders = current_user.purchases.where(status: "ordering").take.orders
+    @orders = current_user.orders
     @baskets = current_user.baskets
+    @all_price = 0
+    @orders.each do |o|
+      @all_price += o.quantity * o.item.sale_price
+    end
+    items = Array.new
+    @orders.each do |o|
+      items << o.item
+      logger.debug o.item.inspect
+    end
+    @product_cds = items.map{|p| p.id}.join("||")
+    @product_nms = items.map{|p| p.display_name}.join("||")
   end
 
 end

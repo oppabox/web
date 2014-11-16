@@ -5,20 +5,23 @@
         <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
         <% if @orders.empty? %>
           <input type="hidden" name="purchase_id" value="">
+          <input type="hidden" name="allat_order_no" value="">
+          <input type="hidden" name="allat_product_cd" value="">
+          <input type="hidden" name="allat_product_nm" value="">
         <% else %>
-          <input type="hidden" name="purchase_id" value="<%=@orders.take.purchase.id%>">
+          <input type="hidden" name="purchase_id" value="<%=@orders.first.purchase.id%>">
+          <input type="hidden" name="allat_order_no" value="<%=@orders.first.purchase.id%>">
+          <input type="hidden" name="allat_product_cd" value="<%=@product_cds%>">
+          <input type="hidden" name="allat_product_nm" value="<%=@product_nms%>">
         <% end %>
         <input type="hidden" name="allat_shop_id" value="oppabox">
-        <input type="hidden" name="allat_order_no" value="201411122400001">
         <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
-        <input type="hidden" name="allat_product_cd" value="1||2||3||">
-        <input type="hidden" name="allat_product_nm" value="마우스||스킨">
         <input type="hidden" name="allat_buyer_nm" value="<%=current_user.name%>">
         <input type="hidden" name="allat_enc_data" value="">
         <input type="hidden" name="allat_test_yn" value="Y">
         <input type="hidden" name="allat_real_yn" value="Y">
         <input type="hidden" name="allat_product_img" value="http://">
-        <input type="hidden" name="allat_amt" value="1000">
+        <input type="hidden" name="allat_amt" value="<%=@all_price+5000%>">
         <h4>주문확인</h4>
         <%= render :partial => 'order_confirm' %>
         <h4>배송 정보 확인</h4>
