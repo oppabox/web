@@ -4,6 +4,16 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :purchases
+  has_many :baskets
+
+  def orders
+    p = self.purchase
+    p.nil? ? [] : p.orders
+  end
+
+  def purchase
+    self.purchases.where(status: "ordering").take
+  end
 
   def send_password_reset
     enc = Devise.token_generator.generate(self.class, :reset_password_token)

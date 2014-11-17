@@ -33,12 +33,14 @@ $(function(){
     var phonenumber = $("#signup_phonenumber").val()
     var postcode = $("#signup_postcode").val()
     var address = $("#signup_address").val()
+    var name = $("#signup_name").val()
 
     $.ajax({
       url: "/home/api_step3/",
       type: "POST",
       dataType:"JSON",
       data: {
+        name: name,
         country: country,
         phonenumber:phonenumber,
         postcode:postcode,

@@ -1,102 +1,11 @@
 class PayController < ApplicationController
-  include AllatUtil
-  AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
-  AT_SHOP_ID   = "oppabox"       #설정필요
-
   def billing
-    at_amt = params[:allat_amt] # test
-    params[:allat_order_id] # 쇼핑몰에서 사용하는 고유 주문 ID
-    params[:allat_product_cd] # 제품 아이디 || 로 구분
-    params[:allat_product_nm] # 제품 이름 || 구분
-    params[:allat_recp_nm] # 수취인 성명
-    params[:allat_recp_addr] # 수취인 주소
-
-
-    at_data = "allat_shop_id=" + AT_SHOP_ID +
-               "&allat_amt=" + at_amt.to_s +
-               "&allat_enc_data=" + params[:allat_enc_data] +
-               "&allat_cross_key=" + AT_CROSS_KEY
-    at_txt = approvalReq(at_data, "SSL")
-    logger.debug "===== #{at_txt} // #{at_txt.class}"
-    replycd = getValue("reply_cd", at_txt) #결과코드
-    logger.debug "///// #{replycd} // #{replycd.class}"
-    replymsg = getValue("reply_msg", at_txt) #결과 메세지
-#  // 결과값 처리
-#  //--------------------------------------------------------------------------
-#  // 결과 값이 '0000'이면 정상임. 단, allat_test_yn=Y 일경우 '0001'이 정상임.
-#  // 실제 결제   : allat_test_yn=N 일 경우 reply_cd=0000 이면 정상
-#  // 테스트 결제 : allat_test_yn=Y 일 경우 reply_cd=0001 이면 정상
-#  //--------------------------------------------------------------------------
-    result = "<h1>Result<h1><hr>"
-    test_flag = params[:allat_test_yn] == "Y" ? "0001" : "0000"
-    if replycd == test_flag
-      order_no         = getValue("order_no",at_txt)
-      amt              = getValue("amt",at_txt)
-      pay_type         = getValue("pay_type",at_txt)
-      approval_ymdhms  = getValue("approval_ymdhms",at_txt)
-      seq_no           = getValue("seq_no",at_txt)
-      approval_no      = getValue("approval_no",at_txt)
-      card_id          = getValue("card_id",at_txt)
-      card_nm          = getValue("card_nm",at_txt)
-      sell_mm          = getValue("sell_mm",at_txt)
-      zerofee_yn       = getValue("zerofee_yn",at_txt)
-      cert_yn          = getValue("cert_yn",at_txt)
-      contract_yn      = getValue("contract_yn",at_txt)
-      save_amt         = getValue("save_amt",at_txt)
-      bank_id          = getValue("bank_id",at_txt)
-      bank_nm          = getValue("bank_nm",at_txt)
-      cash_bill_no     = getValue("cash_bill_no",at_txt)
-      escrow_yn        = getValue("escrow_yn",at_txt)
-      account_no       = getValue("account_no",at_txt)
-      account_nm       = getValue("account_nm",at_txt)
-      income_acc_nm    = getValue("income_account_nm",at_txt)
-      income_limit_ymd = getValue("income_limit_ymd",at_txt)
-      income_expect_ymd= getValue("income_expect_ymd",at_txt)
-      cash_yn          = getValue("cash_yn",at_txt)
-      hp_id            = getValue("hp_id",at_txt)
-      ticket_id        = getValue("ticket_id",at_txt)
-      ticket_pay_type  = getValue("ticket_pay_type",at_txt)
-      ticket_name      = getValue("ticket_nm",at_txt)
-
-      result += "결과코드              : " + replycd + "<br>"
-      result += "결과메세지            : " + replymsg + "<br>"
-      result += "주문번호              : " + order_no + "<br>"
-      result += "승인금액              : " + amt + "<br>"
-      result += "지불수단              : " + pay_type + "<br>"
-      result += "승인일시              : " + approval_ymdhms + "<br>"
-      result += "거래일련번호          : " + seq_no + "<br>"
-      result += "에스크로 적용 여부    : " + escrow_yn + "<br>"
-      result += "=============== 신용 카드 ===============================<br>"
-      result += "승인번호              : " + approval_no + "<br>"
-      result += "카드ID                : " + card_id + "<br>"
-      result += "카드명                : " + card_nm + "<br>"
-      result += "할부개월              : " + sell_mm + "<br>"
-      result += "무이자여부            : " + zerofee_yn + "<br>";   #무이자(Y),일시불(N
-      result += "인증여부              : " + cert_yn + "<br>";      #인증(Y),미인증(N
-      result += "직가맹여부            : " + contract_yn + "<br>";  #3자가맹점(Y),대표가맹점(N
-      result += "세이브 결제 금액      : " + save_amt + "<br>"
-      result += "=============== 계좌 이체 / 가상계좌 ====================<br>"
-      result += "은행ID                : " + bank_id + "<br>"
-      result += "은행명                : " + bank_nm + "<br>"
-      result += "현금영수증 일련 번호  : " + cash_bill_no + "<br>"
-      result += "=============== 가상계좌 ================================<br>"
-      result += "계좌번호              : " + account_no + "<br>"
-      result += "입금계좌명            : " + income_acc_nm + "<br>"
-      result += "입금자명              : " + account_nm + "<br>"
-      result += "입금기한일            : " + income_limit_ymd + "<br>"
-      result += "입금예정일            : " + income_expect_ymd + "<br>"
-      result += "현금영수증신청 여부   : " + cash_yn + "<br>"
-      result += "=============== 휴대폰 결제 =============================<br>"
-      result += "이동통신사구분        : " + hp_id + "<br>"
-      result += "=============== 상품권 결제 =============================<br>"
-      result += "상품권 ID             : " + ticket_id + "<br>"
-      result += "상품권 이름           : " + ticket_name + "<br>"
-      result += "결제구분              : " + ticket_pay_type + "<br>"
+    p = Purchase.find(params[:purchase_id])
+    if p.billing params[:allat_amt], params[:allat_enc_data], params[:allat_test_yn]
+      redirect_to "/mypage/list"
     else
-      result += "결과코드  : " + replycd.inspect + "<br>";
-      result += "결과메세지: " + replymsg.inspect + "<br>";
+      redirect_to "/pay/order"
     end
-    render :text => result
   end
 
   def success
@@ -104,28 +13,19 @@ class PayController < ApplicationController
   end
 
   def order
-    @orders = Order.where(:user_id => current_user.id)
-  end
-
-  def submit_item
-    if !user_signed_in?
-      render :nothing => true, :status => 401
-    else
-      o = Order.new
-      o.item_id = params[:item_id]
-      o.user = current_user
-      o.postcode = current_user.postcode
-      o.country = current_user.country
-      o.phonenumber = current_user.phonenumber
-      o.address_1 = current_user.address_1
-      o.address_2 = current_user.address_2
-      o.address_3 = current_user.address_3
-      if o.save
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
+    @orders = current_user.orders
+    @baskets = current_user.baskets
+    @all_price = 0
+    @orders.each do |o|
+      @all_price += o.quantity * o.item.sale_price
     end
+    items = Array.new
+    @orders.each do |o|
+      items << o.item
+      logger.debug o.item.inspect
+    end
+    @product_cds = items.map{|p| p.id}.join("||")
+    @product_nms = items.map{|p| p.display_name}.join("||")
   end
 end
 

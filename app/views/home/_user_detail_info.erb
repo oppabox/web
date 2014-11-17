@@ -1,18 +1,18 @@
 <div class="row">
   <div class="col-md-4 col-xs-6">
     <label>받는 사람</label>
-    <input name="allat_recp_nm" id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+    <input name="allat_recp_nm" id="signup_name" value="<%=current_user.name || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= "이름" %>" required autofocus>
   </div>
 </div>
 <div style="height:20px;">&nbsp;</div>
 <div class="row">
   <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_phonenumber') %></label>
-    <input name="phonenumber" id="signup_phonenumber" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+    <input name="phonenumber" id="signup_phonenumber" value="<%=current_user.phonenumber || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
   </div>
   <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_postcode') %></label>
-    <input name="postcode" id="signup_postcode" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+    <input name="postcode" id="signup_postcode" value="<%=current_user.postcode || ""%>" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
   </div>
 </div>
 <div style="height:20px;">&nbsp;</div>
@@ -28,4 +28,4 @@
 </select>
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_address') %></label>
-<input name="allat_recp_addr" id="signup_address" type="text" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+<input name="allat_recp_addr" id="signup_address" type="text" value="<%=current_user.address_1 || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>

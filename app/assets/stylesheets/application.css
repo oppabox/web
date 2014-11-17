@@ -1,6 +1,11 @@
 /*
- *= require_tree .
  *= require_self
+ *= require bootstrap.min
+ *= require box
+ *= require home
+ *= require item
+ *= require mypage
+ *= require pay
  */
 body {
   padding-top: 70px;
