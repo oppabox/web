@@ -16,8 +16,13 @@
       <% item = o.item %>
       <div class="col-md-4 col-xs-4"><p class="text-center"><a href="/item/<%= item.path-%>"><%= item.display_name %></a></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center"><%= item.sale_price %></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><input type="text" class="o_quantity" value="<%= o.quantity %>" onblur="total_Price(<%=index%>,<%= item.sale_price %>); " data-id="<%=o.item_id%>" ></p></div>
-      <div class="col-md-2 col-xs-2" ><p class="text-center" ><%= item.sale_price * o.quantity %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center">
+       <a href="#"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
+       &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
+       <a href="#"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
+      
+      </div>
+      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= item.sale_price * o.quantity %></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" onclick="move_to_basket(<%=item.id%>);">취소</a></div>
     </div>
     <% end %>
