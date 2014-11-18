@@ -1,7 +1,6 @@
 function total_Price(id,sale_price){
 	var $ob=$(".o_quantity").eq(id);
 	var data=$ob.val();
-	alert(data);
 	var type=Number(data);
 	if(data != " " ){						//수량에 값이 있을 때 실행 (js.erb로 루비들을 불러오면 파일을 불러올 수 없어서 이렇게 해놨습니다.)
 		if(!isNaN(type)){				//수량이 숫자일때만 실행
