@@ -11,18 +11,18 @@
       <div class="col-md-12 col-xs-12"><p class="text-center">주문 내역이 없습니다</p></div>
     </div>
   <% else %>
-    <% @orders.each_with_index do |o,index|%>
+    <% @orders.each do |o|%>
     <div class="row">
       <% item = o.item %>
       <div class="col-md-4 col-xs-4"><p class="text-center"><a href="/item/<%= item.path-%>"><%= item.display_name %></a></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><%= item.sale_price %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><%= number_with_delimiter(item.sale_price) %></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center">
-       <a href="#"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
-       &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
+       <a href="#" class="order_minus"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
+     &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
        <a href="#"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
       
-      </div>
-      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= item.sale_price * o.quantity %></p></div>
+      </p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= number_with_delimiter(item.sale_price * o.quantity) %></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" onclick="move_to_basket(<%=item.id%>);">취소</a></div>
     </div>
     <% end %>
