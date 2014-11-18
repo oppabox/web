@@ -2,7 +2,6 @@
   <div class="row box_wrap">
     <%= render :partial => '/mypage/left_list' %>
     <div class="col-md-10">
-      <h4>배송 정보</h4>
       <hr>
       <% current_user.purchases.each do |purchase| %>
       <table cellspacing="0" cellpadding="0" width="725"class="table table-bordered th-center">

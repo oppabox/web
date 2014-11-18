@@ -50,6 +50,7 @@ ko:
 
   mypage_title: "내 정보"
   mypage_info: "회원 정보"
+  mypage_address: "배송 정보"
   mypage_list: "구매 내역"
   mypage_carry: "배송 정보"
   mypage_reset_password: "비밀번호 변경"
