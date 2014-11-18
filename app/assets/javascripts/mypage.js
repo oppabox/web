@@ -39,7 +39,7 @@ $(function(){
       success: function(data) {
         alert(data["message"])
         if(data["result"])
-          location.href="/"
+          location.reload()
       }
     })
   })

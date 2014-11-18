@@ -42,6 +42,9 @@ class MypageController < ApplicationController
           user.password_confirmation = params[:password_confirm]
           ret[:result] =  user.save
           ret[:message] = t('renew_password_success')
+
+          sign_out()
+          sign_in(:user, user)
         end
       end
     else
