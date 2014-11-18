@@ -21,10 +21,6 @@ function total_Price(id,sale_price){
 	}
 }
 
-function temp_func(df){
-	alert(df);
-}
-
 function fix_to_order(id, qty, callback) {
   if (callback == undefined) {
     callback = function() {
