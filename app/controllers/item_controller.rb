@@ -23,62 +23,50 @@ class ItemController < ApplicationController
   end
 
   def del_from_basket
-    if !user_signed_in?
-      render :nothing => true, :status => 401
+    b = Basket.where(user_id: current_user.id,
+                     item_id: params[:item_id]).take
+    if b.delete
+      render :nothing => true, :status => 200
     else
-      b = Basket.where(user_id: current_user.id,
-                       item_id: params[:item_id]).take
-      if b.delete
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
+      render :text => t(:something_wrong), :status => 500
     end
   end
 
   def del_from_order
-    if !user_signed_in?
-      render :nothing => true, :status => 401
+    b = current_user.orders.where(item_id: params[:item_id]).take
+    if b.delete
+      render :nothing => true, :status => 200
     else
-      b = current_user.orders.where(item_id: params[:item_id]).take
-      if b.delete
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
+      render :text => t(:something_wrong), :status => 500
     end
   end
 
   def add_to_order
-    if !user_signed_in?
-      render :nothing => true, :status => 401
+    p = current_user.purchase
+    if p.nil?
+      p = Purchase.create(user_id: current_user.id,
+                          recipient: current_user.name,
+                          country: current_user.country,
+                          address_1: current_user.address_1,
+                          address_2: current_user.address_2,
+                          address_3: current_user.address_3,
+                          postcode: current_user.postcode,
+                          phonenumber: current_user.phonenumber,
+                          status: "ordering")
+    end
+    o = Order.where(purchase_id: p.id, item_id: params[:item_id]).take
+    if o.nil?
+      o = Order.new
+      o.purchase_id = p.id
+      o.item_id = params[:item_id]
+      o.quantity = params[:quantity]
     else
-      p = current_user.purchase
-      if p.nil?
-        p = Purchase.create(user_id: current_user.id,
-                            recipient: current_user.name,
-                            country: current_user.country,
-                            address_1: current_user.address_1,
-                            address_2: current_user.address_2,
-                            address_3: current_user.address_3,
-                            postcode: current_user.postcode,
-                            phonenumber: current_user.phonenumber,
-                            status: "ordering")
-      end
-      o = Order.where(purchase_id: p.id, item_id: params[:item_id]).take
-      if o.nil?
-        o = Order.new
-        o.purchase_id = p.id
-        o.item_id = params[:item_id]
-        o.quantity = params[:quantity]
-      else
-        o.quantity = o.quantity + 1
-      end
-      if o.save
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
+      o.quantity = o.quantity + 1
+    end
+    if o.save
+      render :nothing => true, :status => 200
+    else
+      render :text => t(:something_wrong), :status => 500
     end
   end
 end
