@@ -29,18 +29,14 @@ class PayController < ApplicationController
   end
 
   def fix_to_order
-    if !user_signed_in?
-      render :nothing => true, :status => 401
-    else
-      o = Order.where(item_id: params[:item_id]).take
-      
-      o.quantity = params[:quantity]
+    o = Order.where(item_id: params[:item_id]).take
+    
+    o.quantity = params[:quantity]
 
-      if o.save
-        render :nothing => true, :status => 200
-      else
-        render :text => t(:something_wrong), :status => 500
-      end
+    if o.save
+      render :nothing => true, :status => 200
+    else
+      render :text => t(:something_wrong), :status => 500
     end
   end
 end
