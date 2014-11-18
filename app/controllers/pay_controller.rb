@@ -27,6 +27,22 @@ class PayController < ApplicationController
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
   end
+
+  def fix_to_order
+    if !user_signed_in?
+      render :nothing => true, :status => 401
+    else
+      o = Order.where(item_id: params[:item_id]).take
+      
+      o.quantity = params[:quantity]
+
+      if o.save
+        render :nothing => true, :status => 200
+      else
+        render :text => t(:something_wrong), :status => 500
+      end
+    end
+  end
 end
 
 #  // 올앳 결제 서버와 통신 : ApprovalReq->통신함수, $at_txt->결과값
