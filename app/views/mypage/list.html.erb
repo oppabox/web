@@ -3,7 +3,6 @@
     <%= render :partial => "left_list" %>
 
     <div class="col-sm-10">
-      <h4>구매 내역</h4>
       <hr>
       <% if current_user.purchases.empty? %>
         <%= t('mypage_no_order') %>
@@ -11,7 +10,7 @@
       <% current_user.purchases.each do |p| %>
       <% p.orders.each do |order|%>
         <% item = order.item %>
-        <!-- 주문한 상품 정보 -->
+        <%#-- 주문한 상품 정보 %>
         <div class="row padx">
           <div class="col-md-12 padx">
             <div class="tit_box mag_bot_0">
@@ -26,7 +25,7 @@
                 <div class="row">
                   <div class="col-md-12 list_img_pad">
 
-                  <img src="<%= item.logo_path %>" class="img_product_item">
+                  <img src="<%= item.logo_path %>" class="img_product_item img-responsive">
                     <p class="detail_info">
                       <span class="detail">
                         <span>주문번호 : 00000000</span>

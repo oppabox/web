@@ -9,9 +9,30 @@
         <a class="navbar-brand" href="/"><%= image_tag "oppabox_web_logo.png" %></a>
       </div>
     <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-left">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('left_menu') %><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% Box.all.each do |b| %>
+              <% if b.items.empty? %>
+                <li><a href="/box/<%=b.path%>"><%= b.display_name%></a></li>
+              <% else %>
+                <li class="dropdown-submenu"><a href="/box/<%=b.path%>"><%= b.display_name %></a>
+                <ul class="dropdown-menu">
+                  <% b.items.each do |i| %>
+                  <li><a href="/item/<%= i.path %>"><%= i.display_name%></a></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+
       <ul class="nav navbar-nav navbar-right">
         <%if user_signed_in?%>
           <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
+          <li><a href="/mypage/basket"><%= t('menu_basket') %></a></li>
           <li><%= link_to t('menu_logout'), destroy_user_session_path, method: :delete%></a></li>
         <%else%>
           <li><a href="/home/login"><%= t('menu_login') %></a></li>

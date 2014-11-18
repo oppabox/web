@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   #테스트용
   get "pay/success"
   get "pay/order"
+	post "pay/fix_to_order"
 
   post "item/add_to_basket"
   post "item/add_to_order"
@@ -38,10 +39,13 @@ Rails.application.routes.draw do
   post "home/api_renew_password"
   post "home/api_reset_password"
 
-  get "mypage/" => "mypage#info"
+  get "mypage/" => "mypage#list"
+  get "mypage/basket"
   get "mypage/info"
   post "mypage/api_info"
   get "mypage/list"
   get "mypage/carry"
+  get "mypage/reset_password"
+  post "mypage/api_reset_password"
   get "mypage/api_info"
 end

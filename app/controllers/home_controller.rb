@@ -126,22 +126,18 @@ class HomeController < ApplicationController
       ret[:message] = t('must_user_login')
     else
       user = User.where(:reset_password_token => session[:reset_password_token]).first
-      if user.nil?
-        ret[:result] = false
-        ret[:message] = t('must_user_login')
-      else
-        ret = User.check_sign_params(user.email,
-                                     params[:password],
-                                     params[:password_confirmation])
+      ret = User.check_sign_params(user.email,
+                                   params[:password],
+                                   params[:password_confirmation])
 
-        if ret[:result]
-          ret[:result] = user.update(:password => params[:password],
-                                     :password_confirmation => params[:password_confirm])
-          ret[:message] = t('renew_password_success')
-        end
+      if ret[:result]
+        ret[:result] = user.update(:password => params[:password],
+                                   :password_confirmation => params[:password_confirm])
+        ret[:message] = t('renew_password_success')
       end
     end
 
     render :json => ret
   end
+
 end

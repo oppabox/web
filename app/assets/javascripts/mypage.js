@@ -23,5 +23,25 @@ $(function(){
       }
     })
   })
+  $("#user_reset_password_button").on("click",function(){
+    var current_password = $("#user_current_password").val()
+    var password = $("#user_reset_password").val()
+    var password_confirm = $("#user_reset_password_confirm").val()
+    $.ajax({
+      url: "/mypage/api_reset_password/",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        current_password: current_password,
+        password: password,
+        password_confirm: password_confirm
+      },
+      success: function(data) {
+        alert(data["message"])
+        if(data["result"])
+          location.reload()
+      }
+    })
+  })
 }) 
 

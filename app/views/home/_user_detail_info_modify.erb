@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-4 col-xs-6">
+    <label>받는 사람</label>
+    <input name="allat_recp_nm" id="signup_name" value="<%=current_user.name || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= "이름" %>" required autofocus>
+  </div>
+</div>
+<div style="height:20px;">&nbsp;</div>
+<div class="row">
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_phonenumber') %></label>
+    <input name="phonenumber" id="signup_phonenumber" value="<%=current_user.phonenumber || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+  </div>
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_postcode') %></label>
+    <input name="postcode" id="signup_postcode" value="<%=current_user.postcode || ""%>" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+  </div>
+</div>
+<div style="height:20px;">&nbsp;</div>
+<label><%= t('signup_step3_nationality') %></label>
+<select name="country" id="signup_country" class="form-control">
+  <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+    <% selected = "" %>
+    <% if n.to_s == "KR" %>
+      <% selected = %Q[selected="selected"] %>
+    <% end %>
+    <option value="<%= n %>" <%= selected %>><%= m %></option>
+  <% end %>
+</select>
+<div style="height:20px;">&nbsp;</div>
+<label><%= t('signup_step3_address') %></label>
+<div class="row">
+  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
+    <input name="allat_recp_addr_1" id="signup_address_1" type="text" value="<%=current_user.address_1 || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+  </div>
+  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
+    <input name="allat_recp_addr_2" id="signup_address_2" type="text" value="<%=current_user.address_2 || ""%>" class="form-control">
+  </div>
+  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
+    <input name="allat_recp_addr_3" id="signup_address_3" type="text" value="<%=current_user.address_3 || ""%>" class="form-control">
+  </div>
+</div>
