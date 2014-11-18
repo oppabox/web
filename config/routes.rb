@@ -44,5 +44,7 @@ Rails.application.routes.draw do
   post "mypage/api_info"
   get "mypage/list"
   get "mypage/carry"
+  get "mypage/reset_password"
+  post "mypage/api_reset_password"
   get "mypage/api_info"
 end

@@ -20,4 +20,35 @@ class MypageController < ApplicationController
 
   def carry
   end
+
+  def reset_password
+    
+  end
+
+  def api_reset_password
+    ret = Hash.new
+    if current_user.valid_password?(params[:current_password])
+      if current_user.nil?
+        ret[:result] = false
+        ret[:message] = t('must_user_login')
+      else
+        ret = User.check_sign_params(current_user.email,
+                                     params[:password],
+                                     params[:password_confirmation])
+
+        if ret[:result]
+          user = current_user
+          user.password = params[:password]
+          user.password_confirmation = params[:password_confirm]
+          ret[:result] =  user.save
+          ret[:message] = t('renew_password_success')
+        end
+      end
+    else
+      ret[:result] = false
+      ret[:message] = t('current_password_invalid')
+    end
+    render :json => ret
+  end
+
 end

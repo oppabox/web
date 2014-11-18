@@ -45,10 +45,14 @@ ko:
   renew_password_button: "바꾸기"
   renew_password_success: "비밀번호 변경이 완료되었습니다."
   renew_password_link_invalid: "해당 사용자가 없습니다. 링크를 확인하십시오."
+  current_password: "현재 비밀번호"
+  current_password_invalid: "현재 비밀번호가 잘못 되었습니다."
+
   mypage_title: "내 정보"
   mypage_info: "회원 정보"
   mypage_list: "구매 내역"
   mypage_carry: "배송 정보"
+  mypage_reset_password: "비밀번호 변경"
   mypage_no_order: "주문하신 물건이 없습니다."
 
 
