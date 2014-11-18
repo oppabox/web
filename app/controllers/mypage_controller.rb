@@ -1,6 +1,8 @@
 class MypageController < ApplicationController
   def info
+  end
 
+  def basket
   end
 
   def api_info
@@ -22,7 +24,6 @@ class MypageController < ApplicationController
   end
 
   def reset_password
-    
   end
 
   def api_reset_password

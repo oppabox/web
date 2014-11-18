@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   post "home/api_reset_password"
 
   get "mypage/" => "mypage#info"
+  get "mypage/basket"
   get "mypage/info"
   post "mypage/api_info"
   get "mypage/list"
