@@ -20,6 +20,13 @@ $(function(){
         address_3:address_3
       },
       success: function(data) {
+      },
+      error: function(httpObj) {
+        if(httpObj.status == 401){
+          window.location.href = "/home/login";
+        }else{
+          alert(httpObj.responseText);
+        }
       }
     })
   })
@@ -40,6 +47,13 @@ $(function(){
         alert(data["message"])
         if(data["result"])
           location.reload()
+      },
+      error: function(httpObj) {
+        if(httpObj.status == 401){
+          window.location.href = "/home/login";
+        }else{
+          alert(httpObj.responseText);
+        }
       }
     })
   })

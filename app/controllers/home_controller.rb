@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+  before_action :login_check,       only: [:step3] 
+  before_action :login_check_ajax,  only: [:api_step3]
+
   def index
     @boxes = Box.all
   end
@@ -139,5 +142,4 @@ class HomeController < ApplicationController
 
     render :json => ret
   end
-
 end

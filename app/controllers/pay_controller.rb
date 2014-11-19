@@ -1,4 +1,8 @@
 class PayController < ApplicationController
+
+  before_action :login_check, only: [:order, :success, :billing]
+  before_action :login_check_ajax, only: [:reorder_quantity]
+
   def billing
     p = Purchase.find(params[:purchase_id])
     if p.billing params[:allat_amt], params[:allat_enc_data], params[:allat_test_yn]

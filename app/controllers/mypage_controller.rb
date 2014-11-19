@@ -1,4 +1,8 @@
 class MypageController < ApplicationController
+
+  before_action :login_check, only: [:info, :basket, :list, :carry, :reset_password]
+  before_action :login_check_ajax, only: [:api_info, :api_reset_password]
+
   def info
   end
 

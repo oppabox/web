@@ -1,4 +1,6 @@
 class ItemController < ApplicationController
+  before_action :login_check_ajax,  only: [:add_to_basket, :del_from_basket, :add_to_order, :del_from_order]
+
   def view
     @item = Item.where(:path => params[:name]).first
   end

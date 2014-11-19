@@ -13,5 +13,15 @@ class ApplicationController < ActionController::Base
     @current_translations = translations[params[:lo]] || translations[I18n.default_locale]
   end
 
-
+  def login_check
+    if !user_signed_in? 
+      redirect_to "/home/login"
+    end
+  end
+  
+  def login_check_ajax
+    if !user_signed_in? 
+      render :nothing => true, :status => 401
+    end
+  end
 end
