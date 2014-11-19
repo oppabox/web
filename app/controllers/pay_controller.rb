@@ -28,10 +28,14 @@ class PayController < ApplicationController
     @product_nms = items.map{|p| p.display_name}.join("||")
   end
 
-  def fix_to_order
-    o = Order.where(item_id: params[:item_id]).take
-    
-    o.quantity = params[:quantity]
+  def reorder_quantity
+    o = Order.where(id: params[:order_id]).take
+    if params[:method].downcase == "plus"
+      o.quantity += 1
+    else
+      o.quantity -= 1
+    end
+    o.quantity = 1 if o.quantity < 1
 
     if o.save
       render :nothing => true, :status => 200

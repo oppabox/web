@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   #테스트용
   get "pay/success"
   get "pay/order"
-	post "pay/fix_to_order"
+	post "pay/reorder_quantity"
 
   post "item/add_to_basket"
   post "item/add_to_order"

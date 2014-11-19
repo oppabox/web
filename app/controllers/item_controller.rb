@@ -4,21 +4,17 @@ class ItemController < ApplicationController
   end
 
   def add_to_basket
-    if !user_signed_in?
-      render :nothing => true, :status => 401
-    else
-      i = Basket.where(item_id: params[:item_id]).take
-      if i.nil?
-        i = Basket.new(user_id: current_user.id,
-                       item_id: params[:item_id])
-        if i.save
-          render :nothing => true, :status => 200
-        else
-          render :text => t(:something_wrong), :status => 500
-        end
+    i = Basket.where(item_id: params[:item_id]).take
+    if i.nil?
+      i = Basket.new(user_id: current_user.id,
+                     item_id: params[:item_id])
+      if i.save
+        render :nothing => true, :status => 200
       else
-        render :text => "이미 장바구니에 담겨있습니다", :status => 200
+        render :text => t(:something_wrong), :status => 500
       end
+    else
+      render :text => "이미 장바구니에 담겨있습니다", :status => 200
     end
   end
 
