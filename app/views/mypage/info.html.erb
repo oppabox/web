@@ -3,7 +3,9 @@
     <%= render :partial => "left_list" %>
     <div class="col-sm-10">
       <hr>
-      <%= render partial: "/home/user_detail_info_modify" %>
+      <%=form_tag("/mypage/edit_address") %>
+      <%=render partial: "/home/user_detail_info_modify" %>
+      <%=submit_tag "수정하기", class: "btn btn-lg btn-info btn-block top-margin user-info-submit"%>
     </div>
   </div>
 </div>

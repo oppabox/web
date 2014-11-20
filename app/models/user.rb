@@ -25,14 +25,7 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(self).deliver
   end
 
-  def self.check_sign_params email, password = nil, password_confirm = nil
-    if password.nil?
-      password = "password123" #Temporary password
-    end
-    if password_confirm.nil?
-      password_confirm = password
-    end
-
+  def self.check_sign_params email, password = "", password_confirm = ""
     ret = Hash.new
     ret[:result] = true
     if email.match(Devise::email_regexp).nil?
@@ -45,7 +38,6 @@ class User < ActiveRecord::Base
       ret[:result] = false
       ret[:message] = I18n.t('usercheck_password_confirm_not_equal')
     end
-
     ret
   end
 end

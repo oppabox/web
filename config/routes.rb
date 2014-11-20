@@ -48,4 +48,5 @@ Rails.application.routes.draw do
   get "mypage/reset_password"
   post "mypage/api_reset_password"
   get "mypage/api_info"
+  post "mypage/edit_address"
 end
