@@ -11,7 +11,7 @@ class ItemController < ApplicationController
       i = Basket.new(user_id: current_user.id,
                      item_id: params[:item_id])
       if i.save
-        render :nothing => true, :status => 200
+        render :text => "장바구니에 담겼습니다. 확인하시겠습니까?", :status => 200
       else
         render :text => t(:something_wrong), :status => 500
       end
