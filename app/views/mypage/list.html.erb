@@ -19,26 +19,26 @@
         <tr class="active" >
           <th><%=t('order_number')%></th>
           <th><%=t('item_display_name')%></th>
-          <th><%=t('carry_number')%></th>
           <th><%=t('carry_price')%></th>
           <th><%=t('carry_quantity')%></th>
           <th><%=t('carry_total_price')%></th>
           <th><%=t('order_state')%></th>
-          <th><%=t('carry_check')%></th>
         </tr>
-        <% purchase.orders.each do |order|%>
+        <% purchase.orders.each_with_index do |order, index|%>
         <tr>
         <% if current_user.purchases.empty? %>
           <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
         <% end %>
-          <td></td>
+          <% if index == 0 %>
+            <td rowspan="<%=purchase.orders.count%>"><%=order.purchase.id%></td>
+          <% end %>
           <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a></td>
-          <td></td>
-          <td></td>
-          <td><%= order.quantity %></td>
-          <td></td>
-          <td><%= order.purchase.status %></td>
-          <td></td>
+          <td><%= number_with_delimiter(order.item.sale_price) %></td>
+          <td><%= number_with_delimiter(order.quantity) %></td>
+          <td><%= number_with_delimiter(order.item.sale_price * order.quantity) %></td>
+          <% if index == 0 %>
+            <td rowspan="<%=purchase.orders.count%>"><%= order.purchase.status %></td>
+          <% end %>
         </tr>
         <% end %>
       </tbody>
