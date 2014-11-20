@@ -61,7 +61,6 @@ ko:
   mypage_carry: "배송 정보"
   mypage_reset_password: "비밀번호 변경"
   mypage_no_order: "주문하신 물건이 없습니다."
-  mypage_basket_list: "장바구니리스트"
   mypage_list_product_name: "상품명"
   
 
@@ -81,6 +80,19 @@ ko:
   order_quantity: "수량"
   order_unit: "개"
 
+  product_info_name: "제품명"
+  product_info_original_price: "정상가"
+  product_info_sale_price: "판매가"
+  product_info_reserve: "적립금"
+  product_info_delivery_charge: "배송비"
+  product_info_delivery_charge_footer: "하단 배송안내 참고"
+  product_info_quantity: "남은수량"
+  product_info_purchasing_quantity: "구매수량"
+  product_info_sum: "주문금액"
+  product_info_sum_vat: "VAT 포함"
+  product_info_basket: "장바구니 담기"
+  product_info_billing: "구매하기"
+
   foot_navi_product: "상품정보"
   foot_navi_delivery: "배송안내"
   foot_navi_billing: "결제안내"
@@ -97,19 +109,6 @@ ko:
   delivery_info_seven: "주소불명이나, 연락처 오류, 연락불가 등의 사유로 반송되어진 제품의 배송비는 구매자 부담이오니 반드시 연락 가능한 연락처와 주소를 기입해 주시기 바랍니다. "
   delivery_info_eight: "제주 및 도서산간 지역은 추가로 배송비 발생시 고객부담."
   delivery_info_eight_one: "(해외 도서산간 지역은 추가 배송비는 고객부담.)"
-
-  product_info_name: "제품명"
-  product_info_original_price: "정상가"
-  product_info_sale_price: "판매가"
-  product_info_reserve: "적립금"
-  product_info_delivery_charge: "배송비"
-  product_info_delivery_charge_footer: "하단 배송안내 참고"
-  product_info_quantity: "남은수량"
-  product_info_purchasing_quantity: "구매수량"
-  product_info_sum: "주문금액"
-  product_info_sum_vat: "VAT 포함"
-  product_info_basket: "장바구니 담기"
-  product_info_billing: "구매하기"
 
   refund_info_one: "교환 및 반품안내 : 02-794-5558 (Email : privacy@oppabox.com)"
   refund_info_two: "교환/반품 신청 기간"
@@ -134,6 +133,27 @@ ko:
   refund_info_five_nine: "주문제작 상품의 경우 제작발주 후에는 구매취소 및 교환, 환불이 불가합니다."
 
 
+  basket_list_product_name: "상품명"
+  basket_list_price: "판매가"
+  basket_list_empty: "장바구니가 비었습니다."
+  basket_list_order: "주문"
+  basket_list_del: "삭제"
 
+  order_confirm_product_name: "상품명"
+  order_confirm_price: "판매가"
+  order_confirm_quantity: "수량"
+  order_confirm_sum: "총 금액"
+  order_confirm_order_empty: "주문 내역이 없습니다."
+  order_confirm_cancel: "취소"
 
+  total_payment_product_price: "총 상품 비용"
+  total_payment_delivery_price: "총 배송 비용"
+  total_payment_billing_price: "총 결제 금액"
+  total_payment_success: "결제하기"
 
+  order_confirm: "주문확인"
+  address_confirm: "배송 정보 확인"
+  total_payment: "총 결제 비용 확인"
+  basket_list: "장바구니"
+
+  basket_add: "장바구니에 추가되었습니다."

@@ -1,21 +1,21 @@
 <div class="well">
   <div class="row" style="margin-bottom:10px;font-weight:bold;font-size:16px;">
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center">상품명</p></div>
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center">판매가</p></div>
+    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('basket_list_product_name') %></p></div>
+    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('basket_list_price') %></p></div>
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
   </div>
   <% if @baskets.empty? %>
     <div class="row">
-      <div class="col-md-12 col-xs-12 "><p class="text-center">장바구니가 비었습니다</p></div>
+      <div class="col-md-12 col-xs-12 "><p class="text-center"><%= t('basket_list_empty') %></p></div>
     </div>
   <% else %>
     <% @baskets.each do |b|%>
     <div class="row">
       <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.display_name%></p></div>
       <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.sale_price%></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="move_to_order" onclick="move_to_order(<%=b.item.id%>);">주문</a></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="del_from_basket" onclick="del_from_basket(<%=b.item.id%>);">삭제</a></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="move_to_order" onclick="move_to_order(<%=b.item.id%>);"><%= t('basket_list_order') %></a></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="del_from_basket" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></div>
     </div>
     <% end %>
   <% end %>

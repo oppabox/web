@@ -1,14 +1,14 @@
 <div class="well">
   <div class="row" style="margin-bottom:10px;font-weight:bold;font-size:16px;">
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center">상품명</p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center">판매가</p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center">수량</p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center">총 금액</p></div>
+    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('order_confirm_product_name') %></p></div>
+    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_price') %></p></div>
+    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_quantity') %></p></div>
+    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_sum') %></p></div>
     <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
   </div>
   <% if @orders.empty? %>
     <div class="row">
-      <div class="col-md-12 col-xs-12"><p class="text-center">주문 내역이 없습니다</p></div>
+      <div class="col-md-12 col-xs-12"><p class="text-center"><%= t('order_confirm_order_empty') %></p></div>
     </div>
   <% else %>
     <% @orders.each do |o|%>
@@ -23,7 +23,7 @@
       
       </p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center" ><%= number_with_delimiter(item.sale_price * o.quantity) %></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" onclick="move_to_basket(<%=item.id%>);">취소</a></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></div>
     </div>
     <% end %>
   <% end %>

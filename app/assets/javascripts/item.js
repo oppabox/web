@@ -6,7 +6,7 @@ $(function(){
   $("#add_to_cart").click(function() {
     var id = $("#item_detail_quantity").data("id");
     add_to_basket(id, function() {
-      alert("장바구니에 추가되었습니다");
+      alert("<%= t('basket_add') %>");
     });
   });
   $("#purchase").click(function() {
