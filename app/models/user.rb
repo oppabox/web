@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
       ret[:result] = false
       ret[:message] = I18n.t('usercheck_password_confirm_not_equal')
     end
-
     ret
   end
 end

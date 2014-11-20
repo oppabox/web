@@ -45,6 +45,7 @@
     var addr_2 = $("#signup_address_2").val();
     var addr_3 = $("#signup_address_3").val();
     $("#signup_address").val(addr_1+" "+addr_2+" "+addr_3);
+    $("input[name$='allat_buyer_nm']").val($("input[name$='allat_recp_nm']").val());
     ftn_approval(dfm);
   }
   function ftn_approval(dfm) {

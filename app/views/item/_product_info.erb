@@ -66,7 +66,7 @@
       <p>구매수량</p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="1000"  value="1" data-id="<%=@item.id%>">
+      <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="1000" value="1" data-id="<%=@item.id%>">
     </div>
   </div>
 
@@ -79,7 +79,7 @@
           <label class="price_1">주문금액</label>
         </div>
         <div class="col-xs-8 col-md-9 price_detail">
-          <p class="price_2" ><%= number_with_delimiter(@item.sale_price) -%></p>
+          <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"><%= number_with_delimiter(@item.sale_price) -%></p>
           <p class="price_3" >VAT 포함</p>
         </div>
       </div>

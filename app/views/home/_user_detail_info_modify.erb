@@ -20,10 +20,11 @@
 <select name="country" id="signup_country" class="form-control">
   <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
     <% selected = "" %>
-    <% if n.to_s == "KR" %>
+    <% country = current_user.country || "KR"%>
+    <% if n.to_s == country %>
       <% selected = %Q[selected="selected"] %>
     <% end %>
-    <option value="<%= n %>" <%= selected %>><%= m %></option>
+    <option value="<%= n %>" <%= selected.html_safe %>><%= m %></option>
   <% end %>
 </select>
 <div style="height:20px;">&nbsp;</div>

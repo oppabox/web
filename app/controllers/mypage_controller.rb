@@ -7,6 +7,7 @@ class MypageController < ApplicationController
   end
 
   def basket
+    @baskets = current_user.baskets
   end
 
   def api_info
@@ -39,7 +40,7 @@ class MypageController < ApplicationController
       else
         ret = User.check_sign_params(current_user.email,
                                      params[:password],
-                                     params[:password_confirmation])
+                                     params[:password_confirm])
 
         if ret[:result]
           user = current_user
@@ -59,4 +60,15 @@ class MypageController < ApplicationController
     render :json => ret
   end
 
+  def edit_address
+    current_user.name = params[:allat_recp_nm]
+    current_user.country = params[:country]
+    current_user.phonenumber = params[:phonenumber]
+    current_user.postcode = params[:postcode]
+    current_user.address_1 = params[:allat_recp_addr_1]
+    current_user.address_2 = params[:allat_recp_addr_2]
+    current_user.address_3 = params[:allat_recp_addr_3]
+    current_user.save
+    redirect_to :back
+  end
 end
