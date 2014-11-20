@@ -32,7 +32,7 @@
           <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
         <% end %>
           <td></td>
-          <td><%= order.item.display_name %></td>
+          <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a></td>
           <td></td>
           <td></td>
           <td><%= order.quantity %></td>
