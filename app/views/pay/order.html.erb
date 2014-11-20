@@ -22,14 +22,14 @@
         <input type="hidden" name="allat_real_yn" value="Y">
         <input type="hidden" name="allat_product_img" value="http://">
         <input type="hidden" name="allat_amt" value="<%=@all_price+5000%>">
-        <h4>주문확인</h4>
+        <h4><%= t('order_confirm') %></h4>
         <%= render :partial => 'order_confirm' %>
-        <h4>배송 정보 확인</h4>
+        <h4><%= t('address_confirm') %></h4>
         <%= render :partial => 'address_confirm' %>
-        <h4>총 결제 비용 확인</h4>
+        <h4><%= t('total_payment') %></h4>
         <%= render :partial => 'total_payment' %>
         <div style="height:40px;"></div>
-        <h4>장바구니</h4>
+        <h4><%= t('basket_list') %></h4>
         <%= render :partial => 'basket_list' %>
       <% end %>
       </div>

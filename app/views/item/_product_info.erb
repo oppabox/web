@@ -9,7 +9,7 @@
 <div class="col-md-7 product_info">
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>제품명</p>
+      <p><%= t('product_info_name') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p><%= @item.display_name %></p>
@@ -19,7 +19,7 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>정상가</p>
+      <p><%= t('product_info_original_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p><%= number_with_delimiter(@item.original_price) %>원</p>
@@ -28,7 +28,7 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>판매가</p>
+      <p><%= t('product_info_sale_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price ) %>원</p>
@@ -37,7 +37,7 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>적립금</p>
+      <p><%= t('product_info_reserve') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price/100 ) %>원</p>
@@ -47,23 +47,23 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>배송비</p>
+      <p><%= t('product_info_delivery_charge') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p>하단 배송안내 참고</p>
+      <p><%= t('product_info_delivery_charge_footer') %></p>
     </div>
   </div>
   <hr>
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>남은수량</p>
+      <p><%= t('product_info_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p><%= number_with_delimiter(20) %>개</p>
     </div>
     <div class="col-xs-4 col-md-3">
-      <p>구매수량</p>
+      <p><%= t('product_info_purchasing_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="1000" value="1" data-id="<%=@item.id%>">
@@ -76,11 +76,11 @@
     <div class="col-xs-12 col-md-12  price_wrap">
       <div class="row">
         <div class="col-xs-4 col-md-3">
-          <label class="price_1">주문금액</label>
+          <label class="price_1"><%= t('product_info_sum') %></label>
         </div>
         <div class="col-xs-8 col-md-9 price_detail">
           <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"><%= number_with_delimiter(@item.sale_price) -%></p>
-          <p class="price_3" >VAT 포함</p>
+          <p class="price_3" ><%= t('product_info_sum_vat') %></p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
   <div style="height:20px;"></div>
 
   <div class="row mar-left mar-right text-right">
-      <button type="submit" id="add_to_cart" class="btn btn-default btn btn-width">장바구니 담기</button>&nbsp;&nbsp;
-      <button type="submit" id="purchase" class="btn btn-danger btn btn-width">구매하기</button>
+      <button type="submit" id="add_to_cart" class="btn btn-default btn btn-width"><%= t('product_info_basket') %></button>&nbsp;&nbsp;
+      <button type="submit" id="purchase" class="btn btn-danger btn btn-width"><%= t('product_info_billing') %></button>
   </div>
 </div>
