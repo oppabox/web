@@ -29,6 +29,7 @@
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_address') %></label>
 <div class="row">
+  <input name="allat_recp_addr" id="signup_address" type="hidden" value="">
   <div class="col-md-4 col-xs-12" style="margin-top:10px;">
     <input name="allat_recp_addr_1" id="signup_address_1" type="text" value="<%=current_user.address_1 || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
   </div>
