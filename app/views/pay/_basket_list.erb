@@ -12,7 +12,7 @@
   <% else %>
     <% @baskets.each do |b|%>
     <div class="row">
-      <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.display_name%></p></div>
+      <div class="col-md-4 col-xs-4 "><p class="text-center"><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></p></div>
       <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.sale_price%></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="move_to_order" onclick="move_to_order(<%=b.item.id%>);"><%= t('basket_list_order') %></a></div>
       <div class="col-md-2 col-xs-2"><p class="text-center"><a href="#" class="del_from_basket" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></div>

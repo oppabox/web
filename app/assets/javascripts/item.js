@@ -5,8 +5,11 @@ $(function(){
   });
   $("#add_to_cart").click(function() {
     var id = $("#item_detail_quantity").data("id");
-    add_to_basket(id, function() {
-      alert("<%= t('basket_add') %>");
+    add_to_basket(id, function(data) {
+      var r = confirm(data);
+      if (r == true) {
+        window.location.href = "/mypage/basket";
+      }
     });
   });
   $("#purchase").click(function() {
