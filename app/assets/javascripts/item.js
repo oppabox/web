@@ -82,7 +82,7 @@ function add_to_order(id, qty, callback) {
 function del_from_basket(id, callback) {
   if (callback == undefined) {
     callback = function() {
-      window.location.href = "/pay/order";
+      location.reload();
     }
   }
   $.ajax({
