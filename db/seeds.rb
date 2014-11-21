@@ -132,7 +132,7 @@ b = Box.where(:path => "jewelry_box").first
 i = Item.new
   i.box = b
   i.path = "ring"
-  i.logo_path = "/items/jewelry_box/knot/knot.jpg"
+  i.logo_path = "/items/jewelry_box/ring/thumb.jpg"
   i.original_price = "69000"
   i.sale_price = "49000"
   i.show_original_price = true
@@ -144,19 +144,19 @@ i.save
 n = ItemName.new
 n.item = i
 n.locale = "ko"
-n.name = "Jewel Ring Box"
+n.name = "Cubic brass ring"
 n.save
 
 #SET 3 : IMAGES
 1.upto(3) do |x|
   m = ItemImage.new
   m.item = i
-  m.path = "/items/jewelry_box/knot/#{x}.jpg"
+  m.path = "/items/jewelry_box/ring/#{x}.jpg"
   m.save
 end
 
 #SET 3 : OPTIONS
-#NONE
+#사이즈 옵션표 확인 후 추가
 
 #BEAUTY BOX
 #SET 1 : BASIC INFO
