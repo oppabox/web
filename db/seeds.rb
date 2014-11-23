@@ -278,7 +278,7 @@ b = Box.where(:path => "design_box").first
 i = Item.new
 i.box = b
 i.path = "in_my_bag_1"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/low1/thumb.jpg"
 i.original_price = "56300"
 i.sale_price = "50500"
 i.show_original_price = true
@@ -308,7 +308,7 @@ end
 i = Item.new
 i.box = b
 i.path = "in_my_bag_2"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/low2/thumb.jpg"
 i.original_price = "51300"
 i.sale_price = "48500"
 i.show_original_price = true
@@ -338,7 +338,7 @@ end
 i = Item.new
 i.box = b
 i.path = "in_my_bag_3"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/middle1/thumb.jpg"
 i.original_price = "70800"
 i.sale_price = "67500"
 i.quantity = -1
@@ -367,7 +367,7 @@ end
 i = Item.new
 i.box = b
 i.path = "in_my_bag_4"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/middle2/thumb.jpg"
 i.original_price = "70800"
 i.sale_price = "63500"
 i.quantity = -1
@@ -396,7 +396,7 @@ end
 i = Item.new
 i.box = b
 i.path = "in_my_bag_5"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/high1/thumb.jpg"
 i.original_price = "100800"
 i.sale_price = "91000"
 i.quantity = -1
@@ -425,7 +425,7 @@ end
 i = Item.new
 i.box = b
 i.path = "in_my_bag_6"
-i.logo_path = "/items/design_box/logo.jpg"
+i.logo_path = "/items/design_box/high2/thumb.jpg"
 i.original_price = "111000"
 i.sale_price = "94500"
 i.quantity = -1
