@@ -11,12 +11,12 @@ class ItemController < ApplicationController
       i = Basket.new(user_id: current_user.id,
                      item_id: params[:item_id])
       if i.save
-        render :nothing => true, :status => 200
+        render :text => t(:basket_add_success), :status => 200
       else
         render :text => t(:something_wrong), :status => 500
       end
     else
-      render :text => "이미 장바구니에 담겨있습니다", :status => 200
+      render :text => t(:basket_already_add), :status => 200
     end
   end
 

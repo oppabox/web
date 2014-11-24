@@ -7,6 +7,7 @@ class MypageController < ApplicationController
   end
 
   def basket
+    @baskets = current_user.baskets
   end
 
   def api_info
@@ -70,5 +71,4 @@ class MypageController < ApplicationController
     current_user.save
     redirect_to :back
   end
-
 end

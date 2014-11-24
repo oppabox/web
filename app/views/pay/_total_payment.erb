@@ -1,10 +1,10 @@
 <div style="height:20px;"></div>
 <div class="row">
-  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px">총 상품 비용</p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px"><%= t('total_payment_product_price') %></p></div>
   <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(@all_price) -%></p> </div>
 </div>
 <div class="row">
-  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px">총 배송 비용</p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px"><%= t('total_payment_delivery_price') %></p></div>
   <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(5000) -%></p></div>
 </div>
 <div class="row">
@@ -12,7 +12,7 @@
 </div>
 <div class="row">
   <div class="col-xs-6 col-md-6">
-    <p class="text-right" style="font-weight:bold;font-size:17px;margin-right:20px;">총 결제 금액</p> 
+    <p class="text-right" style="font-weight:bold;font-size:17px;margin-right:20px;"><%= t('total_payment_billing_price') %></p> 
   </div>
   <div class="col-xs-6 col-md-6"> 
     <p class="text-left" style="font-weight:bold;font-size:17px;margin-left:20px;"><%= number_with_delimiter(@all_price + 5000) -%></p> 
@@ -21,6 +21,6 @@
 <hr>
 <div class="row">
   <div class="col-xs-6 col-md-6 col-xs-offset-3 col-md-offset-3"> 
-    <button type="submit" class="btn btn-primary" style="width:100%" onClick="javascript:billing(document.fm);">결제하기</button>
+    <button type="submit" class="btn btn-primary" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_success') %></button>
   </div>
 </div>

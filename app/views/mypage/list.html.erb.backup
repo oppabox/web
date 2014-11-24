@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <%= render :partial => "left_list" %>
+
+    <div class="col-sm-10">
+      <hr>
+      <% if current_user.purchases.empty? %>
+        <%= t('mypage_no_order') %>
+      <% end %>
+      <% current_user.purchases.each do |p| %>
+      <% p.orders.each do |order|%>
+        <% item = order.item %>
+        <%#-- 주문한 상품 정보 %>
+        <div class="row padx">
+          <div class="col-md-12 padx">
+            <div class="tit_box mag_bot_0">
+              <span class="left bold"><%= order.created_at.strftime("%Y.%m.%d %H:%M:%S") %></span>
+            </div>
+          </div>
+
+          <div class="col-md-12 padx mag_top_0">
+            <div class="info_box">
+              <div class="col-md-12 padx mag_top_0">
+                <label class="info_label_pad">상품명 : <%= item.display_name %></label>
+                <div class="row">
+                  <div class="col-md-12 list_img_pad">
+
+                  <img src="<%= item.logo_path %>" class="img_product_item img-responsive">
+                    <p class="detail_info">
+                      <span class="detail">
+                        <span>주문번호 : 00000000</span>
+                        <br>
+                        <span>배송번호 : 00000000</span>
+                        <br>
+                        <span>선택사항 : US Women's Size 6.5</span>
+                        <br>
+                        <span><%=t('order_quantity')%> : <%= order.quantity %> <%=t('order_unit')%></span>
+                      </span>
+                    </p>
+                  </div>
+                  <span class="total_price">총 주문 가격 : 0000000</span>
+                </div>
+                <!-- 배송추적 -->
+                <hr class="hr-height">
+                <div class="col-md-12">
+                  <strong class="left nav_mid"> 배송 준비중 </strong>
+                  <button type="button" class="btn btn-primary btn-mag right" style="margin-bottom:10px;">배송추적</button>
+                </div> <!-- /배송추적 -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /주문한 상품 정보 -->
+      <%end%>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+
+              <!-- 배송중 옆에 붙이기 <button tyle="button" class="btn-primary">문의하기</button> -->

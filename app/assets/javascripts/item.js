@@ -1,8 +1,15 @@
 $(function(){
+  $("#item_detail_quantity").on("change", function(){
+    var total_price = $(this).val() * $("#total_price").data("original-price");
+    $("#total_price").html(formatNumber(total_price));
+  });
   $("#add_to_cart").click(function() {
     var id = $("#item_detail_quantity").data("id");
-    add_to_basket(id, function() {
-      alert("장바구니에 추가되었습니다");
+    add_to_basket(id, function(data) {
+      var r = confirm(data);
+      if (r == true) {
+        window.location.href = "/mypage/basket";
+      }
     });
   });
   $("#purchase").click(function() {
@@ -13,6 +20,9 @@ $(function(){
     });
   });
 });
+function formatNumber (num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
 function move_to_order(id) {
   add_to_order(id, 1, function() {
     del_from_basket(id, function() {
@@ -75,7 +85,7 @@ function add_to_order(id, qty, callback) {
 function del_from_basket(id, callback) {
   if (callback == undefined) {
     callback = function() {
-      window.location.href = "/pay/order";
+      location.reload();
     }
   }
   $.ajax({
