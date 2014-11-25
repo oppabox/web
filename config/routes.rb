@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
 	post "pay/billing"
+	post "pay/dollar_billing"
+  post "pay/callback"
   post "pay/success"
 
   #테스트용

@@ -22,6 +22,12 @@
         <input type="hidden" name="allat_real_yn" value="Y">
         <input type="hidden" name="allat_product_img" value="http://">
         <input type="hidden" name="allat_amt" value="<%=@all_price+5000%>">
+        <input type="hidden" name="allat_amt_dollar" value="<%=(@all_price+5000)/1000.0%>">
+        <input type="hidden" name="allat_callback_url" value="http://oppabox.com/pay/callback">
+        <input type="hidden" name="allat_currency" value="840">
+        <input type="hidden" name="allat_xid" value="">
+        <input type="hidden" name="allat_eci" value="">
+        <input type="hidden" name="allat_cavv" value="">
         <h4><%= t('order_confirm') %></h4>
         <%= render :partial => 'order_confirm' %>
         <h4><%= t('address_confirm') %></h4>
@@ -60,4 +66,30 @@
       alert(ret.substring(8,ret.length));     <%# Message 가져오기 %>
     }
   }
+</script>
+<script type="text/javascript">
+<!--
+// Call 'AllatPay MPI Cert', 올앳페이 MPI 인증페이지 호출
+function ftn_mpi_cert_req(dfm) {
+    window.open('','ALLAT_MPI_POPUP','width=450,height=450,scrollbars=no');
+    dfm.target = "ALLAT_MPI_POPUP";
+    dfm.action = "https://tx.allatpay.com/servlet/AllatPay/ansim/mdsmpi_en/mdsmpi_en_main.jsp";
+    dfm.method = "post";
+    dfm.submit();
+}
+// Receive 'AllatPay MPI Result', 올앳페이 MPI 인증결과 수신 및 AfterPage 호출(Callback Page에서 호출)
+function ftn_approval_submit(result_cd,result_msg,xid,eci,cavv) {
+    if( result_cd != '0000' ) {
+        alert(result_cd + " : " + result_msg);
+    }else{
+        fm.allat_xid.value = xid;
+        fm.allat_eci.value = eci;
+        fm.allat_cavv.value = cavv;
+        fm.action = "/pay/dollar_billing";
+        fm.target = "_self";
+        fm.method = "post";
+        fm.submit();
+    }
+}
+//-->
 </script>

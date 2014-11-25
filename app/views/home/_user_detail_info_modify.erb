@@ -17,7 +17,7 @@
 </div>
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_nationality') %></label>
-<select name="country" id="signup_country" class="form-control">
+<select name="country" id="signup_country" class="form-control" onChange="changePayment();">
   <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
     <% selected = "" %>
     <% country = current_user.country || "KR"%>

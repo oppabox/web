@@ -3,6 +3,23 @@ class PayController < ApplicationController
   before_action :login_check, only: [:order, :success, :billing]
   before_action :login_check_ajax, only: [:reorder_quantity]
 
+  def callback
+    at_result_cd = params[:allat_result_cd]
+    at_result_msg = params[:allat_result_msg]
+    at_xid = params[:allat_xid]
+    at_eci = params[:allat_eci]
+    at_cavv = params[:allat_cavv]
+    ret = "<script type='text/javascript'>"
+    ret += "window.opener.ftn_approval_submit('#{at_result_cd}','#{at_result_msg}','#{$at_xid}','#{at_eci}','#{at_cavv}');"
+    ret += "window.close();"
+    ret += "</script>"
+    render text: ret
+  end
+
+  def dollar_billing
+    render text: "OK"
+  end
+
   def billing
     p = Purchase.find(params[:purchase_id])
     p.recipient = params[:allat_recp_nm]

@@ -21,6 +21,24 @@
 <hr>
 <div class="row">
   <div class="col-xs-6 col-md-6 col-xs-offset-3 col-md-offset-3"> 
-    <button type="submit" class="btn btn-primary" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_success') %></button>
+    <div id="krw_payment">
+      <button type="submit" class="btn btn-primary" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_success') %></button>
+    </div>
+    <div id="usd_payment">
+      <input type="text" name="allat_card_no" value="" size="19" maxlength="16" placeholder="Card No.">
+      <input type="button" value="달러결제" name="app_btn" onclick="javascript:ftn_mpi_cert_req(document.fm);">
+    </div>
   </div>
 </div>
+<script>
+function changePayment() {
+  if ($("#signup_country").val() == "KR") {
+    $("#krw_payment").show();
+    $("#usd_payment").hide();
+  } else {
+    $("#krw_payment").hide();
+    $("#usd_payment").show();
+  }
+}
+changePayment();
+</script>
