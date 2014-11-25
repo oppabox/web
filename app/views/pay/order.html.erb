@@ -21,8 +21,8 @@
         <input type="hidden" name="allat_test_yn" value="Y">
         <input type="hidden" name="allat_real_yn" value="Y">
         <input type="hidden" name="allat_product_img" value="http://">
-        <input type="hidden" name="allat_amt" value="<%=@all_price+5000%>">
-        <input type="hidden" name="allat_amt_dollar" value="<%=(@all_price+5000)/1000.0%>">
+        <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price+5000%>">
+        <input type="hidden" name="allat_amt_dollar" id="allat_amt_dollar" value="<%=((@all_price+5000)/10.0).to_i%>">
         <input type="hidden" name="allat_callback_url" value="http://oppabox.com/pay/callback">
         <input type="hidden" name="allat_currency" value="840">
         <input type="hidden" name="allat_xid" value="">
@@ -71,6 +71,7 @@
 <!--
 // Call 'AllatPay MPI Cert', 올앳페이 MPI 인증페이지 호출
 function ftn_mpi_cert_req(dfm) {
+    $("#allat_amt").val($("#allat_amt_dollar").val());
     window.open('','ALLAT_MPI_POPUP','width=450,height=450,scrollbars=no');
     dfm.target = "ALLAT_MPI_POPUP";
     dfm.action = "https://tx.allatpay.com/servlet/AllatPay/ansim/mdsmpi_en/mdsmpi_en_main.jsp";

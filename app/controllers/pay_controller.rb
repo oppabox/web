@@ -35,7 +35,7 @@ class PayController < ApplicationController
     current_user.address_3 = params[:allat_recp_addr_3]
     current_user.save
 
-    if p.dollar_billing params
+    if p.usd_billing params
       redirect_to "/mypage/list"
     else
       redirect_to "/pay/order"
@@ -61,7 +61,7 @@ class PayController < ApplicationController
     current_user.address_3 = params[:allat_recp_addr_3]
     current_user.save
 
-    if p.billing params[:allat_amt], params[:allat_enc_data], params[:allat_test_yn]
+    if p.krw_billing params
       redirect_to "/mypage/list"
     else
       redirect_to "/pay/order"

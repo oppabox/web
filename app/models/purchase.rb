@@ -13,16 +13,69 @@ class Purchase < ActiveRecord::Base
     amt += 5000
   end
 
-  def dollar_billing params
+  def usd_billing params
+    all_usd_price = all_krw_price / 1000.0
+    allat_enc_data
 
+    at_order_no       = ""
+    at_card_no        = params[:allat_card_no]
+    at_cardvalid_ym   = ""
+    at_shop_member_id = ""
+    at_product_cd     = ""
+    at_product_nm     = ""
+    at_buyer_nm       = ""
+    at_recp_nm        = ""
+    at_recp_addr      = ""
+    at_email_addr     = ""
+    at_xid            = params[:allat_xid]
+    at_eci            = params[:allat_eci]
+    at_cavv           = params[:allat_cavv]
+    at_test_yn        = params[:allat_test_yn]
+    at_user_ip        = current_sign_in_ip
+
+    at_enc=setValue(at_enc,"allat_shop_id",at_shop_id)
+    at_enc=setValue(at_enc,"allat_order_no",at_order_no)
+    at_enc=setValue(at_enc,"allat_card_no",at_card_no)
+    at_enc=setValue(at_enc,"allat_cardvalid_ym",at_cardvalid_ym)
+    at_enc=setValue(at_enc,"allat_amt",at_amt)
+    at_enc=setValue(at_enc,"allat_shop_member_id",at_shop_member_id)
+    at_enc=setValue(at_enc,"allat_product_cd",at_product_cd)
+    at_enc=setValue(at_enc,"allat_product_nm",at_product_nm)
+    at_enc=setValue(at_enc,"allat_cardcert_yn","N")
+    at_enc=setValue(at_enc,"allat_buyer_nm",at_buyer_nm)
+    at_enc=setValue(at_enc,"allat_recp_name",at_recp_nm)
+    at_enc=setValue(at_enc,"allat_recp_addr",at_recp_addr)
+    at_enc=setValue(at_enc,"allat_email_addr",at_email_addr)
+    at_enc=setValue(at_enc,"xid",at_xid)
+    at_enc=setValue(at_enc,"eci",at_eci)
+    at_enc=setValue(at_enc,"cavv",at_cavv)
+    at_enc=setValue(at_enc,"allat_pay_type","3D")
+    at_enc=setValue(at_enc,"allat_test_yn",at_test_yn)
+    at_enc=setValue(at_enc,"allat_user_ip",at_user_ip)
+    at_enc=setValue(at_enc,"allat_opt_pin","NOUSE")
+    at_enc=setValue(at_enc,"allat_opt_mod","APP")
+
+    process all_usd_price, at_enc, params[:allat_test_yn]
   end
 
-  def billing allat_amt, allat_enc_data, allat_test_yn
+  def krw_billing params
+    process all_krw_price, params[:allat_enc_data], params[:allat_test_yn]
+  end
+
+  def all_krw_price
     at_amt = 0
     orders.each do |o|
       at_amt += o.item.sale_price.to_i * o.quantity.to_i
     end
     at_amt += 5000 #배송비
+  end
+
+  def all_usd_price
+    all_krw_price / 10.0
+  end
+
+  def process allat_amt, allat_enc_data, allat_test_yn
+    at_amt = allat_amt
     at_data = "allat_shop_id=" + AT_SHOP_ID +
                "&allat_amt=" + at_amt.to_s +
                "&allat_enc_data=" + allat_enc_data +
