@@ -119,4 +119,13 @@ private
     return false if checksum != "1"
     return true
   end
+
+  def setValue retData, insKey, insValue
+    if retData.length == 0
+      tmpData = "00000010" + insKey  + "^C" + insValue + "^X"
+    else
+      tmpData = retData + insKey + "^C" + insValue + "^X"
+    end
+    return tmpData
+  end
 end

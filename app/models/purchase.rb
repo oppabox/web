@@ -5,8 +5,24 @@ class Purchase < ActiveRecord::Base
   AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
   AT_SHOP_ID   = "oppabox"       #설정필요
 
+  def all_amt
+    amt = 0
+    orders.each do |o|
+      amt += o.item.sale_price.to_i * o.quantity.to_i
+    end
+    amt += 5000
+  end
+
+  def dollar_billing params
+
+  end
+
   def billing allat_amt, allat_enc_data, allat_test_yn
-    at_amt = allat_amt
+    at_amt = 0
+    orders.each do |o|
+      at_amt += o.item.sale_price.to_i * o.quantity.to_i
+    end
+    at_amt += 5000 #배송비
     at_data = "allat_shop_id=" + AT_SHOP_ID +
                "&allat_amt=" + at_amt.to_s +
                "&allat_enc_data=" + allat_enc_data +

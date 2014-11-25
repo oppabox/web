@@ -17,7 +17,29 @@ class PayController < ApplicationController
   end
 
   def dollar_billing
-    render text: "OK"
+    p = Purchase.find(params[:purchase_id])
+    p.recipient = params[:allat_recp_nm]
+    p.country = params[:country]
+    p.postcode = params[:postcode]
+    p.phonenumber = params[:phonenumber]
+    p.address_1 = params[:allat_recp_addr_1]
+    p.address_2 = params[:allat_recp_addr_2]
+    p.address_3 = params[:allat_recp_addr_3]
+    p.save
+    current_user.name = params[:allat_recp_nm]
+    current_user.country = params[:country]
+    current_user.postcode = params[:postcode]
+    current_user.phonenumber = params[:phonenumber]
+    current_user.address_1 = params[:allat_recp_addr_1]
+    current_user.address_2 = params[:allat_recp_addr_2]
+    current_user.address_3 = params[:allat_recp_addr_3]
+    current_user.save
+
+    if p.dollar_billing params
+      redirect_to "/mypage/list"
+    else
+      redirect_to "/pay/order"
+    end
   end
 
   def billing
