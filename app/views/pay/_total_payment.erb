@@ -27,8 +27,8 @@
     <div id="usd_payment">
       <p>Verified by Visa 혹은 MasterCard SecureCode에 등록을 하지 않았으면 사용 인증을 먼저 받아야합니다. 사전 승인은 결제 과정에 하실 수 있거나 비자 혹은 마스타카드 웹사이트에서 미리 승인을 받을 수 있습니다.</p>
       <p>If you haven't yet registered with Verified by Visa or MasterCard SecureCode, you'll need to activate this feature first. You can do this during the payment process, or activate it in advance through the <a href="https://usa.visa.com/personal/security/vbv/index.jsp?ep=v_sym_verifiedbyvisa" target="_blank">Visa</a> or <a href="http://www.mastercard.us/support/securecode.html" target="_blank">MasterCard</a> website.</p>
-      <input type="text" name="allat_card_no" value="" size="19" maxlength="16" placeholder="Card No.">
-      <input type="button" value="달러결제" name="app_btn" onclick="javascript:ftn_mpi_cert_req(document.fm);">
+      <input type="text" class="form-control" name="allat_card_no" value="" size="19" maxlength="16" placeholder="Input card number"><br><br>
+      <input type="button" class="btn btn-primary" value="Checkout" name="app_btn" style="width:100%" onclick="javascript:ftn_mpi_cert_req(document.fm);">
     </div>
   </div>
 </div>
