@@ -32,10 +32,12 @@ n.name = "김재중"
 n.save
 
 #김재중박스 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/images/items/kitchen_box/tableware/olivia/main.jpg"
-m.save
+1.upto(2) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/images/items/star_box/jj/#{x}.jpg"
+  m.save
+end
 
 #이민호박스
 i = Item.new
@@ -58,10 +60,12 @@ n.name = "이민호"
 n.save
 
 #이민호박스 : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/images/items/kitchen_box/tableware/olivia/main.jpg"
-m.save
+1.upto(4) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/images/items/star_box/minho/#{x}.jpg"
+  m.save
+end
 
 #JEWELRY BOX
 #SET 1
