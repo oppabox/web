@@ -4,9 +4,9 @@ class CreatePurchases < ActiveRecord::Migration
       t.integer :user_id
       t.string :recipient
       t.string :country
-      t.string :address_1
-      t.string :address_2
-      t.string :address_3
+      t.string :city
+      t.string :state
+      t.string :address
       t.string :postcode
       t.string :phonenumber
 

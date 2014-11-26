@@ -7,9 +7,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :phonenumber
       t.string :postcode
 
-      t.string :address_1
-      t.string :address_2
-      t.string :address_3
+      t.string :address
+      t.string :city
+      t.string :state
 
       t.string :password_reset_token
       t.datetime :password_reset_sent_at

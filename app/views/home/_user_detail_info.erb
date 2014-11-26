@@ -28,4 +28,4 @@
 </select>
 <div style="height:20px;">&nbsp;</div>
 <label><%= t('signup_step3_address') %></label>
-<input name="allat_recp_addr" id="signup_address" type="text" value="<%=current_user.address_1 || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+<input name="allat_recp_addr" id="signup_address" type="text" value="<%=current_user.address || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>

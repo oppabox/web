@@ -31,13 +31,7 @@
 <label><%= t('signup_step3_address') %></label>
 <div class="row">
   <input name="allat_recp_addr" id="signup_address" type="hidden" value="">
-  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
-    <input name="allat_recp_addr_1" id="signup_address_1" type="text" value="<%=current_user.address_1 || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
-  </div>
-  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
-    <input name="allat_recp_addr_2" id="signup_address_2" type="text" value="<%=current_user.address_2 || ""%>" class="form-control">
-  </div>
-  <div class="col-md-4 col-xs-12" style="margin-top:10px;">
-    <input name="allat_recp_addr_3" id="signup_address_3" type="text" value="<%=current_user.address_3 || ""%>" class="form-control">
+  <div class="col-md-12 col-xs-12" style="margin-top:10px;">
+    <input name="allat_recp_addr" id="signup_address" type="text" value="<%=current_user.address || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
   </div>
 </div>

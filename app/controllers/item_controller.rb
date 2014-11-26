@@ -45,9 +45,7 @@ class ItemController < ApplicationController
       p = Purchase.create(user_id: current_user.id,
                           recipient: current_user.name,
                           country: current_user.country,
-                          address_1: current_user.address_1,
-                          address_2: current_user.address_2,
-                          address_3: current_user.address_3,
+                          address: current_user.address,
                           postcode: current_user.postcode,
                           phonenumber: current_user.phonenumber,
                           status: "ordering")

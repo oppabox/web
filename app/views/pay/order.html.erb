@@ -47,10 +47,8 @@
 <script language=Javascript>initCheckOB();</script>
 <script language=Javascript>
   function billing(dfm) {
-    var addr_1 = $("#signup_address_1").val();
-    var addr_2 = $("#signup_address_2").val();
-    var addr_3 = $("#signup_address_3").val();
-    $("#signup_address").val(addr_1+" "+addr_2+" "+addr_3);
+    var addr = $("#signup_address").val();
+    $("#signup_address").val(addr);
     $("input[name$='allat_buyer_nm']").val($("input[name$='allat_recp_nm']").val());
     ftn_approval(dfm);
   }

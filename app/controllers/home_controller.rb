@@ -69,6 +69,7 @@ class HomeController < ApplicationController
     current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
+    current_user.address = params[:address]
 
     address_array = params[:address].split(" ")
     address_split = Array.new(3){""}
@@ -81,10 +82,6 @@ class HomeController < ApplicationController
         break
       end
     end
-
-    current_user.address_1 = address_split[0]
-    current_user.address_2 = address_split[1]
-    current_user.address_3 = address_split[2]
 
     ret = Hash.new
     ret[:result] = current_user.save

@@ -14,9 +14,7 @@ class MypageController < ApplicationController
     current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
-    current_user.address_1 = params[:address_1]
-    current_user.address_2 = params[:address_2]
-    current_user.address_3 = params[:address_3]
+    current_user.address = params[:address]
     ret = current_user.save
 
     render :json => ret
@@ -65,9 +63,7 @@ class MypageController < ApplicationController
     current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
-    current_user.address_1 = params[:allat_recp_addr_1]
-    current_user.address_2 = params[:allat_recp_addr_2]
-    current_user.address_3 = params[:allat_recp_addr_3]
+    current_user.address = params[:allat_recp_addr]
     current_user.save
     redirect_to :back
   end
