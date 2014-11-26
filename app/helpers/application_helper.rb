@@ -25,8 +25,8 @@ module ApplicationHelper
             x.display_name
           end
         end
-      inner_html += #image_box + text_box
-        content_tag :div, :class => 'col-md-4 col-xs-6 text-center' do
+      inner_html += #image_box + text_box                             # class로 조절이 안되서 style로 조절
+        content_tag :div, :class => 'col-md-4 col-xs-6 text-center', :style => 'padding-left:0; padding-right:0;' do
           content_tag :div, :class => "box_view" do 
             image_box + text_box
           end
@@ -34,7 +34,7 @@ module ApplicationHelper
     end
 
     content_tag :div, :class => 'container' do #for bootstrap
-      content_tag :div, :class => 'row' do 
+      content_tag :div, :class => 'row index_row_padding' do 
         inner_html.html_safe
       end
     end
