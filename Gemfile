@@ -5,6 +5,10 @@ gem 'devise'
 gem 'mailgun_rails'
 gem 'therubyracer'
 
+
+#user omniauth
+gem 'omniauth-facebook'
+
 #debugger
 gem 'pry', :group => :development
 

@@ -9,5 +9,6 @@
     <input id="signin_password" type="password" class="form-control user-info-input" required>
     <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
     <button class="btn btn-lg btn-primary btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
+    <%= link_to t('sign_in_with_facebook'), user_omniauth_authorize_path(:facebook)%>
   </div>
 </div> <!-- /container -->
