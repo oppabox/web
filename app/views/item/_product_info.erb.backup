@@ -34,6 +34,16 @@
       <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price ) %>원</p>
     </div>
   </div>
+
+
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <p><%= t('product_info_reserve') %></p>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price/100 ) %>원</p>
+    </div>
+  </div>
   <hr>
 
   <div class="row mar-left">
