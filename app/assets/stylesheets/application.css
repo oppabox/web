@@ -14,7 +14,7 @@ body {
 
 footer {
   border-top: 1px solid #e7e7e7;
-  margin-top: 20px;
+  margin-top: 60px;
   background: #262626;
 }
 
@@ -23,9 +23,27 @@ footer p{
 }
 
 .navbar-default {
-	background-color: #CCCCCC;
-	border-color: #CCCCCC;
+	background-color: #262626 !important;
+	border-color: #262626 !important;
 }
+.dropdown-menu {
+	background-color: #303030 !important;
+	border-color: #303030 !important;
+}
+.open a {
+	background-color: #303030 !important;
+}
+.dropdown-menu li a {
+	color: #fff !important;
+}
+.dropdown-menu li a:hover {
+	color: #fff !important;
+	background-color: #404040 !important;
+}
+.dropdown a:hover {
+	background-color: #303030 !important;
+}
+
 
 /* 상단 */
 .us_info {

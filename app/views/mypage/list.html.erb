@@ -25,7 +25,7 @@
           <th><%=t('order_state')%></th>
         </tr>
         <% purchase.orders.each_with_index do |order, index|%>
-        <tr>
+        <tr class="list_cell">
         <% if current_user.purchases.empty? %>
           <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
         <% end %>

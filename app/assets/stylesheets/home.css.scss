@@ -7,6 +7,19 @@
   margin: 2px 15px 25px 15px;
   border: 1px solid #a9a9a9;
 }
+.box_view a {
+  text-decoration: none !important;
+  color: #000;
+}
+.box_view a:hover {
+  color: #525252;
+}
+
+.product_title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
 .index_row_padding {
   padding: 0 15px 0 15px;
 }

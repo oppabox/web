@@ -75,3 +75,29 @@
 .hr-height {
   margin-top: 10px;
 }
+
+
+/* 구매내역 */
+.left_navi li a {
+  color: #525252;
+  font-weight: 600;
+  margin-bottom:0;
+}
+.left_navi li a:hover {
+  color: #fff;
+}
+.left_navi .active a {
+  background-color: #525252 !important;
+}
+.left_navi .active li a {
+  color: #000;
+}
+
+.list_cell td a {
+  text-decoration: none !important;
+  color: #000;
+  font-weight: bold;
+}
+.list_cell td a:hover {
+  color: #525252;
+}
