@@ -1,52 +1,56 @@
 <footer>
-  <!-- <p class="text-center">
-    <%= t('company_name') %> | <%= t('ceo') %><%= t('company_privacy') %>
-    <% if I18n.locale == :ko %>
-    <%= t('registration_number') %>
-    <% end %>
-    <%= t('company_address') %>
-  </p> -->
 
   <%# 상단 %>
-  <div class="about_info">
+  <div class="us_info">
     <div class="container">
       <div class="row">
 
-        <%# ABOUT US %>
+        <%# Company Info %>
         <div class="col-md-4">
-          <h3 class="about_us">Company</h3>
+          <div class="headline">
+            <h2>Company Info</h2>
+          </div>
           <div>
-            <ul>
+            <ul class="company_ul">
               <li>
-
-              </li>
-              
-              <li>
-
+                <a href="#">Oppabox Co. Ltd.</a>
               </li>
 
               <li>
-              
+                <a href="#">이용약관</a>
+              </li>
+                
+              <li>
+                <a href="#">개인정보</a>
               </li>
             </ul>
           </div>
         </div>
 
-        <%#%>
+        <%# Contact Us %>
         <div class="col-md-4">
-          <h3 class="about_us">Ccontact Us</h3>
+          <div class="headline">
+            <h2>Contact Us</h2>
+          </div>
           <div>
-            <ul>
+            <ul class="contact_ul">
               <li>
-
+                <p>Call. 02-794-5558</p>
               </li>
               
               <li>
-
+                <p>Email. oppabox@oppabox.com</p>
               </li>
 
               <li>
-              
+                <p>
+                  Address.
+                  <br>
+                  <%= t('company_address') %>
+                </p>
+              </li>
+
+              <li>
               </li>
             </ul>
           </div>
@@ -54,7 +58,9 @@
 
         <%# CHECK THIS OUT %>
         <div class="col-md-4">
-          <h3 class="about_us">FOLLOW oppabox</h3>
+          <div class="headline">
+            <h2>Follow Us</h2>
+          </div>
           <div>
             <ul>
               <li>
@@ -85,8 +91,9 @@
         <% end %>
         <%= t('company_address') %>
       </p>
-      <p class="copyright_txt text-left"><%= t('company_copyright').html_safe %>.</p>
-      <span class=""
+      <div>
+        <p class="copyright_txt text-left"><%= t('company_copyright').html_safe %>.</p>
+      </div>
     </div>
   </div>
 
