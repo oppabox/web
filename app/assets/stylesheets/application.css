@@ -6,6 +6,7 @@
  *= require mypage
  *= require pay
  */
+
 body {
   padding-top: 70px;
   font-family: sans-serif;
@@ -19,6 +20,11 @@ footer {
 
 footer p{
   margin-bottom:5px;
+}
+
+.navbar-default {
+	background-color: #CCCCCC;
+	border-color: #CCCCCC;
 }
 
 /* 상단 */
