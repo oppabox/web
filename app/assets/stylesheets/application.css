@@ -34,10 +34,10 @@ footer p{
 .open a {
 	background-color: #3B3B3B !important;
 }
-.nav li a {
+.nav-oppabox li a {
 	color: #fff !important;
 }
-.nav li a:hover {
+.nav-oppabox li a:hover {
 	color: #fff !important;
 	background-color: #3B3B3B !important;
 }
