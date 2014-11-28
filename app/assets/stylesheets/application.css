@@ -22,28 +22,29 @@ footer p{
   margin-bottom:5px;
 }
 
+/* navbar button color */
 .navbar-default {
 	background-color: #262626 !important;
 	border-color: #262626 !important;
 }
 .dropdown-menu {
-	background-color: #303030 !important;
-	border-color: #303030 !important;
+	background-color: #3B3B3B !important;
+	border-color: #3B3B3B !important;
 }
 .open a {
-	background-color: #303030 !important;
+	background-color: #3B3B3B !important;
 }
-.dropdown-menu li a {
+.nav li a {
 	color: #fff !important;
+}
+.nav li a:hover {
+	color: #fff !important;
+	background-color: #3B3B3B !important;
 }
 .dropdown-menu li a:hover {
 	color: #fff !important;
-	background-color: #404040 !important;
+	background-color: #454545 !important;
 }
-.dropdown a:hover {
-	background-color: #303030 !important;
-}
-
 
 /* 상단 */
 .us_info {
