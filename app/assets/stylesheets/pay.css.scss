@@ -39,3 +39,30 @@
 .o_quantity{
   width: 40%;
 }
+
+
+.display_link a {
+  text-decoration: none !important;
+  font-weight: 600;
+  color: #000;
+}
+.display_link a:hover {
+  color: #4D4D4D;
+}
+
+.order_link a {
+  text-decoration: none !important;
+  font-weight: 500;
+  color: #000;
+}
+.order_link a:hover {
+  color: #4D4D4D;
+}
+
+.delete_link a {
+  text-decoration: none !important;
+  color: #ff0039;
+}
+.delete_link a:hover {
+  color: #cc002e;
+}

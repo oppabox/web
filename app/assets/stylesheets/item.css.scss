@@ -1,6 +1,18 @@
 // Place all the styles related to the item controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.product_link_list {
+	font-size: 18px;
+}
+.product_link_list a {
+	text-decoration: none !important;
+	font-weight: bold;
+	color: #525252;
+}
+.product_link_list a:hover {
+	color: #000;
+}
+
 .product_box {
 	padding: 5px 10px 5px 10px;
 	background: #fff;
@@ -79,4 +91,27 @@
 .img-center {
 	margin: auto;
 	text-align: center;
+}
+
+.foot_navi {
+	background-color: #2B2B2B;
+}
+.foot_navi li a {
+	color: #fff;
+	font-weight: 600;
+	margin-bottom:0;
+}
+.foot_navi li a:hover {
+	color: #4D4D4D;
+}
+.foot_navi .active li a {
+	color: #000;
+	border: 1px solid #dddddd;
+}
+
+.foot_info_box {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	border: 1px solid #dddddd; 
+	border-top-color: #fff;
 }

@@ -9,7 +9,7 @@
         <a class="navbar-brand" href="/"><%= image_tag "oppabox_web_logo.png" %></a>
       </div>
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-left">
+      <ul class="nav navbar-nav navbar-left nav-oppabox">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('left_menu') %><b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -32,13 +32,13 @@
           <ul class="dropdown-menu">
             <li><a href="#">한국어</a></li>
             <li><a href="#">English</a></li>
-            <li><a href="#">中国</a></li>
+            <li><a href="#">中国語</a></li>
             <li><a href="#">日本語</a></li>
           </ul>
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right nav-oppabox">
         <%if user_signed_in?%>
           <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
           <li><a href="/mypage/basket"><%= t('menu_basket') %></a></li>

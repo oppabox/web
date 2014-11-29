@@ -6,20 +6,94 @@
  *= require mypage
  *= require pay
  */
+
 body {
   padding-top: 70px;
+  font-family: sans-serif;
 }
 
 footer {
   border-top: 1px solid #e7e7e7;
-  margin-top: 20px;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  background: #f8f8f8;
+  margin-top: 60px;
+  background: #262626;
 }
 
 footer p{
   margin-bottom:5px;
+}
+
+/* navbar button color */
+.navbar-default {
+	background-color: #262626 !important;
+	border-color: #262626 !important;
+}
+.dropdown-menu {
+	background-color: #3B3B3B !important;
+	border-color: #3B3B3B !important;
+}
+.open a {
+	background-color: #3B3B3B !important;
+}
+.nav-oppabox li a {
+	color: #fff !important;
+}
+.nav-oppabox li a:hover {
+	color: #fff !important;
+	background-color: #3B3B3B !important;
+}
+.dropdown-menu li a:hover {
+	color: #fff !important;
+	background-color: #454545 !important;
+}
+
+/* 상단 */
+.us_info {
+	background:#2B2B2B;
+	padding-top: 8px;
+	padding-bottom: 30px;
+}
+.us_info ul {
+	list-style: none;
+	padding-left: 0;
+	margin-left: 0;
+}
+.us_info ul li {
+	list-style: none;
+	font-weight: bold;
+	color: #E0E0E0;
+	padding: 0 0 10px 0;
+}
+.company_ul li a{
+	font-size: 16px;
+	font-weight: bold;
+	color: #8A8A8A;
+}
+.headline {
+	margin: 15px 0 25px 0;
+}
+.headline h2 {
+	color: #F2F2F2;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 15px;
+	border-bottom: 1px solid #e4e9f0;
+	padding-bottom: 15px;
+	border-left: none;
+
+}
+
+/* 하단 */
+
+.company_box {
+	color: #CCCCCC;
+	padding-top:10px;
+}
+.company_txt {
+	padding:0 20px 0 20px;
+}
+.copyright_txt {
+	color: #fff;
+	padding: 15px 0 10px 20px;
 }
 
 /* 부트스트랩3 에서 사라진 dropdown-submenu */

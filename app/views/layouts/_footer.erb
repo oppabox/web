@@ -1,9 +1,100 @@
 <footer>
-<p class="text-center"><%= t('company_name') %> | <%= t('ceo') %></p>
-<% if I18n.locale == :ko %>
-<p class="text-center"><%= t('registration_number') %></p>
-<% end %>
-<p class="text-center"><%= t('company_address') %></p>
-<p class="text-center"><%= t('company_privacy') %></p>
-<p class="text-center"><%= t('company_copyright').html_safe %></p>
+
+  <%# 상단 %>
+  <div class="us_info">
+    <div class="container">
+      <div class="row">
+
+        <%# Company Info %>
+        <div class="col-md-4">
+          <div class="headline">
+            <h2>Company Info</h2>
+          </div>
+          <div>
+            <ul class="company_ul">
+              <li>
+                <a href="#">Oppabox Co. Ltd.</a>
+              </li>
+
+              <li>
+                <a href="#">이용약관</a>
+              </li>
+                
+              <li>
+                <a href="#">개인정보</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <%# Contact Us %>
+        <div class="col-md-4">
+          <div class="headline">
+            <h2>Contact Us</h2>
+          </div>
+          <div>
+            <ul class="contact_ul">
+              <li>
+                <p>Call. 02-794-5558</p>
+              </li>
+              
+              <li>
+                <p>Email. oppabox@oppabox.com</p>
+              </li>
+
+              <li>
+                <p>
+                  Address.
+                  <br>
+                  <%= t('company_address') %>
+                </p>
+              </li>
+
+              <li>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <%# CHECK THIS OUT %>
+        <div class="col-md-4">
+          <div class="headline">
+            <h2>Follow Us</h2>
+          </div>
+          <div>
+            <ul>
+              <li>
+
+              </li>
+              
+              <li>
+
+              </li>
+
+              <li>
+              
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# 하단 %>
+  <div class="container company_box">
+    <div class="row">
+      <p class="company_txt text-left">
+        <%= t('company_name') %> | <%= t('ceo') %><%= t('company_privacy') %>
+        <% if I18n.locale == :ko %>
+        <%= t('registration_number') %>
+        <% end %>
+        <%= t('company_address') %>
+      </p>
+      <div>
+        <p class="copyright_txt text-left"><%= t('company_copyright').html_safe %>.</p>
+      </div>
+    </div>
+  </div>
+
 </footer>
