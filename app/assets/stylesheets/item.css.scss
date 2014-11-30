@@ -2,116 +2,129 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .product_link_list {
-	font-size: 18px;
+  font-size: 18px;
 }
 .product_link_list a {
-	text-decoration: none !important;
-	font-weight: bold;
-	color: #525252;
+  text-decoration: none !important;
+  font-weight: bold;
+  color: #525252;
 }
 .product_link_list a:hover {
-	color: #000;
+  color: #000;
 }
 
 .product_box {
-	padding: 5px 10px 5px 10px;
-	background: #fff;
-	margin: 1px;
+  padding: 5px 10px 5px 10px;
+  background: #fff;
+  margin: 1px;
 }
 
 .product_box h4 {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-bottom: 2px solid;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid;
   font-weight:bold;
 }
 
 .product_box h4 span {
-	margin-top: 35px;
-	margin-left: 15px;
+  margin-top: 35px;
+  margin-left: 15px;
 
 }
 
 .product_img {
-	margin-top: 30px;
-	margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 .padx {
-	padding: 0;
-	margin-top: 10px;
+  padding: 0;
+  margin-top: 10px;
 }
 
 .on {
-	list-style: none;
-	display: inline;
-	cursor: pointer;
-	margin: 0;
-	padding: 0;
+  list-style: none;
+  display: inline;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .product_info {
-	padding: 30px 0 30px 0;
+  padding: 30px 0 30px 0;
 }
 
 .price_wrap {
-	background: #f7f7f7;
-	border-top: 1px solid #e4e4e4;
-	border-bottom: 1px solid #e4e4e4;
+  background: #f7f7f7;
+  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
 }
 .price_1 {
-	height: 38px;
-	font-size: 14px;
-	margin-top: 15px;
+  height: 38px;
+  font-size: 14px;
+  margin-top: 15px;
 }
 
 .price_detail{
-	text-align: right;
-	font-weight: bold;
+  text-align: right;
+  font-weight: bold;
 }
 .price_2 {
   margin-top:15px;
-	font-size: 16px;
-	color: #f14949;
+  font-size: 16px;
+  color: #f14949;
 }
 .price_3 {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .mar-left {
-	margin-left: 5px;
+  margin-left: 5px;
 }
 .mar-right {
-	margin-right: 5px;
+  margin-right: 5px;
 }
 .btn-width {
-	width: 130px;
+  width: 130px;
 }
 
 .img-center {
-	margin: auto;
-	text-align: center;
+  margin: auto;
+  text-align: center;
 }
 
 .foot_navi {
-	background-color: #2B2B2B;
+  background-color: #2B2B2B;
 }
 .foot_navi li a {
-	color: #fff;
-	font-weight: 600;
-	margin-bottom:0;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom:0;
 }
 .foot_navi li a:hover {
-	color: #4D4D4D;
+  color: #4D4D4D;
 }
 .foot_navi .active li a {
-	color: #000;
-	border: 1px solid #dddddd;
+  color: #000;
+  border: 1px solid #dddddd;
 }
 
 .foot_info_box {
-	padding-top: 40px;
-	padding-bottom: 40px;
-	border: 1px solid #dddddd; 
-	border-top-color: #fff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 1px solid #dddddd; 
+  border-top-color: #fff;
+}
+
+.refund_ul {
+  padding-right: 10px;
+}
+.refund_ul li {
+  padding-bottom: 30px;
+}
+.refund_ul li label {
+  margin-bottom: 15px;
+}
+.refund_ul li p {
+  font-size: 13px;
 }

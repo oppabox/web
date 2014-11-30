@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="text-center form-signin-heading"><%= t('menu_login') %></h2>
+  <h2 class="text-center form-signin-heading"><b>oppabox</b> <%= t('menu_login') %></h2>
   <hr>
   <div class="form-signin" role="form">
     <label><%= t('login_email_address') %></label>
@@ -8,7 +8,7 @@
     <label><%= t('login_password')%></label>
     <input id="signin_password" type="password" class="form-control user-info-input" required>
     <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
-    <button class="btn btn-lg btn-primary btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
+    <button class="btn btn-lg btn-default btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
     <%= link_to t('sign_in_with_facebook'), user_omniauth_authorize_path(:facebook)%>
   </div>
 </div> <!-- /container -->

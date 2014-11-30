@@ -34,7 +34,7 @@ module ApplicationHelper
     end
 
     content_tag :div, :class => 'container' do #for bootstrap
-      content_tag :div, :class => 'row index_row_padding' do 
+      content_tag :div, :class => 'row ' do 
         inner_html.html_safe
       end
     end
