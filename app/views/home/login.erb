@@ -10,5 +10,6 @@
     <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
     <button class="btn btn-lg btn-default btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
     <%= link_to t('sign_in_with_facebook'), user_omniauth_authorize_path(:facebook)%>
+    <%= link_to t('sign_in_with_weibo'), user_omniauth_authorize_path(:weibo)%>
   </div>
 </div> <!-- /container -->

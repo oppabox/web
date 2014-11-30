@@ -8,6 +8,7 @@ gem 'therubyracer'
 
 #user omniauth
 gem 'omniauth-facebook'
+gem 'omniauth-weibo-oauth2', :git => "https://github.com/sang2087/omniauth-weibo-oauth2.git"
 
 #debugger
 gem 'pry', :group => :development

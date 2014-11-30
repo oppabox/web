@@ -2,6 +2,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.omniauth :facebook, "1401531440137581", "5be0cc15748605c9787fb3917cc24292"
+  config.omniauth :weibo, "3996430906", "c22ea1aef0230db3ba7b2c881dbf7acf"
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
