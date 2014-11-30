@@ -160,3 +160,4 @@ ja:
   basket_add_success: "ショッピングカートに追加されました。ショッピングカートを確認しますか？"
   basket_already_add: "既にショッピングカートに入っています。 カートを確認しますか？"
   sign_in_with_facebook: "Facebook Login"
+  sign_in_with_weibo: "Weibo Login"

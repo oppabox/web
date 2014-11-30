@@ -159,3 +159,4 @@ en:
   basket_add_success: "It is added to your card. Would you like to check the cart?"
   basket_already_add: "It is already in the cart. Would you like to check the cart?"
   sign_in_with_facebook: "Facebook Login"
+  sign_in_with_weibo: "Weibo Login"

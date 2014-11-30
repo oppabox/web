@@ -1,4 +1,4 @@
-en:
+zh-CN:
   company_name: "OPPABOX Inc."
   ceo: "CEO - "
   company_address: "455-fourth floor, Gangnam-gu, Eonju-ro, 647, Seoul, Republic of Korea, 135-996"
@@ -160,3 +160,4 @@ en:
   basket_add_success: "已装进购物车  要确认购物车吗？"
   basket_already_add: "已在购物车里  要确认购物车吗？
   sign_in_with_facebook: "Facebook Login"
+  sign_in_with_weibo: "Weibo Login"
