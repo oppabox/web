@@ -1,4 +1,4 @@
-zh-CN:
+cn:
   company_name: "OPPABOX Inc."
   ceo: "CEO - "
   company_address: "455-fourth floor, Gangnam-gu, Eonju-ro, 647, Seoul, Republic of Korea, 135-996"
@@ -63,7 +63,6 @@ zh-CN:
   mypage_reset_password: "更改密码"
   mypage_no_order: "没有购买信息"
   mypage_list_product_name: "商品名称"
-  
 
   order_number: "订购编号"
   carry_number: "快递公司 / 配送编号"
