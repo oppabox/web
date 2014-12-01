@@ -37,9 +37,11 @@ function changePayment() {
   if ($("#signup_country").val() == "KR") {
     $("#krw_payment").show();
     $("#usd_payment").hide();
+    $("#at_shop_id").val("oppabox");
   } else {
     $("#krw_payment").hide();
     $("#usd_payment").show();
+    $("#at_shop_id").val("usd_oppbox");
   }
 }
 changePayment();
