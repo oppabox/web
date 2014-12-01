@@ -156,6 +156,6 @@ cn:
   basket_list: "购物车"
 
   basket_add_success: "已装进购物车  要确认购物车吗？"
-  basket_already_add: "已在购物车里  要确认购物车吗？
+  basket_already_add: "已在购物车里  要确认购物车吗？"
   sign_in_with_facebook: "Facebook Login"
   sign_in_with_weibo: "Weibo Login"

@@ -3,7 +3,8 @@ class Purchase < ActiveRecord::Base
   has_many :orders
   belongs_to  :user
   AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
-  AT_SHOP_ID   = "oppabox"       #설정필요
+  AT_KRW_SHOP_ID   = "oppabox"       #설정필요
+  AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요
 
   def all_amt
     amt = 0
@@ -32,6 +33,7 @@ class Purchase < ActiveRecord::Base
     at_cavv           = params[:allat_cavv]
     at_test_yn        = params[:allat_test_yn]
     at_user_ip        = current_sign_in_ip
+    at_shop_id        = AT_USD_SHOP_ID
 
     at_enc=setValue(at_enc,"allat_shop_id",at_shop_id)
     at_enc=setValue(at_enc,"allat_order_no",at_order_no)
@@ -55,11 +57,11 @@ class Purchase < ActiveRecord::Base
     at_enc=setValue(at_enc,"allat_opt_pin","NOUSE")
     at_enc=setValue(at_enc,"allat_opt_mod","APP")
 
-    process all_usd_price, at_enc, params[:allat_test_yn]
+    process all_usd_price, at_enc, params[:allat_test_yn], AT_USD_SHOP_ID
   end
 
   def krw_billing params
-    process all_krw_price, params[:allat_enc_data], params[:allat_test_yn]
+    process all_krw_price, params[:allat_enc_data], params[:allat_test_yn], AT_KRW_SHOP_ID
   end
 
   def all_krw_price
@@ -74,9 +76,9 @@ class Purchase < ActiveRecord::Base
     all_krw_price / 10.0
   end
 
-  def process allat_amt, allat_enc_data, allat_test_yn
+  def process allat_amt, allat_enc_data, allat_test_yn, at_shop_id
     at_amt = allat_amt
-    at_data = "allat_shop_id=" + AT_SHOP_ID +
+    at_data = "allat_shop_id=" + at_shop_id +
                "&allat_amt=" + at_amt.to_s +
                "&allat_enc_data=" + allat_enc_data +
                "&allat_cross_key=" + AT_CROSS_KEY
