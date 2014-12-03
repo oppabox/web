@@ -19,11 +19,13 @@
             %>
 
               <li>
-                <a href="#"><%= t('company_agreement_link') %></a>
+                <a href="/terms"><%= t('company_agreement_link') %></a>
               </li>
                 
               <li>
-                <a href="#"><%= t('company_privacy_link') %></a>
+                <% if params[:lo] != "zh"%>
+                <a href="/privacy"><%= t('company_privacy_link') %></a>
+                <%end%>
               </li>
             </ul>
           </div>
@@ -63,8 +65,10 @@
           <div>
             <ul>
               <li>
-                  <a class="btn btn-social-icon btn-facebook" href="http://goo.gl/g4zQ51" target="sub"><i class="fa fa-facebook"></i></a>
-                  <a class="btn btn-social-icon btn-instagram" href="http://instagram.com/oppabox" target="sub"><i class="fa fa-instagram"></i></a>
+                <img src="<%= asset_path 'allat.png' %>" width="60">
+                &nbsp;
+                
+                <img src="<%= asset_path 'ups.gif' %>" width="40">
               </li>
             </ul>
           </div>
@@ -80,6 +84,7 @@
               <li>
                   <a class="btn btn-social-icon btn-facebook" href="http://goo.gl/g4zQ51" target="sub"><i class="fa fa-facebook"></i></a>
                   <a class="btn btn-social-icon btn-instagram" href="http://instagram.com/oppabox" target="sub"><i class="fa fa-instagram"></i></a>
+                  <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/oppabox" target="sub"><i class="fa fa-twitter"></i></a>
               </li>
             </ul>
           </div>

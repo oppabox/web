@@ -160,6 +160,7 @@ cn:
   sign_in_with_facebook: "Facebook Login"
   sign_in_with_weibo: "Weibo Login"
 
+  #중국은 이용약관만 있습니다.
   user_agreement_1: '使用条款'
   user_agreement_2: '第一条（目的）'
   user_agreement_3: '本条款旨在，OPPABOX公司（电子商务经营者）运营的网上商城（以下简称“商城”），为用户提供网络服务（以下简称“服务”），制定本条款的目的是为了规定商城和用户的权利、义务及责任事项。'

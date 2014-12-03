@@ -1,32 +1,67 @@
 <div class="container">
   <h2 class="text-center form-signin-heading"><%= t('signup_step1') %></h2>
   <hr>
-<div class="jumbotron agreement">
-	<% 0.upto(112) do |i| %>
-		<p>
-			<%= 
-				x=i.to_s
-				privacy_policy = "privacy_policy_"+x
-				t(privacy_policy) 
-			%>
-		</p>
+  <% 
+	if params[:lo] == "zh"					#중국어
+		user_agreement_line = 198
+	elsif params[:lo] == "en"				#영어
+		privacy_policy_line = 15
+		user_agreement_line = 148
+	elsif params[:lo] == "ja"				#일본어
+		privacy_policy_line = 17
+		user_agreement_line = 148
+	elsif params[:lo] == "ko"				#한국어
+		privacy_policy_line = 112
+		user_agreement_line = 134
+	else														#default 한국어
+		privacy_policy_line = 112
+		user_agreement_line = 134
+	end
+	
+	# 한국, 미국, 일본
+	if params[:lo] != "zh" %>
+	<div class="jumbotron agreement">
+		<%0.upto(privacy_policy_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					privacy_policy = "privacy_policy_"+x
+					t(privacy_policy) 
+				%>
+			</p>
+		<%end%>
+	</div>
+	<br>
+	<div class="jumbotron agreement">
+		<% 1.upto(user_agreement_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					user_agreement = "user_agreement_"+x
+					t(user_agreement) 
+				%>
+			</p>
+		<%end%>
+	</div>
+	
+	<%
+	# 중국은 이용약관만 있습니다.
+	else %>
+	<div class="jumbotron agreement">
+		<% 1.upto(user_agreement_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					user_agreement = "user_agreement_"+x
+					t(user_agreement) 
+				%>
+			</p>
+		<%end%>
+	</div>
 	<%end%>
-</div>
-<br>
-<div class="jumbotron agreement">
-	<% 1.upto(134) do |i| %>
-		<p>
-			<%= 
-				x=i.to_s
-				user_agreement = "user_agreement_"+x
-				t(user_agreement) 
-			%>
-		</p>
-	<%end%>
-</div>
-<div class="text-center" style="margin-top:50px;margin-bottom:50px;">
-  <button type="button" class="btn btn-lg btn-default"><%= t('toa_disaggreement') %></button>
-  &nbsp; &nbsp; &nbsp;
-  <a href="/home/step2"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('toa_aggreement')%>&nbsp;</button></a>
-</div>
+	<div class="text-center" style="margin-top:50px;margin-bottom:50px;">
+	  <button type="button" class="btn btn-lg btn-default"><%= t('toa_disaggreement') %></button>
+	  &nbsp; &nbsp; &nbsp;
+	  <a href="/home/step2"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('toa_aggreement')%>&nbsp;</button></a>
+	</div>
 </div> <!-- /container -->

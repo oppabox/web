@@ -139,4 +139,10 @@ class HomeController < ApplicationController
 
     render :json => ret
   end
+
+  def terms
+  end
+
+  def privacy
+  end
 end
