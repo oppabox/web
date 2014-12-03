@@ -6,29 +6,33 @@
       <div class="row">
 
         <%# Company Info %>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="headline">
             <h2>Company Info</h2>
           </div>
           <div>
             <ul class="company_ul">
+            <%#
               <li>
-                <a href="#">Oppabox Co. Ltd.</a>
+                <a href="#">Oppabox Crop.</a>
               </li>
+            %>
 
               <li>
-                <a href="#"><%= t('company_agreement_link') %></a>
+                <a href="/terms"><%= t('company_agreement_link') %></a>
               </li>
                 
               <li>
-                <a href="#"><%= t('company_privacy_link') %></a>
+                <% if params[:lo] != "zh"%>
+                <a href="/privacy"><%= t('company_privacy_link') %></a>
+                <%end%>
               </li>
             </ul>
           </div>
         </div>
 
         <%# Contact Us %>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="headline">
             <h2>Contact Us</h2>
           </div>
@@ -54,8 +58,24 @@
           </div>
         </div>
 
-        <%# CHECK THIS OUT %>
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <div class="headline">
+            <h2>Supplier</h2>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <img src="<%= asset_path 'allat.png' %>" width="60">
+                &nbsp;
+                
+                <img src="<%= asset_path 'ups.gif' %>" width="40">
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <%# Follow Us %>
+        <div class="col-md-3">
           <div class="headline">
             <h2>Follow Us</h2>
           </div>
@@ -64,6 +84,7 @@
               <li>
                   <a class="btn btn-social-icon btn-facebook" href="http://goo.gl/g4zQ51" target="sub"><i class="fa fa-facebook"></i></a>
                   <a class="btn btn-social-icon btn-instagram" href="http://instagram.com/oppabox" target="sub"><i class="fa fa-instagram"></i></a>
+                  <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/oppabox" target="sub"><i class="fa fa-twitter"></i></a>
               </li>
             </ul>
           </div>

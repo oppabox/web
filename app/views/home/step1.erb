@@ -1,22 +1,67 @@
 <div class="container">
   <h2 class="text-center form-signin-heading"><%= t('signup_step1') %></h2>
   <hr>
-<div class="jumbotron" style="height:300px;overflow:scroll">
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin semper eleifend pretium. Nam sit amet mi pellentesque, dignissim risus ut, rhoncus ex. Donec nisi ligula, imperdiet vel suscipit eu, imperdiet et nisi. Aenean tincidunt, nunc eget rutrum aliquam, elit elit iaculis diam, ac mattis tellus massa vel ante. Curabitur imperdiet accumsan quam, ultricies scelerisque quam ullamcorper ut. Vestibulum nec facilisis lorem, a porta urna. Cras pellentesque consectetur odio, in congue magna fringilla nec. Phasellus ultricies ligula ut dolor molestie bibendum. Aenean et condimentum urna, sed pellentesque nunc. Etiam tristique, eros quis tincidunt pharetra, mi nibh aliquet tortor, id dignissim felis tellus vel eros. Proin maximus lorem eu ante finibus lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a odio varius, pulvinar diam sed, sollicitudin odio. Cras dignissim sem augue, varius fringilla mi varius sit amet.
-
-Cras pellentesque eros turpis. Nulla sit amet orci sit amet nulla elementum dapibus sit amet sit amet tortor. Donec aliquam, nulla at porttitor porttitor, metus ligula commodo tortor, scelerisque feugiat neque orci nec leo. Curabitur sit amet tincidunt turpis, vel mollis lectus. In hendrerit dolor vel egestas viverra. Donec venenatis scelerisque euismod. Donec faucibus, nunc ac dignissim porttitor, turpis nulla scelerisque augue, nec facilisis leo sapien eu justo. Nunc eget est eu ligula rutrum vestibulum. Aliquam gravida, turpis et consequat consequat, ipsum dui laoreet odio, eu condimentum urna ligula vitae nulla.
-
-Suspendisse metus libero, sollicitudin vel tincidunt vitae, lobortis id tortor. Ut a magna pellentesque dolor vehicula bibendum vel dignissim nisi. Mauris ut nisi vel lorem maximus porta. Sed tincidunt tellus felis, eget interdum nulla volutpat eu. Etiam ligula metus, ultricies ornare luctus sit amet, iaculis sit amet mauris. Integer mi felis, tincidunt vel sem non, euismod semper lectus. Fusce laoreet mauris odio, vitae mollis purus interdum sit amet. Suspendisse vulputate quis libero eu porttitor. Sed ornare porttitor faucibus. Integer turpis tellus, ultricies sit amet aliquet quis, auctor vitae odio. Mauris vestibulum gravida ligula, et sollicitudin odio commodo a. In scelerisque sit amet velit vitae tincidunt. Praesent sodales maximus urna.
-
-Donec scelerisque augue eu dolor rhoncus, nec scelerisque velit laoreet. Vestibulum mauris erat, feugiat vitae lacus quis, rhoncus varius nisl. Nulla maximus, mauris sit amet imperdiet sagittis, magna tortor fringilla tortor, condimentum commodo nisi erat quis magna. Maecenas lacus enim, hendrerit a scelerisque eget, laoreet et leo. Donec malesuada lacus a nisl condimentum, quis sagittis dui accumsan. Ut mauris velit, vehicula non leo quis, pharetra laoreet odio. Praesent vehicula risus id velit faucibus varius. Suspendisse iaculis, purus a lobortis mattis, eros enim commodo risus, a rhoncus odio ex eget sapien. Quisque ut leo risus. Nulla pulvinar turpis eu porta fermentum. Pellentesque lacinia efficitur odio, et ullamcorper eros imperdiet sit amet.
-
-Phasellus efficitur quis libero in maximus. Vestibulum at sollicitudin dui, quis aliquet ligula. Mauris tristique mauris ac tincidunt accumsan. Sed gravida, mi a accumsan faucibus, purus leo egestas velit, et maximus purus dui ut neque. Aliquam tristique molestie dapibus. Mauris at ultrices risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras leo sapien, ultrices scelerisque lacinia vitae, facilisis vel justo.
-</p>
-</div>
-<div class="text-center" style="margin-top:50px;margin-bottom:50px;">
-  <button type="button" class="btn btn-lg btn-default"><%= t('toa_disaggreement') %></button>
-  &nbsp; &nbsp; &nbsp;
-  <a href="/home/step2"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('toa_aggreement')%>&nbsp;</button></a>
-</div>
+  <% 
+	if params[:lo] == "zh"					#중국어
+		user_agreement_line = 198
+	elsif params[:lo] == "en"				#영어
+		privacy_policy_line = 15
+		user_agreement_line = 148
+	elsif params[:lo] == "ja"				#일본어
+		privacy_policy_line = 17
+		user_agreement_line = 148
+	elsif params[:lo] == "ko"				#한국어
+		privacy_policy_line = 112
+		user_agreement_line = 134
+	else														#default 한국어
+		privacy_policy_line = 112
+		user_agreement_line = 134
+	end
+	
+	# 한국, 미국, 일본
+	if params[:lo] != "zh" %>
+	<div class="jumbotron agreement">
+		<%0.upto(privacy_policy_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					privacy_policy = "privacy_policy_"+x
+					t(privacy_policy) 
+				%>
+			</p>
+		<%end%>
+	</div>
+	<br>
+	<div class="jumbotron agreement">
+		<% 1.upto(user_agreement_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					user_agreement = "user_agreement_"+x
+					t(user_agreement) 
+				%>
+			</p>
+		<%end%>
+	</div>
+	
+	<%
+	# 중국은 이용약관만 있습니다.
+	else %>
+	<div class="jumbotron agreement">
+		<% 1.upto(user_agreement_line) do |i| %>
+			<p>
+				<%= 
+					x=i.to_s
+					user_agreement = "user_agreement_"+x
+					t(user_agreement) 
+				%>
+			</p>
+		<%end%>
+	</div>
+	<%end%>
+	<div class="text-center" style="margin-top:50px;margin-bottom:50px;">
+	  <button type="button" class="btn btn-lg btn-default"><%= t('toa_disaggreement') %></button>
+	  &nbsp; &nbsp; &nbsp;
+	  <a href="/home/step2"><button type="button" class="btn btn-lg btn-primary">&nbsp;<%= t('toa_aggreement')%>&nbsp;</button></a>
+	</div>
 </div> <!-- /container -->

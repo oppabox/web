@@ -1,0 +1,29 @@
+<% 
+	if params[:lo] == "zh"					#중국어
+		user_agreement_line = 198
+	elsif params[:lo] == "en"				#영어
+		user_agreement_line = 148
+	elsif params[:lo] == "ja"				#일본어
+		user_agreement_line = 148
+	elsif params[:lo] == "ko"				#한국어
+		user_agreement_line = 134
+	else														#default 한국어
+		user_agreement_line = 134
+	end
+%>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2><%= t('user_agreement_1') %></h2>
+			<hr>
+			<div class="jumbotron agreement">
+				<% 1.upto(user_agreement_line) do |i| 
+					x=i.to_s
+					terms="user_agreement_"+x %>
+				<p><%=t(terms)%></p>
+				<%end%>
+			</div>
+		</div>
+	</div>
+</div>

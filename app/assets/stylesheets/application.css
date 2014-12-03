@@ -6,8 +6,10 @@
  *= require mypage
  *= require pay
  */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 body {
+	font-family: 'Nanum Gothic', sans-serif;
   padding-top: 70px;
   font-family: sans-serif;
 }

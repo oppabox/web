@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   get "item/:name", to: "item#view"
 
   #home
+  get "terms"     , to: "home#terms"
+  get "privacy"   , to: "home#privacy"
   get "home/main"
   get "home/step1"
   get "home/step2"
