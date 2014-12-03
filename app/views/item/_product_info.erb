@@ -22,7 +22,7 @@
       <p><%= t('product_info_original_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= number_with_delimiter(@item.original_price) %>원</p>
+      <p><%= number_with_delimiter(@item.original_price) %></p>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
       <p><%= t('product_info_sale_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price ) %>원</p>
+      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price ) %></p>
     </div>
   </div>
   <hr>
@@ -60,7 +60,18 @@
       <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="1000" value="1" data-id="<%=@item.id%>">
     </div>
   </div>
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <p>옵션</p>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <select name="sel_option" id="sel_option" class="form-control">
+          <option value="option">옵션</option>
+      </select>
+    </div>
+  </div>
 
+  
   <div style="height:20px;"></div>
 
   <div class="row mar-left mar-right">

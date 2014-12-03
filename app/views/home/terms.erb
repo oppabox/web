@@ -17,11 +17,13 @@
 		<div class="col-md-12">
 			<h2><%= t('user_agreement_1') %></h2>
 			<hr>
-			<% 2.upto(user_agreement_line) do |i| 
-				x=i.to_s
-				terms="user_agreement_"+x %>
-			<p><%=t(terms)%></p>
-			<%end%>
+			<div class="jumbotron agreement">
+				<% 1.upto(user_agreement_line) do |i| 
+					x=i.to_s
+					terms="user_agreement_"+x %>
+				<p><%=t(terms)%></p>
+				<%end%>
+			</div>
 		</div>
 	</div>
 </div>

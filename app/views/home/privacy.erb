@@ -1,24 +1,26 @@
  <% 
-	if params[:lo] == "en"				#영어
-		privacy_policy_line = 15
-	elsif params[:lo] == "ja"				#일본어
-		privacy_policy_line = 17
-	elsif params[:lo] == "ko"				#한국어
-		privacy_policy_line = 112
-	else														#default 한국어
-		privacy_policy_line = 112
-	end
+  if params[:lo] == "en"        #영어
+    privacy_policy_line = 15
+  elsif params[:lo] == "ja"       #일본어
+    privacy_policy_line = 17
+  elsif params[:lo] == "ko"       #한국어
+    privacy_policy_line = 112
+  else                            #default 한국어
+    privacy_policy_line = 112
+  end
 %>
 <div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<h2><%= t('privacy_policy_0') %></h2>
-			<hr>
-			<% 1.upto(privacy_policy_line) do |i| 
-				x=i.to_s
-				privacy="privacy_policy_"+x %>
-			<p><%=t(privacy)%></p>
-			<%end%>
-		</div>
-	</div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2><%= t('privacy_policy_0') %></h2>
+      <hr>
+      <div class="jumbotron agreement">
+        <% 0.upto(privacy_policy_line) do |i| 
+          x=i.to_s
+          privacy="privacy_policy_"+x %>
+        <p><%=t(privacy)%></p>
+        <%end%>
+      </div>
+    </div>
+  </div>
 </div>
