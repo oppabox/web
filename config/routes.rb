@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  constraints subdomain: false do
+    get ':any', to: redirect(subdomain: 'www', path: '/%{any}'), any: /.*/
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ActiveAdmin.routes(self)

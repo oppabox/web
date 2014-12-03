@@ -42,7 +42,7 @@
         <%if user_signed_in?%>
           <li><a href="/mypage/"><%= t('menu_mypage') %></a></li>
           <li><a href="/mypage/basket"><%= t('menu_basket') %></a></li>
-          <li><%= link_to t('menu_logout'), destroy_user_session_path, method: :delete%></a></li>
+          <li><%= link_to t('menu_logout'), destroy_user_session_path, method: :delete%></li>
         <%else%>
           <li><a href="/home/login"><%= t('menu_login') %></a></li>
           <li><a href="/home/step1"><%= t('menu_signup') %></a></li>

@@ -11,7 +11,7 @@ class PayController < ApplicationController
     at_cavv = params[:allat_cavv]
     logger.debug "====\n" + at_result_msg.encoding.name
     ret = "<script type='text/javascript'>"
-    ret += "window.opener.ftn_approval_submit('#{at_result_cd}','#{at_result_msg.force_encoding("utf-8")}','#{$at_xid}','#{at_eci}','#{at_cavv}');"
+    ret += "window.opener.ftn_approval_submit('#{at_result_cd}','#{at_result_msg}','#{$at_xid}','#{at_eci}','#{at_cavv}');"
     ret += "window.close();"
     ret += "</script>"
     render text: ret

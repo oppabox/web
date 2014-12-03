@@ -23,7 +23,7 @@
         <input type="hidden" name="allat_product_img" value="http://">
         <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price+5000%>">
         <input type="hidden" name="allat_amt_dollar" id="allat_amt_dollar" value="<%=((@all_price+5000)/10.0).to_i%>">
-        <input type="hidden" name="allat_callback_url" value="http://oppabox.com/pay/callback">
+        <input type="hidden" name="allat_callback_url" value="http://www.oppabox.com/pay/callback">
         <input type="hidden" name="allat_currency" value="840">
         <input type="hidden" name="allat_xid" value="">
         <input type="hidden" name="allat_eci" value="">
@@ -62,9 +62,6 @@
       alert(ret.substring(8,ret.length));     <%# Message 가져오기 %>
     }
   }
-</script>
-<script type="text/javascript">
-<!--
 // Call 'AllatPay MPI Cert', 올앳페이 MPI 인증페이지 호출
 function ftn_mpi_cert_req(dfm) {
     $("#allat_amt").val($("#allat_amt_dollar").val());
@@ -88,5 +85,4 @@ function ftn_approval_submit(result_cd,result_msg,xid,eci,cavv) {
         fm.submit();
     }
 }
-//-->
 </script>
