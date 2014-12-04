@@ -93,6 +93,10 @@ class HomeController < ApplicationController
 
   end
 
+  def welcome
+
+  end
+
   def reset_password
   end
 

@@ -89,12 +89,34 @@ n.name = "925 실버 크로스 이니셜팔찌"
 n.save
 
 #SET 1 : IMAGES
+#ko
 1.upto(3) do |x|
   m = ItemImage.new
   m.item = i
   m.path = "/images/items/jewelry_box/cross/#{x}.jpg"
   m.save
 end
+# #en
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/cross/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/cross/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/cross/zh/#{x}.jpg"
+#   m.save
+# end
 
 #SET 1 : OPTIONS
 #원하는 레터링(영문 대문자 이니셜)가능
@@ -121,12 +143,34 @@ n.name = "925 실버 매듭 셋트"
 n.save
 
 #SET 2 : IMAGES
+#ko
 1.upto(3) do |x|
   m = ItemImage.new
   m.item = i
   m.path = "/images/items/jewelry_box/knot/#{x}.jpg"
   m.save
 end
+# #en
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/knot/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/knot/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/knot/zh/#{x}.jpg"
+#   m.save
+# end
 
 #SET 2 : OPTIONS
 #NONE
@@ -152,12 +196,34 @@ n.name = "Cubic brass ring"
 n.save
 
 #SET 3 : IMAGES
+#ko
 1.upto(3) do |x|
   m = ItemImage.new
   m.item = i
   m.path = "/images/items/jewelry_box/ring/#{x}.jpg"
   m.save
 end
+# #en
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/ring/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/ring/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(3) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/jewelry_box/ring/zh/#{x}.jpg"
+#   m.save
+# end
 
 #SET 3 : OPTIONS
 #사이즈 옵션표 확인 후 추가
@@ -184,10 +250,32 @@ n.name = "피부 진정 & 보습세트"
 n.save
 
 #SET 1 : IMAGES
+#ko
 m = ItemImage.new
 m.item = i
 m.path = "/images/items/beauty_box/set1/1.jpg"
 m.save
+# #en
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set1/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set1/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set1/zh/#{x}.jpg"
+#   m.save
+# end
 
 #SET 1 : OPTIONS
 #NONE
@@ -212,11 +300,32 @@ n.name = "스킨 브라이트닝 세트"
 n.save
 
 #SET 2 : IMAGES
+#ko
 m = ItemImage.new
 m.item = i
 m.path = "/images/items/beauty_box/set2/1.jpg"
 m.save
-
+# #en
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set2/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set2/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set2/zh/#{x}.jpg"
+#   m.save
+# end
 #SET 2 : OPTIONS
 #NONE
 
@@ -244,6 +353,27 @@ m = ItemImage.new
 m.item = i
 m.path = "/images/items/beauty_box/set3/1.jpg"
 m.save
+# #en
+# 1.upto(5) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set3/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(5) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set3/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(5) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set3/zh/#{x}.jpg"
+#   m.save
+# end
 
 #SET 3 : OPTIONS
 #NONE
@@ -272,7 +402,27 @@ m = ItemImage.new
 m.item = i
 m.path = "/images/items/beauty_box/set4/1.jpg"
 m.save
-
+# #en
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set4/en/#{x}.jpg"
+#   m.save
+# end
+# #ja
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set4/ja/#{x}.jpg"
+#   m.save
+# end
+# #zh
+# 1.upto(2) do |x|
+#   m = ItemImage.new
+#   m.item = i
+#   m.path = "/images/items/beauty_box/set4/zh/#{x}.jpg"
+#   m.save
+# end
 
 #DESIGN BOX
 b = Box.where(:path => "design_box").first
@@ -302,6 +452,21 @@ n.save
   m.path = "/images/items/design_box/low1/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low1/en/bag1.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low1/ja/bag1.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low1/zh/bag1.jpg"
+# m.save
 
 #IN MY BAG 1 : OPTIONS
 #NONE
@@ -332,6 +497,21 @@ n.save
   m.path = "/images/items/design_box/low2/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low2/en/bag2.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low2/ja/bag2.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/low2/zh/bag2.jpg"
+# m.save
 
 #IN MY BAG 2 :OPTIONS
 #NONE
@@ -361,6 +541,21 @@ n.save
   m.path = "/images/items/design_box/middle1/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle1/en/bag3.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle1/ja/bag3.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle1/zh/bag3.jpg"
+# m.save
 
 #IN MY BAG 3 : OPTIONS
 #NONE
@@ -390,6 +585,21 @@ n.save
   m.path = "/images/items/design_box/middle2/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle2/en/bag4.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle2/ja/bag4.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/middle2/zh/bag4.jpg"
+# m.save
 
 #IN MY BAG 4 : OPTIONS
 #NONE
@@ -419,6 +629,21 @@ n.save
   m.path = "/images/items/design_box/high1/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high1/en/bag5.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high1/ja/bag5.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high1/zh/bag5.jpg"
+# m.save
 
 #IN MY BAG 5 : OPTIONS
 #NONE
@@ -448,6 +673,21 @@ n.save
   m.path = "/images/items/design_box/high2/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high2/en/bag6.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high2/ja/bag6.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/design_box/high2/zh/bag6.jpg"
+# m.save
 
 #IN MY BAG 6 : OPTIONS
 #NONE
@@ -475,11 +715,27 @@ n.name = "Frypan"
 n.save
 
 #FRYPAN : IMAGES
-m = ItemImage.new
-m.item = i
-m.path = "/images/items/kitchen_box/frypan/frypan.jpg"
-m.save
-
+1.upto(2) do |x|
+  m = ItemImage.new
+  m.item = i
+  m.path = "/images/items/kitchen_box/frypan/#{x}.jpg"
+  m.save
+end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/frypan/en/1.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/frypan/ja/1.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/frypan/zh/1.jpg"
+# m.save
 
 #KITCHENTOOL
 i = Item.new
@@ -506,13 +762,28 @@ n.save
   m.path = "/images/items/kitchen_box/kitchentool/#{x}.jpg"
   m.save
 end
+# #en
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/kitchentool/en/1.jpg"
+# m.save
+# #ja
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/kitchentool/ja/1.jpg"
+# m.save
+# #zh
+# m = ItemImage.new
+# m.item = i
+# m.path = "/images/items/kitchen_box/kitchentool/zh/1.jpg"
+# m.save
 
 #WESTERN TABLEWARE
 #ARCHI
 i = Item.new
   i.box = b
   i.path = "archi"
-  i.logo_path = "/images/items/kitchen_box/tableware/archi/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table1/archi/thumb.jpg"
   i.original_price = "114810"
   i.sale_price = "86500"
   i.quantity = -1
@@ -529,14 +800,14 @@ n.save
 #ARCHI : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/archi/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table1/archi/main.jpg"
 m.save
 
 #GOCCIA
 i = Item.new
   i.box = b
   i.path = "goccia"
-  i.logo_path = "/images/items/kitchen_box/tableware/goccia/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table1/goccia/thumb.jpg"
   i.original_price = "182220"
   i.sale_price = "125000"
   i.quantity = -1
@@ -553,14 +824,14 @@ n.save
 #GOCCIA : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/goccia/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table1/goccia/main.jpg"
 m.save
 
 #OLIVIA
 i = Item.new
   i.box = b
   i.path = "olivia"
-  i.logo_path = "/images/items/kitchen_box/tableware/olivia/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table2/olivia/thumb.jpg"
   i.original_price = "211900"
   i.sale_price = "155000"
   i.quantity = -1
@@ -577,14 +848,14 @@ n.save
 #OLIVIA : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/olivia/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table2/olivia/main.jpg"
 m.save
 
 #PALACE
 i = Item.new
   i.box = b
   i.path = "palace"
-  i.logo_path = "/images/items/kitchen_box/tableware/palace/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table2/palace/thumb.jpg"
   i.original_price = "181320"
   i.sale_price = "135000"
   i.quantity = -1
@@ -601,14 +872,14 @@ n.save
 #PALACE : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/palace/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table2/palace/main.jpg"
 m.save
 
 #SWING
 i = Item.new
   i.box = b
   i.path = "swing"
-  i.logo_path = "/images/items/kitchen_box/tableware/swing/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table2/swing/thumb.jpg"
   i.original_price = "210770"
   i.sale_price = "155000"
   i.quantity = -1
@@ -625,14 +896,14 @@ n.save
 #SWING : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/swing/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table2/swing/main.jpg"
 m.save
 
 #SYNTHESIS
 i = Item.new
   i.box = b
   i.path = "synthesis"
-  i.logo_path = "/images/items/kitchen_box/tableware/synthesis/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table2/synthesis/thumb.jpg"
   i.original_price = "169640"
   i.sale_price = "135000"
   i.quantity = -1
@@ -649,14 +920,14 @@ n.save
 #SYNTHESIS : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/synthesis/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table2/synthesis/main.jpg"
 m.save
 
 #TULIPANI
 i = Item.new
   i.box = b
   i.path = "tulipani"
-  i.logo_path = "/images/items/kitchen_box/tableware/tulipani/thumb.jpg"
+  i.logo_path = "/images/items/kitchen_box/tableware/table1/tulipani/thumb.jpg"
   i.original_price = "103330"
   i.sale_price = "85000"
   i.quantity = -1
@@ -673,6 +944,6 @@ n.save
 #TULIPANI : IMAGES
 m = ItemImage.new
 m.item = i
-m.path = "/images/items/kitchen_box/tableware/tulipani/main.jpg"
+m.path = "/images/items/kitchen_box/tableware/table1/tulipani/main.jpg"
 m.save
 

@@ -26,7 +26,31 @@
   padding-left:15px;
   font-size:20px;
 }
-
+.success_tot_price{
+  float:right;
+}
+.success_tot_price strong{
+  color:#f14949;
+}
+.success_info{
+  margin-left:30px;
+}
+.success_info label{
+  margin-right: 10px;
+  color:#892;
+}
+.success_thanks{
+  font-size:25px;
+  letter-spacing:-2px;
+}
+.success_thanks label{
+  font-size:40px;
+  letter-spacing:-1px;
+}
+.success_thanks strong{
+  color:#f14949;
+  font-size:50px;
+}
 // order
 
 .order_link{

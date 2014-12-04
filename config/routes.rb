@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get "home/step1"
   get "home/step2"
   get "home/step3"
+  get "home/welcome"
   get "home/login"
 
   #box
