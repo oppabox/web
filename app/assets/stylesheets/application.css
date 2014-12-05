@@ -7,11 +7,28 @@
  *= require pay
  */
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
 
 body {
-	font-family: 'Nanum Gothic', sans-serif;
+	font-family: 'Noto Sans',sans-serif, !important;
   padding-top: 70px;
   font-family: sans-serif;
+}
+
+::selection {
+	background: #444;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+::-moz-selection {
+	background: #444;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+::-webkit-selection {
+	background: #444;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 }
 
 footer {
