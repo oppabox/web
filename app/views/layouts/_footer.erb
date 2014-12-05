@@ -1,10 +1,8 @@
 <footer>
-
   <%# 상단 %>
   <div class="us_info">
     <div class="container">
       <div class="row">
-
         <%# Company Info %>
         <div class="col-md-3">
           <div class="headline">
@@ -12,21 +10,20 @@
           </div>
           <div>
             <ul class="company_ul">
-            <%#
               <li>
-                <a href="#">Oppabox Crop.</a>
+                <p><%= t('company_name') %> </p>
               </li>
-            %>
-
               <li>
-                <a href="/terms"><%= t('company_agreement_link') %></a>
+                <p><%= t('ceo') %>/<%= t('company_privacy') %></p>
               </li>
-                
+              <% if I18n.locale == :ko %>
               <li>
-                <% if params[:lo] != "zh"%>
-                <a href="/privacy"><%= t('company_privacy_link') %></a>
-                <%end%>
+                <p><%= t('registration_number') %></p>
               </li>
+              <li>
+                <p><%= t('market_number') %></p>
+              </li>
+              <% end %>
             </ul>
           </div>
         </div>
@@ -37,23 +34,12 @@
             <h2>Contact Us</h2>
           </div>
           <div>
-            <ul class="contact_ul">
+            <ul class="company_ul">
+              <li><p>Call. +82-2-794-5558</p></li>
+              <li><p>Email. privacy@oppabox.com</p></li>
               <li>
-                <p>Call. 02-794-5558</p>
+                <p>Address.<br><%= t('company_address') %></p>
               </li>
-              
-              <li>
-                <p>Email. privacy@oppabox.com</p>
-              </li>
-
-              <li>
-                <p>
-                  Address.
-                  <br>
-                  <%= t('company_address') %>
-                </p>
-              </li>
-
             </ul>
           </div>
         </div>
@@ -67,7 +53,6 @@
               <li>
                 <img src="<%= asset_path 'allat.png' %>" width="60">
                 &nbsp;
-                
                 <img src="<%= asset_path 'ups.gif' %>" width="40">
               </li>
             </ul>
@@ -96,16 +81,7 @@
   <%# 하단 %>
   <div class="container company_box">
     <div class="row">
-      <p class="company_txt text-left">
-        <%= t('company_name') %> | <%= t('ceo') %><%= t('company_privacy') %>
-        <% if I18n.locale == :ko %>
-        <%= t('registration_number') %>
-        <% end %>
-        <%= t('company_address') %>
-      </p>
-      <div>
-        <p class="copyright_txt text-left"><%= t('company_copyright').html_safe %>.</p>
-      </div>
+      <p class="text-center"><%= t('company_copyright').html_safe %>.</p>
     </div>
   </div>
 
