@@ -5,12 +5,16 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale, :current_translations
   def set_locale
-    I18n.locale = params[:lo] || I18n.default_locale
+    I18n.locale = cookies[:locale] || I18n.default_locale
+    puts "#####################################"
+    puts I18n.locale
+    puts "#####################################"
   end
 
   def current_translations
     translations ||= I18n.backend.send(:translations)
-    @current_translations = translations[params[:lo]] || translations[I18n.default_locale]
+    @current_translations = translations[cookies[:locale]] || translations[I18n.default_locale]
+
   end
 
   def login_check
