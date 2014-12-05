@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>oppabox</title>
-    <style>
-      body {
-        background-color:#000;
-      }
-      .valn {
-        margin-top: 160px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="valn">
-      <img src="img.png">
+<html> 
+  <head> 
+  <title>oppabox</title> 
+  <link href="/css/bootstrap_theme3.min.css" media="all" rel="stylesheet" />
+  <style type="text/css"> 
+  html,body {margin:0 ; padding:0 ; width:100% ; height:100% ; overflow:auto; background: #000;} 
+  .container {width:100% ; height:100%} 
+  .container_table {display:table ; width:100% ; height:100%} 
+  .container_cell {display:table-cell ; vertical-align:middle ; text-align:center} 
+  .img-center { margin: 0 auto; text-align: center;}
+  </style> 
+
+  <!--[if IE]> 
+  <style type="text/css"> 
+  .container {position:relative} 
+  .container_table {position:absolute ; top:50% ; width:100% ; height:0} 
+  .container_cell {position:relative ; top:-50%} 
+  </style> 
+  <![endif]--> 
+
+  </head> 
+
+  <body> 
+    <div class="container"> 
+      <div class="container_table"> 
+        <div class="container_cell"> 
+            <img src="img.png" class="img-responsive img-center">
+        </div> 
+      </div> 
     </div>
-  </body>
-</html>
+  </body> 
+</html> 
