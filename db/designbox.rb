@@ -13,11 +13,14 @@ def designbox
   i.save
 
 #IN MY BAG 1 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 1"
-  n.save
+  name = {"ko" => "In My Bag 1", "en" => "In My Bag 1", "cn" => "In My Bag 1", "ja" => "In My Bag 1"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #IN MY BAG 1 : OPTIONS
 #NONE
@@ -34,11 +37,14 @@ def designbox
   i.save
 
 #IN MY BAG 2 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 2"
-  n.save
+  name = {"ko" => "In My Bag 2", "en" => "In My Bag 2", "cn" => "In My Bag 2", "ja" => "In My Bag 2"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #IN MY BAG 2 :OPTIONS
 #NONE
@@ -54,11 +60,14 @@ def designbox
   i.save
 
 #IN MY BAG 3 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 3"
-  n.save
+  name = {"ko" => "In My Bag 3", "en" => "In My Bag 3", "cn" => "In My Bag 3", "ja" => "In My Bag 3"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #IN MY BAG 3 : OPTIONS
 #NONE
@@ -74,11 +83,14 @@ def designbox
   i.save
 
 #IN MY BAG 4 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 4"
-  n.save
+  name = {"ko" => "In My Bag 4", "en" => "In My Bag 4", "cn" => "In My Bag 4", "ja" => "In My Bag 4"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #IN MY BAG 4 : OPTIONS
 #NONE
@@ -94,11 +106,15 @@ def designbox
   i.save
 
 #IN MY BAG 5 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 5"
-  n.save
+  name = {"ko" => "In My Bag 5", "en" => "In My Bag 5", "cn" => "In My Bag 5", "ja" => "In My Bag 5"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
+
 
 #IN MY BAG 5 : OPTIONS
 #NONE
@@ -114,11 +130,14 @@ def designbox
   i.save
 
 #IN MY BAG 6 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "In My Bag 6"
-  n.save
+  name = {"ko" => "In My Bag 6", "en" => "In My Bag 6", "cn" => "In My Bag 6", "ja" => "In My Bag 6"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #IN MY BAG 6 : OPTIONS
 #NONE

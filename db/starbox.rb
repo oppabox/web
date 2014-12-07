@@ -12,7 +12,7 @@ def starbox
   i.save
 
 #김재중박스 : LOCALE NAME
-  name = {"ko" => "김재중박스", "en" => "JaeJoong Box", "cn" => "김재중박스", "ja" => "김재중"}
+  name = {"ko" => "김재중박스", "en" => "JaeJoong Box", "cn" => "김재중박스", "ja" => "김재중박스"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i

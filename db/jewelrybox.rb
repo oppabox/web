@@ -14,11 +14,14 @@ def jewelrybox
   i.save
 
 #SET 1 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "925 실버 크로스 이니셜팔찌"
-  n.save
+  name = {"ko" => "925 실버 크로스 이니셜팔찌", "en" => "925 실버 크로스 이니셜팔찌", "cn" => "925 실버 크로스 이니셜팔찌", "ja" => "925 실버 크로스 이니셜팔찌"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SET 1 : OPTIONS
 #원하는 레터링(영문 대문자 이니셜)가능
@@ -37,11 +40,14 @@ def jewelrybox
   i.save
 
 #SET 2 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "925 실버 매듭 셋트"
-  n.save
+  name = {"ko" => "925 실버 매듭 세트", "en" => "925 실버 매듭 세트", "cn" => "925 실버 매듭 세트", "ja" => "925 실버 매듭 세트"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SET 2 : OPTIONS
 #NONE
@@ -64,4 +70,12 @@ def jewelrybox
   n.locale = "ko"
   n.name = "Cubic brass ring"
   n.save
+  name = {"ko" => "큐빅 브라스링", "en" => "Cubic Brass Ring", "cn" => "Cubic Brass Ring", "ja" => "Cubic Brass Ring"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 end

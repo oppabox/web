@@ -13,12 +13,14 @@ def beautybox
   i.save
 
 #SET 1 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "피부 진정 & 보습세트"
-  n.save
-
+  name = {"ko" => "피부진정 & 보습세트", "en" => "피부진정 & 보습세트", "cn" => "피부진정 & 보습세트", "ja" => "피부진정 & 보습세트"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 #SET 1 : OPTIONS
 #NONE
 
@@ -34,11 +36,14 @@ def beautybox
   i.save
 
 #SET 2 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "스킨 브라이트닝 세트"
-  n.save
+  name = {"ko" => "스킨 브라이트닝 세트", "en" => "스킨 브라이트닝 세트", "cn" => "스킨 브라이트닝 세트", "ja" => "스킨 브라이트닝 세트"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SET 3
   i = Item.new
@@ -52,11 +57,14 @@ def beautybox
   i.save
 
 #SET 3 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "뷰티버라이어티 세트"
-  n.save
+  name = {"ko" => "뷰티 버라이어티 세트", "en" => "뷰티 버라이어티 세트", "cn" => "뷰티 버라이어티 세트", "ja" => "뷰티 버라이어티 세트"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SET 3 : OPTIONS
 #NONE
@@ -73,9 +81,12 @@ def beautybox
   i.save
 
 #SET 4 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "월드 베스트 세트"
-  n.save
+  name = {"ko" => "월드 베스트 세트", "en" => "월드 베스트 세트", "cn" => "월드 베스트 세트", "ja" => "월드 베스트 세트"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 end

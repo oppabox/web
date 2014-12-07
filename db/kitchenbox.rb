@@ -13,12 +13,14 @@ def kitchenbox
   i.save
 
 #FRYPAN : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Frypan"
-  n.save
-
+  name = {"ko" => "프라이팬", "en" => "Frypan", "cn" => "Frypan", "ja" => "Frypan"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #KITCHENTOOL
   i = Item.new
@@ -31,11 +33,14 @@ def kitchenbox
   i.save
 
 #KITCHENTOOL : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "KitchenTool"
-  n.save
+  name = {"ko" => "키친툴", "en" => "Kitchen Tool", "cn" => "키친툴", "ja" => "키친툴"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #WESTERN TABLEWARE
 #ARCHI
@@ -49,11 +54,14 @@ def kitchenbox
   i.save
 
 #ARCHI : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Archi"
-  n.save
+  name = {"ko" => "아키", "en" => "Archi", "cn" => "Archi", "ja" => "Archi"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #GOCCIA
   i = Item.new
@@ -66,12 +74,14 @@ def kitchenbox
   i.save
 
 #GOCCIA : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Goccia"
-  n.save
-
+  name = {"ko" => "고씨아", "en" => "Goccia", "cn" => "Goccia", "ja" => "Goccia"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #OLIVIA
   i = Item.new
@@ -84,12 +94,14 @@ def kitchenbox
   i.save
 
 #OLIVIA : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Olivia"
-  n.save
-
+  name = {"ko" => "올리비아", "en" => "Olivia", "cn" => "Olivia", "ja" => "Olivia"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #PALACE
   i = Item.new
@@ -102,12 +114,14 @@ def kitchenbox
   i.save
 
 #PALACE : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Palace"
-  n.save
-
+  name = {"ko" => "팰러스", "en" => "Palace", "cn" => "Palace", "ja" => "Palace"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SWING
   i = Item.new
@@ -120,11 +134,14 @@ def kitchenbox
   i.save
 
 #SWING : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Swing"
-  n.save
+  name = {"ko" => "스윙", "en" => "Swing", "cn" => "Swing", "ja" => "Swing"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #SYNTHESIS
   i = Item.new
@@ -137,11 +154,14 @@ def kitchenbox
   i.save
 
 #SYNTHESIS : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Synthesis"
-  n.save
+  name = {"ko" => "신테시스", "en" => "Synthesis", "cn" => "Synthesis", "ja" => "Synthesis"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #TULIPANI
   i = Item.new
@@ -154,10 +174,13 @@ def kitchenbox
   i.save
 
 #TULIPANI : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "Tulipani"
-  n.save
+  name = {"ko" => "튤리파니", "en" => "Tulipani", "cn" => "Tulipani", "ja" => "Tulipani"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 end
