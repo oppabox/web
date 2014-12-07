@@ -147,6 +147,8 @@ en:
   total_payment_product_price: "Total Product Cost"
   total_payment_delivery_price: "Total Shipping Cost"
   total_payment_billing_price: "Sub Total"
+  total_payment_for_korean: "for international customers"
+  total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "Proceed"
 
   order_confirm: "Order Confirmation"

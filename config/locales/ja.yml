@@ -148,6 +148,8 @@ ja:
   total_payment_product_price: "商品の総額"
   total_payment_delivery_price: "輸送費総額"
   total_payment_billing_price: "支払総額"
+  total_payment_for_korean: "for international customers"
+  total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "支払い"
 
   order_confirm: "注文内容の確認"

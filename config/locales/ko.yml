@@ -150,6 +150,8 @@ ko:
   total_payment_product_price: "총 상품 비용"
   total_payment_delivery_price: "총 배송 비용"
   total_payment_billing_price: "총 결제 금액"
+  total_payment_for_korean: "국내 결제"
+  total_payment_for_nonkorean: "해외 결제"
   total_payment_success: "결제하기"
 
   order_confirm: "주문확인"

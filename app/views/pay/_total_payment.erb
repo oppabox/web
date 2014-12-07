@@ -20,10 +20,17 @@
 </div>
 <hr>
 <div class="row">
-  <div class="col-xs-6 col-md-6 col-xs-offset-3 col-md-offset-3"> 
+  <div class="col-xs-3 col-md-3 col-xs-offset-3 col-md-offset-3"> 
     <div id="krw_payment">
-      <button type="submit" class="btn btn-danger" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_success') %></button>
+    <button type="submit" class="btn btn-danger" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_for_korean') %></button>
     </div>
+  </div>
+  <div class="col-xs-3 col-md-3"> 
+    <div id="krw_payment">
+    <button type="submit" class="btn btn-danger" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_for_nonkorean') %></button>
+    </div>
+  </div>
+  <div class="col-xs-3 col-md-3"> 
     <div id="usd_payment">
       <p>Verified by Visa 혹은 MasterCard SecureCode에 등록을 하지 않았으면 사용 인증을 먼저 받아야합니다. 사전 승인은 결제 과정에 하실 수 있거나 비자 혹은 마스타카드 웹사이트에서 미리 승인을 받을 수 있습니다.</p>
       <p>If you haven't yet registered with Verified by Visa or MasterCard SecureCode, you'll need to activate this feature first. You can do this during the payment process, or activate it in advance through the <a href="https://usa.visa.com/personal/security/vbv/index.jsp?ep=v_sym_verifiedbyvisa" target="_blank">Visa</a> or <a href="http://www.mastercard.us/support/securecode.html" target="_blank">MasterCard</a> website.</p>

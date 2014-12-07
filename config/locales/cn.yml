@@ -148,6 +148,8 @@ cn:
   total_payment_product_price: "总商品费"
   total_payment_delivery_price: "总配送费"
   total_payment_billing_price: "总结算额"
+  total_payment_for_korean: "for international customers"
+  total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "结账"
 
   order_confirm: "确认购买"
