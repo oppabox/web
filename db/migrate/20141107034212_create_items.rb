@@ -4,8 +4,6 @@ class CreateItems < ActiveRecord::Migration
       t.integer     :box_id
       t.string      :path
 
-      t.string      :logo_path
-
       t.integer     :original_price
       t.integer     :sale_price
       t.boolean     :show_original_price
