@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
   before_action :set_locale, :current_translations
   def set_locale
     I18n.locale = cookies[:locale] || I18n.default_locale
-    puts "#####################################"
-    puts I18n.locale
-    puts "#####################################"
+    if !["ko", "en", "cn", "ja"].include?(I18n.locale.to_s)
+      I18n.locale = I18n.default_locale
+    end
   end
 
   def current_translations

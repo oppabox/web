@@ -1,5 +1,4 @@
 def starbox
-#STAR BOX
   b = Box.where(:path => "star_box").first
 
 #김재중박스
@@ -14,11 +13,14 @@ def starbox
   i.save
 
 #김재중박스 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "김재중"
-  n.save
+  name = {"ko" => "김재중박스", "en" => "JaeJoong Box", "cn" => "김재중박스", "ja" => "김재중"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #김재중박스 : IMAGES
   1.upto(2) do |x|
@@ -42,11 +44,14 @@ def starbox
   i.save
 
 #이민호박스 : LOCALE NAME
-  n = ItemName.new
-  n.item = i
-  n.locale = "ko"
-  n.name = "이민호"
-  n.save
+  name = {"ko" => "이민호박스", "en" => "Minho Box", "cn" => "이민호박스", "ja" => "이민호박스"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
 
 #이민호박스 : IMAGES
   1.upto(4) do |x|
