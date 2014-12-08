@@ -11,7 +11,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   
     alias_method :facebook, :all
-    alias_method :weibo, :all
+  # alias_method :weibo, :all
+  # alias_method :twitter, :all
   # def facebook
   #   # You need to implement the method below in your model (e.g. app/models/user.rb)
   #   @user = User.from_omniauth(request.env["omniauth.auth"])

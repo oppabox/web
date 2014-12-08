@@ -9,7 +9,8 @@
     <input id="signin_password" type="password" class="form-control user-info-input" required>
     <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
     <button class="btn btn-lg btn-default btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
-    <%= link_to t('sign_in_with_facebook'), user_omniauth_authorize_path(:facebook)%>
-    <%= link_to t('sign_in_with_weibo'), user_omniauth_authorize_path(:weibo)%>
+
+    <div style="height:10px;">&nbsp;</div>
+    <%= link_to "<button class='btn btn-sm btn-default btn-block user-info-submit' id='signup_step2_button'>#{t('sign_in_with_facebook')}</button>".html_safe, user_omniauth_authorize_path(:facebook)%>
   </div>
 </div> <!-- /container -->
