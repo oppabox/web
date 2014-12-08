@@ -19,6 +19,7 @@ en:
   signup_step1: "Terms of Agreement"
   signup_step2: "Create your Account"
   signup_step3: "Additional Information"
+  signup_choice: "회원 가입 방법 선택"
   toa_aggreement: "Agree"
   toa_disaggreement: "Disagree"
   signup_step3_address: "Address"

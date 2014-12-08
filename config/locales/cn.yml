@@ -20,6 +20,7 @@ cn:
   signup_step1: "OPPA BOX同意条款"
   signup_step2: "基本输入项目"
   signup_step3: "航运信息输入"
+  signup_choice: "회원 가입 방법 선택"
   toa_aggreement: "我同意"
   toa_disaggreement: "我不同意"
   signup_step3_address: "输入地址"

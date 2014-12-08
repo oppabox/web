@@ -1,0 +1,55 @@
+<div style="height:20px;"></div>
+<div class="row">
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px"><%= t('total_payment_product_price') %></p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(@all_price) -%></p> </div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-md-6"> <p class="text-right" style="margin-right:20px"><%= t('total_payment_delivery_price') %></p></div>
+  <div class="col-xs-6 col-md-6"> <p class="text-left" style="margin-left:20px"><%= number_with_delimiter(5000) -%></p></div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3 col-md-6 col-md-offset-3" style="height:20px;border-bottom:1px solid black;margin-bottom:20px;"></div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-md-6">
+    <p class="text-right" style="font-weight:bold;font-size:17px;margin-right:20px;"><%= t('total_payment_billing_price') %></p> 
+  </div>
+  <div class="col-xs-6 col-md-6"> 
+    <p class="text-left" style="font-weight:bold;font-size:17px;margin-left:20px;"><%= number_with_delimiter(@all_price + 5000) -%> (or $ <%= number_with_delimiter((@all_price + 5000) / 1000.0 )-%>)</p>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-3 col-md-3 col-xs-offset-3 col-md-offset-3"> 
+    <div id="krw_payment">
+    <button type="submit" class="btn btn-danger" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_for_korean') %></button>
+    </div>
+  </div>
+  <div class="col-xs-3 col-md-3"> 
+    <div id="krw_payment">
+    <button type="submit" class="btn btn-danger" style="width:100%" onClick="javascript:billing(document.fm);"><%= t('total_payment_for_nonkorean') %></button>
+    </div>
+  </div>
+  <div class="col-xs-3 col-md-3"> 
+    <div id="usd_payment">
+      <p>Verified by Visa 혹은 MasterCard SecureCode에 등록을 하지 않았으면 사용 인증을 먼저 받아야합니다. 사전 승인은 결제 과정에 하실 수 있거나 비자 혹은 마스타카드 웹사이트에서 미리 승인을 받을 수 있습니다.</p>
+      <p>If you haven't yet registered with Verified by Visa or MasterCard SecureCode, you'll need to activate this feature first. You can do this during the payment process, or activate it in advance through the <a href="https://usa.visa.com/personal/security/vbv/index.jsp?ep=v_sym_verifiedbyvisa" target="_blank">Visa</a> or <a href="http://www.mastercard.us/support/securecode.html" target="_blank">MasterCard</a> website.</p>
+      <input type="text" class="form-control" name="allat_card_no" value="" size="19" maxlength="16" placeholder="Input card number"><br><br>
+      <input type="button" class="btn btn-primary" value="Checkout" name="app_btn" style="width:100%" onclick="javascript:ftn_mpi_cert_req(document.fm);">
+    </div>
+  </div>
+</div>
+<script>
+function changePayment() {
+  if ($("#signup_country").val() == "KR") {
+    $("#krw_payment").show();
+    $("#usd_payment").hide();
+    $("#at_shop_id").val("oppabox");
+  } else {
+    $("#krw_payment").hide();
+    $("#usd_payment").show();
+    $("#at_shop_id").val("usd_oppbox");
+  }
+}
+changePayment();
+</script>

@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   get "home/step1"
   get "home/step2"
   get "home/step3"
+  get "home/signup_choice"
+  get "home/add_email_and_nationality"
   get "home/welcome"
   get "home/login"
 

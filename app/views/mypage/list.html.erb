@@ -3,6 +3,9 @@
     <%= render :partial => '/mypage/left_list' %>
     <div class="col-md-10">
       <hr>
+      <% if current_user.purchases.size == 0 %>
+        구매 내역이 없습니다.
+      <% end %>
       <% current_user.purchases.each do |purchase| %>
       <table cellspacing="0" cellpadding="0" width="725"class="table table-bordered th-center">
         <colgroup>

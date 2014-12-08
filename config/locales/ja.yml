@@ -20,6 +20,7 @@ ja:
   signup_step1: "オパボックスの約款同意"
   signup_step2: "基本入力事項"
   signup_step3: "配送情報の入力"
+  signup_choice: "회원 가입 방법 선택"
   toa_aggreement: "同意します。"
   toa_disaggreement: "同意しません。"
   signup_step3_address: "住所入力"

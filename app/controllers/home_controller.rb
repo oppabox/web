@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :login_check,       only: [:step3] 
+  before_action :login_check,       only: [:step3, :add_email_and_nationality] 
   before_action :login_check_ajax,  only: [:api_step3]
 
   def index
@@ -34,9 +34,27 @@ class HomeController < ApplicationController
   def step1
 
   end
+
+  def signup_choice
+    puts cookies.inspect
+    if cookies[:aggreement] != "true"
+      redirect_to "/home/step1"
+    end
+  end
+
+  def add_email_and_nationality
+    cookies.delete(:aggreement)
+
+  end
   
   def step2
+    if cookies[:aggreement] != "true"
+      redirect_to "/home/step1"
+    end
+  end
 
+  def step3
+    cookies.delete(:aggreement)
   end
    
   def api_step2
@@ -91,9 +109,6 @@ class HomeController < ApplicationController
     render :json => ret
   end
 
-  def step3
-
-  end
 
   def welcome
 
