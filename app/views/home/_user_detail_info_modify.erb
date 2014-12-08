@@ -1,23 +1,37 @@
 <div class="row">
   <div class="col-md-4 col-xs-6">
     <label><%= t('user_detail_recipient') %></label>
-    <input name="allat_recp_nm" id="signup_name" value="<%=current_user.name || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= t('user_detail_recipient_name') %>" required autofocus>
+    <input name="userrealname" id="signup_name" value="<%=current_user.name || ""%>" type="text" class="form-control" placeholder="<%= t('user_detail_recipient_name') %>" required autofocus>
   </div>
 </div>
 <div style="height:20px;">&nbsp;</div>
 <div class="row">
   <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_phonenumber') %></label>
-    <input name="phonenumber" id="signup_phonenumber" value="<%=current_user.phonenumber || ""%>" style="width:90%" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
+    <input name="phonenumber" id="signup_phonenumber" value="<%=current_user.phonenumber || ""%>" type="text" class="form-control" placeholder="<%= t('signup_step3_phonenumber') %>" required>
   </div>
   <div class="col-md-4 col-xs-6">
     <label><%= t('signup_step3_postcode') %></label>
-    <input name="postcode" id="signup_postcode" value="<%=current_user.postcode || ""%>" style="width:90%;" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+    <input name="postcode" id="signup_postcode" value="<%=current_user.postcode || ""%>" type="text" class="form-control" placeholder="<%= t('signup_step3_postcode') %>" required>
+    <% if ["KR"].include? current_user.country %>
+      <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
+      <a href="#" onclick="expandDaumPostcode();return false;"><p class="text-right">우편번호 찾기</p></a>
+    <% end %>
   </div>
 </div>
+<% if !["KR"].include? current_user.country %>
 <div style="height:20px;">&nbsp;</div>
+<% else %>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div id="wrap" style="display:none;border:1px solid;height:300px;margin:5px 0;position:relative;-webkit-overflow-scrolling:touch;">
+      <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px" onclick="foldDaumPostcode()" alt="exit">
+    </div>
+  </div>
+</div>
+<% end %>
 <label><%= t('signup_step3_nationality') %></label>
-<select name="country" id="signup_country" class="form-control" onChange="changePayment();">
+<select name="country" id="signup_country" class="form-control" onChange="changePayment();" disabled>
   <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
     <% selected = "" %>
     <% country = current_user.country || "KR"%>
@@ -28,9 +42,57 @@
   <% end %>
 </select>
 <div style="height:20px;">&nbsp;</div>
-<label><%= t('signup_step3_address') %></label>
+<div class="row">
+  <% if ["US", "CA"].include? current_user.country %>
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_state') %></label>
+    <input name="state" id="signup_state" type="text" value="<%=current_user.state || ""%>" class="form-control" placeholder="<%= t('signup_step3_state_compact') %>" required>
+  </div>
+  <% end %>
+  <% if !["KR"].include? current_user.country %>
+  <div class="col-md-4 col-xs-6">
+    <label><%= t('signup_step3_city') %></label>
+    <input name="city" id="signup_city" type="text" value="<%=current_user.city || ""%>" class="form-control" placeholder="<%= t('signup_step3_city_compact') %>" required>
+  </div>
+  <% end %>
+</div>
+<% if !["KR"].include? current_user.country %>
+<div style="height:20px;">&nbsp;</div>
+<% end %>
+<% if !["KR"].include? current_user.country %>
+  <label><%= t('signup_step3_rest_address') %></label>
+<% else %>
+  <label><%= t('signup_step3_address') %></label>
+<% end %>
 <div class="row">
   <div class="col-md-12 col-xs-12" style="margin-top:10px;">
-    <input name="allat_recp_addr" id="signup_address" type="text" value="<%=current_user.address || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
+    <input name="address" id="signup_address" type="text" value="<%=current_user.address || ""%>" class="form-control" placeholder="<%= t('signup_step3_address') %>" required>
   </div>
 </div>
+<% if ["KR"].include? current_user.country %>
+<script>
+    var element = document.getElementById('wrap');
+    function foldDaumPostcode() {
+        element.style.display = 'none';
+    }
+
+    function expandDaumPostcode() {
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.getElementById('signup_postcode').value = data.postcode1 + "-" + data.postcode2;
+                var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+                document.getElementById('signup_address').value = addr;
+                element.style.display = 'none';
+                document.body.scrollTop = currentScroll;
+            },
+            onresize : function(size) {
+                element.style.height = size.height + "px";
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element);
+        element.style.display = 'block';
+    }
+</script>
+<% end %>

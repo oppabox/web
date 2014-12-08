@@ -13,9 +13,11 @@ Rails.application.routes.draw do
   post "pay/callback"
   post "pay/success"
 
-  #테스트용
   get "pay/success"
   get "pay/order"
+  get "pay/korean_payment"
+  get "pay/nonkorean_payment"
+
 	post "pay/reorder_quantity"
 
   post "item/add_to_basket"
@@ -23,7 +25,6 @@ Rails.application.routes.draw do
   post "item/del_from_basket"
   post "item/del_from_order"
 	
-	#상품 테스트
   get "item/:name", to: "item#view"
 
   #home

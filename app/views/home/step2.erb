@@ -5,6 +5,18 @@
     <label><%= t('login_email_address') %></label>
     <input id="signup_email" type="email" class="form-control user-info-input" required autofocus>
     <div style="height:20px;">&nbsp;</div>
+    <label><%= t('signup_step3_nationality') %></label>
+    <select name="country" id="signup_country" class="form-control">
+      <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+        <% selected = "" %>
+        <% if n.to_s == "KR" %>
+          <% selected = %Q[selected="selected"] %>
+        <% end %>
+        <option value="<%= n %>" <%= selected %>><%= m %></option>
+      <% end %>
+    </select>
+    <p class="text-right"><%= t('signup_step3_cannot_fix') %></p>
+    <hr>
     <label><%= t('login_password') %></label>
     <input id="signup_password" type="password" class="form-control user-info-input" required>
     <div style="height:20px;">&nbsp;</div>

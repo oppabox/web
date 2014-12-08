@@ -2,87 +2,70 @@
   <div class="row">
     <div class="col-md-offset-1 col-md-10">
       <div class="row product_box" >
-        <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
         <% if @orders.empty? %>
-          <input type="hidden" name="purchase_id" value="">
-          <input type="hidden" name="allat_order_no" value="">
-          <input type="hidden" name="allat_product_cd" value="">
-          <input type="hidden" name="allat_product_nm" value="">
+          <div style="height:80px;"></div>
+          <h3 class="text-center"><%= t('total_payment_error1') %></h3>
+          <div style="height:30px;"></div>
+          <hr>
+          <div style="height:30px;"></div>
+          <h3 class="text-center"><%= t('total_payment_error2') %></h3>
+          <div style="height:40px;"></div>
         <% else %>
+          <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
           <input type="hidden" name="purchase_id" value="<%=@orders.first.purchase.id%>">
           <input type="hidden" name="allat_order_no" value="<%=@orders.first.purchase.id%>">
           <input type="hidden" name="allat_product_cd" value="<%=@product_cds%>">
           <input type="hidden" name="allat_product_nm" value="<%=@product_nms%>">
+          <input type="hidden" name="allat_recp_nm" value="<%=current_user.name%>">
+          <input type="hidden" name="allat_recp_addr" value="<%=current_user.address%>">
+          <input type="hidden" name="allat_shop_id" id="at_shop_id" value="oppabox">
+          <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
+          <input type="hidden" name="allat_buyer_nm" value="<%=current_user.name%>">
+          <input type="hidden" name="allat_enc_data" value="">
+          <input type="hidden" name="allat_test_yn" value="Y">
+          <input type="hidden" name="allat_real_yn" value="Y">
+          <input type="hidden" name="allat_product_img" value="http://">
+          <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price+5000%>">
+          <input type="hidden" name="allat_amt_dollar" id="allat_amt_dollar" value="<%=((@all_price+5000)/10.0).to_i%>">
+          <input type="hidden" name="allat_callback_url" value="http://www.oppabox.com/pay/callback">
+          <input type="hidden" name="allat_currency" value="840">
+          <input type="hidden" name="allat_xid" value="">
+          <input type="hidden" name="allat_eci" value="">
+          <input type="hidden" name="allat_cavv" value="">
+          <div style="height:80px;"></div>
+          <h3 class="text-center"><%= t('total_payment_inprogress1') %></h3>
+          <div style="height:30px;"></div>
+          <hr>
+          <div style="height:30px;"></div>
+          <h3 class="text-center"><%= t('total_payment_inprogress2') %></h3>
+          <div style="height:40px;"></div>
+          <% end %>
         <% end %>
-        <input type="hidden" name="allat_shop_id" id="at_shop_id" value="oppabox">
-        <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
-        <input type="hidden" name="allat_buyer_nm" value="<%=current_user.name%>">
-        <input type="hidden" name="allat_enc_data" value="">
-        <input type="hidden" name="allat_test_yn" value="Y">
-        <input type="hidden" name="allat_real_yn" value="Y">
-        <input type="hidden" name="allat_product_img" value="http://">
-        <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price+5000%>">
-        <input type="hidden" name="allat_amt_dollar" id="allat_amt_dollar" value="<%=((@all_price+5000)/10.0).to_i%>">
-        <input type="hidden" name="allat_callback_url" value="http://www.oppabox.com/pay/callback">
-        <input type="hidden" name="allat_currency" value="840">
-        <input type="hidden" name="allat_xid" value="">
-        <input type="hidden" name="allat_eci" value="">
-        <input type="hidden" name="allat_cavv" value="">
-        <h4><%= t('order_confirm') %></h4>
-        <%= render :partial => 'order_confirm' %>
-        <h4><%= t('address_confirm') %></h4>
-        <%= render :partial => 'address_confirm' %>
-        <h4><%= t('total_payment') %></h4>
-        <%= render :partial => 'total_payment' %>
-        <div style="height:40px;"></div>
-        <h4><%= t('basket_list') %></h4>
-        <%= render :partial => 'basket_list' %>
-      <% end %>
       </div>
     </div>
   </div>
 </div>
 <%#---- 수동 설치 설명 Layer를 사용하지 않으시려면, 아래 스크립트를 삭제 해 주시기 바랍니다 ----%>
+<% if !@orders.empty? %>
 <script language=JavaScript charset='euc-kr' src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
 <script language=Javascript>initCheckOB();</script>
 <script language=Javascript>
-  function billing(dfm) {
-    $("input[name$='allat_buyer_nm']").val($("input[name$='allat_recp_nm']").val());
-    ftn_approval(dfm);
-  }
-  function ftn_approval(dfm) {
-    var ret;
-    ret = visible_Approval(dfm); <%#Function 내부에서 submit을 하게 되어있음%>
-    if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
-      <%# 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.%>
-      alert(ret.substring(4,ret.length));     <%# Message 가져오기 %>
-    }
-    if( ret.substring(0,4)=="9999" ){
-      <%# 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다. %>
-      alert(ret.substring(8,ret.length));     <%# Message 가져오기 %>
-    }
-  }
-// Call 'AllatPay MPI Cert', 올앳페이 MPI 인증페이지 호출
-function ftn_mpi_cert_req(dfm) {
-    $("#allat_amt").val($("#allat_amt_dollar").val());
-    window.open('','ALLAT_MPI_POPUP','width=450,height=450,scrollbars=no');
-    dfm.target = "ALLAT_MPI_POPUP";
-    dfm.action = "https://tx.allatpay.com/servlet/AllatPay/ansim/mdsmpi_en/mdsmpi_en_main.jsp";
-    dfm.method = "post";
-    dfm.submit();
+function billing(dfm) {
+  $("input[name$='allat_buyer_nm']").val($("input[name$='allat_recp_nm']").val());
+  ftn_approval(dfm);
 }
-// Receive 'AllatPay MPI Result', 올앳페이 MPI 인증결과 수신 및 AfterPage 호출(Callback Page에서 호출)
-function ftn_approval_submit(result_cd,result_msg,xid,eci,cavv) {
-    if( result_cd != '0000' ) {
-        alert(result_cd + " : " + result_msg);
-    }else{
-        fm.allat_xid.value = xid;
-        fm.allat_eci.value = eci;
-        fm.allat_cavv.value = cavv;
-        fm.action = "/pay/dollar_billing";
-        fm.target = "_self";
-        fm.method = "post";
-        fm.submit();
-    }
+function ftn_approval(dfm) {
+  var ret;
+  ret = visible_Approval(dfm); <%#Function 내부에서 submit을 하게 되어있음%>
+  if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
+    <%# 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.%>
+    alert(ret.substring(4,ret.length));     <%# Message 가져오기 %>
+  }
+  if( ret.substring(0,4)=="9999" ){
+    <%# 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다. %>
+    alert(ret.substring(8,ret.length));     <%# Message 가져오기 %>
+  }
 }
+billing(document.fm);
 </script>
+<% end %>

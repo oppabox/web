@@ -59,11 +59,12 @@ class MypageController < ApplicationController
   end
 
   def edit_address
-    current_user.name = params[:allat_recp_nm]
-    current_user.country = params[:country]
+    current_user.name = params[:userrealname]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
-    current_user.address = params[:allat_recp_addr]
+    current_user.address = params[:address]
+    current_user.city = params[:city]
+    current_user.state = params[:state]
     current_user.save
     redirect_to :back
   end

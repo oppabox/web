@@ -49,6 +49,7 @@ class HomeController < ApplicationController
 
         user = User.create!({:email => params[:email],
                              :password => params[:password],
+                             :country => params[:country],
                              :password_confirmation => params[:password_confirm]})
         if user == false
           ret[:result] = false
@@ -66,10 +67,11 @@ class HomeController < ApplicationController
   def api_step3
     current_user.option_flag = true
     current_user.name = params[:name]
-    current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
     current_user.address = params[:address]
+    current_user.city = params[:city]
+    current_user.state = params[:state]
 
     address_array = params[:address].split(" ")
     address_split = Array.new(3){""}

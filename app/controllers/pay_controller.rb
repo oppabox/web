@@ -17,28 +17,6 @@ class PayController < ApplicationController
     render text: ret
   end
 
-  def dollar_billing
-    p = Purchase.find(params[:purchase_id])
-    p.recipient = params[:allat_recp_nm]
-    p.country = params[:country]
-    p.postcode = params[:postcode]
-    p.phonenumber = params[:phonenumber]
-    p.address = params[:allat_recp_addr]
-    p.save
-    current_user.name = params[:allat_recp_nm]
-    current_user.country = params[:country]
-    current_user.postcode = params[:postcode]
-    current_user.phonenumber = params[:phonenumber]
-    current_user.address = params[:allat_recp_addr]
-    current_user.save
-
-    if p.usd_billing params
-      redirect_to "/mypage/list"
-    else
-      redirect_to "/pay/order"
-    end
-  end
-
   def billing
     p = Purchase.find(params[:purchase_id])
     p.recipient = params[:allat_recp_nm]
@@ -78,6 +56,14 @@ class PayController < ApplicationController
     end
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
+  end
+
+  def korean_payment
+    order
+  end
+
+  def nonkorean_payment
+    order
   end
 
   def reorder_quantity

@@ -8,6 +8,7 @@ $(function(){
     var email = $("#signup_email").val()
     var password = $("#signup_password").val()
     var password_confirm = $("#signup_password_confirm").val()
+    var country = $("#signup_country").val()
 
     $.ajax({
       url: "/home/api_step2/",
@@ -16,6 +17,7 @@ $(function(){
       data: {
         email: email,
         password: password,
+        country: country,
         password_confirm: password_confirm
       },
       success: function(data) {
@@ -29,11 +31,12 @@ $(function(){
   })
 
   $("#signup_step3_button").on("click",function(){
-    var country = $("#signup_country").val()
     var phonenumber = $("#signup_phonenumber").val()
     var postcode = $("#signup_postcode").val()
     var address = $("#signup_address").val()
     var name = $("#signup_name").val()
+    var city = $("#signup_city").val()
+    var state = $("#signup_state").val()
 
     $.ajax({
       url: "/home/api_step3/",
@@ -41,9 +44,10 @@ $(function(){
       dataType:"JSON",
       data: {
         name: name,
-        country: country,
         phonenumber:phonenumber,
         postcode:postcode,
+        city:city,
+        state:state,
         address:address
       },
       success: function(data) {

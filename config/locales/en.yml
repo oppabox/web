@@ -27,6 +27,12 @@ en:
   signup_step3_complete: "Enter"
   signup_step3_incomplete: "Cancel"
   signup_step3_nationality: "Contry"
+  signup_step3_city: "도시 이름 입력"
+  signup_step3_city_compact: "도시 이름"
+  signup_step3_state: "주 이름 입력(북미전용)"
+  signup_step3_state_compact: "주 이름"
+  signup_step3_rest_address: "나머지 주소 입력"
+  signup_step3_cannot_fix: "국가 정보는 가입후 수정이 불가능합니다."
 
   usercheck_invalid_email: "You entered a wrong e-mail address."
   usercheck_password_short_length: "The password has to exceed 8 digits at least."
