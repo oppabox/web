@@ -7,18 +7,17 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 load File.join(File.dirname(__FILE__), '/', 'starbox.rb')
-load File.join(File.dirname(__FILE__), '/', 'jewelrybox.rb')
-load File.join(File.dirname(__FILE__), '/', 'beautybox.rb')
 load File.join(File.dirname(__FILE__), '/', 'designbox.rb')
 load File.join(File.dirname(__FILE__), '/', 'kitchenbox.rb')
+load File.join(File.dirname(__FILE__), '/', 'jewelrybox.rb')
+load File.join(File.dirname(__FILE__), '/', 'beautybox.rb')
 
-["STAR BOX", "JEWELRY BOX", "BEAUTY BOX", "DESIGN BOX", "KITCHEN BOX"].each do |x|
+["STAR BOX", "DESIGN BOX", "KITCHEN BOX", "BEAUTY BOX", "JEWELRY BOX"].each do |x|
   Box.create(display_name: x, path: x.gsub(" ", "_").downcase )
 end
 
 starbox
-jewelrybox
-beautybox
 designbox
 kitchenbox
-
+jewelrybox
+beautybox
