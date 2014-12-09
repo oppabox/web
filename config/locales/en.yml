@@ -38,9 +38,12 @@ en:
   signup_step3_state_compact: "State name"
   signup_step3_rest_address: "Enter the rest of address"
   signup_step3_cannot_fix: "State information can not be modified after subscriptions."
-  signup_add_email: "이메일 정보 입력"
-  signup_add_email_description: "이메일 정보를 입력해야 가입이 완료됩니다."
-  signup_add_email_complete: "가입왼료"
+  signup_add_email: "국가/이메일 정보 입력"
+  signup_add_email_description: "국가/이메일을 입력해야 가입이 완료됩니다."
+  signup_add_email_complete: "가입 완료"
+  signup_complete: "가입이 완료되었습니다."
+  signup_additional: "지금 배송정보를 입력하면, OPPABOX 이용이 더 편리합니다."
+  signup_choice_email: "Sign up with Email" #English only. Don't tranlate!
 
   usercheck_invalid_email: "You entered a wrong e-mail address."
   usercheck_password_short_length: "The password has to exceed 4 digits at least."

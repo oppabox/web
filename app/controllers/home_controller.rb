@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :login_check,       only: [:step3, :add_email] 
+  before_action :login_check,       only: [:step3] 
   before_action :login_check_ajax,  only: [:api_step3]
 
   def index
