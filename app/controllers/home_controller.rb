@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :login_check,       only: [:step3, :add_email_and_nationality] 
+  before_action :login_check,       only: [:step3, :add_email] 
   before_action :login_check_ajax,  only: [:api_step3]
 
   def index
@@ -31,43 +31,69 @@ class HomeController < ApplicationController
     render :json => ret
   end
 
+  def api_nationality
+    ret = Hash.new
+    if COUNTRIES.values.include?(params[:nationality])
+      session[:nationality] = params[:nationality]
+      ret[:result] = true
+    else
+      ret[:message] = t("invalid_input")
+    end
+    render :json => ret
+  end
+
   def step1
 
   end
 
-  def signup_choice
-    puts cookies.inspect
+  def nationality
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
     end
   end
 
-  def add_email_and_nationality
-    cookies.delete(:aggreement)
+  def signup_choice
+    if cookies[:aggreement] != "true"
+      redirect_to "/home/step1"
+    elsif session[:nationality].nil? 
+      redirect_to "/home/nationality"
+    end
+  end
 
+  def add_email
+    if cookies[:aggreement] != "true"
+      redirect_to "/home/step1"
+    elsif session[:nationality].nil? 
+      redirect_to "/home/nationality"
+    end
   end
   
   def step2
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
+    elsif session[:nationality].nil? 
+      redirect_to "/home/nationality"
     end
   end
 
   def step3
+    session.delete(:nationality)
     cookies.delete(:aggreement)
   end
    
   def api_step2
     ret = User.check_sign_params params[:email], params[:password], params[:password_confirm]
     if ret[:result]
-      unless User.where(:email => params[:email]).first.nil?
+      if !User.where(:email => params[:email]).first.nil?
         ret[:result] = false
         ret[:message] = t("duplicated_email")
+      elsif session[:nationality].nil?
+        ret[:result] = false
+        ret[:message] = t("something_wrong")
       else
-
         user = User.create!({:email => params[:email],
                              :password => params[:password],
-                             :country => params[:country],
+                             :country => session[:nationality],
                              :password_confirmation => params[:password_confirm]})
         if user == false
           ret[:result] = false

@@ -39,9 +39,12 @@ ja:
   signup_step3_state_compact: "注名前"
   signup_step3_rest_address: "残りのアドレス入力"
   signup_step3_cannot_fix: "国家情報は、登録後に変更できません。"
+  signup_add_email: "이메일 정보 입력"
+  signup_add_email_description: "이메일 정보를 입력해야 가입이 완료됩니다."
+  signup_add_email_complete: "가입왼료"
 
   usercheck_invalid_email: "入力されたメールアドレスが正しくありません。"
-  usercheck_password_short_length: "パスワードは8文字以上です。"
+  usercheck_password_short_length: "パスワードは4文字以上です。"
   usercheck_password_confirm_not_equal: "パスワードの確認入力が一致しません。"
   duplicated_email: "入力されたメールアドレスはすでに登録されております。"
   cannot_signup: "会員登録ができません。"
@@ -86,6 +89,7 @@ ja:
 
   must_user_login: "ログインしてください。"
   something_wrong: "サーバーに問題があります。"
+  invalid_input: "잘못된 값이 입력되었습니다."
 
   item_display_name: "商品名"
   item_already_basket: "すでにショッピングカートに入っています。"

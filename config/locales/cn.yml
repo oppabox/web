@@ -39,9 +39,12 @@ cn:
   signup_step3_state_compact: "주 이름"
   signup_step3_rest_address: "输入地址的剩余部分"
   signup_step3_cannot_fix: "状态信息不能订阅之后被修改。"
+  signup_add_email: "이메일 정보 입력"
+  signup_add_email_description: "이메일 정보를 입력해야 가입이 완료됩니다."
+  signup_add_email_complete: "가입왼료"
 
   usercheck_invalid_email: "输入电子邮箱错误"
-  usercheck_password_short_length: "密码需设成8个字符以上"
+  usercheck_password_short_length: "密码需设成4个字符以上"
   usercheck_password_confirm_not_equal: "密码和再次输入密码不一致"
   duplicated_email: "电子邮箱已存在"
   cannot_signup: "无法注册会员"
@@ -85,6 +88,7 @@ cn:
 
   must_user_login: "需要您登录"
   something_wrong: "网络有问题"
+  invalid_input: "잘못된 값이 입력되었습니다."
 
   item_display_name: "商品名称"
   item_already_basket: "已在购物车里"

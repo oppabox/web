@@ -32,10 +32,11 @@ Rails.application.routes.draw do
   get "privacy"   , to: "home#privacy"
   get "home/main"
   get "home/step1"
+  get "home/nationality"
   get "home/step2"
   get "home/step3"
   get "home/signup_choice"
-  get "home/add_email_and_nationality"
+  get "home/add_email"
   get "home/welcome"
   get "home/login"
 
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
   post "home/api_login"
   post "home/api_renew_password"
   post "home/api_reset_password"
+  post "home/api_nationality"
 
   get "mypage/" => "mypage#list"
   get "mypage/basket"

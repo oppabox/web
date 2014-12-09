@@ -1,0 +1,21 @@
+<div class="container">
+  <h3 class="text-center form-signin-heading"><%= t('signup_step3_nationality') %></h3>
+  <hr>
+  <div style="height:20px;">&nbsp;</div>
+  <div style="height:20px;">&nbsp;</div>
+  <h4 class="text-center"><%= t('signup_step3_cannot_fix') %></h4>
+  <div style="height:20px;">&nbsp;</div>
+  <div class="form-signin" role="form">
+    <select name="country" id="signup_country" class="form-control">
+      <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+        <% selected = "" %>
+        <% if n.to_s == "KR" %>
+          <% selected = %Q[selected="selected"] %>
+        <% end %>
+        <option value="<%= n %>" <%= selected %>><%= m %></option>
+      <% end %>
+    </select>
+    <div style="height:20px;">&nbsp;</div>
+    <button class="btn btn-default btn-block user-info-submit" id="signup_nationality"><%= t('signup_step3_nationality') %></button>
+  </div>
+</div>

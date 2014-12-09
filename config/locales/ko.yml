@@ -41,9 +41,12 @@ ko:
   signup_step3_state_compact: "주 이름"
   signup_step3_rest_address: "나머지 주소 입력"
   signup_step3_cannot_fix: "국가 정보는 가입 후 수정이 불가능합니다."
+  signup_add_email: "이메일 정보 입력"
+  signup_add_email_description: "이메일을 입력해야 가입이 완료됩니다."
+  signup_add_email_complete: "가입 완료"
 
   usercheck_invalid_email: "이메일을 잘못 입력했습니다. "
-  usercheck_password_short_length: "비밀번호는 8자 이상이어야 합니다."
+  usercheck_password_short_length: "비밀번호는 4자 이상이어야 합니다."
   usercheck_password_confirm_not_equal: "비밀번호와 비밀번호 재입력이 일치하지 않습니다."
   duplicated_email: "이미 존재하는 이메일입니다."
   cannot_signup: "회원가입을 할 수 없습니다."
@@ -88,6 +91,7 @@ ko:
 
   must_user_login: "로그인을 해야합니다."
   something_wrong: "서버에 문제가 있습니다."
+  invalid_input: "잘못된 값이 입력되었습니다."
 
   item_display_name: "상품명"
   item_already_basket: "이미 장바구니에 담겨있습니다."

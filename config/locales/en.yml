@@ -38,9 +38,12 @@ en:
   signup_step3_state_compact: "State name"
   signup_step3_rest_address: "Enter the rest of address"
   signup_step3_cannot_fix: "State information can not be modified after subscriptions."
+  signup_add_email: "이메일 정보 입력"
+  signup_add_email_description: "이메일 정보를 입력해야 가입이 완료됩니다."
+  signup_add_email_complete: "가입왼료"
 
   usercheck_invalid_email: "You entered a wrong e-mail address."
-  usercheck_password_short_length: "The password has to exceed 8 digits at least."
+  usercheck_password_short_length: "The password has to exceed 4 digits at least."
   usercheck_password_confirm_not_equal: "The password and the re-entered password are not identical."
   duplicated_email: "The e-mail you typed is an existing e-mail address in our website."
   cannot_signup: "You cannot register as a member."
@@ -85,6 +88,7 @@ en:
 
   must_user_login: "You need to login."
   something_wrong: "There is a problem in a server."
+  invalid_input: "잘못된 값이 입력되었습니다."
 
   item_display_name: "Product Name"
   item_already_basket: "It is already in the cart."

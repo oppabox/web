@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
     if email.match(Devise::email_regexp).nil?
       ret[:result] = false
       ret[:message] = I18n.t('usercheck_invalid_email')
-    elsif password.length < 8
+    elsif password.length < 4
       ret[:result] = false
       ret[:message] = I18n.t('usercheck_password_short_length')
     elsif password != password_confirm
