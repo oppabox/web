@@ -3,10 +3,6 @@
     <%= render :partial => '/mypage/left_list' %>
     <div class="col-md-10">
       <hr>
-      <% if current_user.purchases.size == 0 %>
-        구매 내역이 없습니다.
-      <% end %>
-      <% current_user.purchases.each do |purchase| %>
       <table cellspacing="0" cellpadding="0" width="725"class="table table-bordered th-center">
         <colgroup>
           <col width="76">
@@ -19,7 +15,7 @@
           <col width="85">
         </colgroup>
         <tbody>
-          <tr class="active" >
+          <tr class="active">
             <th><%=t('order_number')%></th>
             <th><%=t('item_display_name')%></th>
             <th><%=t('carry_price')%></th>
@@ -27,26 +23,33 @@
             <th><%=t('carry_total_price')%></th>
             <th><%=t('order_state')%></th>
           </tr>
-        <% purchase.orders.each_with_index do |order, index|%>
+          <% if current_user.purchases.size == 0 %>
           <tr class="list_cell">
-          <% if current_user.purchases.empty? %>
+            <td class="text-center" colspan="6"><b>구매 내역이 없습니다.</b></td>
+          </tr>
+          <% else %>
+          <% current_user.purchases.each do |purchase| %>
+          <% purchase.orders.each_with_index do |order, index|%>
+          <tr class="list_cell">
+            <% if current_user.purchases.size == 0 %>
             <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
-          <% end %>
-          <% if index == 0 %>
+            <% end %>
+            <% if index == 0 %>
             <td rowspan="<%=purchase.orders.count%>"><%=order.purchase.id%></td>
-          <% end %>
+            <% end %>
             <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a></td>
             <td><%= number_with_delimiter(order.item.sale_price) %></td>
             <td><%= number_with_delimiter(order.quantity) %></td>
             <td><%= number_with_delimiter(order.item.sale_price * order.quantity) %></td>
-          <% if index == 0 %>
+            <% if index == 0 %>
             <td rowspan="<%=purchase.orders.count%>"><%= order.purchase.status %></td>
-          <% end %>
+            <% end %>
           </tr>
+          <% end %>
+          <% end %>
         <% end %>
         </tbody>
       </table>
-      <% end %>
     </div>
   </div>
 </div>

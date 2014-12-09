@@ -51,8 +51,10 @@
       <p><%= t('product_info_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= number_with_delimiter(20) %>개</p>
+      <p><%= number_with_delimiter(20) %> <%= t('order_unit') %></p>
     </div>
+  </div>
+  <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
       <p><%= t('product_info_purchasing_quantity') %></p>
     </div>
@@ -63,7 +65,7 @@
   
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p>옵션</p>
+      <p><%= t('product_info_options') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <select name="sel_option" id="sel_option" class="form-control">
@@ -92,7 +94,7 @@
   <div style="height:20px;"></div>
 
   <div class="row mar-left mar-right text-right">
-      <button type="submit" id="add_to_cart" class="btn btn-default btn btn-width"><%= t('product_info_basket') %></button>&nbsp;&nbsp;
+      <button type="submit" id="add_to_cart" class="btn btn-default btn btn-width-cart"><%= t('product_info_basket') %></button>&nbsp;&nbsp;
       <button type="submit" id="purchase" class="btn btn-danger btn btn-width"><%= t('product_info_billing') %></button>
   </div>
 </div>

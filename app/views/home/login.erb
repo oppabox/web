@@ -2,6 +2,13 @@
   <h2 class="text-center form-signin-heading"><b>oppabox</b> <%= t('menu_login') %></h2>
   <hr>
   <div class="form-signin" role="form">
+    <label style="font-size:1.3em"><%= t('signin_social') %></label>
+    <div class="text-center" style="margin-top:10px;">
+      <a href="/users/auth/facebook"><img src="<%= asset_path 'fb_button.png' %>" style="margin:5px;" width="130"></a>
+      <a href="#"><img src="<%= asset_path 'tw_button.png' %>" style="margin:5px;" width="130"></a>
+    </div>
+    <hr>
+    <label style="font-size:1.3em; margin-bottom:20px;"><%= t('signin_email') %></label><br>
     <label><%= t('login_email_address') %></label>
     <input id="signin_email" type="email" class="form-control user-info-input" required autofocus>
     <div style="height:20px;">&nbsp;</div>
@@ -9,8 +16,5 @@
     <input id="signin_password" type="password" class="form-control user-info-input" required>
     <a href="/home/reset_password"><p class="text-right"><%= t('forget_password') %></p></a>
     <button class="btn btn-lg btn-default btn-block user-info-submit" id="signin_button"><%= t('menu_login') %></button>
-
-    <div style="height:10px;">&nbsp;</div>
-    <%= link_to "<button class='btn btn-sm btn-default btn-block user-info-submit' id='signup_step2_button'>#{t('sign_in_with_facebook')}</button>".html_safe, user_omniauth_authorize_path(:facebook)%>
   </div>
 </div> <!-- /container -->
