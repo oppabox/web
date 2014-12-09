@@ -1,6 +1,5 @@
 $(function(){
   $("#info_button").on("click",function(){
-    var country = $("#info_country").val()
     var phonenumber = $("#info_phonenumber").val()
     var postcode = $("#info_postcode").val()
     var address = $("#info_address").val()
@@ -10,7 +9,6 @@ $(function(){
       type: "POST",
       dataType:"JSON",
       data: {
-        country: country,
         phonenumber:phonenumber,
         postcode:postcode,
         address:address

@@ -9,4 +9,15 @@
     <div style="height:20px;">&nbsp;</div>
     <button class="btn btn-default btn-block user-info-submit" id="signup_add_email"><%= t('signup_add_email_complete') %></button>
   </div>
+  <label><%= t('signup_step3_nationality') %></label>
+  <select name="country" id="signup_country" class="form-control">
+    <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
+      <% selected = "" %>
+      <% if n.to_s == "KR" %>
+        <% selected = %Q[selected="selected"] %>
+      <% end %>
+      <option value="<%= n %>" <%= selected %>><%= m %></option>
+    <% end %>
+  </select>
+  <p class="text-right"><%= t('signup_step3_cannot_fix') %></p>
 </div>

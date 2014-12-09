@@ -11,7 +11,6 @@ class MypageController < ApplicationController
   end
 
   def api_info
-    current_user.country = params[:country]
     current_user.phonenumber = params[:phonenumber]
     current_user.postcode = params[:postcode]
     current_user.address = params[:address]

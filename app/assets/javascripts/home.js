@@ -4,28 +4,11 @@ $(function(){
       $(".user-info-submit").click()
     }
   })
-  $("#signup_nationality").on("click",function(){
-    var nationality = $("#signup_country").val()
-    $.ajax({
-      url: "/home/api_nationality/",
-      type: "POST",
-      dataType:"JSON",
-      data: {
-        nationality: nationality
-      },
-      success: function(data) {
-        if(data["result"]){
-          location.href="/home/signup_choice"
-        }else{
-          alert(data["message"])
-        }
-      }
-    })
-  });
   $("#signup_step2_button").on("click",function(){
     var email = $("#signup_email").val()
     var password = $("#signup_password").val()
     var password_confirm = $("#signup_password_confirm").val()
+    var country = $("#signup_country").val()
 
     $.ajax({
       url: "/home/api_step2/",
@@ -34,6 +17,7 @@ $(function(){
       data: {
         email: email,
         password: password,
+        country: country, 
         password_confirm: password_confirm
       },
       success: function(data) {

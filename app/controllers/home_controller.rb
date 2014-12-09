@@ -31,48 +31,22 @@ class HomeController < ApplicationController
     render :json => ret
   end
 
-  def api_nationality
-    ret = Hash.new
-    if COUNTRIES.values.include?(params[:nationality])
-      session[:nationality] = params[:nationality]
-      ret[:result] = true
-    else
-      ret[:message] = t("invalid_input")
-    end
-    render :json => ret
-  end
-
   def step1
 
-  end
-
-  def nationality
-    if cookies[:aggreement] != "true"
-      redirect_to "/home/step1"
-    end
   end
 
   def signup_choice
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
-    elsif session[:nationality].nil? 
-      redirect_to "/home/nationality"
     end
   end
 
   def add_email
-    if cookies[:aggreement] != "true"
-      redirect_to "/home/step1"
-    elsif session[:nationality].nil? 
-      redirect_to "/home/nationality"
-    end
   end
   
   def step2
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
-    elsif session[:nationality].nil? 
-      redirect_to "/home/nationality"
     end
   end
 
@@ -87,13 +61,13 @@ class HomeController < ApplicationController
       if !User.where(:email => params[:email]).first.nil?
         ret[:result] = false
         ret[:message] = t("duplicated_email")
-      elsif session[:nationality].nil?
+      elsif !COUNTRIES.values.include?(params[:country])
         ret[:result] = false
-        ret[:message] = t("something_wrong")
+        ret[:message] = t("invalid_input")
       else
         user = User.create!({:email => params[:email],
                              :password => params[:password],
-                             :country => session[:nationality],
+                             :country => params[:country],
                              :password_confirmation => params[:password_confirm]})
         if user == false
           ret[:result] = false

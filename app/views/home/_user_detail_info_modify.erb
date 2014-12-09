@@ -31,10 +31,10 @@
 </div>
 <% end %>
 <label><%= t('signup_step3_nationality') %></label>
-<select name="country" id="signup_country" class="form-control" onChange="changePayment();" disabled>
+<select name="country" id="signup_country" class="form-control" disabled>
   <% COUNTRIES.sort_by { |x, y| x }.each do |m, n| %>
     <% selected = "" %>
-    <% country = current_user.country || "KR"%>
+    <% country = current_user.country %>
     <% if n.to_s == country %>
       <% selected = %Q[selected="selected"] %>
     <% end %>
