@@ -41,8 +41,26 @@ def kitchenbox
     n.name = y
     n.save
   end
+#PALACE
+  i = Item.new
+    i.box = b
+    i.path = "palace"
+    i.original_price = "181320"
+    i.sale_price = "135000"
+    i.quantity = -1
+    i.limited = false
+  i.save
 
-#WESTERN TABLEWARE
+#PALACE : LOCALE NAME
+  name = {"ko" => "팰러스", "en" => "Palace", "cn" => "Palace", "ja" => "Palace"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
+
 #ARCHI
   i = Item.new
     i.box = b
@@ -83,6 +101,26 @@ def kitchenbox
     n.save
   end
 
+#TULIPANI
+  i = Item.new
+    i.box = b
+    i.path = "tulipani"
+    i.original_price = "103330"
+    i.sale_price = "85000"
+    i.quantity = -1
+    i.limited = false
+  i.save
+
+#TULIPANI : LOCALE NAME
+  name = {"ko" => "튤리파니", "en" => "Tulipani", "cn" => "Tulipani", "ja" => "Tulipani"}
+  name.each do |x, y|
+    n = ItemName.new
+    n.item = i
+    n.locale = x
+    n.name = y
+    n.save
+  end
+
 #OLIVIA
   i = Item.new
     i.box = b
@@ -95,26 +133,6 @@ def kitchenbox
 
 #OLIVIA : LOCALE NAME
   name = {"ko" => "올리비아", "en" => "Olivia", "cn" => "Olivia", "ja" => "Olivia"}
-  name.each do |x, y|
-    n = ItemName.new
-    n.item = i
-    n.locale = x
-    n.name = y
-    n.save
-  end
-
-#PALACE
-  i = Item.new
-    i.box = b
-    i.path = "palace"
-    i.original_price = "181320"
-    i.sale_price = "135000"
-    i.quantity = -1
-    i.limited = false
-  i.save
-
-#PALACE : LOCALE NAME
-  name = {"ko" => "팰러스", "en" => "Palace", "cn" => "Palace", "ja" => "Palace"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
@@ -155,26 +173,6 @@ def kitchenbox
 
 #SYNTHESIS : LOCALE NAME
   name = {"ko" => "신테시스", "en" => "Synthesis", "cn" => "Synthesis", "ja" => "Synthesis"}
-  name.each do |x, y|
-    n = ItemName.new
-    n.item = i
-    n.locale = x
-    n.name = y
-    n.save
-  end
-
-#TULIPANI
-  i = Item.new
-    i.box = b
-    i.path = "tulipani"
-    i.original_price = "103330"
-    i.sale_price = "85000"
-    i.quantity = -1
-    i.limited = false
-  i.save
-
-#TULIPANI : LOCALE NAME
-  name = {"ko" => "튤리파니", "en" => "Tulipani", "cn" => "Tulipani", "ja" => "Tulipani"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
