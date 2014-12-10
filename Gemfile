@@ -8,10 +8,12 @@ gem 'therubyracer'
 
 #user omniauth
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 #gem 'omniauth-weibo-oauth2', :git => "https://github.com/sang2087/omniauth-weibo-oauth2.git"
+#gem 'twitter'
 
 #debugger
-# gem 'pry', :group => :development
+#gem 'pry', :group => :development
 
 #Admin
 gem 'activeadmin', github: 'activeadmin'

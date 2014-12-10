@@ -32,18 +32,63 @@ class HomeController < ApplicationController
   end
 
   def step1
-
   end
 
   def signup_choice
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
     end
+    session[:aggreement]  = true
   end
 
   def add_email
+    if session[:auth].nil?
+      redirect_to "/home/step1"
+    end
+    @email = session[:auth]["info"]["email"]
+    session.delete(:aggreement)
   end
-  
+
+  def api_add_email
+    auth = session[:auth]
+    if auth.nil?
+      ret[:result] = false
+      ret[:message] = t("cannot_signup")
+    else
+      ret = User.check_sign_params params[:email], nil, nil
+
+      if ret[:result]
+        if !User.where(:email => params[:email]).first.nil?
+          ret[:result] = false
+          ret[:message] = t("duplicated_email")
+        elsif !COUNTRIES.values.include?(params[:country])
+          ret[:result] = false
+          ret[:message] = t("invalid_input")
+        else
+
+          user = User.new
+          user.email = params[:email]
+          user.password = Devise.friendly_token[0,20]
+          user.country = params[:country]
+          user.provider = auth["provider"]
+          user.uid = auth["uid"]
+          r = user.save
+
+          if r == false
+            ret[:result] = false
+            ret[:message] = t("cannot_signup")
+          else
+            sign_in(user)
+            ret[:result] = true
+          end
+
+          session.delete(:auth)
+        end
+      end
+    end
+    render :json => ret
+  end
+
   def step2
     if cookies[:aggreement] != "true"
       redirect_to "/home/step1"
@@ -52,6 +97,7 @@ class HomeController < ApplicationController
 
   def step3
     session.delete(:nationality)
+    session.delete(:aggreement)
     cookies.delete(:aggreement)
   end
    

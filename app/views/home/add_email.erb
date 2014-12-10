@@ -7,7 +7,7 @@
   <div class="form-signin" role="form">
 
     <label><%= t('login_email_address') %></label>
-    <input id="signup_add_email" type="email" class="form-control user-info-input" required autofocus>
+    <input id="signup_email" type="email" class="form-control user-info-input" required autofocus value="<%=@email%>">
     <div style="height:20px;">&nbsp;</div>
     <label><%= t('signup_step3_nationality') %></label>
     <select name="country" id="signup_country" class="form-control">

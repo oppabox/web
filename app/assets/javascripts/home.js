@@ -4,6 +4,7 @@ $(function(){
       $(".user-info-submit").click()
     }
   })
+
   $("#signup_step2_button").on("click",function(){
     var email = $("#signup_email").val()
     var password = $("#signup_password").val()
@@ -19,6 +20,26 @@ $(function(){
         password: password,
         country: country, 
         password_confirm: password_confirm
+      },
+      success: function(data) {
+        if(data["result"]){
+          location.href="/home/step3"
+        }else{
+          alert(data["message"])
+        }
+      }
+    })
+  })
+  $("#signup_add_email").on("click",function(){
+    var email = $("#signup_email").val()
+    var country = $("#signup_country").val()
+    $.ajax({
+      url: "/home/api_add_email/",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        email: email,
+        country: country
       },
       success: function(data) {
         if(data["result"]){
@@ -53,8 +74,6 @@ $(function(){
       success: function(data) {
         if(data["result"]){
           location.href="/"
-        }else{
-          alert(I18n["cannot_signup"])
         }
       }
     })
