@@ -9,10 +9,14 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans);
 
-body {
+html {
 	font-family: 'Noto Sans',sans-serif, !important;
+	font-size: 14px !important;
+}
+
+body {
+	font-size: 14px !important;
   padding-top: 70px;
-  font-family: sans-serif;
 }
 
 ::selection {
