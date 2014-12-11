@@ -12,7 +12,7 @@ def starbox
   i.save
 
 #김재중박스 : LOCALE NAME
-  name = {"ko" => "김재중박스", "en" => "JaeJoong Box", "cn" => "김재중박스", "ja" => "김재중박스"}
+  name = {"ko" => "김재중박스", "en" => "KimJaeJoong Box", "cn" => "KimJaeJoong Box", "ja" => "KimJaeJoong Box"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
@@ -34,7 +34,7 @@ def starbox
   i.save
 
 #이민호박스 : LOCALE NAME
-  name = {"ko" => "이민호박스", "en" => "Minho Box", "cn" => "이민호박스", "ja" => "이민호박스"}
+  name = {"ko" => "이민호박스", "en" => "Lee Minho Box", "cn" => "Lee Minho Box", "ja" => "Lee Minho Box"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
