@@ -4,7 +4,6 @@ class ItemController < ApplicationController
   def view
     @item = Item.where(:path => params[:name]).first
     @item_image_files = Array.new
-
     index = 1
     begin
       exists = File.exists?(Rails.root.join("public", "images", "items", @item.box.path, @item.path, I18n.locale.to_s, "#{index}.jpg").to_s)

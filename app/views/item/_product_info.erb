@@ -22,7 +22,7 @@
       <p><%= t('product_info_original_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= number_with_delimiter(@item.original_price) %></p>
+      <p><%= number_with_delimiter(@item.original_price)-%></p>
     </div>
   </div>
 
@@ -31,7 +31,8 @@
       <p><%= t('product_info_sale_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price ) %></p>
+      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price) -%>
+      </p>
     </div>
   </div>
   <hr>
@@ -84,7 +85,8 @@
           <label class="price_1"><%= t('product_info_sum') %></label>
         </div>
         <div class="col-xs-8 col-md-9 price_detail">
-          <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"><%= number_with_delimiter(@item.sale_price) -%></p>
+          <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"><%= number_with_delimiter(@item.sale_price) -%>
+          </p>
           <p class="price_3" ><%= t('product_info_sum_vat') %></p>
         </div>
       </div>
