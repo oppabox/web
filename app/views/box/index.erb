@@ -1,22 +1,2 @@
-<%= 
-  if @box[:path] == "star_box"
-    image_head STAR_BANR
-
-  elsif @box[:path] == "design_box"
-    image_head DESIGN_BANR
-
-  elsif @box[:path] == "beauty_box"
-    image_head BEAUTY_BANR
-
-  elsif @box[:path] == "kitchen_box"
-    image_head KITCHEN_BANR
-
-  elsif @box[:path] == "grienich_box"
-    image_head GRIENICH_BANR
-
-  elsif @box[:path] == "jewelry_box"
-    image_head JEWELRY_BANR
-    
-  end
-%>
+<% image_head "/images/top/#{@box[:path]}.jpg"%>
 <%= item_body @items, "item" %>
