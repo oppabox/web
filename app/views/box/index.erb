@@ -1,23 +1,22 @@
 <%= 
   if @box[:path] == "star_box"
-    home_imag = STAR_BANR
+    image_head STAR_BANR
 
   elsif @box[:path] == "design_box"
-    home_imag = DESIGN_BANR
+    image_head DESIGN_BANR
 
   elsif @box[:path] == "beauty_box"
-    home_imag = BEAUTY_BANR
+    image_head BEAUTY_BANR
 
   elsif @box[:path] == "kitchen_box"
-    home_imag = KITCHEN_BANR
+    image_head KITCHEN_BANR
 
   elsif @box[:path] == "grienich_box"
-    home_imag = GRIENICH_BANR
+    image_head GRIENICH_BANR
 
   elsif @box[:path] == "jewelry_box"
-    home_imag = JEWELRY_BANR
+    image_head JEWELRY_BANR
     
   end
 %>
-<%= image_head home_imag %>
 <%= item_body @items, "item" %>
