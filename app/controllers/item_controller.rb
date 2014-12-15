@@ -47,6 +47,7 @@ class ItemController < ApplicationController
   end
 
   def add_to_order
+    #TODO : options
     p = current_user.purchase
     if p.nil?
       p = Purchase.create(user_id: current_user.id,

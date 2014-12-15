@@ -50,7 +50,40 @@ def jewelrybox
 
 #SET 2 : OPTIONS
 #원하는 레터링(영문 대문자 이니셜)가능
+  o = Option.new
+    o.title = "Length"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"13cm" => "3000", "15cm" => "-2000", "17.5cm" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+
+  o = Option.new
+    o.title = "Length"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"13cm" => "3000", "15cm" => "-2000", "17.5cm" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+
 #각인 : true, false
+  o = Option.new
+  o.title = "Lettering"
+  o.option_type = 2
+  o.item = i
+  o.save
 
 #SET 3
   b = Box.where(:path => "jewelry_box").first

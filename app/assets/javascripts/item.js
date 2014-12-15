@@ -1,7 +1,9 @@
 $(function(){
   $("#item_detail_quantity").on("change", function(){
-    var total_price = $(this).val() * $("#total_price").data("original-price");
-    $("#total_price").html(formatNumber(total_price));
+    recalculate();
+  });
+  $(".select_option_box").on("change", function(){
+    recalculate();
   });
   $("#add_to_cart").click(function() {
     var id = $("#item_detail_quantity").data("id");
@@ -20,6 +22,15 @@ $(function(){
     });
   });
 });
+function recalculate(){
+  var options_total = 0;
+  $(".select_option_box").each(function(){
+    var selected = $(this).find('option:selected');
+    options_total += selected.data('price'); 
+  });
+  var total_price = $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
+  $("#total_price").html(formatNumber(total_price));
+}
 function formatNumber (num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
@@ -65,10 +76,21 @@ function add_to_order(id, qty, callback) {
       window.location.href = "/pay/order";
     }
   }
+  var option_array = new Object();
+  $(".option_items").each(function(){
+    input_value = ""
+    if ($(this).data("option-type") == 1){
+      input_value = $(this).find('option:selected').val();
+    }else{
+      input_value = $(this).val();
+    }
+    option_array[$(this).data("option-id")] = input_value;
+  });
   $.ajax({
     data: {
       item_id: id,
-      quantity: qty
+      quantity: qty,
+      option_items: option_array
     },
     url: '/item/add_to_order',
     type: 'POST',

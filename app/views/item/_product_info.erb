@@ -60,20 +60,33 @@
       <p><%= t('product_info_purchasing_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="1000" value="1" data-id="<%=@item.id%>">
+      <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="5" value="1" data-id="<%=@item.id%>">
     </div>
   </div>
-  
-  <div class="row mar-left">
-    <div class="col-xs-4 col-md-3">
-      <p><%= t('product_info_options') %></p>
+
+  <% if @item.options.size > 0 %>
+  <hr>
+    <% @item.options.each do |o| %>
+    <div class="row mar-left">
+      <div class="col-xs-4 col-md-3">
+        <p><%= o.title %></p>
+      </div>
+      <div class="col-xs-8 col-md-9">
+        <% if o.option_type == 1 %>
+        <select name="sel_option" id="sel_option" data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
+            <option value="option" value="-1" data-price="0">SELECT</option>
+            <% o.option_items.each do |i| %>
+              <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %></option>
+            <% end %>
+        </select>
+        <% else %>
+        <input class="form-control input-sm option_items" data-option-id="<%= o.id -%>" data-option-type="<%= o.option_type -%>" type="text" placeholder="<%= o.title %>">
+        <% end %>
+      </div>
     </div>
-    <div class="col-xs-8 col-md-9">
-      <select name="sel_option" id="sel_option" class="form-control">
-          <option value="option">옵션</option>
-      </select>
-    </div>
-  </div>
+    <div style="height:10px;"></div>
+    <% end %>
+  <% end %>
 
   
   <div style="height:20px;"></div>
