@@ -70,8 +70,10 @@ class ItemController < ApplicationController
       o.purchase_id = p.id
       o.item_id = params[:item_id]
       o.quantity = params[:quantity]
+      o.order_periodic = params[:periodic]
     else
       o.quantity = o.quantity + 1
+      o.order_periodic = params[:periodic]
     end
     if o.save
       render :nothing => true, :status => 200

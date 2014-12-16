@@ -14,7 +14,21 @@ $(function(){
   $("#purchase").click(function() {
     var quantity = $("#item_detail_quantity").val();
     var id = $("#item_detail_quantity").data("id");
-    add_to_order(id, quantity, function() {
+    var option_array = new Object();
+    $(".option_items").each(function(){
+      input_value = ""
+      if ($(this).data("option-type") == 1){
+        input_value = $(this).find('option:selected').val();
+      }else{
+        input_value = $(this).val();
+      }
+      option_array[$(this).data("option-id")] = input_value;
+    });
+    var periodic_month = 1 
+    if ($("#periodic_option").length == 1){
+      periodic_month = $("#periodic_option").val();
+    }
+    add_to_order(id, quantity, option_array, periodic_month, function() {
       window.location.href = "/pay/order";
     });
   });
@@ -25,15 +39,16 @@ function recalculate(){
     var selected = $(this).find('option:selected');
     options_total += selected.data('price'); 
   });
-  var periodic = $("#periodic_option").val();
-  var total_price = periodic * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
+  var periodic_month = $("#periodic_option").val();
+  var total_price = periodic_month * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
   $("#total_price").html(formatNumber(total_price));
 }
 function formatNumber (num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
 function move_to_order(id) {
-  add_to_order(id, 1, function() {
+  var option_array = new Object();
+  add_to_order(id, 1, option_array, 1, function() {
     del_from_basket(id, function() {
       window.location.href = "/pay/order";
     });
@@ -68,31 +83,17 @@ function add_to_basket(id, callback) {
     }
   });
 }
-function add_to_order(id, qty, callback) {
+function add_to_order(id, qty, options, periodic, callback) {
   if (callback == undefined) {
     callback = function() {
       window.location.href = "/pay/order";
     }
   }
-  var option_array = new Object();
-  $(".option_items").each(function(){
-    input_value = ""
-    if ($(this).data("option-type") == 1){
-      input_value = $(this).find('option:selected').val();
-    }else{
-      input_value = $(this).val();
-    }
-    option_array[$(this).data("option-id")] = input_value;
-  });
-  var periodic = 1 
-  if ($("#periodic_option").length == 1){
-    periodic = $("#periodic_option").val();
-  }
   $.ajax({
     data: {
       item_id: id,
       quantity: qty,
-      option_items: option_array,
+      option_items: options,
       periodic: periodic
     },
     url: '/item/add_to_order',

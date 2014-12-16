@@ -4,6 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer     :purchase_id
       t.integer     :item_id
       t.integer     :quantity, :null => false, :default => 1
+      t.integer     :order_periodic,    :default => 1
 
       t.timestamps
     end
