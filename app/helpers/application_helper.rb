@@ -16,13 +16,23 @@ module ApplicationHelper
 
     items.each do |x|
       image_box = #하나의 박스중에 위쪽에 있는 image
-        content_tag :a, :href => "/#{method}/#{x.path}" do 
+        if x.open != true
           tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+        else
+          content_tag :a, :href => "/#{method}/#{x.path}" do 
+            tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+          end
         end
       text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)
-        content_tag :a, :href => "/#{method}/#{x.path}" do 
+        if x.open != true
           content_tag :h4, :class => 'product_title' do 
             x.display_name
+          end
+        else
+          content_tag :a, :href => "/#{method}/#{x.path}" do 
+            content_tag :h4, :class => 'product_title' do 
+              x.display_name
+            end
           end
         end
       inner_html += #image_box + text_box                             # class로 조절이 안되서 style로 조절

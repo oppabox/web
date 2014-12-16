@@ -9,6 +9,7 @@ def starbox
     i.sale_price = "58000"
     i.quantity = -1
     i.limited = true
+    i.periodic = true
   i.save
 
 #김재중박스 : LOCALE NAME

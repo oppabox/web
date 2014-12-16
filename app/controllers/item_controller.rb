@@ -10,6 +10,12 @@ class ItemController < ApplicationController
       @item_image_files << index if exists 
       index += 1
     end while exists 
+
+    if @item.open != true
+      render :nothing => true, :status => 401
+    end
+
+
   end
 
   def add_to_basket

@@ -10,6 +10,8 @@ class CreateItems < ActiveRecord::Migration
 
       t.integer     :quantity
       t.boolean     :limited,     :default => false
+      t.boolean     :periodic,    :default => false
+      t.boolean     :open,        :default => true
 
       t.timestamps
     end
