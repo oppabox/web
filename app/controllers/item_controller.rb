@@ -53,7 +53,6 @@ class ItemController < ApplicationController
   end
 
   def add_to_order
-    #TODO : options
     p = current_user.purchase
     if p.nil?
       p = Purchase.create(user_id: current_user.id,
@@ -72,10 +71,28 @@ class ItemController < ApplicationController
       o.quantity = params[:quantity]
       o.order_periodic = params[:periodic]
     else
-      o.quantity = o.quantity + 1
+      o.quantity = o.quantity + params[:quantity]
       o.order_periodic = params[:periodic]
     end
-    if o.save
+
+    #options
+    error_flag = false
+    params[:option_items].each do |x, y|
+      ooi = OrderOptionItem.new
+      option = Option.where(:id => x).take
+      if option.option_type == 1
+        option_item = OptionItem.where(:id => y).take
+        ooi.option_item = option_item
+      else 
+        ooi.option_text = y
+      end
+      ooi.order = o
+      ooi.option = option
+      if !ooi.save
+        error_flag = true
+      end
+    end
+    if !error_flag and o.save
       render :nothing => true, :status => 200
     else
       render :text => t(:something_wrong), :status => 500
