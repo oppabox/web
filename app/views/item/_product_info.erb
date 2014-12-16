@@ -48,12 +48,14 @@
   <hr>
 
   <div class="row mar-left">
+    <% if @item.limited %>
     <div class="col-xs-4 col-md-3">
       <p><%= t('product_info_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
       <p><%= number_with_delimiter(@item.quantity) %> <%= t('order_unit') %></p>
     </div>
+    <% end %>
   </div>
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">

@@ -39,7 +39,10 @@ function recalculate(){
     var selected = $(this).find('option:selected');
     options_total += selected.data('price'); 
   });
-  var periodic_month = $("#periodic_option").val();
+  var periodic_month = 1 
+  if ($("#periodic_option").length == 1){
+    periodic_month = $("#periodic_option").val();
+  }
   var total_price = periodic_month * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
   $("#total_price").html(formatNumber(total_price));
 }
