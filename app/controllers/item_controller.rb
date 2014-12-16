@@ -71,7 +71,7 @@ class ItemController < ApplicationController
       o.quantity = params[:quantity]
       o.order_periodic = params[:periodic]
     else
-      o.quantity = o.quantity + params[:quantity]
+      o.quantity = o.quantity + params[:quantity].to_i
       o.order_periodic = params[:periodic]
     end
 
