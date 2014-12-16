@@ -1,8 +1,5 @@
 $(function(){
-  $("#item_detail_quantity").on("change", function(){
-    recalculate();
-  });
-  $(".select_option_box").on("change", function(){
+  $(".select_option_box, #periodic_option, #item_detail_quantity").on("change", function(){
     recalculate();
   });
   $("#add_to_cart").click(function() {
@@ -28,7 +25,8 @@ function recalculate(){
     var selected = $(this).find('option:selected');
     options_total += selected.data('price'); 
   });
-  var total_price = $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
+  var periodic = $("#periodic_option").val();
+  var total_price = periodic * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
   $("#total_price").html(formatNumber(total_price));
 }
 function formatNumber (num) {
@@ -86,11 +84,16 @@ function add_to_order(id, qty, callback) {
     }
     option_array[$(this).data("option-id")] = input_value;
   });
+  var periodic = 1 
+  if ($("#periodic_option").length == 1){
+    periodic = $("#periodic_option").val();
+  }
   $.ajax({
     data: {
       item_id: id,
       quantity: qty,
-      option_items: option_array
+      option_items: option_array,
+      periodic: periodic
     },
     url: '/item/add_to_order',
     type: 'POST',

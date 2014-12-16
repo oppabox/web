@@ -52,7 +52,7 @@
       <p><%= t('product_info_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= number_with_delimiter(20) %> <%= t('order_unit') %></p>
+      <p><%= number_with_delimiter(@item.quantity) %> <%= t('order_unit') %></p>
     </div>
   </div>
   <div class="row mar-left">
@@ -73,8 +73,8 @@
       </div>
       <div class="col-xs-8 col-md-9">
         <% if o.option_type == 1 %>
-        <select name="sel_option" id="sel_option" data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
-            <option value="option" value="-1" data-price="0">SELECT</option>
+        <select data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
+            <option value="-1" data-price="0">SELECT</option>
             <% o.option_items.each do |i| %>
               <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %></option>
             <% end %>
@@ -86,6 +86,22 @@
     </div>
     <div style="height:10px;"></div>
     <% end %>
+  <% end %>
+  
+  <% if @item.periodic %>
+  <hr>
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <p><%= t('periodic_purchase') %></p>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <select class="form-control input-sm" id="periodic_option">
+      <% [1, 3, 6, 12].each do |x| %>
+          <option value="<%= x -%>"><%= t("periodoc_#{x}month")-%></option>
+      <% end %>
+      </select>
+    </div>
+  </div>
   <% end %>
 
   
@@ -110,6 +126,10 @@
 
   <div class="row mar-left mar-right text-right">
       <button type="submit" id="add_to_cart" class="btn btn-default btn btn-width-cart"><%= t('product_info_basket') %></button>&nbsp;&nbsp;
-      <button type="submit" id="purchase" class="btn btn-danger btn btn-width"><%= t('product_info_billing') %></button>
+      <% if (@item.quantity < 1) and (@item.limited) %>
+        <button type="submit" class="btn btn-warning btn btn-width"><%= t('sold_out') %></button>
+      <% else %>
+        <button type="submit" id="purchase" class="btn btn-danger btn btn-width"><%= t('product_info_billing') %></button>
+      <% end %>
   </div>
 </div>

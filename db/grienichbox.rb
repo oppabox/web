@@ -7,9 +7,6 @@ b = Box.where(:path => "grienich_box").first
     i.path = "box1"
     i.original_price = "94800"
     i.sale_price = "78000"
-    i.show_original_price = true
-    i.quantity = -1
-    i.limited = false
   i.save
 
 #BOX 1 : LOCALE NAME
@@ -31,9 +28,6 @@ b = Box.where(:path => "grienich_box").first
     i.path = "box2"
     i.original_price = "98000"
     i.sale_price = "121400"
-    i.show_original_price = true
-    i.quantity = -1
-    i.limited = false
   i.save
 
 #BOX 2 : LOCALE NAME
@@ -55,9 +49,6 @@ b = Box.where(:path => "grienich_box").first
     i.path = "box3"
     i.original_price = "15800"
     i.sale_price = "191400"
-    i.show_original_price = true
-    i.quantity = -1
-    i.limited = false
   i.save
 
 #BOX 1 : LOCALE NAME

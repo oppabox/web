@@ -11,7 +11,7 @@ class ItemController < ApplicationController
       index += 1
     end while exists 
 
-    if @item.open != true
+    if @item.opened != true
       render :nothing => true, :status => 401
     end
 

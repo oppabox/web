@@ -8,10 +8,10 @@ class CreateItems < ActiveRecord::Migration
       t.integer     :sale_price
       t.boolean     :show_original_price
 
-      t.integer     :quantity
+      t.integer     :quantity,    :default => -1
       t.boolean     :limited,     :default => false
       t.boolean     :periodic,    :default => false
-      t.boolean     :open,        :default => true
+      t.boolean     :opened,      :default => true
 
       t.timestamps
     end

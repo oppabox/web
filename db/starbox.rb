@@ -7,7 +7,7 @@ def starbox
     i.path = "jaejoong"
     i.original_price = "227000"
     i.sale_price = "58000"
-    i.quantity = -1
+    i.quantity = 300
     i.limited = true
     i.periodic = true
   i.save
@@ -30,7 +30,7 @@ def starbox
                                 #SNAP BACK : 32,500
                                 #PHOTO BOOK : 19,530          전부 표기 해주세요.
     i.sale_price = "53000"
-    i.quantity = -1
+    i.quantity = 300 
     i.limited = true
   i.save
 

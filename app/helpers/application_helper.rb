@@ -16,7 +16,7 @@ module ApplicationHelper
 
     items.each do |x|
       image_box = #하나의 박스중에 위쪽에 있는 image
-        if x.open != true
+        if x.opened != true
           tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
         else
           content_tag :a, :href => "/#{method}/#{x.path}" do 
@@ -24,7 +24,7 @@ module ApplicationHelper
           end
         end
       text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)
-        if x.open != true
+        if x.opened != true
           content_tag :h4, :class => 'product_title' do 
             x.display_name
           end
