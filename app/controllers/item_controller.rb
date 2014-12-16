@@ -1,5 +1,6 @@
 class ItemController < ApplicationController
   before_action :login_check_ajax,  only: [:add_to_basket, :del_from_basket, :add_to_order, :del_from_order]
+  before_action :input_option_validation, only: [:add_to_order]
 
   def view
     @item = Item.where(:path => params[:name]).first
@@ -53,6 +54,7 @@ class ItemController < ApplicationController
   end
 
   def add_to_order
+    
     p = current_user.purchase
     if p.nil?
       p = Purchase.create(user_id: current_user.id,
@@ -63,39 +65,56 @@ class ItemController < ApplicationController
                           phonenumber: current_user.phonenumber,
                           status: "ordering")
     end
-    o = Order.where(purchase_id: p.id, item_id: params[:item_id]).take
-    if o.nil?
-      o = Order.new
+
+    new_order_is_needed = true
+    orders = Order.where(purchase_id: p.id, item_id: params[:item_id])
+    o = Order.new
+
+    if !orders.empty?
+      orders.each do |oo|
+        temp_new_order_is_needed = false
+        oo.order_option_items.each do |x|
+          current_option = x.option
+          if current_option.option_type == 1
+            temp_new_order_is_needed = true if (params[:option_items]["#{x.option_id}"].to_s != x.option_item_id.to_s)
+          else
+            temp_new_order_is_needed = true if (params[:option_items]["#{x.option_id}"].to_s != x.option_text.to_s)
+          end
+        end
+        if temp_new_order_is_needed == false
+          new_order_is_needed = false
+          o = oo
+          break
+        end
+      end
+    end
+
+    if new_order_is_needed
       o.purchase_id = p.id
       o.item_id = params[:item_id]
       o.quantity = params[:quantity]
       o.order_periodic = params[:periodic]
+      o.save
+
+      #options
+      (params[:option_items]||Array.new).each do |x, y|
+        ooi = OrderOptionItem.new
+        option = Option.where(:id => x).take
+        if option.option_type == 1
+          ooi.option_item_id = y
+        else 
+          ooi.option_text = y
+        end
+        ooi.order = o
+        ooi.option = option
+        ooi.save
+      end
     else
       o.quantity = o.quantity + params[:quantity].to_i
       o.order_periodic = params[:periodic]
+      o.save
     end
 
-    #options
-    error_flag = false
-    params[:option_items].each do |x, y|
-      ooi = OrderOptionItem.new
-      option = Option.where(:id => x).take
-      if option.option_type == 1
-        option_item = OptionItem.where(:id => y).take
-        ooi.option_item = option_item
-      else 
-        ooi.option_text = y
-      end
-      ooi.order = o
-      ooi.option = option
-      if !ooi.save
-        error_flag = true
-      end
-    end
-    if !error_flag and o.save
-      render :nothing => true, :status => 200
-    else
-      render :text => t(:something_wrong), :status => 500
-    end
+    render :nothing => true, :status => 200
   end
 end

@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'devise'
 gem 'mailgun_rails'
 gem 'therubyracer'
-
+gem 'thin'
 
 #user omniauth
 gem 'omniauth-facebook'

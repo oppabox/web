@@ -30,4 +30,21 @@ class ApplicationController < ActionController::Base
       render :nothing => true, :status => 401
     end
   end
+
+  def input_option_validation
+    #validate params[:option_items]
+    target_item = Item.where(:id => params[:item_id]).take
+    target_options = target_item.options.map{|x| x.id.to_s}.sort
+
+    if (target_options.size > 0) 
+      if params[:option_items].nil?
+        render :nothing => true, :status => 406
+      else
+        input_options = params[:option_items].map{|x,y| x.to_s}.sort
+        if input_options != target_options
+          render :nothing => true, :status => 406
+        end
+      end
+    end
+  end
 end

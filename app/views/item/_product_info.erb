@@ -77,7 +77,7 @@
         <% if o.option_type == 1 %>
         <select data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
           <% o.option_items.each do |i| %>
-            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %></option>
+            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %> (<%= i.price_change -%>)</option>
           <% end %>
         </select>
         <% else %>
