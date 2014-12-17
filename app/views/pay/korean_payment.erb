@@ -12,6 +12,7 @@
           <div style="height:40px;"></div>
         <% else %>
           <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
+          <% callback_url = request.protocol + request.host_with_port + "/pay/callback"%>
           <input type="hidden" name="purchase_id" value="<%=@orders.first.purchase.id%>">
           <input type="hidden" name="allat_order_no" value="<%=@orders.first.purchase.id%>">
           <input type="hidden" name="allat_product_cd" value="<%=@product_cds%>">
@@ -26,8 +27,7 @@
           <input type="hidden" name="allat_real_yn" value="Y">
           <input type="hidden" name="allat_product_img" value="http://">
           <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price + @delivery_fee%>">
-          <input type="hidden" name="allat_callback_url" value="http://www.oppabox.com/pay/callback">
-          <input type="hidden" name="allat_currency" value="840">
+          <input type="hidden" name="allat_callback_url" value="<%= callback_url %>">
           <input type="hidden" name="allat_xid" value="">
           <input type="hidden" name="allat_eci" value="">
           <input type="hidden" name="allat_cavv" value="">
