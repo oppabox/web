@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get "pay/nonkorean_payment"
 
 	post "pay/reorder_quantity"
+  post "pay/change_currency"
 
   post "item/add_to_basket"
   post "item/add_to_order"

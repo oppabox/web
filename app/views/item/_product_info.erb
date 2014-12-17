@@ -22,7 +22,7 @@
       <p><%= t('product_info_original_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= number_with_delimiter(@item.original_price)-%></p>
+      <p><%= Order.change_currency(@item.original_price)-%></p>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
       <p><%= t('product_info_sale_price') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p style="font-weight:bold; font-size:15px;"><%= number_with_delimiter(@item.sale_price) -%>
+      <p style="font-weight:bold; font-size:15px;"><%= Order.change_currency(@item.sale_price) -%>
       </p>
     </div>
   </div>
@@ -77,7 +77,10 @@
         <% if o.option_type == 1 %>
         <select data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
           <% o.option_items.each do |i| %>
-            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %> (<%= i.price_change -%>)</option>
+            <% price_symbol = if i.price_change >= 0 then "+" else "-" end %>
+            <% price_change = Order.change_currency(i.price_change).gsub(/[+-]/, "").gsub(")","").gsub("(", "/ #{price_symbol}") %>
+            <% price_change = "#{price_symbol} #{price_change}" %>
+            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %> (<%= price_change -%>)</option>
           <% end %>
         </select>
         <% else %>
@@ -104,7 +107,6 @@
     </div>
   </div>
   <% end %>
-
   
   <div style="height:20px;"></div>
 
@@ -115,8 +117,7 @@
           <label class="price_1"><%= t('product_info_sum') %></label>
         </div>
         <div class="col-xs-8 col-md-9 price_detail">
-          <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"><%= number_with_delimiter(@item.sale_price) -%>
-          </p>
+          <p class="price_2" id="total_price" data-original-price="<%=@item.sale_price%>"></p>
           <p class="price_3" ><%= t('product_info_sum_vat') %></p>
         </div>
       </div>

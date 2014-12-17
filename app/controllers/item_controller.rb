@@ -67,7 +67,7 @@ class ItemController < ApplicationController
     end
 
     new_order_is_needed = true
-    orders = Order.where(purchase_id: p.id, item_id: params[:item_id])
+    orders = Order.where(order_periodic: params[:periodic], purchase_id: p.id, item_id: params[:item_id])
     o = Order.new
 
     if !orders.empty?
@@ -93,7 +93,8 @@ class ItemController < ApplicationController
       o.purchase_id = p.id
       o.item_id = params[:item_id]
       o.quantity = params[:quantity]
-      o.order_periodic = params[:periodic]
+      o.order_periodic = params[:periodic].to_i
+      
       o.save
 
       #options
@@ -111,7 +112,7 @@ class ItemController < ApplicationController
       end
     else
       o.quantity = o.quantity + params[:quantity].to_i
-      o.order_periodic = params[:periodic]
+      o.order_periodic = params[:periodic].to_i
       o.save
     end
 

@@ -52,6 +52,7 @@ en:
   periodoc_12month: "12개월"
 
   sold_out: "매진"
+  order_option: "주문옵션"
 
   usercheck_invalid_email: "You entered a wrong e-mail address."
   usercheck_password_short_length: "The password has to exceed 4 digits at least."

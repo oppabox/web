@@ -53,6 +53,7 @@ ja:
   periodoc_12month: "12개월"
 
   sold_out: "매진"
+  order_option: "주문옵션"
 
   usercheck_invalid_email: "入力されたメールアドレスが正しくありません。"
   usercheck_password_short_length: "パスワードは4文字以上です。"

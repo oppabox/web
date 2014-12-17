@@ -55,6 +55,7 @@ ko:
   periodoc_12month: "12개월"
 
   sold_out: "매진"
+  order_option: "주문옵션"
 
   usercheck_invalid_email: "이메일을 잘못 입력했습니다. "
   usercheck_password_short_length: "비밀번호는 4자 이상이어야 합니다."

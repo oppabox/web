@@ -53,6 +53,7 @@ cn:
   periodoc_12month: "12개월"
 
   sold_out: "매진"
+  order_option: "주문옵션"
 
   usercheck_invalid_email: "输入电子邮箱错误"
   usercheck_password_short_length: "密码需设成4个字符以上"

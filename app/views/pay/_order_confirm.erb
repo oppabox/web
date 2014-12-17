@@ -16,22 +16,23 @@
       <% item = o.item %>
       <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
       <div class="col-md-4 col-xs-4"><p class="text-center display_link"><a href="/item/<%= item.path-%>"><%= item.display_name %><%= periodic -%></a></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><%= number_with_delimiter(item.sale_price) %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center"><%= Order.change_currency(o.total_price) %></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center">
        <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
      &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
        <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
       
       </p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= number_with_delimiter(item.sale_price * o.quantity) %></p></div>
+      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= Order.change_currency(o.total_price * o.quantity) %></p></div>
       <div class="col-md-2 col-xs-2"><p class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></div>
     </div>
     <% if o.order_option_items.size > 0 %>
-      <% o.order_option_items.each do |x| %>
-        <%= x.inspect %>
-      <% end %>
       <div class="row">
-        <div class="col-md-12 col-xs-12"><p class="text-center display_link">option_here</p></div>
+        <div class="col-md-12 col-xs-12">
+          <p class="text-center display_link">
+            [<%= t('order_option') -%>] <%= option_string(o) %>
+          </p>
+        </div>
       </div>
     <% end %>
     <div style="height:15px;"></div>

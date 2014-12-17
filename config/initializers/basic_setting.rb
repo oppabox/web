@@ -7,3 +7,5 @@ JEWELRY_BANR = "/images/top/6.jpg"
 GRIENICH_BANR = "/images/top/7.jpg"
 
 BASE_ITEM_IMAGE_LOCATION = "/images/items"
+
+CURRENCY = 1100

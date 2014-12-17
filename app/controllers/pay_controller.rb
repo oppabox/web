@@ -43,12 +43,16 @@ class PayController < ApplicationController
 
   end
 
+  def change_currency
+    render :text => Order.change_currency(params[:total_price].to_i)
+  end
+
   def order
     @orders = current_user.orders
     @baskets = current_user.baskets
     @all_price = 0
     @orders.each do |o|
-      @all_price += o.quantity * o.item.sale_price
+      @all_price += o.quantity * o.total_price
     end
     items = Array.new
     @orders.each do |o|
@@ -56,6 +60,7 @@ class PayController < ApplicationController
     end
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
+    @delivery_fee = 0
   end
 
   def korean_payment

@@ -1,4 +1,5 @@
 $(function(){
+  recalculate();
   $(".select_option_box, #periodic_option, #item_detail_quantity").on("change", function(){
     recalculate();
   });
@@ -44,7 +45,21 @@ function recalculate(){
     periodic_month = $("#periodic_option").val();
   }
   var total_price = periodic_month * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
-  $("#total_price").html(formatNumber(total_price));
+
+  $.ajax({
+    data: {
+      total_price: total_price
+    },
+    url: '/pay/change_currency',
+    type: 'POST',
+    success: function(httpObj){
+      $("#total_price").html(httpObj);
+    },
+    error: function(httpObj) {
+      alert(httpObj.responseText);
+    }
+  });
+
 }
 function formatNumber (num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")

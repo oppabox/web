@@ -9,4 +9,5 @@ class Item < ActiveRecord::Base
   def display_name
     self.item_names.where(:locale => I18n.locale.to_s).first.name
   end
+
 end

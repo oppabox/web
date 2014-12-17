@@ -25,8 +25,7 @@
           <input type="hidden" name="allat_test_yn" value="Y">
           <input type="hidden" name="allat_real_yn" value="Y">
           <input type="hidden" name="allat_product_img" value="http://">
-          <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price+5000%>">
-          <input type="hidden" name="allat_amt_dollar" id="allat_amt_dollar" value="<%=((@all_price+5000)/10.0).to_i%>">
+          <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price + @delivery_fee%>">
           <input type="hidden" name="allat_callback_url" value="http://www.oppabox.com/pay/callback">
           <input type="hidden" name="allat_currency" value="840">
           <input type="hidden" name="allat_xid" value="">
