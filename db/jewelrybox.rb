@@ -50,21 +50,7 @@ def jewelrybox
     o.item = i
   o.save
 
-  {"13cm" => "3000", "15cm" => "-2000", "17.5cm" => "0"}.each do |x, y|
-    oi = OptionItem.new
-      oi.option = o
-      oi.name = x
-      oi.price_change = y
-    oi.save
-  end
-
-  o = Option.new
-    o.title = "Length"
-    o.option_type = 1
-    o.item = i
-  o.save
-
-  {"13cm" => "3000", "15cm" => "-2000", "17.5cm" => "0"}.each do |x, y|
+  {"13cm" => "0", "15cm" => "0", "17.5cm" => "0"}.each do |x, y|
     oi = OptionItem.new
       oi.option = o
       oi.name = x

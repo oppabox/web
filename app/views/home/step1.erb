@@ -2,15 +2,15 @@
   <h2 class="text-center form-signin-heading"><%= t('signup_step1') %></h2>
   <hr>
   <% 
-	if params[:lo] == "zh"					#중국어
+	if cookies[:locale] == "cn"					#중국어
 		user_agreement_line = 198
-	elsif params[:lo] == "en"				#영어
+	elsif cookies[:locale] == "en"				#영어
 		privacy_policy_line = 15
 		user_agreement_line = 148
-	elsif params[:lo] == "ja"				#일본어
+	elsif cookies[:locale] == "ja"				#일본어
 		privacy_policy_line = 17
 		user_agreement_line = 148
-	elsif params[:lo] == "ko"				#한국어
+	elsif cookies[:locale] == "ko"				#한국어
 		privacy_policy_line = 112
 		user_agreement_line = 134
 	else														#default 한국어
@@ -19,7 +19,7 @@
 	end
 	
 	# 한국, 미국, 일본
-	if params[:lo] != "zh" %>
+	if cookies[:locale] != "cn" %>
 	<div class="jumbotron agreement">
 		<%0.upto(privacy_policy_line) do |i| %>
 			<p>

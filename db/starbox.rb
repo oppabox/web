@@ -9,11 +9,11 @@ def starbox
     i.sale_price = "58000"
     i.quantity = 300
     i.limited = true
-    i.periodic = true
+    i.periodic = true #주기 (1개월, 3개월, 6개월, 12개월)
   i.save
 
 #김재중박스 : LOCALE NAME
-  name = {"ko" => "김재중박스", "en" => "KimJaeJoong Box", "cn" => "KimJaeJoong Box", "ja" => "KimJaeJoong Box"}
+  name = {"ko" => "김재중박스", "en" => "Kim JaeJoong Box", "cn" => "Kim JaeJoong Box", "ja" => "Kim JaeJoong Box"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i

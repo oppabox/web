@@ -20,14 +20,27 @@ b = Box.where(:path => "grienich_box").first
   end
 #BOX 1 : OPTIONS
 # Pink, Blue 선택
+  o = Option.new
+    o.title = "Color"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"No.81 PINK" => "0", "CROSS PRINT BLUE" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #BOX 2 : BASIC INFO
 b = Box.where(:path => "grienich_box").first
   i = Item.new
     i.box = b
     i.path = "box2"
-    i.original_price = "98000"
-    i.sale_price = "121400"
+    i.original_price = "121400"
+    i.sale_price = "98000"
   i.save
 
 #BOX 2 : LOCALE NAME
@@ -41,14 +54,27 @@ b = Box.where(:path => "grienich_box").first
   end
 #BOX 2 : OPTIONS
 # Warhol, Jobs 선택
+  o = Option.new
+    o.title = "Select"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Set1" => "0", "Set2" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #BOX 3 : BASIC INFO
 b = Box.where(:path => "grienich_box").first
   i = Item.new
     i.box = b
     i.path = "box3"
-    i.original_price = "15800"
-    i.sale_price = "191400"
+    i.original_price = "191400"
+    i.sale_price = "158000"
   i.save
 
 #BOX 1 : LOCALE NAME
@@ -62,5 +88,17 @@ b = Box.where(:path => "grienich_box").first
   end
 #BOX 3 : OPTIONS
 # Pattern, Folding 선택
+  o = Option.new
+    o.title = "Select"
+    o.option_type = 1
+    o.item = i
+  o.save
 
+  {"Set1" => "0", "Set2" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 end

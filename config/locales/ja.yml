@@ -46,14 +46,14 @@ ja:
   signup_additional: "지금 배송정보를 입력하면, OPPABOX 이용이 더 편리합니다."
   signup_choice_email: "Sign up with Email" #English only. Don't tranlate!
 
-  periodic_purchase: "정기구매"
-  periodoc_1month: "1개월"
-  periodoc_3month: "3개월"
-  periodoc_6month: "6개월"
-  periodoc_12month: "12개월"
+  periodic_purchase: "Term Purchase"
+  periodoc_1month: "1 Month"
+  periodoc_3month: "3 Month"
+  periodoc_6month: "6 Month"
+  periodoc_12month: "12 Month"
 
-  sold_out: "매진"
-  order_option: "주문옵션"
+  sold_out: "Sold out"
+  order_option: "Order option"
 
   usercheck_invalid_email: "入力されたメールアドレスが正しくありません。"
   usercheck_password_short_length: "パスワードは4文字以上です。"
