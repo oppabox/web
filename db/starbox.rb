@@ -10,6 +10,7 @@ def starbox
     i.quantity = 300
     i.limited = true
     i.periodic = true #주기 (1개월, 3개월, 6개월, 12개월)
+    i.opened = false
   i.save
 
 #김재중박스 : LOCALE NAME
@@ -26,12 +27,11 @@ def starbox
   i = Item.new
     i.box = b
     i.path = "minho"
-    i.original_price = "71500"  #EXO BACK : 19,500
-                                #SNAP BACK : 32,500
-                                #PHOTO BOOK : 19,530          전부 표기 해주세요.
+    i.original_price = "71500"
     i.sale_price = "53000"
     i.quantity = 300 
     i.limited = true
+    i.opened = false
   i.save
 
 #이민호박스 : LOCALE NAME

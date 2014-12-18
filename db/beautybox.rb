@@ -7,6 +7,7 @@ def beautybox
     i.path = "set1"
     i.original_price = "52500"
     i.sale_price = "48500"
+    i.opened = false
   i.save
 
 #SET 1 : LOCALE NAME
@@ -45,6 +46,7 @@ def beautybox
     i.path = "set3"
     i.original_price = "126000"
     i.sale_price = "92500"
+    i.opened = false
   i.save
 
 #SET 3 : LOCALE NAME
