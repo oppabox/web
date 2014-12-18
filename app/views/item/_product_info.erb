@@ -85,7 +85,8 @@
           <% end %>
         </select>
         <% else %>
-        <input class="form-control input-sm option_items" data-option-id="<%= o.id -%>" data-option-type="<%= o.option_type -%>" type="text" placeholder="<%= o.title %>">
+        <input class="form-control input-sm option_items" data-option-id="<%= o.id -%>" data-option-type="<%= o.option_type -%>" type="text" maxlength="20" placeholder="<%= o.title %>" style="text-transform:uppercase;" onkeyup="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')">
+        <%# 사용자의 편의를 위해서 소문자로 입력받아도 대문자로 입력되게 바꿈 / 여기서 문제는 실제 Value값은 소문자로 들어가는데 item.js에서 toUpperCase()로 대문자로 전환대게 함.%>
         <% end %>
       </div>
     </div>

@@ -33,7 +33,7 @@ def kitchenbox
   i.save
 
 #KITCHENTOOL : LOCALE NAME
-  name = {"ko" => "키친툴", "en" => "Kitchen Tool", "cn" => "키친툴", "ja" => "키친툴"}
+  name = {"ko" => "키친툴", "en" => "Kitchen Tool", "cn" => "Kitchen Tool", "ja" => "Kitchen Tool"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
