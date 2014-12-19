@@ -67,10 +67,9 @@ class MypageController < ApplicationController
     
 		if current_user.save		
 			flash[:alert] = "Edit Success!"
-    	redirect_to :back
 		else
 			flash[:alert] = "Edit Fail"
-			redirect_to :back
 		end
+    redirect_to :back
   end
 end
