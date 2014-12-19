@@ -43,6 +43,8 @@ ja:
   signup_add_email_description: "국가/이메일을 입력해야 가입이 완료됩니다."
   signup_add_email_complete: "가입 완료"
   signup_complete: "가입이 완료되었습니다."
+  signup_success: "Your registration has been successfully confirmed."
+  signup_success_home: "Go to Main"
   signup_additional: "지금 배송정보를 입력하면, OPPABOX 이용이 더 편리합니다."
   signup_choice_email: "Sign up with Email" #English only. Don't tranlate!
 

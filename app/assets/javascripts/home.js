@@ -73,7 +73,7 @@ $(function(){
       },
       success: function(data) {
         if(data["result"]){
-          location.href="/"
+          location.href="/home/welcome"
         }
       }
     })
