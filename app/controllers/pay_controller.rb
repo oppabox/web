@@ -34,9 +34,9 @@ class PayController < ApplicationController
     current_user.save
 
     if p.krw_billing params
-      redirect_to "/mypage/list"
+      redirect_to "/pay/success"
     else
-      redirect_to "/pay/order"
+      redirect_to "/pay/error"
     end
   end
 
@@ -49,6 +49,7 @@ class PayController < ApplicationController
   end
 
   def order
+    purchase = current_user.purchase
     @orders = current_user.orders
     @baskets = current_user.baskets
     @all_price = 0
@@ -61,7 +62,7 @@ class PayController < ApplicationController
     end
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
-    @delivery_fee = 0
+    @delivery_fee = purchase.get_delivery_fee
   end
 
   def korean_payment

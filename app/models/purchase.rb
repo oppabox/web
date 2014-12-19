@@ -3,77 +3,24 @@ class Purchase < ActiveRecord::Base
   has_many :orders
   belongs_to  :user
   AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
-  AT_KRW_SHOP_ID   = "oppabox"       #설정필요
+  AT_KRW_SHOP_ID   = "oppabox"          #설정필요
   AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요
-
-  def all_amt
-    amt = 0
-    orders.each do |o|
-      amt += o.item.sale_price.to_i * o.quantity.to_i
-    end
-    amt += 5000
-  end
-
-  def usd_billing params
-    all_usd_price = all_krw_price / 1000.0
-    allat_enc_data
-
-    at_order_no       = ""
-    at_card_no        = params[:allat_card_no]
-    at_cardvalid_ym   = ""
-    at_shop_member_id = ""
-    at_product_cd     = ""
-    at_product_nm     = ""
-    at_buyer_nm       = ""
-    at_recp_nm        = ""
-    at_recp_addr      = ""
-    at_email_addr     = ""
-    at_xid            = params[:allat_xid]
-    at_eci            = params[:allat_eci]
-    at_cavv           = params[:allat_cavv]
-    at_test_yn        = params[:allat_test_yn]
-    at_user_ip        = current_sign_in_ip
-    at_shop_id        = AT_USD_SHOP_ID
-
-    at_enc=setValue(at_enc,"allat_shop_id",at_shop_id)
-    at_enc=setValue(at_enc,"allat_order_no",at_order_no)
-    at_enc=setValue(at_enc,"allat_card_no",at_card_no)
-    at_enc=setValue(at_enc,"allat_cardvalid_ym",at_cardvalid_ym)
-    at_enc=setValue(at_enc,"allat_amt",at_amt)
-    at_enc=setValue(at_enc,"allat_shop_member_id",at_shop_member_id)
-    at_enc=setValue(at_enc,"allat_product_cd",at_product_cd)
-    at_enc=setValue(at_enc,"allat_product_nm",at_product_nm)
-    at_enc=setValue(at_enc,"allat_cardcert_yn","N")
-    at_enc=setValue(at_enc,"allat_buyer_nm",at_buyer_nm)
-    at_enc=setValue(at_enc,"allat_recp_name",at_recp_nm)
-    at_enc=setValue(at_enc,"allat_recp_addr",at_recp_addr)
-    at_enc=setValue(at_enc,"allat_email_addr",at_email_addr)
-    at_enc=setValue(at_enc,"xid",at_xid)
-    at_enc=setValue(at_enc,"eci",at_eci)
-    at_enc=setValue(at_enc,"cavv",at_cavv)
-    at_enc=setValue(at_enc,"allat_pay_type","3D")
-    at_enc=setValue(at_enc,"allat_test_yn",at_test_yn)
-    at_enc=setValue(at_enc,"allat_user_ip",at_user_ip)
-    at_enc=setValue(at_enc,"allat_opt_pin","NOUSE")
-    at_enc=setValue(at_enc,"allat_opt_mod","APP")
-
-    process all_usd_price, at_enc, params[:allat_test_yn], AT_USD_SHOP_ID
-  end
 
   def krw_billing params
     process all_krw_price, params[:allat_enc_data], params[:allat_test_yn], AT_KRW_SHOP_ID
   end
 
+#TODO : FIX
   def all_krw_price
     at_amt = 0
-    orders.each do |o|
-      at_amt += o.item.sale_price.to_i * o.quantity.to_i
+    self.orders.each do |o|
+      at_amt += o.total_price.to_i * o.quantity.to_i
     end
-    at_amt += 5000 #배송비
+    at_amt += get_delivery_fee
   end
 
-  def all_usd_price
-    all_krw_price / 10.0
+  def get_delivery_fee
+    0
   end
 
   def process allat_amt, allat_enc_data, allat_test_yn, at_shop_id
