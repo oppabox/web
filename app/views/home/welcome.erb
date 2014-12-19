@@ -4,11 +4,7 @@
         <img src="<%= asset_path 'oppabox.png'%>" class="img-responsive img-center" width="100">
       </div>
       <div style="font-size:25px;">
-        <span style="font-weight:bold; padding-right:5px;">OPPABOX</span>
-        &nbsp;
-        <span style="font-weight:bold"> 회원가입이 완료 </span>
-        &nbsp;
-        <span>되었습니다!</span>
+        <span style="font-weight:bold"><%=t('signup_success')%></span>
       </div>
       <div>
         <br>
@@ -41,6 +37,6 @@
       </div>
       %>
       <hr>
-      <button class="btn btn-danger">상품 구매하러 가기!!</button>
+      <a href="/"><button class="btn btn-danger"><%=t('signup_success_home')%></button></a>
   </div>
 </div>

@@ -5,8 +5,8 @@ def designbox
   i = Item.new
     i.box = b
     i.path = "in_my_bag_1"
-    i.original_price = "56300"
-    i.sale_price = "50500"
+    i.original_price = "51300"
+    i.sale_price = "48500"
   i.save
 
 #IN MY BAG 1 : LOCALE NAME
@@ -19,18 +19,45 @@ def designbox
     n.save
   end
 
-#IN MY BAG 1 : OPTIONS
-#NONE
+#IN MY BAG 1 :OPTIONS
+#Mirror
+  o = Option.new
+    o.title = "Mirror"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Navy" => "0", "Green" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Pouch
+  o = Option.new
+    o.title = "Pouch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Dot" => "0", "Blue/Yello" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #IN MY BAG 2
   i = Item.new
     i.box = b
     i.path = "in_my_bag_2"
-    i.original_price = "51300"
-    i.sale_price = "48500"
+    i.original_price = "56300"
+    i.sale_price = "50500"
   i.save
 
-#IN MY BAG 2 : LOCALE NAME
+#IN MY BAG 1 : LOCALE NAME
   name = {"ko" => "In My Bag #2", "en" => "In My Bag #2", "cn" => "In My Bag #2", "ja" => "In My Bag #2"}
   name.each do |x, y|
     n = ItemName.new
@@ -40,8 +67,49 @@ def designbox
     n.save
   end
 
-#IN MY BAG 2 :OPTIONS
-#NONE
+#IN MY BAG 1 : OPTIONS
+#Mirror
+  o = Option.new
+    o.title = "Mirror"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Orange" => "0", "White" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Pouch
+  o = Option.new
+    o.title = "Pouch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Red" => "0", "Green" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Socks
+  o = Option.new
+    o.title = "Socks"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Charcoal Argyle" => "0", "Cotton Argyle" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #IN MY BAG 3
   i = Item.new
@@ -62,7 +130,48 @@ def designbox
   end
 
 #IN MY BAG 3 : OPTIONS
-#NONE
+#Pouch
+  o = Option.new
+    o.title = "Pouch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Dot" => "0", "Blue/Yello" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Line Tale
+  o = Option.new
+    o.title = "Line Tale"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Pink" => "0", "Orange" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Clutch
+  o = Option.new
+    o.title = "Clutch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Blue" => "0", "Black" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #IN MY BAG 4
   i = Item.new
@@ -83,7 +192,48 @@ def designbox
   end
 
 #IN MY BAG 4 : OPTIONS
-#NONE
+#Pouch
+  o = Option.new
+    o.title = "Pouch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Pollen-orange5" => "0", "Pollen-green5" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Line Tale
+  o = Option.new
+    o.title = "Line Tale"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Pink" => "0", "Orange" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Clutch
+  o = Option.new
+    o.title = "Clutch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Blue" => "0", "Black" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #IN MY BAG 5
   i = Item.new
@@ -103,9 +253,35 @@ def designbox
     n.save
   end
 
-
 #IN MY BAG 5 : OPTIONS
-#NONE
+#Leather Bag
+  o = Option.new
+    o.title = "Leather Bag"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Navy" => "0", "Blue" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Note Book
+  o = Option.new
+    o.title = "Note Book"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"White" => "0", "Blue" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 
 #IN MY BAG 6
   i = Item.new
@@ -126,5 +302,60 @@ def designbox
   end
 
 #IN MY BAG 6 : OPTIONS
-#NONE
+#Leather Bag
+  o = Option.new
+    o.title = "Leather Bag"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Navy" => "0", "Blue" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Clutch
+  o = Option.new
+    o.title = "Clutch"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Blue" => "0", "Black" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Socks select #1
+  o = Option.new
+    o.title = "Socks select #1"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Stripe Navy" => "0", "Stripe Charcoal" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
+#Socks select #2
+  o = Option.new
+    o.title = "Socks select #2"
+    o.option_type = 1
+    o.item = i
+  o.save
+
+  {"Waled Pink" => "0", "Waled Black" => "0"}.each do |x, y|
+    oi = OptionItem.new
+      oi.option = o
+      oi.name = x
+      oi.price_change = y
+    oi.save
+  end
 end

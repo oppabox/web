@@ -64,7 +64,13 @@ class MypageController < ApplicationController
     current_user.address = params[:address]
     current_user.city = params[:city]
     current_user.state = params[:state]
-    current_user.save
-    redirect_to :back
+    
+		if current_user.save		
+			flash[:alert] = "Edit Success!"
+    	redirect_to :back
+		else
+			flash[:alert] = "Edit Fail"
+			redirect_to :back
+		end
   end
 end

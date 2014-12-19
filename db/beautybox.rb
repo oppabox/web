@@ -7,10 +7,11 @@ def beautybox
     i.path = "set1"
     i.original_price = "52500"
     i.sale_price = "48500"
+    i.opened = false
   i.save
 
 #SET 1 : LOCALE NAME
-  name = {"ko" => "피부진정 & 보습세트", "en" => "피부진정 & 보습세트", "cn" => "피부진정 & 보습세트", "ja" => "피부진정 & 보습세트"}
+  name = {"ko" => "피부진정 & 보습세트", "en" => "Skin suppression & Moisturizing set", "cn" => "Skin suppression & Moisturizing set", "ja" => "Skin suppression & Moisturizing set"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
@@ -30,7 +31,7 @@ def beautybox
   i.save
 
 #SET 2 : LOCALE NAME
-  name = {"ko" => "스킨 브라이트닝 세트", "en" => "스킨 브라이트닝 세트", "cn" => "스킨 브라이트닝 세트", "ja" => "스킨 브라이트닝 세트"}
+  name = {"ko" => "스킨 브라이트닝 세트", "en" => "Skin brightening set", "cn" => "Skin brightening set", "ja" => "Skin brightening set"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
@@ -45,10 +46,11 @@ def beautybox
     i.path = "set3"
     i.original_price = "126000"
     i.sale_price = "92500"
+    i.opened = false
   i.save
 
 #SET 3 : LOCALE NAME
-  name = {"ko" => "뷰티 버라이어티 세트", "en" => "뷰티 버라이어티 세트", "cn" => "뷰티 버라이어티 세트", "ja" => "뷰티 버라이어티 세트"}
+  name = {"ko" => "뷰티 버라이어티 세트", "en" => "Beauty variety set", "cn" => "Beauty variety set", "ja" => "Beauty variety set"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
@@ -69,7 +71,7 @@ def beautybox
   i.save
 
 #SET 4 : LOCALE NAME
-  name = {"ko" => "월드 베스트 세트", "en" => "월드 베스트 세트", "cn" => "월드 베스트 세트", "ja" => "월드 베스트 세트"}
+  name = {"ko" => "월드 베스트 세트", "en" => "World best set", "cn" => "World best set", "ja" => "World best set"}
   name.each do |x, y|
     n = ItemName.new
     n.item = i
