@@ -70,6 +70,7 @@ class MypageController < ApplicationController
     	redirect_to :back
 		else
 			flash[:alert] = "Edit Fail"
+			redirect_to :back
 		end
   end
 end
