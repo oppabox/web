@@ -20,13 +20,14 @@ class PayController < ApplicationController
   def billing
     p = Purchase.find(params[:purchase_id])
     p.recipient = params[:allat_recp_nm]
-    p.country = params[:country]
+#p.country = params[:country]
+    p.country = current_user.country
     p.postcode = params[:postcode]
     p.phonenumber = params[:phonenumber]
     p.address = params[:allat_recp_addr]
     p.save
     current_user.name = params[:allat_recp_nm]
-    current_user.country = params[:country]
+#current_user.country = params[:country]
     current_user.postcode = params[:postcode]
     current_user.phonenumber = params[:phonenumber]
     current_user.address = params[:allat_recp_addr]
