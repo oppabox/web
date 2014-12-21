@@ -62,6 +62,8 @@ def jewelrybox
   o = Option.new
   o.title = "Lettering"
   o.option_type = 2
+  o.max_length = 20
+  o.english_only = true
   o.item = i
   o.save
 

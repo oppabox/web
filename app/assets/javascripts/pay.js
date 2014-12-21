@@ -1,3 +1,9 @@
+$(function(){
+  $("#krw_payment_submit").click(function(){
+      submit_address("/pay/korean_payment");
+  });
+});
+
 function reorder_quantity(method, order_id){
   $.ajax({
     data: {

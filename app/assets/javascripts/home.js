@@ -52,32 +52,8 @@ $(function(){
   })
 
   $("#signup_step3_button").on("click",function(){
-    var phonenumber = $("#signup_phonenumber").val()
-    var postcode = $("#signup_postcode").val()
-    var address = $("#signup_address").val()
-    var name = $("#signup_name").val()
-    var city = $("#signup_city").val()
-    var state = $("#signup_state").val()
-
-    $.ajax({
-      url: "/home/api_step3/",
-      type: "POST",
-      dataType:"JSON",
-      data: {
-        name: name,
-        phonenumber:phonenumber,
-        postcode:postcode,
-        city:city,
-        state:state,
-        address:address
-      },
-      success: function(data) {
-        if(data["result"]){
-          location.href="/home/welcome"
-        }
-      }
-    })
-  })
+      submit_address("/home/welcome");
+  });
 
   $("#signin_button").on("click",function(){
     var email = $("#signin_email").val()

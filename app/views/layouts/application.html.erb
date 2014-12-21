@@ -17,14 +17,17 @@
 
 <body>
   <%= render :partial => 'layouts/header' %>
+  <% if !flash.empty? %>
   <div class="row" id="flash_message" style="display:none;">
     <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-      <p class="text-center"><button style="width:80%" type="button" class="btn btn-primary">Action</button></p>
+      <p class="text-center"><button style="width:80%" type="button" class="btn btn-primary"><%= flash[:alert] %></button></p>
     </div>
   </div>
+  <% end %>
   <%= yield %>
   <%= render :partial => 'layouts/footer' %>
 
+  <% if !flash.empty? %>
   <script type="text/javascript">
   $(function(){
     $("#flash_message").slideDown(function() {
@@ -34,5 +37,6 @@
     });
   });
   </script>
+  <% end %>
 </body>
 </html>

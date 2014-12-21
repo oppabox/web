@@ -55,6 +55,9 @@ en:
 
   sold_out: "Sold out"
   order_option: "Order option"
+  modify_address: "수정하기"
+  modify_address_complete: "주소 수정 완료"
+  modify_address_error: "주소 수정 실패"
 
   usercheck_invalid_email: "You entered a wrong e-mail address."
   usercheck_password_short_length: "The password has to exceed 4 digits at least."

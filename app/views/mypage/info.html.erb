@@ -2,15 +2,10 @@
   <div class="row">
     <%= render :partial => "left_list" %>
     <div class="col-md-10">
-			<% if flash[:alert] %>
-      <div style="background:#525252; color:#fff;">
-				<p style="padding-left:15px;font-size:25px; height:40px;"><%=flash[:alert]%></p>
-      </div>
-    	<%end%>
       <hr>
       <%=form_tag("/mypage/edit_address") %>
       <%=render partial: "/home/user_detail_info_modify" %>
-      <%=submit_tag "수정하기", class: "btn btn-lg btn-default btn-block top-margin user-info-submit"%>
+      <%=submit_tag t('modify_address'), class: "btn btn-lg btn-default btn-block top-margin user-info-submit"%>
     </div>
   </div>
 </div>

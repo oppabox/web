@@ -21,7 +21,7 @@ $(function(){
       if ($(this).data("option-type") == 1){
         input_value = $(this).find('option:selected').val();
       }else{
-        input_value = $(this).val().toUpperCase();
+        input_value = $(this).val();
       }
       option_array[$(this).data("option-id")] = input_value;
     });

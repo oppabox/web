@@ -66,9 +66,9 @@ class MypageController < ApplicationController
     current_user.state = params[:state]
     
 		if current_user.save		
-			flash[:alert] = "Edit Success!"
+			flash[:alert] = t('modify_address_complete')
 		else
-			flash[:alert] = "Edit Fail"
+			flash[:alert] = t('modify_address_error')
 		end
     redirect_to :back
   end
