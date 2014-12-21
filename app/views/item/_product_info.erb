@@ -63,8 +63,20 @@
       <p><%= t('product_info_purchasing_quantity') %></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <input id="item_detail_quantity" type="number" style="width:60px;" min="1" max="5" value="1" data-id="<%=@item.id%>">
+      <input id="item_detail_quantity" type="number" style="width:60px;" value="1" data-id="<%=@item.id%>">
     </div>
+    <script type="text/javascript">
+      $("#item_detail_quantity").keyup(function(event){
+        if (isNaN(parseInt($(this).val())) == true){
+          $(this).val(1);
+        }else{
+          $(this).val(parseInt($(this).val()));
+        }
+        if (parseInt($(this).val()) > <%= @item.buy_limit %>){
+          $(this).val(<%= @item.buy_limit %>);
+        }
+      });
+    </script>
   </div>
 
   <% if @item.options.size > 0 %>

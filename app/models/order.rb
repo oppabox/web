@@ -4,7 +4,17 @@ class Order < ActiveRecord::Base
   belongs_to  :purchase
   has_many    :order_option_items
 
-  before_save :period_check
+  before_save :period_check, :quantity_check
+
+  def quantity_check
+    if self.quantity.nil? or self.quantity.empty? of self.quantity < 0 
+      self.quantity = 1
+    end
+
+    if self.item.buy_limit < self.quantity 
+      self.quantity = self.item.buy_limit
+    end
+  end
 
   def period_check
     if ![1,3,6,12].include? self.order_periodic

@@ -20,7 +20,11 @@
                 <li class="dropdown-submenu"><a href="/box/<%=b.path%>"><%= b.display_name %></a>
                 <ul class="dropdown-menu">
                   <% b.items.each do |i| %>
-                  <li><a href="/item/<%= i.path %>"><%= i.display_name%></a></li>
+                    <% if i.opened == false %>
+                      <li><a href="#" style="cursor:not-allowed"><%= i.display_name%></a></li>
+                    <% else %>
+                      <li><a href="/item/<%= i.path %>"><%= i.display_name%></a></li>
+                    <% end %>
                   <% end %>
                 </ul>
               <% end %>
