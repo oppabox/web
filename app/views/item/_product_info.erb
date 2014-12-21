@@ -67,11 +67,7 @@
     </div>
     <script type="text/javascript">
       $("#item_detail_quantity").keyup(function(event){
-        if (isNaN(parseInt($(this).val())) == true){
-          $(this).val(1);
-        }else{
-          $(this).val(parseInt($(this).val()));
-        }
+        $(this).val(parseInt($(this).val()));
         if (parseInt($(this).val()) > <%= @item.buy_limit %>){
           $(this).val(<%= @item.buy_limit %>);
         }
