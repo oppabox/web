@@ -50,6 +50,14 @@ class PayController < ApplicationController
 
   def order
     purchase = current_user.purchase
+      purchase.address = current_user.address
+      purchase.city = current_user.city
+      purchase.postcode = current_user.postcode
+      purchase.phonenumber = current_user.phonenumber
+      purchase.recipient = current_user.name
+      purchase.state = current_user.state
+    purchase.save
+
     @orders = current_user.orders
     @baskets = current_user.baskets
     @all_price = 0

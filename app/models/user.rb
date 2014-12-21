@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def purchase
-    self.purchases.where(status: "ordering").take
+    self.purchases.where(status: PURCHASE_ORDERING).take
   end
 
   def send_password_reset

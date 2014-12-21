@@ -57,13 +57,7 @@ class ItemController < ApplicationController
     
     p = current_user.purchase
     if p.nil?
-      p = Purchase.create(user_id: current_user.id,
-                          recipient: current_user.name,
-                          country: current_user.country,
-                          address: current_user.address,
-                          postcode: current_user.postcode,
-                          phonenumber: current_user.phonenumber,
-                          status: "ordering")
+      p = Purchase.create(user_id: current_user.id, status: PURCHASE_ORDERING)
     end
 
     new_order_is_needed = true

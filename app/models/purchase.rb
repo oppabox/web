@@ -10,7 +10,6 @@ class Purchase < ActiveRecord::Base
     process all_krw_price, params[:allat_enc_data], params[:allat_test_yn], AT_KRW_SHOP_ID
   end
 
-#TODO : FIX
   def all_krw_price
     at_amt = 0
     self.orders.each do |o|
@@ -78,7 +77,7 @@ class Purchase < ActiveRecord::Base
       self.pay_type = pay_type
       self.approval_ymdhms = approval_ymdhms
       self.seq_no = seq_no
-      self.status = "paid"
+      self.status = PURCHASE_PAID
       result += "=============== 신용 카드 ===============================\n"
       result += "승인번호              : " + approval_no + "\n"
       result += "카드ID                : " + card_id + "\n"

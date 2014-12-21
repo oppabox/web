@@ -3,14 +3,14 @@ class CreatePurchases < ActiveRecord::Migration
     create_table :purchases do |t|
       t.integer :user_id
       t.string :recipient
-      t.string :country
+
       t.string :city
       t.string :state
       t.string :address
       t.string :postcode
       t.string :phonenumber
 
-      t.string :status, default: "ordering" # "paid", "shipping"
+      t.integer :status, default: 0 # 0=>"purchase_ordering" 1=>"purchase_paid"
 
       # 결제 완료 후
       t.string :replycd

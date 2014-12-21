@@ -23,31 +23,64 @@
             <th><%=t('carry_total_price')%></th>
             <th><%=t('order_state')%></th>
           </tr>
-          <% if current_user.purchases.size == 0 %>
-          <tr class="list_cell">
-            <td class="text-center" colspan="6"><b>구매 내역이 없습니다.</b></td>
-          </tr>
+
+          <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.count <= 0) %>
+            <tr class="list_cell">
+              <td class="text-center" colspan="6"><b><%= t('empty_order') %></b></td>
+            </tr>
           <% else %>
+
           <% current_user.purchases.each do |purchase| %>
-          <% purchase.orders.each_with_index do |order, index|%>
-          <tr class="list_cell">
-            <% if current_user.purchases.size == 0 %>
-            <td colspan="7" style="text-align:center;"><%= t('mypage_no_order') %></td>
+            <% purchase.orders.each_with_index do |order, index|%>
+              <tr class="list_cell">
+
+                <% if index == 0 %>
+                  <td rowspan="<%=purchase.orders.count + 1%>"><%=order.purchase.id%></td>
+                <% end %>
+
+                <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
+                <% options = Array.new(1){periodic} %>
+                <% order.order_option_items.each do |x| %>
+                  <% options << x.option_item.name if  x.option.option_type == 1 %>
+                  <% options << x.option_text if  x.option.option_type == 2 %>
+                <% end %>
+                <% options.compact! %>
+
+                <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
+                <td><%= number_with_delimiter(order.total_price) %></td>
+                <td><%= number_with_delimiter(order.quantity) %></td>
+                <td><%= number_with_delimiter(order.total_price * order.quantity) %></td>
+                <% if index == 0 %>
+                  <% name = ["purchase_ordering", "purchase_paid"] %>
+                  <td rowspan="<%=purchase.orders.count+1%>">
+                    <% if order.purchase.status == 0 %>
+                      <a href="/pay/order"><%= t("#{name[order.purchase.status]}") %></a>
+                    <% else %>
+                      <%= t("#{name[order.purchase.status]}") %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
             <% end %>
-            <% if index == 0 %>
-            <td rowspan="<%=purchase.orders.count%>"><%=order.purchase.id%></td>
+
+            <% address_full = Array.new %>
+            <% address_full << [t('country_comment'), current_user.country].join(" : ") %>
+            <% address_full << [t('postcode_comment'), purchase.postcode].join(" : ") %>
+            <% if ["US", "CA"].include? current_user.country %>
+              <% address_full << [t('state_comment'), purchase.state].join(" : ") %>
             <% end %>
-            <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a></td>
-            <td><%= number_with_delimiter(order.item.sale_price) %></td>
-            <td><%= number_with_delimiter(order.quantity) %></td>
-            <td><%= number_with_delimiter(order.item.sale_price * order.quantity) %></td>
-            <% if index == 0 %>
-            <td rowspan="<%=purchase.orders.count%>"><%= order.purchase.status %></td>
+            <% if !["KR"].include? current_user.country %>
+              <% address_full << [t('city_comment'), purchase.city].join(" : ") %>
             <% end %>
-          </tr>
+            <% address_full << [t('address_comment'), purchase.address].join(" : ") %>
+            <% address_full << [t('phone_comment'), purchase.phonenumber].join(" : ") %>
+            <% address_full << [t('user_detail_recipient'), purchase.recipient].join(" : ") %>
+
+            <tr class="list_cell">
+              <td colspan="4">[<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %></td>
+            </tr>
           <% end %>
           <% end %>
-        <% end %>
         </tbody>
       </table>
     </div>
