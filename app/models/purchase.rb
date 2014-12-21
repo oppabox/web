@@ -110,7 +110,37 @@ class Purchase < ActiveRecord::Base
       self.replycd = replycd
       self.replymsg = replymsg
     end
-    self.save
+
+    ActiveRecord::Base.transaction do
+      
+      #ITEM QUANTITY
+      self.orders.each do |x|
+        i = x.item
+        if i.limited == true
+          i.quantity -= x.quantity
+          if i.quantity >= 0
+            i.save
+          else
+            #TODO : RAISE ERROR HERE
+          end
+        end
+
+        x.order_option_items.each do |y|
+          option_item = y.option_item
+          if option_item.limited == true
+            option_item.quantity -= x.quantity
+            if option_item.quantity >= 0
+              option_item.save
+            else
+              #TODO : RAISE ERROR HERE
+            end
+          end
+        end
+      end
+
+      self.save
+    end
+
     replycd == success_flag
   end
 end

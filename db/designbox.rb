@@ -32,6 +32,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Pouch
@@ -46,6 +48,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 
@@ -80,6 +84,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Pouch
@@ -94,6 +100,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Socks
@@ -108,6 +116,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 
@@ -142,6 +152,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Line Tale
@@ -156,6 +168,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Clutch
@@ -170,6 +184,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 
@@ -204,6 +220,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Line Tale
@@ -218,6 +236,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Clutch
@@ -232,6 +252,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 
@@ -266,6 +288,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Note Book
@@ -280,6 +304,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 
@@ -314,6 +340,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Clutch
@@ -328,6 +356,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Socks select #1
@@ -342,6 +372,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 #Socks select #2
@@ -356,6 +388,8 @@ def designbox
       oi.option = o
       oi.name = x
       oi.price_change = y
+      oi.quantity = 5
+      oi.limited = true
     oi.save
   end
 end

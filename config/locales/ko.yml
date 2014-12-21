@@ -71,6 +71,8 @@ ko:
   city_comment: "도시"
   state_comment: "주"
 
+  remaining_quantity: "남은수량"
+
   usercheck_invalid_email: "이메일을 잘못 입력했습니다. "
   usercheck_password_short_length: "비밀번호는 4자 이상이어야 합니다."
   usercheck_password_confirm_not_equal: "비밀번호와 비밀번호 재입력이 일치하지 않습니다."

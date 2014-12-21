@@ -80,8 +80,14 @@
           <% o.option_items.each do |i| %>
             <% price_symbol = if i.price_change >= 0 then "+" else "-" end %>
             <% price_change = Order.change_currency(i.price_change).gsub(/[+-]/, "").gsub(")","").gsub("(", "/ #{price_symbol}") %>
-            <% price_change = "#{price_symbol} #{price_change}" %>
-            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %> (<%= price_change -%>)</option>
+            <% price_change = " (#{price_symbol} #{price_change})" %>
+            <% remaining_quantity = " / #{t('remaining_quantity')} : #{i.quantity}" %>
+
+            <% price_change = "" if i.price_change == 0 %>
+            <% remaining_quantity = "" if i.limited == false %>
+
+            <option value="<%= i.id -%>" data-price="<%= i.price_change -%>"><%= i.name %><%= price_change -%><%= remaining_quantity -%></option>
+
           <% end %>
         </select>
         <% else %>
