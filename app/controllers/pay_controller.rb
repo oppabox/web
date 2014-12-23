@@ -19,16 +19,22 @@ class PayController < ApplicationController
 
   def billing
     p = Purchase.find(params[:purchase_id])
+    toss_params = params.map{|k, v| "#{k}=#{v}"}.join("&")
 
     if p.krw_billing params
-      redirect_to "/pay/success"
+      redirect_to "/pay/success?#{toss_params}"
     else
       redirect_to "/pay/error"
     end
   end
 
   def success
-
+    @address = params[:address]
+    @postcode = params[:postcode]
+    @purchase = current_user.purchased_find params[:purchase_id]
+    unless @purchase
+      redirect_to '/'
+    end
   end
 
   def change_currency

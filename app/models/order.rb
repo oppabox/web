@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
       self.quantity = 1
     end
 
-    if self.item.buy_limit < self.quantity 
+    if self.item.buy_limit < self.quantity
       self.quantity = self.item.buy_limit
     end
   end
@@ -27,9 +27,9 @@ class Order < ActiveRecord::Base
   end
 
   def total_price
-    sum = self.item.sale_price 
+    sum = self.item.sale_price
     self.order_option_items.each do |x|
-      if !x.option_item_id.nil? and x.option_item_id > 0 
+      if !x.option_item_id.nil? and x.option_item_id > 0
         sum += x.option_item.price_change
       end
     end
