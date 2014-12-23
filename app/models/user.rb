@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     self.purchases.where(status: PURCHASE_ORDERING).take
   end
 
+  def purchased_find purchase_id
+    self.purchases.where(status: PURCHASE_PAID, id: purchase_id).take
+  end
+
   def send_password_reset
     enc = Devise.token_generator.generate(self.class, :reset_password_token)
 
