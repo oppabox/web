@@ -48,8 +48,4 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-	
-	def chk_admin_page 
-		@hide_admin_render = true 
-	end
 end
