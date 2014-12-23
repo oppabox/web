@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'admin/login'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ActiveAdmin.routes(self)
@@ -40,6 +42,9 @@ Rails.application.routes.draw do
   get "home/add_email"
   get "home/welcome"
   get "home/login"
+	
+	#admin
+	get "adminshow"	, to: "admin#login"
 
   #box
   get "box/:name", to: "box#index"

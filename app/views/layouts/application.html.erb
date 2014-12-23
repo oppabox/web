@@ -9,6 +9,10 @@
 <link href="/css/font-awesome.min.css" media="all" rel="stylesheet" />
 <%= javascript_include_tag 'application' %>
 <script src="/js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="js/sb-admin-2.js"></script>
 <%= csrf_meta_tags %>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,16 +20,16 @@
 </head>
 
 <body>
-  <%= render :partial => 'layouts/header' %>
+  <%= render :partial => 'layouts/header' unless @hide_admin_render %>
   <% if !flash.empty? %>
   <div class="row" id="flash_message" style="display:none;">
     <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-      <p class="text-center"><button style="width:80%" type="button" class="btn btn-primary"><%= flash[:alert] %></button></p>
+      <p class="text-center"><button style="width:80%" type="button" class="btn btn-danger"><%= flash[:alert] %></button></p>
     </div>
   </div>
   <% end %>
   <%= yield %>
-  <%= render :partial => 'layouts/footer' %>
+  <%= render :partial => 'layouts/footer' unless @hide_admin_render %>
 
   <% if !flash.empty? %>
   <script type="text/javascript">

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
 
   before_action :set_locale, :current_translations
+
   def set_locale
     locale = cookies[:locale].to_s || I18n.default_locale.to_s
     if !["ko", "en", "cn", "ja"].include?(locale)
@@ -47,4 +48,8 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+	
+	def chk_admin_page 
+		@hide_admin_render = true 
+	end
 end
