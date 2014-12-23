@@ -72,8 +72,8 @@
       $(this).val(parseInt($(this).val()));
       if (parseInt($(this).val()) > <%= @item.buy_limit %>){
         $(this).val(<%= @item.buy_limit %>);
-        recalculate();
       }
+      recalculate();
     });
   })
   </script>
