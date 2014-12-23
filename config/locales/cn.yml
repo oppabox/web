@@ -407,3 +407,9 @@ cn:
   user_agreement_198: '②“商城”与用户之间发生的电子商务诉讼，适用韩国法律。附则（实施日期）本条款自   年  月  日起实施 。'
 
   more_shopping: "더 쇼핑하기"
+  paid_sum: "총 결제된 금액"
+  paid_datetime: "결제 일시"
+  paid_thanks: "주문해주셔서 감사합니다!"
+  paid_delivery_charge: "결제된 배송비"
+  go_to_home: "홈으로 이동"
+  go_to_mypage: "내 정보 보기"

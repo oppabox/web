@@ -39,17 +39,10 @@
   margin-right: 10px;
   color:#892;
 }
-.success_thanks{
-  font-size:25px;
-  letter-spacing:-2px;
-}
-.success_thanks label{
-  font-size:40px;
-  letter-spacing:-1px;
-}
-.success_thanks strong{
-  color:#f14949;
-  font-size:50px;
+.success_thanks::first-letter {
+  font-size: 150%;
+  font-weight: bold;
+  color: red;
 }
 // order
 
