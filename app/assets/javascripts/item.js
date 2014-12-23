@@ -1,6 +1,6 @@
 $(function(){
   recalculate();
-  $(".select_option_box, #periodic_option, #item_detail_quantity").on("change", function(){
+  $(".select_option_box, #periodic_option").on("change", function(){
     recalculate();
   });
   $("#add_to_cart").click(function() {
@@ -11,12 +11,6 @@ $(function(){
         window.location.href = "/mypage/basket";
       }
     });
-  });
-  $("#item_detail_quantity").change(function(event){
-    $(this).val(parseInt($(this).val()));
-    if (parseInt($(this).val()) > <%= @item.buy_limit %>){
-      $(this).val(<%= @item.buy_limit %>);
-    }
   });
   $("#purchase").click(function() {
     var quantity = $("#item_detail_quantity").val();

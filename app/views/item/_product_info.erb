@@ -66,6 +66,17 @@
       <input id="item_detail_quantity" type="number" style="width:60px;" value="1" data-id="<%=@item.id%>">
     </div>
   </div>
+  <script>
+  $(function(){
+    $("#item_detail_quantity").change(function(event){
+      $(this).val(parseInt($(this).val()));
+      if (parseInt($(this).val()) > <%= @item.buy_limit %>){
+        $(this).val(<%= @item.buy_limit %>);
+        recalculate();
+      }
+    });
+  })
+  </script>
 
   <% if @item.options.size > 0 %>
   <hr>
