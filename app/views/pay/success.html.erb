@@ -26,7 +26,7 @@
           <div class="success_info">
             <div><label>-결제방법</label><%=@purchase.pay_type%></div>
             <div><label>-결제금액</label><%=number_with_delimiter(@purchase.amt)%>원</div>
-            <div><label>-배달주소</label><%=@address%>, <%=@postcode%></div>
+            <div><label>-배달주소</label><%=current_user.address%>, <%=current_user.postcode%></div>
             <div><label>-받는사람</label><%=@purchase.recipient%></div>
             <div><label>-전화번호</label><%=@purchase.phonenumber%></div>
             <div><label>-주문메모</label></div>
