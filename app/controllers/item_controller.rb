@@ -20,7 +20,7 @@ class ItemController < ApplicationController
   end
 
   def add_to_basket
-    i = Basket.where(item_id: params[:item_id]).take
+    i = Basket.where(user_id: current_user.id, item_id: params[:item_id]).take
     if i.nil?
       i = Basket.new(user_id: current_user.id,
                      item_id: params[:item_id])
@@ -54,7 +54,6 @@ class ItemController < ApplicationController
   end
 
   def add_to_order
-    
     p = current_user.purchase
     if p.nil?
       p = Purchase.create(user_id: current_user.id, status: PURCHASE_ORDERING)
