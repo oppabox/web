@@ -112,7 +112,6 @@ class Purchase < ActiveRecord::Base
     end
 
     ActiveRecord::Base.transaction do
-      
       #ITEM QUANTITY
       self.orders.each do |x|
         i = x.item
@@ -122,6 +121,7 @@ class Purchase < ActiveRecord::Base
             i.save
           else
             #TODO : RAISE ERROR HERE
+            return false
           end
         end
 
@@ -133,6 +133,7 @@ class Purchase < ActiveRecord::Base
               option_item.save
             else
               #TODO : RAISE ERROR HERE
+              return false
             end
           end
         end
