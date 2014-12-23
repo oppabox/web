@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 	post "pay/dollar_billing"
   post "pay/callback"
 
-  get "pay/success/:purchase_id"
+  get "pay/success/:purchase_id" => "pay#success"
   get "pay/error"
   get "pay/order"
   get "pay/korean_payment"
