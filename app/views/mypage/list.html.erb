@@ -3,26 +3,18 @@
     <%= render :partial => '/mypage/left_list' %>
     <div class="col-md-10">
       <hr>
-      <table cellspacing="0" cellpadding="0" width="725"class="table table-bordered th-center">
-        <colgroup>
-          <col width="76">
-          <col width="184">
-          <col width="100">
-          <col width="80">
-          <col width="40">
-          <col width="80">
-          <col width="80">
-          <col width="85">
-        </colgroup>
-        <tbody>
+      <table class="table">
+        <thead>
           <tr class="active">
-            <th><%=t('order_number')%></th>
-            <th><%=t('item_display_name')%></th>
-            <th><%=t('carry_price')%></th>
-            <th><%=t('carry_quantity')%></th>
-            <th><%=t('carry_total_price')%></th>
-            <th><%=t('order_state')%></th>
+            <th class="text-center"><%=t('order_number')%></th>
+            <th class="text-center"><%=t('item_display_name')%></th>
+            <th class="text-center"><%=t('carry_price')%></th>
+            <th class="text-center"><%=t('carry_quantity')%></th>
+            <th class="text-center"><%=t('carry_total_price')%></th>
+            <th class="text-center"><%=t('order_state')%></th>
           </tr>
+        </thead>
+        <tbody>
 
           <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.count <= 0) %>
             <tr class="list_cell">
@@ -35,7 +27,7 @@
               <tr class="list_cell">
 
                 <% if index == 0 %>
-                  <td rowspan="<%=purchase.orders.count + 1%>"><%=order.purchase.id%></td>
+                  <td rowspan="<%=purchase.orders.count + 1%>" class="text-center"><%=order.purchase.id%></td>
                 <% end %>
 
                 <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
@@ -47,12 +39,12 @@
                 <% options.compact! %>
 
                 <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
-                <td><%= number_with_delimiter(order.total_price) %></td>
-                <td><%= number_with_delimiter(order.quantity) %></td>
-                <td><%= number_with_delimiter(order.total_price * order.quantity) %></td>
+                <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
+                <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
+                <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
                 <% if index == 0 %>
                   <% name = ["purchase_ordering", "purchase_paid"] %>
-                  <td rowspan="<%=purchase.orders.count+1%>">
+                  <td rowspan="<%=purchase.orders.count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
                       <a href="/pay/order"><%= t("#{name[order.purchase.status]}") %></a>
                     <% else %>

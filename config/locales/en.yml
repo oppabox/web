@@ -104,7 +104,6 @@ en:
   mypage_reset_password: "Change of Password"
   mypage_no_order: "There is no history of order"
   mypage_list_product_name: "Product Name"
-  
 
   order_number: "Order no."
   carry_number: "Shipping Company / Delivery No"
@@ -371,3 +370,5 @@ en:
   user_agreement_146: '② Any and all e-commerce-related lawsuits raised between the “Mall” and a User shall be governed by the law of the Republic of Korea.'
   user_agreement_147: '** Supplementary Provision (Effective Date)'
   user_agreement_148: 'This Agreement shall be effective from December 01, 2014.'
+
+  more_shopping: "더 쇼핑하기"

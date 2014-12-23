@@ -1,22 +1,29 @@
-<div class="well">
-  <div class="row" style="margin-bottom:10px;font-weight:bold;font-size:16px;">
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('basket_list_product_name') %></p></div>
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('basket_list_price') %></p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
-  </div>
+<table class="table">
+  <thead>
+    <tr class="active">
+      <th><%=t('basket_list_product_name')%></th>
+      <th><%=t('basket_list_price')%></th>
+      <th>-</th>
+      <th>-</th>
+    </tr>
+  </thead>
+  <tbody>
   <% if @baskets.empty? %>
-    <div class="row">
-      <div class="col-md-12 col-xs-12 "><p class="text-center"><%= t('basket_list_empty') %></p></div>
-    </div>
+    <tr class="text-center list_cell">
+      <td colspan="4">
+        <br><%= t('basket_list_empty') %><br>
+        <br><a href="/"><%= t('more_shopping') %></a><br>
+      </td>
+    </tr>
   <% else %>
     <% @baskets.each do |b|%>
-    <div class="row">
-      <div class="col-md-4 col-xs-4 "><p class="text-center display_link"><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></p></div>
-      <div class="col-md-4 col-xs-4 "><p class="text-center"><%=b.item.sale_price%></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center order_link"><a href="/item/<%=b.item.path%>" class="move_to_order"><%= t('basket_list_order') %></a></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center delete_link"><a href="#" class="del_from_basket" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></div>
-    </div>
+    <tr class="list_cell">
+      <td><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></td>
+      <td><%=Order.change_currency(b.item.sale_price)%></td>
+      <td><a href="/item/<%=b.item.path%>"><%= t('basket_list_order') %></a></td>
+      <td><a href="#" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></td>
+    </tr>
     <% end %>
   <% end %>
-</div>
+  </tbody>
+</table>
