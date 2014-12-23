@@ -12,6 +12,12 @@ $(function(){
       }
     });
   });
+  $("#item_detail_quantity").change(function(event){
+    $(this).val(parseInt($(this).val()));
+    if (parseInt($(this).val()) > <%= @item.buy_limit %>){
+      $(this).val(<%= @item.buy_limit %>);
+    }
+  });
   $("#purchase").click(function() {
     var quantity = $("#item_detail_quantity").val();
     var id = $("#item_detail_quantity").data("id");
