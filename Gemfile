@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Database
+gem 'mysql2'
+
 #user management
 gem 'devise'
 gem 'mailgun_rails'
