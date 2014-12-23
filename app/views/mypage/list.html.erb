@@ -18,7 +18,10 @@
 
           <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.count <= 0) %>
             <tr class="list_cell">
-              <td class="text-center" colspan="6"><b><%= t('empty_order') %></b></td>
+              <td class="text-center" colspan="6">
+                <br><%=t('empty_order')%><br>
+                <br><a href="/"><%= t('more_shopping') %></a><br>
+              </td>
             </tr>
           <% else %>
 
