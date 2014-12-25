@@ -11,8 +11,19 @@ class Order < ActiveRecord::Base
       self.quantity = 1
     end
 
-    if self.item.buy_limit < self.quantity
+    if self.quantity > self.item.buy_limit 
       self.quantity = self.item.buy_limit
+    end
+
+    if (self.item.limited == true) and (self.quantity > self.item.quantity)
+      self.quantity = self.item.quantity
+    end
+
+    #option limits
+    self.order_option_items.each do |x|
+      if (x.option_item.limited == true) and (self.quantity > x.option_item.quantity)
+        self.quantity = x.option_item.quantity
+      end
     end
   end
 

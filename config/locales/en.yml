@@ -53,6 +53,7 @@ en:
   periodoc_6month: "6 Month"
   periodoc_12month: "12 Month"
 
+  over_quantity: "구매 수량을 초과하였습니다."
   sold_out: "Sold out"
   order_option: "Order option"
   modify_address: "수정하기"

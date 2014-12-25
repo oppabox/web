@@ -1,6 +1,19 @@
 $(function(){
   $("#krw_payment_submit").click(function(){
-      submit_address("/pay/korean_payment");
+    $.ajax({
+      url: '/pay/check_order_quantity',
+      type: 'GET',
+      success: function(){
+        submit_address("/pay/korean_payment");
+      },
+      error: function(httpObj) {
+        if(httpObj.status == 401){
+          window.location.href = "/home/login";
+        }else{
+          alert(httpObj.responseText);
+        }
+      }
+    });
   });
 });
 

@@ -48,7 +48,7 @@
   <hr>
 
   <div class="row mar-left">
-    <% if false #@item.limited (남은수량 삭제) %>
+    <% if @item.limited %>
     <div class="col-xs-4 col-md-3">
       <p><%= t('product_info_quantity') %></p>
     </div>
@@ -66,12 +66,14 @@
       <input id="item_detail_quantity" type="number" style="width:60px;" value="1" data-id="<%=@item.id%>">
     </div>
   </div>
+
+  <% limit = if @item.limited then [@item.buy_limit, @item.quantity].min else @item.buy_limit end %>
   <script>
   $(function(){
     $("#item_detail_quantity").change(function(event){
       $(this).val(parseInt($(this).val()));
-      if (parseInt($(this).val()) > <%= @item.buy_limit %>){
-        $(this).val(<%= @item.buy_limit %>);
+      if (parseInt($(this).val()) > <%= limit %>){
+        $(this).val(<%= limit %>);
         recalculate();
       }
     });
@@ -160,3 +162,8 @@
       <% end %>
   </div>
 </div>
+<script type="text/javascript">
+$(function(){
+  recalculate();
+});
+</script>

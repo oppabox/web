@@ -1,7 +1,32 @@
 class PayController < ApplicationController
 
   before_action :login_check, only: [:order, :success, :billing]
-  before_action :login_check_ajax, only: [:reorder_quantity]
+  before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
+
+  def check_order_quantity
+    over_quantity_names = Array.new
+    current_user.orders.each do |o|
+      #item check
+      item = o.item
+      if item.limited and item.quantity < o.quantity
+        over_quantity_names << item.display_name
+      end
+
+      #option check
+      o.order_option_items.each do |x|
+        option_item = x.option_item
+        if option_item.limited and option_item.quantity < o.quantity
+          over_quantity_names << item.display_name
+        end
+      end
+    end
+    if over_quantity_names.size > 0 
+      #TODO : HTTPS STATUS MAY NOT BE CORRECT
+      render :text => "#{t('over_quantity')} \n#{over_quantity_names.join(", ")}", :status => 404
+    else
+      render :nothing => true, :status => 200
+    end
+  end
 
   def callback
     at_result_cd = params[:allat_result_cd]
@@ -81,7 +106,6 @@ class PayController < ApplicationController
     else
       o.quantity -= 1
     end
-    o.quantity = 1 if o.quantity < 1
 
     if o.save
       render :nothing => true, :status => 200

@@ -1,5 +1,4 @@
 $(function(){
-  recalculate();
   $(".select_option_box, #periodic_option").on("change", function(){
     recalculate();
   });

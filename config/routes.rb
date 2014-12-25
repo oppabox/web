@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "pay/success/:purchase_id" => "pay#success"
   get "pay/error"
   get "pay/order"
+  get "pay/check_order_quantity"
   get "pay/korean_payment"
   get "pay/nonkorean_payment"
 

@@ -43,7 +43,7 @@ def designbox
     o.item = i
   o.save
 
-  {"Dot" => "0", "Blue/Yello" => "0"}.each do |x, y|
+  {"Dot" => "0", "Blue/Yellow" => "0"}.each do |x, y|
     oi = OptionItem.new
       oi.option = o
       oi.name = x
@@ -147,7 +147,7 @@ def designbox
     o.item = i
   o.save
 
-  {"Dot" => "0", "Blue/Yello" => "0"}.each do |x, y|
+  {"Dot" => "0", "Blue/Yellow" => "0"}.each do |x, y|
     oi = OptionItem.new
       oi.option = o
       oi.name = x
