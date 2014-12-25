@@ -96,4 +96,14 @@
         element.style.display = 'block';
     }
 </script>
+<% else %>
+<script type="text/javascript">
+$('#signup_state, #signup_city, #signup_address').keyup(function(event){
+    var past = $(this).val();
+    $(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
+    if($(this).val() != past){
+      alert("Only Alphabets, Numbers and ('-','_') are allowed");
+    }
+});
+</script>
 <% end %>
