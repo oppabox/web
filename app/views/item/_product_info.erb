@@ -74,8 +74,8 @@
       $(this).val(parseInt($(this).val()));
       if (parseInt($(this).val()) > <%= limit %>){
         $(this).val(<%= limit %>);
-        recalculate();
       }
+      recalculate();
     });
   })
   </script>

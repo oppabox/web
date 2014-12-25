@@ -1,54 +1,84 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <p class="text-center success_thanks"><label><strong>주</strong>문해 주셔서</label> 감사합니다.</p>
+      <h3 class="text-center success_thanks"><%=t('paid_thanks')%></h3>
       <hr>
-      <p>*<%=current_user.name%> 고객님의 주문상세내역 입니다.</p>
-      <p>*oppabox에서 <span id="date_year"></span>년 <span id="date_month"></span>월 <span id="date_day"></span>일 <span id="date_hour"></span>:<span id="date_minute"></span>에 주문하신 내역입니다. 고맙습니다.</p>
-      <div class="container">
-        <div class="well" style="padding: 19px 19px 5px 19px;">
-          <div class="row" style="margin-bottom:10px;font-weight:bold;font-size:16px;">
-            <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('order_confirm_product_name') %></p></div>
-            <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_price') %></p></div>
-            <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_quantity') %></p></div>
-            <div class="col-md-2 col-xs-2 "><p class="text-center"><%= t('order_confirm_sum') %></p></div>
-            <%@purchase.orders.each do |o|%>
-              <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= o.item.display_name %></p></div>
-              <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= number_with_delimiter(o.item.sale_price) %> 원</p></div>
-              <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= o.quantity %> 개</p></div>
-              <div class="col-md-2 col-xs-2 "><p class="text-center"><%= number_with_delimiter(o.item.sale_price * o.quantity) %> 원</p></div>
-            <% end %>
-          </div>
-          <div class="row">
-            <label class="success_tot_price" style="padding-right:14px;">(배송료 2,500원 포함)<strong> <%=number_with_delimiter(@purchase.amt)%> 원</strong></label>
-          </div>
-        </div>
-          <div class="success_info">
-            <div><label>-결제방법</label><%=@purchase.pay_type%></div>
-            <div><label>-결제금액</label><%=number_with_delimiter(@purchase.amt)%>원</div>
-            <div><label>-배달주소</label><%=current_user.address%>, <%=current_user.postcode%></div>
-            <div><label>-받는사람</label><%=@purchase.recipient%></div>
-            <div><label>-전화번호</label><%=@purchase.phonenumber%></div>
-            <div><label>-주문메모</label></div>
-          </div>
-        <hr>
-        <p class="text-center">
-          <a href="/"><button class="btn btn-primary" style="margin-right:10px;">홈으로</button></a>
-          <a href="/mypage"><button class="btn btn-danger">마이페이지 바로가기</button></a>
-        </p>
-      </div>
+      <p class="text-right"><%=t('paid_datetime')%> : <span id="datetime"></span></p>
+      <table class="table">
+        <thead>
+          <tr class="active">
+            <th class="text-center"><%=t('order_number')%></th>
+            <th class="text-center"><%=t('item_display_name')%></th>
+            <th class="text-center"><%=t('carry_price')%></th>
+            <th class="text-center"><%=t('carry_quantity')%></th>
+            <th class="text-center"><%=t('carry_total_price')%></th>
+            <th class="text-center"><%=t('paid_sum')%></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @purchase.orders.each_with_index do |order, index|%>
+            <tr class="list_cell">
+
+              <% if index == 0 %>
+                <td rowspan="<%=@purchase.orders.count%>" class="text-center"><%=order.purchase.id%></td>
+              <% end %>
+
+              <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
+              <% options = Array.new(1){periodic} %>
+              <% order.order_option_items.each do |x| %>
+                <% options << x.option_item.name if  x.option.option_type == 1 %>
+                <% options << x.option_text if  x.option.option_type == 2 %>
+              <% end %>
+              <% options.compact! %>
+
+              <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
+              <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
+              <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
+              <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
+              <% if index == 0 %>
+                <td rowspan="<%=@purchase.orders.count%>" class="text-center">
+                  <%= Order.change_currency(@purchase.amt) %><br>
+                  [<%=t('paid_delivery_charge')%> : <%=0%>]
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+
+          <% address_full = Array.new %>
+          <% address_full << [t('country_comment'), current_user.country].join(" : ") %>
+          <% address_full << [t('postcode_comment'), @purchase.postcode].join(" : ") %>
+          <% if ["US", "CA"].include? current_user.country %>
+            <% address_full << [t('state_comment'), @purchase.state].join(" : ") %>
+          <% end %>
+          <% if !["KR"].include? current_user.country %>
+            <% address_full << [t('city_comment'), @purchase.city].join(" : ") %>
+          <% end %>
+          <% address_full << [t('address_comment'), @purchase.address].join(" : ") %>
+          <% address_full << [t('phone_comment'), @purchase.phonenumber].join(" : ") %>
+          <% address_full << [t('user_detail_recipient'), @purchase.recipient].join(" : ") %>
+
+          <tr class="list_cell">
+            <td></td>
+            <td colspan="6">
+              <p>[<%= t('mypage_carry')%>]</p>
+              <% address_full.each do |a| %>
+                <p><%=a%></p>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <p class="text-center">
+        <a href="/"><button class="btn btn-primary" style="margin-right:10px;"><%=t('go_to_home')%></button></a>
+        <a href="/mypage"><button class="btn btn-danger"><%=t('go_to_mypage')%></button></a>
+      </p>
     </div>
   </div>
 </div>
 <script>
   $(function() {
-      //javascript 상에서 클라이언트의 local time zone 에 맞도록 시간을 표시해주기 위해
       var date = new Date("<%=@purchase.updated_at.strftime('%m/%d/%Y %H:%M:%S UTC')%>")
-      $("#date_year").html(date.getFullYear());
-      $("#date_month").html(date.getMonth());
-      $("#date_day").html(date.getDay());
-      $("#date_hour").html(date.getHours());
-      $("#date_minute").html(date.getMinutes());
+      $("#datetime").html(date.toString());
   })
-
 </script>

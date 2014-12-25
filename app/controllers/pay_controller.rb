@@ -54,8 +54,6 @@ class PayController < ApplicationController
   end
 
   def success
-    @address = params[:address]
-    @postcode = params[:postcode]
     @purchase = current_user.purchased_find params[:purchase_id]
     unless @purchase
       redirect_to '/'

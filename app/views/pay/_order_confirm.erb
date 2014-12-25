@@ -1,41 +1,42 @@
-<div class="well">
-  <div class="row" style="margin-bottom:10px;font-weight:bold;font-size:16px;">
-    <div class="col-md-4 col-xs-4 right-border"><p class="text-center"><%= t('order_confirm_product_name') %></p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_price') %></p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_quantity') %></p></div>
-    <div class="col-md-2 col-xs-2 right-border"><p class="text-center"><%= t('order_confirm_sum') %></p></div>
-    <div class="col-md-2 col-xs-2"><p class="text-center">-</p></div>
-  </div>
-  <% if @orders.empty? %>
-    <div class="row">
-      <div class="col-md-12 col-xs-12"><p class="text-center"><%= t('order_confirm_order_empty') %></p></div>
-    </div>
-  <% else %>
-    <% @orders.each do |o|%>
-    <div class="row">
-      <% item = o.item %>
-      <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
-      <div class="col-md-4 col-xs-4"><p class="text-center display_link"><a href="/item/<%= item.path-%>"><%= item.display_name %><%= periodic -%></a></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center"><%= Order.change_currency(o.total_price) %></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center">
-       <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
-     &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
-       <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
-      
-      </p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center" ><%= Order.change_currency(o.total_price * o.quantity) %></p></div>
-      <div class="col-md-2 col-xs-2"><p class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></div>
-    </div>
-    <% if o.order_option_items.size > 0 %>
-      <div class="row">
-        <div class="col-md-12 col-xs-12">
-          <p class="text-center display_link">
+<table class="table">
+  <thead>
+    <tr class="active">
+      <th class="text-center"><%= t('order_confirm_product_name') %></th>
+      <th class="text-center"><%= t('order_confirm_price') %></th>
+      <th class="text-center"><%= t('order_confirm_quantity') %></th>
+      <th class="text-center"><%= t('order_confirm_sum') %></th>
+      <th class="text-center">-</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @orders.empty? %>
+      <tr class="text-center list_cell">
+        <td colspan="5">
+          <br><%= t('order_confirm_order_empty') %><br>
+          <br><a href="/"><%= t('more_shopping') %></a><br>
+        </td>
+      </tr>
+    <% else %>
+      <% @orders.each do |o|%>
+      <tr>
+        <% item = o.item %>
+        <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
+        <td class="text-center display_link">
+          <a href="/item/<%= item.path-%>"><%= item.display_name %><%= periodic -%></a><br>
+          <% if o.order_option_items.size > 0 %>
             [<%= t('order_option') -%>] <%= option_string(o) %>
-          </p>
-        </div>
-      </div>
+          <% end %>
+        </td>
+        <td class="text-center"><%= Order.change_currency(o.total_price) %></td>
+        <td class="text-center">
+         <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
+       &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
+         <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
+        </td>
+        <td class="text-center" ><%= Order.change_currency(o.total_price * o.quantity) %></td>
+        <td class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></td>
+      </tr>
+      <% end %>
     <% end %>
-    <div style="height:15px;"></div>
-    <% end %>
-  <% end %>
-</div>
+  </tbody>
+</table>
