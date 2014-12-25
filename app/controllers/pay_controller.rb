@@ -46,9 +46,12 @@ class PayController < ApplicationController
     purchase_id = params[:purchase_id]
     p = Purchase.find(purchase_id)
 
-    if p.krw_billing params
+    result = p.krw_billing params
+
+    if result[:is_success]
       redirect_to "/pay/success/#{purchase_id}"
     else
+      flash[:alert] = result[:msg]
       redirect_to "/pay/error"
     end
   end

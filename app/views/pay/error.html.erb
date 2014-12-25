@@ -1,2 +1,14 @@
-
-<h1>결제에 에러가 있음</h1>
+<div class="container">
+  <div class="row">
+    <h1><%=t('paid_error')%></h1>
+    <br>
+    <p><%=t('error_msg')%> : <%=flash[:alert]%></p>
+    <p><%=t('please_retry')%><p>
+    <br>
+    <h4><%=t('contact_label')%></h4>
+    <ul>
+      <li>Email. privacy@oppabox.com</li>
+      <li>Call. +82-2-794-5558</li>
+    </ul>
+  </div>
+</div>

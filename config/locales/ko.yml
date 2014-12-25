@@ -519,3 +519,7 @@ ko:
   paid_delivery_charge: "결제된 배송비"
   go_to_home: "홈으로 이동"
   go_to_mypage: "내 정보 보기"
+  contact_label: "고객센터"
+  error_msg: "오류 메시지"
+  please_retry: "다시 한번 시도해보시고 계속 에러가 발생할 경우 고객센터로 문의 바랍니다"
+  paid_error: "결제에 실패했습니다"
