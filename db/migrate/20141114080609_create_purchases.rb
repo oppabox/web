@@ -10,7 +10,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.string :postcode
       t.string :phonenumber
 
-      t.integer :status, default: 0 # 0=>"purchase_ordering" 1=>"purchase_paid"
+      t.integer :status, default: 0 # 0=>"purchase_ordering" 1=>"purchase_paid" 2=>"purchase_pending"
 
       # 결제 완료 후
       t.string :replycd

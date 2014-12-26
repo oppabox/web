@@ -386,3 +386,4 @@ ja:
   error_msg: "오류 메시지"
   please_retry: "다시 한번 시도해보시고 계속 에러가 발생할 경우 고객센터로 문의 바랍니다"
   paid_error: "결제에 실패했습니다"
+  purchase_pending: "결제 대기"

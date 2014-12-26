@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def purchased_find purchase_id
-    self.purchases.where(status: PURCHASE_PAID, id: purchase_id).take
+    self.purchases.where(id: purchase_id).where.not(status: PURCHASE_ORDERING).take
   end
 
   def send_password_reset
