@@ -23,6 +23,8 @@ class PayController < ApplicationController
     if over_quantity_names.size > 0 
       #TODO : HTTPS STATUS MAY NOT BE CORRECT
       render :text => "#{t('over_quantity')} \n#{over_quantity_names.join(", ")}", :status => 404
+    elsif current_user.country != "KR"
+      render :text => "We're sorry. For now, we serve only for Korean customers due to beta test.", :status => 404
     else
       render :nothing => true, :status => 200
     end
