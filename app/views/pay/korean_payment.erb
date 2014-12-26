@@ -23,7 +23,7 @@
           <input type="hidden" name="allat_pmember_id" value="<%=current_user.id%>">
           <input type="hidden" name="allat_buyer_nm" value="<%=current_user.name%>">
           <input type="hidden" name="allat_enc_data" value="">
-          <input type="hidden" name="allat_test_yn" value="N">
+          <input type="hidden" name="allat_test_yn" value="<%=ALLAT_TEST_FLAG%>">
           <input type="hidden" name="allat_real_yn" value="Y">
           <input type="hidden" name="allat_product_img" value="http://">
           <input type="hidden" name="allat_amt" id="allat_amt" value="<%=@all_price + @delivery_fee%>">
