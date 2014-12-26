@@ -66,6 +66,15 @@
               <% end %>
             </td>
           </tr>
+          <% unless @purchase.pay_type == nil %>
+          <tr class="list_cell">
+            <td></td>
+            <td colspan="6">
+              <p>[무통장 입금 계좌 정보]</p>
+              <p><%=@purchase.pay_type%></p>
+            </td>
+          </tr>
+          <% end %>
         </tbody>
       </table>
       <hr>
