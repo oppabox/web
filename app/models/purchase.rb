@@ -74,7 +74,7 @@ class Purchase < ActiveRecord::Base
       self.replymsg = replymsg
       self.order_no = order_no
       self.amt = amt
-      self.pay_type = pay_type
+      self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"
       self.approval_ymdhms = approval_ymdhms
       self.seq_no = seq_no
       self.status = PURCHASE_PAID
