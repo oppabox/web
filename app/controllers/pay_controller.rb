@@ -15,7 +15,7 @@ class PayController < ApplicationController
       #option check
       o.order_option_items.each do |x|
         option_item = x.option_item
-        if option_item.limited and option_item.quantity < o.quantity
+        if !option_item.nil? and option_item.limited and option_item.quantity < o.quantity
           over_quantity_names << item.display_name
         end
       end
