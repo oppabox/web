@@ -69,6 +69,7 @@ cn:
   phone_comment: "전화번호"
   city_comment: "도시"
   state_comment: "주"
+  address_foreign_msg: "해외 주소의 경우 영문 알파벳과 숫자와 일부 기호만 가능합니다."
 
   remaining_quantity: "남은수량"
 
