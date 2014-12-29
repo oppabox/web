@@ -1,0 +1,23 @@
+<html>
+<head>
+<script language="JavaScript">
+<!--
+  function loadForm(){
+    if(opener && opener.document.regForm){
+      var frm = opener.document.regForm;
+      frm.rescode.value = "<?php echo $rescode; ?>";
+      frm.resmsg.value = "<?php echo $resmsg; ?>";
+      frm.authcode.value = "<?php echo $authcode; ?>";
+      frm.cardco.value = "<?php echo $cardco; ?>";
+      frm.target = "";
+      frm.action = "/pay/success/<%=@ref||0%>";
+      frm.submit();
+    }
+    self.close();
+  }
+//-->
+</script>
+</head>
+<body onload="javascript:loadForm();">
+</body>
+</html>
