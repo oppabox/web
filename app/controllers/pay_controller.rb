@@ -101,6 +101,11 @@ class PayController < ApplicationController
 
   def nonkorean_payment
     order
+    if params[:mobile]
+      @pay_url = EXIMBAY_MOBILE_URL
+    else
+      @pay_url = EXIMBAY_URL
+    end
   end
 
   def reorder_quantity
@@ -120,6 +125,7 @@ class PayController < ApplicationController
 
   def usd_request
     @secretKey = EXIMBAY_SECRET_KEY
+    @pay_url = params[:pay_url]
     @mid = params[:mid]
     @ref = params[:ref]
 

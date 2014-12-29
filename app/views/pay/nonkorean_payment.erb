@@ -12,6 +12,7 @@
           <div style="height:40px;"></div>
         <% else %>
           <%= form_tag("/pay/usd_request", name: "regForm", method: "post") do %>
+            <input type="hidden" name="pay_url" value="<%=@pay_url%>">
             <input type="hidden" name="cur" value="USD">
             <input type="hidden" name="product" value="<%=@product_nms%>">
             <input type="hidden" name="visitorid" value="<%=current_user.id%>">

@@ -31,6 +31,22 @@ $(function(){
       }
     });
   });
+  $("#nonkrw_mobile_payment_submit").click(function(){
+    $.ajax({
+      url: '/pay/check_order_quantity',
+      type: 'GET',
+      success: function(){
+        submit_address("/pay/nonkorean_payment?mobile=true");
+      },
+      error: function(httpObj) {
+        if(httpObj.status == 401){
+          window.location.href = "/home/login";
+        }else{
+          alert(httpObj.responseText);
+        }
+      }
+    });
+  });
 });
 
 function reorder_quantity(method, order_id){
