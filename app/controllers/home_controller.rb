@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+  if ENV['OPPABOX_TEST']
+    http_basic_authenticate_with name: "test", password: "oppabox1234", except: :usd_status
+  end
   before_action :login_check,       only: [:step3] 
   before_action :login_check_ajax,  only: [:api_step3]
 

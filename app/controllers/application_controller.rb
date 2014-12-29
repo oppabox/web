@@ -2,11 +2,16 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
-  if ENV['OPPABOX_TEST']
-    http_basic_authenticate_with name: "test", password: "oppabox1234"
-  end
 
-  before_action :set_locale, :current_translations
+  before_action :set_locale, :current_translations, :http_basic_authenticate
+
+  def http_basic_authenticate
+    if ENV['OPPABOX_TEST']
+      authenticate_or_request_with_http_basic do |name, password|
+        name == 'test' && password == 'oppabox1234'
+      end
+    end
+  end
 
   def set_locale
     locale = cookies[:locale].to_s || I18n.default_locale.to_s

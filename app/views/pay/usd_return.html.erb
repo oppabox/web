@@ -5,12 +5,16 @@
   function loadForm(){
     if(opener && opener.document.regForm){
       var frm = opener.document.regForm;
-      frm.rescode.value = "<?php echo $rescode; ?>";
-      frm.resmsg.value = "<?php echo $resmsg; ?>";
-      frm.authcode.value = "<?php echo $authcode; ?>";
-      frm.cardco.value = "<?php echo $cardco; ?>";
+      frm.rescode.value = "<%= @rescode %>";
+      frm.resmsg.value = "<%= @resmsg %>";
+      frm.authcode.value = "<%= @authcode %>";
+      frm.cardco.value = "<%= @cardco %>";
       frm.target = "";
-      frm.action = "/pay/success/<%=@ref||0%>";
+      <% if @rescode == "0000" %>
+        frm.action = "/pay/success/<%=@ref||0%>";
+      <% else %>
+        frm.action = "/pay/error";
+      <% end %>
       frm.submit();
     }
     self.close();

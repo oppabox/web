@@ -2,6 +2,7 @@ class PayController < ApplicationController
 
   before_action :login_check, only: [:order, :success, :billing, :korean_payment, :nonkorean_payment]
   before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
+  skip_before_action :http_basic_authenticate, only: :usd_status
 
   def check_order_quantity
     over_quantity_names = Array.new
@@ -144,7 +145,6 @@ class PayController < ApplicationController
   end
 
   def usd_return
-    render layout: false
     @secretKey = EXIMBAY_SECRET_KEY
     @mid = EXIMBAY_MID
     @ver = EXIMBAY_VER
@@ -210,11 +210,13 @@ class PayController < ApplicationController
         @rescode = "ERROR"
         @resmsg = "Invalid transaction"
       end
+    else
+      flash[:alert] = @resmsg
     end
   end
 
   def usd_status
-    @secretKey = EXIMBAY_SECRET
+    @secretKey = EXIMBAY_SECRET_KEY
 
     @ver = params['ver']
     @mid = params['mid']
@@ -243,7 +245,7 @@ class PayController < ApplicationController
     @cardno1 = params['cardno1']
     @cardno4 = params['cardno4']
 
-    p = current_user.purchase
+    p = Purchase.find(@ref)
 
     if (@rescode == "0000")
       @linkBuf = @secretKey + "?mid=" + @mid +"&ref=" + @ref + "&cur=" + @cur +"&amt=" + @amt +"&rescode=" + @rescode + "&transid=" +@transid
@@ -265,6 +267,6 @@ class PayController < ApplicationController
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
-    p.save
+    render text: p.save
   end
 end
