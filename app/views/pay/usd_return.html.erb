@@ -13,6 +13,7 @@
       <% if @rescode == "0000" %>
         frm.action = "/pay/success/<%=@ref||0%>";
       <% else %>
+        frm.method = "get"
         frm.action = "/pay/error";
       <% end %>
       frm.submit();
