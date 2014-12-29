@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row product_box" >
+        <% if @orders.empty? %>
+          <div style="height:80px;"></div>
+          <h3 class="text-center"><%= t('total_payment_error1') %></h3>
+          <div style="height:30px;"></div>
+          <hr>
+          <div style="height:30px;"></div>
+          <h3 class="text-center"><%= t('total_payment_error2') %></h3>
+          <div style="height:40px;"></div>
+        <% else %>
+          <%= form_tag("/pay/usd_request", name: "regForm", method: "post") do %>
+            <input type="hidden" name="cur" value="USD">
+            <input type="hidden" name="product" value="<%=@product_nms%>">
+            <input type="hidden" name="visitorid" value="<%=current_user.id%>">
+            <input type="hidden" name="ver" value="180">
+            <input type="hidden" name="mid" value="1849705C64">
+            <input type="hidden" name="txntype" value="SALE">
+            <input type="hidden" name="ref" value="<%=@orders.first.purchase.id%>">
+            <input type="hidden" name="rescode">
+            <input type="hidden" name="resmsg">
+            <input type="hidden" name="authcode">
+            <input type="hidden" name="cardco">
+            <input type="hidden" name="buyer" value="<%=current_user.name%>">
+            <input type="hidden" name="tel" value="<%=current_user.phonenumber%>">
+            <input type="hidden" name="email" value="<%=current_user.email%>">
+            <input type="hidden" name="amt" value="<%=Order.usd_from_krw(@all_price + @delivery_fee)%>">
+            <input type="hidden" name="dm_shipTo_country" value="<%=current_user.country%>">
+            <input type="hidden" name="dm_shipTo_city" value="<%=current_user.city%>">
+            <input type="hidden" name="dm_shipTo_state" value="<%=current_user.state%>">
+            <input type="hidden" name="dm_shipTo_street1" value="<%=current_user.address%>">
+            <input type="hidden" name="dm_shipTo_postalCode" value="<%=current_user.postcode%>">
+            <input type="hidden" name="dm_shipTo_phoneNumber" value="<%=current_user.phonenumber%>">
+            <input type="hidden" name="dm_shipTo_firstName" value="<%=current_user.name.split[0]%>">
+            <input type="hidden" name="dm_shipTo_lastName" value="<%=current_user.name.split[-1]%>">
+            <div style="height:80px;"></div>
+            <h3 class="text-center"><%= t('total_payment_inprogress1') %></h3>
+            <div style="height:30px;"></div>
+            <hr>
+            <div style="height:30px;"></div>
+            <h3 class="text-center"><%= t('total_payment_inprogress2') %></h3>
+            <div style="height:40px;"></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+  <!--
+  function payForm(){
+        var frm = document.regForm;
+        frm.visitorid.value = get_visitorid();
+        //please check mandatory fields
+        frm.rescode.value = "";
+        frm.resmsg.value = "";
+        frm.authcode.value = "";
+        frm.cardco.value = "";
+        window.open("", "payment2", "scrollbars=yes,status=no,toolbar=no,resizable=yes,location=no,menu=no,width=800,height=470");
+        frm.target = "payment2";
+        frm.submit();
+      }
+    payForm();
+//-->
+</script>
+<script type="text/javascript">init_module();</script>

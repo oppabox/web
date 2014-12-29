@@ -31,7 +31,7 @@
         <td class="text-center">
          <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
        &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
-         <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
+         <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="bt btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
         </td>
         <td class="text-center" ><%= Order.change_currency(o.total_price * o.quantity) %></td>
         <td class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></td>

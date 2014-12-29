@@ -34,7 +34,11 @@ class Order < ActiveRecord::Base
   end
 
   def self.change_currency money
-    "#{number_with_delimiter(money)} KRW (#{number_with_delimiter((money.to_f / CURRENCY).round(2))} USD)".html_safe
+    "#{number_with_delimiter(money)} KRW (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
+  end
+
+  def self.usd_from_krw money
+    (money.to_f / CURRENCY).round(2)
   end
 
   def total_price
