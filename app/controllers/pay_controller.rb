@@ -118,10 +118,8 @@ class PayController < ApplicationController
   end
 
   def usd_request
-    render layout: false
-
-    @secretKey = "289F40E6640124B2628640168C3C5464"
-    @mid = "1849705C64"
+    @secretKey = EXIMBAY_SECRET_KEY
+    @mid = params[:mid]
     @ref = params[:ref]
 
     @cur = params[:cur]
@@ -143,17 +141,130 @@ class PayController < ApplicationController
     @visitorid = params[:visitorid]
     @linkBuf = @secretKey + "?mid=#{@mid}&ref=#{@ref}&cur=#{@cur}&amt=#{@amt}"
     @fgkey = Digest::SHA256.hexdigest(@linkBuf)
-
-    puts @cur
-    puts @amt
   end
 
   def usd_return
-    render text: "cool"
+    render layout: false
+    @secretKey = EXIMBAY_SECRET_KEY
+    @mid = EXIMBAY_MID
+    @ver = EXIMBAY_VER
+    @txntype = params['txntype']
+    @ref = params['ref']
+    @cur = params['cur']
+    @amt = params['amt']
+    @shop = params['shop']
+    @buyer = params['buyer']
+    @tel = params['tel']
+    @email = params['email']
+    @product = params['product']
+    @lang = params['lang']
+    @param1 = params['param1']
+    @param2 = params['param2']
+    @param3 = params['param3']
 
+    @transid = params['transid']
+    @rescode = params['rescode']
+    @resmsg = params['resmsg']
+    @authcode = params['authcode']
+    @cardco = params['cardco']
+    @resdt = params['resdt']
+    @cardholder = params['cardholder']
+    @fgkey = params['fgkey']
+    @cardno1 = params['cardno1']
+    @cardno4 = params['cardno4']
+    
+    puts "ver:#{@ver}"
+    puts "mid:#{@mid}"
+    puts "txntype:#{@txntype}"
+    puts "ref:#{@ref}"
+    puts "cur:#{@cur}"
+    puts "amt:#{@amt}"
+    puts "shop:#{@shop}"
+    puts "buyer:#{@buyer}"
+    puts "tel:#{@tel}"
+    puts "email:#{@email}"
+    puts "product:#{@product}"
+    puts "lang:#{@lang}"
+    puts "product:#{@product}"
+    puts "param1:#{@param1}"
+    puts "param2:#{@param2}"
+    puts "param3:#{@param3}"
+    
+    puts "transid:#{@transid}"
+    puts "rescode:#{@rescode}"
+    puts "resmsg:#{@resmsg}"
+    puts "authcode:#{@authcode}"
+    puts "cardco:#{@cardco}"
+    puts "resdt:#{@resdt}"
+    puts "cardholder:#{@cardholder}"
+    puts "fgkey:#{@fgkey}"
+    puts "cardno1:#{@cardno1}"
+    puts "cardno4:#{@cardno4}"
+    if @rescode == "0000"
+      @linkBuf = @secretKey+ "?mid=" + @mid +"&ref=" + @ref +"&cur=" +@cur +"&amt=" +@amt +"&rescode=" +@rescode +"&transid=" +@transid
+      puts "link : "+ @linkBuf
+      @newFgkey = Digest::SHA256.hexdigest(@linkBuf)
+      puts "fgkey :"+ @fgkey
+      puts "newFgkey :"+ @newFgkey
+      if @fgkey.downcase != @newFgkey
+        @rescode = "ERROR"
+        @resmsg = "Invalid transaction"
+      end
+    end
   end
 
   def usd_status
+    @secretKey = EXIMBAY_SECRET
 
+    @ver = params['ver']
+    @mid = params['mid']
+    @txntype = params['txntype']
+    @ref = params['ref']
+    @cur = params['cur']
+    @amt = params['amt']
+    @shop = params['shop']
+    @buyer = params['buyer']
+    @tel = params['tel']
+    @email = params['email']
+    @product = params['product']
+    @lang = params['lang']
+    @param1 = params['param1']
+    @param2 = params['param2']
+    @param3 = params['param3']
+
+    @transid = params['transid']
+    @rescode = params['rescode']
+    @resmsg = params['resmsg']
+    @authcode = params['authcode']
+    @cardco = params['cardco']
+    @resdt = params['resdt']
+    @cardholder = params['cardholder']
+    @fgkey = params['fgkey']
+    @cardno1 = params['cardno1']
+    @cardno4 = params['cardno4']
+
+    p = current_user.purchase
+
+    if (@rescode == "0000")
+      @linkBuf = @secretKey + "?mid=" + @mid +"&ref=" + @ref + "&cur=" + @cur +"&amt=" + @amt +"&rescode=" + @rescode + "&transid=" +@transid
+      @newFgkey = Digest::SHA256.hexdigest(@linkBuf)
+      if (@fgkey.downcase != @newFgkey)
+        @rescode = "ERROR"
+        @resmsg = "Invalid transaction"
+      end
+    end
+
+    if (@rescode == "0000")
+      p.status = PURCHASE_PAID
+      p.order_no = "authcode: #{@authcode}"
+      p.approval_ymdhms = @resdt
+      p.amt = @amt + @cur
+      p.seq_no = "transid: #{@transid}"
+      p.pay_type = "CARD #{@cardco} #{@cardno1}********#{@cardno4} by: #{@cardholder}"
+      #apply your database or file system.
+    end
+    p.replycd = @rescode
+    p.replymsg = @resmsg
+    p.save
   end
 end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post "pay/callback"
 
   get "pay/success/:purchase_id" => "pay#success"
+  post "pay/success/:purchase_id" => "pay#success"
   get "pay/error"
   get "pay/order"
   get "pay/check_order_quantity"
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   post "pay/usd_request"
   post "pay/usd_return"
   post "pay/usd_status"
+  post "pay/usd_finish"
 
   post "item/add_to_basket"
   post "item/add_to_order"
