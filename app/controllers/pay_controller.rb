@@ -15,7 +15,7 @@ class PayController < ApplicationController
       #option check
       o.order_option_items.each do |x|
         option_item = x.option_item
-        if option_item.limited and option_item.quantity < o.quantity
+        if !option_item.nil? and option_item.limited and option_item.quantity < o.quantity
           over_quantity_names << item.display_name
         end
       end
@@ -23,6 +23,8 @@ class PayController < ApplicationController
     if over_quantity_names.size > 0 
       #TODO : HTTPS STATUS MAY NOT BE CORRECT
       render :text => "#{t('over_quantity')} \n#{over_quantity_names.join(", ")}", :status => 404
+    elsif current_user.country != "KR"
+      render :text => "We're sorry. For now, we serve only for Korean customers due to beta test.", :status => 404
     else
       render :nothing => true, :status => 200
     end
@@ -46,9 +48,12 @@ class PayController < ApplicationController
     purchase_id = params[:purchase_id]
     p = Purchase.find(purchase_id)
 
-    if p.krw_billing params
+    result = p.krw_billing params
+
+    if result[:is_success]
       redirect_to "/pay/success/#{purchase_id}"
     else
+      flash[:alert] = result[:msg]
       redirect_to "/pay/error"
     end
   end

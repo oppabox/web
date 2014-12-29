@@ -74,10 +74,10 @@ class Purchase < ActiveRecord::Base
       self.replymsg = replymsg
       self.order_no = order_no
       self.amt = amt
-      self.pay_type = pay_type
+      self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"
       self.approval_ymdhms = approval_ymdhms
       self.seq_no = seq_no
-      self.status = PURCHASE_PAID
+      self.status = (pay_type == "VBANK") ? PURCHASE_PENDING : PURCHASE_PAID
       result += "=============== 신용 카드 ===============================\n"
       result += "승인번호              : " + approval_no + "\n"
       result += "카드ID                : " + card_id + "\n"
@@ -111,6 +111,8 @@ class Purchase < ActiveRecord::Base
       self.replymsg = replymsg
     end
 
+    logger.info result
+
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       self.orders.each do |x|
@@ -142,7 +144,8 @@ class Purchase < ActiveRecord::Base
       self.save
     end
 
-    replycd == success_flag
+    is_success = replycd == success_flag
+    return {is_success: is_success, msg: replymsg}
   end
 end
 #  // 올앳 결제 서버와 통신 : ApprovalReq->통신함수, $at_txt->결과값

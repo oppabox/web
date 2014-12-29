@@ -1,10 +1,10 @@
 <table class="table">
   <thead>
     <tr class="active">
-      <th><%=t('basket_list_product_name')%></th>
-      <th><%=t('basket_list_price')%></th>
-      <th>-</th>
-      <th>-</th>
+      <th class="text-center"><%=t('basket_list_product_name')%></th>
+      <th class="text-center"><%=t('basket_list_price')%></th>
+      <th class="text-center">-</th>
+      <th class="text-center">-</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
     </tr>
   <% else %>
     <% @baskets.each do |b|%>
-    <tr class="list_cell">
+    <tr class="text-center list_cell">
       <td><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></td>
       <td><%=Order.change_currency(b.item.sale_price)%></td>
       <td><a href="/item/<%=b.item.path%>"><%= t('basket_list_order') %></a></td>

@@ -46,7 +46,7 @@
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
                 <% if index == 0 %>
-                  <% name = ["purchase_ordering", "purchase_paid"] %>
+                  <% name = ["purchase_ordering", "purchase_paid", "purchase_pending"] %>
                   <td rowspan="<%=purchase.orders.count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
                       <a href="/pay/order"><%= t("#{name[order.purchase.status]}") %></a>
@@ -72,7 +72,12 @@
             <% address_full << [t('user_detail_recipient'), purchase.recipient].join(" : ") %>
 
             <tr class="list_cell">
-              <td colspan="4">[<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %></td>
+              <td colspan="4">
+                [<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %>
+              <% if purchase.status == 2 %>
+                <br>[무통장 입금정보] <%=purchase.pay_type%>
+              <% end %>
+              </td>
             </tr>
           <% end %>
           <% end %>
