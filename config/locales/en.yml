@@ -10,7 +10,7 @@ en:
   menu_mypage: "My Page"
   menu_login: "Sign In"
   menu_signup: "Sign Up"
-  menu_basket: "Card"
+  menu_basket: "Cart"
   menu_reset_password: "Find Password"
   menu_renew_password: "Change Password" 
   login_email_address: "Email Address"
