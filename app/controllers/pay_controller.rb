@@ -1,6 +1,6 @@
 class PayController < ApplicationController
 
-  before_action :login_check, only: [:order, :success, :billing]
+  before_action :login_check, only: [:order, :success, :billing, :korean_payment, :nonkorean_payment]
   before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
 
   def check_order_quantity
