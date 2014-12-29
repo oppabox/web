@@ -23,8 +23,8 @@ class PayController < ApplicationController
     if over_quantity_names.size > 0 
       #TODO : HTTPS STATUS MAY NOT BE CORRECT
       render :text => "#{t('over_quantity')} \n#{over_quantity_names.join(", ")}", :status => 404
-    elsif current_user.country != "KR"
-      render :text => "We're sorry. For now, we serve only for Korean customers due to beta test.", :status => 404
+    # elsif current_user.country != "KR"
+    #   render :text => "We're sorry. For now, we serve only for Korean customers due to beta test.", :status => 404
     else
       render :nothing => true, :status => 200
     end
@@ -115,5 +115,45 @@ class PayController < ApplicationController
     else
       render :text => t(:something_wrong), :status => 500
     end
+  end
+
+  def usd_request
+    render layout: false
+
+    @secretKey = "289F40E6640124B2628640168C3C5464"
+    @mid = "1849705C64"
+    @ref = params[:ref]
+
+    @cur = params[:cur]
+    @product = params[:product]
+    @buyer = params[:buyer]
+    @tel = params[:tel]
+    @email = params[:email]
+    @amt = params[:amt]
+
+    @dm_shipTo_country = params[:dm_shipTo_country]
+    @dm_shipTo_city = params[:dm_shipTo_city]
+    @dm_shipTo_state = params[:dm_shipTo_state]
+    @dm_shipTo_street1 = params[:dm_shipTo_street1]
+    @dm_shipTo_postalCode = params[:dm_shipTo_postalCode]
+    @dm_shipTo_phoneNumber = params[:dm_shipTo_phoneNumber]
+    @dm_shipTo_firstName = params[:dm_shipTo_firstName]
+    @dm_shipTo_lastName = params[:dm_shipTo_lastName]
+
+    @visitorid = params[:visitorid]
+    @linkBuf = @secretKey + "?mid=#{@mid}&ref=#{@ref}&cur=#{@cur}&amt=#{@amt}"
+    @fgkey = Digest::SHA256.hexdigest(@linkBuf)
+
+    puts @cur
+    puts @amt
+  end
+
+  def usd_return
+    render text: "cool"
+
+  end
+
+  def usd_status
+
   end
 end

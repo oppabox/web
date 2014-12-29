@@ -1,0 +1,47 @@
+<html>
+  <body leftmargin="0" topmargin="0" align="center" onload="javascript:document.regForm.submit();">
+    <form name="regForm" method="post" action="http://www.test2.eximbay.com/web/payment2.0/payment_real.do">
+      <input type="hidden" name="ver" value="180" /><!--mandatory     -->
+      <input type="hidden" name="txntype" value="SALE" /><!--mandatory--  >
+
+      <input type="hidden" name="mid" value="<%=@mid %>" /> <!--mandatory(for test)-->
+      <input type="hidden" name="ref" value="<%=@ref %>" /><!--mandatory-->
+      <input type="hidden" name="fgkey" value="<%=@fgkey %>" /><!--mandatory-->
+
+      <input type="hidden" name="cur" value="<%=@cur %>" /><!--mandatory-->
+      <input type="hidden" name="amt" value="<%=@amt %>" /><!--mand  atory-->
+      <input type="hidden" name="product" value="<%= @product %>" />
+      <input type="hidden" name="buyer" value="<%= @buyer %>" /><!--mandatory-->
+      <input type="hidden" name="tel" value="<%= @tel  %>" /><!--mandatory-->
+      <input type="hidden" name="email" value="<%= @email %>" /><!--mandatory-->
+
+      <input type="hidden" name="dm_shipTo_country" value="<%= @dm_shipTo_country %>" /><!--mandatory-->
+      <input type="hidden" name="dm_shipTo_city" value="<%= @dm_shipTo_city %>" />          <!--mandatory-->
+      <input type="hidden" name="dm_shipTo_state" value="<%= @dm_shipTo_state %>" /><!--mandatory-->
+      <input type="hidden" name="dm_shipTo_street1" value="<%= @dm_shipTo_street1 %>" />    <!--mandatory-->
+      <input type="hidden" name="dm_shipTo_postalCode" value="<%= @dm_shipTo_postalCode %>" /><!--mandatory-->
+      <input type="hidden" name="dm_shipTo_phoneNumber" value="<%= @dm_shipTo_phoneNumber %>" /> <!--mandatory-->
+      <input type="hidden" name="dm_shipTo_firs tName" value="<%= @dm_shipTo_firstName %>" /><!--mandatory-->   
+      <input type="hidden" name="dm_shipTo_lastName" value="<%= @dm_shipTo_lastName %>" /><!--mandatory-->
+
+      <input type="hidden" name="visitorid" value="<%= @visitorid %>" /> <!--mandatory-->
+
+      <input type="hidden" name="shop" value="Oppabox" />
+      <input type="hidden" name="lang" value="EN" /><!--mandatory-->
+      <% return_url = request.protocol + request.host_with_port + "/pay/usd_return"%>
+      <% status_url = request.protocol + request.host_with_port + "/pay/usd_status"%>
+      <input type="hidden" name="returnurl" value="<%=return_url%>" />
+      <input type="hidden" name="statusurl" value="<%=status_url%>" /> <!--mandatory-->
+      <input type="hidden" name="charset" value="UTF-8" />
+      <input type="hidden" name="param1" value="merchant option1" />
+      <input type="hidden" name="param2" value="merchant option2 " />
+      <input type="hidden" name="param3" value="merchant option3" />
+      <input type="hidden" name="title1" value="" />
+      <input type="hidden" name="title2" value="" />
+      <input type="hidden" name="title3" value="" />
+      <input type="hidden" name="title4" value="" />
+      <input type="hidden" name="displaytype" value="P" /> <!-- P: popup (default)/ I: iframe(layer)-->
+      <input type="hidden" name="directToReturn" value="N" />
+    </form>
+  </body>
+</html>
