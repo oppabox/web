@@ -145,6 +145,10 @@ class PayController < ApplicationController
   end
 
   def usd_return
+<<<<<<< HEAD
+=======
+    render layout: false
+>>>>>>> e99e774eb579af9ed1641a29fc9aec8aeaf277ac
     @secretKey = EXIMBAY_SECRET_KEY
     @mid = EXIMBAY_MID
     @ver = EXIMBAY_VER
@@ -210,13 +214,20 @@ class PayController < ApplicationController
         @rescode = "ERROR"
         @resmsg = "Invalid transaction"
       end
+<<<<<<< HEAD
     else
       flash[:alert] = @resmsg
+=======
+>>>>>>> e99e774eb579af9ed1641a29fc9aec8aeaf277ac
     end
   end
 
   def usd_status
+<<<<<<< HEAD
     @secretKey = EXIMBAY_SECRET_KEY
+=======
+    @secretKey = EXIMBAY_SECRET
+>>>>>>> e99e774eb579af9ed1641a29fc9aec8aeaf277ac
 
     @ver = params['ver']
     @mid = params['mid']
@@ -245,7 +256,11 @@ class PayController < ApplicationController
     @cardno1 = params['cardno1']
     @cardno4 = params['cardno4']
 
+<<<<<<< HEAD
     p = Purchase.find(@ref)
+=======
+    p = current_user.purchase
+>>>>>>> e99e774eb579af9ed1641a29fc9aec8aeaf277ac
 
     if (@rescode == "0000")
       @linkBuf = @secretKey + "?mid=" + @mid +"&ref=" + @ref + "&cur=" + @cur +"&amt=" + @amt +"&rescode=" + @rescode + "&transid=" +@transid
@@ -267,6 +282,10 @@ class PayController < ApplicationController
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
+<<<<<<< HEAD
     render text: p.save
+=======
+    p.save
+>>>>>>> e99e774eb579af9ed1641a29fc9aec8aeaf277ac
   end
 end
