@@ -21,6 +21,8 @@ EXIMBAY_VER = "180"
 # for test
 #EXIMBAY_SECRET_KEY = "289F40E6640124B2628640168C3C5464"
 #EXIMBAY_MID = "1849705C64"
+#EXIMBAY_URL = "https://www.test.eximbay.com/web/payment2.0/payment_real.do"
 # for oppabox
 EXIMBAY_SECRET_KEY = "359B6D089502F529C19950790AA40595"
 EXIMBAY_MID = "17813B6595"
+EXIMBAY_URL = "https://www.eximbay.com/web/payment2.0/payment_real.do"

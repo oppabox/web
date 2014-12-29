@@ -1,6 +1,6 @@
 <html>
   <body leftmargin="0" topmargin="0" align="center" onload="javascript:document.regForm.submit();">
-    <%= form_tag("https://www.test.eximbay.com/web/payment2.0/payment_real.do", method: "post", name: "regForm") do %>
+    <%= form_tag( EXIMBAY_URL, method: "post", name: "regForm") do %>
       <input type="hidden" name="ver" value="180">
       <input type="hidden" name="txntype" value="SALE">
       <input type="hidden" name="mid" value="<%=@mid %>">
