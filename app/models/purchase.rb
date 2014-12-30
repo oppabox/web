@@ -19,7 +19,24 @@ class Purchase < ActiveRecord::Base
   end
 
   def get_delivery_fee
-    0
+    total = 0
+    items = Hash.new(0)
+    month = Array.new(12){0}
+    if !User.current.nil?
+      User.current.orders.order("id DESC").each do |x|
+        item = x.item
+        box = item.box
+        name = if !item.periodic? then box.path else "#{box.path}/#{x.order_periodic}" end
+        items["#{name}"] += item.weight * x.quantity
+      end
+    end
+    puts "##################################"
+    puts items.inspect
+    total
+  end
+
+  def calucate_box_delivery weight, month = 1
+
   end
 
   def process allat_amt, allat_enc_data, allat_test_yn, at_shop_id

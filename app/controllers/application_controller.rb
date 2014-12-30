@@ -6,7 +6,11 @@ class ApplicationController < ActionController::Base
     http_basic_authenticate_with name: "test", password: "oppabox1234"
   end
 
-  before_action :set_locale, :current_translations, :http_basic_authenticate
+  before_action :set_locale, :current_translations, :http_basic_authenticate, :set_current_user
+
+  def set_current_user
+    User.current = current_user
+  end
 
   def http_basic_authenticate
     if ENV['OPPABOX_TEST']
