@@ -43,6 +43,9 @@
             <div style="height:30px;"></div>
             <h3 class="text-center"><%= t('total_payment_inprogress2') %></h3>
             <div style="height:40px;"></div>
+            <div id="nonkrw_payment">
+              <button class="btn btn-primary" style="width:100%" onclick="payForm();"><%= t('open_payment_popup') %></button>
+            </div>
           <% end %>
         <% end %>
       </div>
@@ -63,7 +66,7 @@
         frm.target = "payment2";
         frm.submit();
       }
-    payForm();
+  payForm();
 //-->
 </script>
 <script type="text/javascript">init_module();</script>
