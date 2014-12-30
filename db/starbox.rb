@@ -11,6 +11,7 @@ def starbox
     i.limited = true
     i.periodic = true #주기 (1개월, 3개월, 6개월, 12개월)
     i.opened = false
+		i.weight = 4
     i.buy_limit = 5
   i.save
 
@@ -33,6 +34,7 @@ def starbox
     i.quantity = 300 
     i.limited = true
     i.opened = false
+		i.weight = 4
     i.buy_limit = 5
   i.save
 

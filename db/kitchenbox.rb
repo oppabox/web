@@ -10,6 +10,7 @@ def kitchenbox
     i.sale_price = "225000"
     i.quantity = -1
     i.limited = false
+		i.weight = 5.0
   i.save
 
 #FRYPAN : LOCALE NAME
@@ -30,6 +31,7 @@ def kitchenbox
     i.sale_price = "55000"
     i.quantity = -1
     i.limited = false
+		i.weight = 1.0
   i.save
 
 #KITCHENTOOL : LOCALE NAME
@@ -49,6 +51,7 @@ def kitchenbox
     i.sale_price = "135000"
     i.quantity = -1
     i.limited = false
+		i.weight = 4.0
   i.save
 
 #PALACE : LOCALE NAME
@@ -69,6 +72,7 @@ def kitchenbox
     i.sale_price = "86500"
     i.quantity = -1
     i.limited = false
+		i.weight = 2.0
   i.save
 
 #ARCHI : LOCALE NAME
@@ -89,6 +93,7 @@ def kitchenbox
     i.sale_price = "125000"
     i.quantity = -1
     i.limited = false
+		i.weight = 2.5
   i.save
 
 #GOCCIA : LOCALE NAME
@@ -109,6 +114,7 @@ def kitchenbox
     i.sale_price = "85000"
     i.quantity = -1
     i.limited = false
+		i.weight = 2.0
   i.save
 
 #TULIPANI : LOCALE NAME
@@ -129,6 +135,7 @@ def kitchenbox
     i.sale_price = "155000"
     i.quantity = -1
     i.limited = false
+		i.weight = 4.0
   i.save
 
 #OLIVIA : LOCALE NAME
@@ -149,6 +156,7 @@ def kitchenbox
     i.sale_price = "155000"
     i.quantity = -1
     i.limited = false
+		i.weight = 4.0
   i.save
 
 #SWING : LOCALE NAME
@@ -169,6 +177,7 @@ def kitchenbox
     i.sale_price = "135000"
     i.quantity = -1
     i.limited = false
+		i.weight = 4.0
   i.save
 
 #SYNTHESIS : LOCALE NAME
