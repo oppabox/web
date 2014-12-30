@@ -21,13 +21,14 @@ class Purchase < ActiveRecord::Base
   def get_delivery_fee
     total = 0
     items = Hash.new(0)
-    if !User.current.nil?
+    if !User.current.nil? and User.current.country != "KR"
       User.current.orders.order("id DESC").each do |x|
         item = x.item
         box = item.box
         name = if !item.periodic? then box.path else "#{box.path}/#{x.order_periodic}" end
         items["#{name}"] += item.weight * x.quantity
       end
+    end
     end
     items.each do |x, y|
       if x.split("/").size > 1
