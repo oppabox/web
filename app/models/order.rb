@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
 
     #option limits
     self.order_option_items.each do |x|
-      if (!x.nil?) and (x.option_item.limited == true) and (self.quantity > x.option_item.quantity)
+      if (!x.option_item.nil?) and (x.option_item.limited == true) and (self.quantity > x.option_item.quantity)
         self.quantity = x.option_item.quantity
       end
     end
