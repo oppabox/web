@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
       if !params[:option_items].nil?
         params[:option_items].each do |x, y|
           o = OptionItem.where(:id => y).take
-          if !o.nil? and (o.quantity < params[:quantity].to_i)
+          if !o.nil? and (o.limited) and (o.quantity < params[:quantity].to_i)
             #TODO : HTTP STATUS MAY NOT BE CORRECT.
             render :text => t('over_quantity'), :status => 406 
             validate_option_item_quantity = false

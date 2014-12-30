@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
   before_save :period_check, :quantity_check
 
   def quantity_check
-    if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity < 0 
+    if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 
       self.quantity = 1
     end
 
