@@ -81,7 +81,7 @@ class PayController < ApplicationController
     purchase.save
 
     @orders = current_user.orders
-    @baskets = current_user.baskets
+    @baskets = current_user.baskets.where(deleted: false)
     @all_price = 0
     @orders.each do |o|
       @all_price += o.quantity * o.total_price

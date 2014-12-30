@@ -7,7 +7,7 @@ class MypageController < ApplicationController
   end
 
   def basket
-    @baskets = current_user.baskets
+    @baskets = current_user.baskets.where(deleted: false)
   end
 
   def api_info
