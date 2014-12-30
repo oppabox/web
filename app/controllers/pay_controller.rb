@@ -6,7 +6,7 @@ class PayController < ApplicationController
 
   def check_order_quantity
     over_quantity_names = Array.new
-    current_user.orders.each do |o|
+    current_user.orders.where(deleted: false).each do |o|
       #item check
       item = o.item
       if item.limited and item.quantity < o.quantity
@@ -110,14 +110,18 @@ class PayController < ApplicationController
 
   def reorder_quantity
     o = Order.where(id: params[:order_id]).take
-    if params[:method].downcase == "plus"
-      o.quantity += 1
-    else
-      o.quantity -= 1
-    end
 
-    if o.save
-      render :nothing => true, :status => 200
+    if o.purchase.user == current_user
+      if params[:method].downcase == "plus"
+        o.quantity += 1
+      else
+        o.quantity -= 1
+      end
+      if o.save
+        render :nothing => true, :status => 200
+      else
+        render :text => t(:something_wrong), :status => 500
+      end
     else
       render :text => t(:something_wrong), :status => 500
     end

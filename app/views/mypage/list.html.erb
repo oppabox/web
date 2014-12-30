@@ -16,7 +16,7 @@
         </thead>
         <tbody>
 
-          <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.count <= 0) %>
+          <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.where(deleted: false).count <= 0) %>
             <tr class="list_cell">
               <td class="text-center" colspan="6">
                 <br><%=t('empty_order')%><br>
@@ -26,11 +26,11 @@
           <% else %>
 
           <% current_user.purchases.each do |purchase| %>
-            <% purchase.orders.each_with_index do |order, index|%>
+            <% purchase.orders.where(deleted: false).each_with_index do |order, index|%>
               <tr class="list_cell">
 
                 <% if index == 0 %>
-                  <td rowspan="<%=purchase.orders.count + 1%>" class="text-center"><%=order.purchase.id%></td>
+                  <td rowspan="<%=purchase.orders.where(deleted: false).count + 1%>" class="text-center"><%=order.purchase.id%></td>
                 <% end %>
 
                 <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
@@ -47,7 +47,7 @@
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
                 <% if index == 0 %>
                   <% name = ["purchase_ordering", "purchase_paid", "purchase_pending"] %>
-                  <td rowspan="<%=purchase.orders.count+1%>" class="text-center">
+                  <td rowspan="<%=purchase.orders.where(deleted: false).count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
                       <a href="/pay/order"><%= t("#{name[order.purchase.status]}") %></a>
                     <% else %>

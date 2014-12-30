@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   def orders
     p = self.purchase
-    p.nil? ? [] : p.orders
+    p.nil? ? [] : p.orders.where(deleted: false)
   end
 
   def purchase

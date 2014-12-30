@@ -12,7 +12,7 @@ class Purchase < ActiveRecord::Base
 
   def all_krw_price
     at_amt = 0
-    self.orders.each do |o|
+    self.orders.where(deleted: false).each do |o|
       at_amt += o.total_price.to_i * o.quantity.to_i
     end
     at_amt += get_delivery_fee
@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
     total = 0
     items = Hash.new(0)
     if !User.current.nil? and User.current.country != "KR"
-      User.current.orders.order("id DESC").each do |x|
+      User.current.orders.where(deleted: false).order("id DESC").each do |x|
         item = x.item
         box = item.box
         name = if !item.periodic? then box.path else "#{box.path}/#{x.order_periodic}" end
@@ -178,7 +178,7 @@ class Purchase < ActiveRecord::Base
 
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
-      self.orders.each do |x|
+      self.orders.where(deleted: false).each do |x|
         i = x.item
         if i.limited == true
           i.quantity -= x.quantity

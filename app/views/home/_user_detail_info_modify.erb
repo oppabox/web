@@ -61,6 +61,7 @@
 <% end %>
 <% if !["KR"].include? current_user.country %>
   <label><%= t('signup_step3_rest_address') %></label>
+  <div id="address_msg" data-msg="<%= t('address_foreign_msg') -%>"><%= t('address_foreign_msg') -%></div>
 <% else %>
   <label><%= t('signup_step3_address') %></label>
 <% end %>
@@ -94,5 +95,17 @@
         }).embed(element);
         element.style.display = 'block';
     }
+</script>
+<% else %>
+<script type="text/javascript">
+$('#signup_state, #signup_city, #signup_address').keyup(function(event){
+    var past = $(this).val();
+    //$(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
+    $(this).val($(this).val().replace(/[^\x00-\x7F]/g, ''));
+    if($(this).val() != past){
+      var msg = $("#address_msg").data("msg");
+      alert(msg);
+    }
+});
 </script>
 <% end %>
