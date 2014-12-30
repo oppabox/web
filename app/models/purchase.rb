@@ -29,7 +29,6 @@ class Purchase < ActiveRecord::Base
         items["#{name}"] += item.weight * x.quantity
       end
     end
-    end
     items.each do |x, y|
       if x.split("/").size > 1
         total = calucate_box_delivery y, x.split("/")[1].to_i
