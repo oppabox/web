@@ -197,6 +197,10 @@ ja:
   total_payment_for_korean: "for international customers"
   total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "支払い"
+  total_payment_inprogress1: "決済進行中です。"
+  total_payment_inprogress2: "決済が完了すると、自動的にページが切り替わります。"
+  total_payment_error1: "お支払い情報がありません。"
+  total_payment_error2: "最初から進めてください。"
 
   order_confirm: "注文内容の確認"
   address_confirm: "配達情報の確認"

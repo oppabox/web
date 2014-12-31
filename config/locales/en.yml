@@ -195,6 +195,10 @@ en:
   total_payment_for_korean: "for international customers"
   total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "Proceed"
+  total_payment_inprogress1: "Payment in progress."
+  total_payment_inprogress2: "Once your payment is complete, the page will automatically transition."
+  total_payment_error1: "No payment information."
+  total_payment_error2: "Please proceed again from the beginning."
 
   order_confirm: "Order Confirmation"
   address_confirm: "Checking Delivery Information"
