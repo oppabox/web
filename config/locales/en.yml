@@ -9,6 +9,7 @@ en:
   left_menu: "Products"
   menu_mypage: "My Page"
   menu_login: "Sign In"
+  menu_logout: "Logout"
   menu_signup: "Sign Up"
   menu_basket: "Cart"
   menu_reset_password: "Find Password"
