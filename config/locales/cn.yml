@@ -197,6 +197,10 @@ cn:
   total_payment_for_korean: "for international customers"
   total_payment_for_nonkorean: "for Korean customers"
   total_payment_success: "结账"
+  total_payment_inprogress1: "正在付款。"
+  total_payment_inprogress2: "一旦付款完成后，页面会自动转换。"
+  total_payment_error1: "没有付款信息。"
+  total_payment_error2: "请再次从头开始。"
 
   order_confirm: "确认购买"
   address_confirm: "确认配送信息"
