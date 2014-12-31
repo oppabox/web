@@ -7,6 +7,7 @@
 # Ignore temp files
 .DS_Store
 .swp
+.sql
 
 # Ignore Lock file
 /Gemfile.lock

@@ -31,12 +31,12 @@ class Purchase < ActiveRecord::Base
     end
     items.each do |x, y|
       if x.split("/").size > 1
-        total = calucate_box_delivery y, x.split("/")[1].to_i
+        total += calucate_box_delivery y, x.split("/")[1].to_i
       else
-        total = calucate_box_delivery y
+        total += calucate_box_delivery y
       end
     end
-    total
+    total.ceil
   end
 
   def calucate_box_delivery weight, month = 1
