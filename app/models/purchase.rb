@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
     total = 0
     items = Hash.new(0)
     if !User.current.nil? and User.current.country != "KR"
-      User.current.orders.where(deleted: false).order("id DESC").each do |x|
+      User.current.orders.order("id DESC").each do |x|
         item = x.item
         box = item.box
         name = if !item.periodic? then box.path else "#{box.path}/#{x.order_periodic}" end
