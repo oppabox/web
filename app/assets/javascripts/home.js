@@ -52,7 +52,7 @@ $(function(){
   })
 
   $("#signup_step3_button").on("click",function(){
-      submit_address("/home/welcome");
+      submit_address("/");
   });
 
   $("#signin_button").on("click",function(){

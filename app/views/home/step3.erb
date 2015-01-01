@@ -1,7 +1,16 @@
 <div class="container">
-  <h2 class="text-center form-signin-heading"><%= t('signup_step3') %></h2>
+  <div class="row text-center welcome_oppabox">
+    <div style="margin-bottom:20px">
+      <img src="<%= asset_path 'oppabox.png'%>" class="img-responsive img-center" width="100">
+    </div>
+      <p style="font-size:25px;"><%=t('signup_success')%></p>
+      <br>
+      <p style="font-size:20px; font-weight:bold;">Global Shopping Mall, OPPABOX</p>
+      <p style="font-size:20px; font-weight:bold;">Bringing happiness to you everyday</p>
+      <p style="font-size:20px; font-weight:bold;">Thank you.</p>
+  </div>
   <hr>
-  <h4 class="text-center"><%= t('signup_complete') %></h4>
+  <div style="height:10px;"></div>
   <h4 class="text-center"><%= t('signup_additional') %></h4>
   <div class="form-signin" role="form" style="max-width:480px;">
     <%=render partial: "/home/user_detail_info"%>
