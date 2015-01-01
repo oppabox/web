@@ -1,6 +1,7 @@
 ActiveAdmin.register Order do
 
   index do
+    column :id
     column "status" do |o|
       status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송완료"]
       status_string[o.purchase.status]
@@ -16,6 +17,9 @@ ActiveAdmin.register Order do
     column "country" do |o|
       o.purchase.user.country
     end
+    column "user_id" do |o|
+      o.purchase.user_id
+    end
     column "recipient" do |o|
       o.purchase.recipient
     end
@@ -31,13 +35,19 @@ ActiveAdmin.register Order do
     column "phonenumber" do |o|
       o.purchase.phonenumber
     end
+    column "email" do |o|
+      o.purchase.user.email
+    end
     column "결제금액" do |o|
       o.purchase.amt
     end
+    column :updated_at
+    column :created_at
   end
 
 
   csv do
+    column :id
     column "status" do |o|
       status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송완료"]
       status_string[o.purchase.status]
@@ -52,6 +62,9 @@ ActiveAdmin.register Order do
     column "country" do |o|
       o.purchase.user.country
     end
+    column "user_id" do |o|
+      o.purchase.user_id
+    end
     column "recipient" do |o|
       o.purchase.recipient
     end
@@ -67,9 +80,14 @@ ActiveAdmin.register Order do
     column "phonenumber" do |o|
       o.purchase.phonenumber
     end
+    column "email" do |o|
+      o.purchase.user.email
+    end
     column "결제금액" do |o|
       o.purchase.amt
     end
+    column :updated_at
+    column :created_at
   end
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
