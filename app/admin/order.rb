@@ -3,7 +3,7 @@ ActiveAdmin.register Order do
   index do
     column :id
     column "status" do |o|
-      status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송완료"]
+      status_string = ["주문중", "결제완료", "무통장입금확인필요", "배송완료"]
       status_string[o.purchase.status]
     end
     column "Product" do |o|
@@ -45,11 +45,12 @@ ActiveAdmin.register Order do
     column :created_at
   end
 
+  filter :purchase_status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
 
   csv do
     column :id
     column "status" do |o|
-      status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송완료"]
+      status_string = ["주문중", "결제완료", "무통장입금확인필요", "배송완료"]
       status_string[o.purchase.status]
     end
     column "Product" do |p|

@@ -6,6 +6,17 @@ class Purchase < ActiveRecord::Base
   AT_KRW_SHOP_ID   = "oppabox"          #설정필요
   AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요
 
+  STATUSES = {
+    0 => '주문중', 
+    1 => '결제완료',
+    2 => '무통장입금확인필요',
+    3 => '배송완료'
+  }
+
+  def status_name
+    STATUSES[status].to_s
+  end
+
   def krw_billing params
     process all_krw_price, params[:allat_enc_data], params[:allat_test_yn], AT_KRW_SHOP_ID
   end
