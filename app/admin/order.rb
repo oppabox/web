@@ -52,7 +52,7 @@ ActiveAdmin.register Order do
     column :updated_at
     column :created_at
     column "Done" do |o|
-      link_to "done", { :action => :change_status_to_done, :id => o.id }, {:class => "done_btn", :onclick => "return confirm('정말 변경하시겠습니까?');"}
+      link_to "done", { :action => :change_status_to_done, :id => o.id }, {:class => "done_btn", :style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
     end
   end
 
