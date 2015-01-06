@@ -64,6 +64,7 @@ ActiveAdmin.register Order do
     column "Product" do |p|
       p.item.display_name
     end
+    column :order_periodic
     column :quantity
     column "total_weight" do |o|
       o.item.weight * o.quantity
