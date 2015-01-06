@@ -45,7 +45,15 @@ ActiveAdmin.register Order do
     column :created_at
   end
 
+  filter :item, :as => :select
   filter :purchase_status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
+  filter :quantity
+  filter :order_periodic
+  filter :created_at
+  filter :updated_at
+  filter :deleted
+  filter :purchase_user_country, :as => :select, :collection => proc { User.uniq.pluck(:country) }, :label => "country"
+
 
   csv do
     column :id
