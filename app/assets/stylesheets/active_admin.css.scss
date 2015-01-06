@@ -15,3 +15,31 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+// custom
+.done_btn {
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	line-height: 200%;
+	text-decoration: none !important;
+	-webkit-font-smoothing: antialiased;
+	background: white;
+	background: -webkit-linear-gradient(-90deg, white, #e7e7e7);
+	background: -moz-linear-gradient(-90deg, white, #e7e7e7);
+	background: linear, 180deg, white, #e7e7e7;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFE7E7E7');
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFE7E7E7');
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;
+	border: solid 1px #c7c7c7;
+	border-color: #c7c7c7;
+	border-top-color: lightgrey;
+	border-right-color: #c7c7c7;
+	border-bottom-color: #c2c2c2;
+	border-left-color: #c7c7c7;
+	text-shadow: white 0 1px 0;
+	padding: 3px 5px;
+	color: #5e6469 !important;
+	margin: 0px;
+}

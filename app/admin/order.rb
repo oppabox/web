@@ -1,9 +1,17 @@
 ActiveAdmin.register Order do
 
+  collection_action :change_status_to_done do
+    order = Order.find(params[:id])
+    order.purchase.status = PURCHASE_DONE
+    order.purchase.save
+
+    redirect_to :action => :index
+  end
+
   index do
     column :id
     column "status" do |o|
-      status_string = ["주문중", "결제완료", "무통장입금확인필요", "배송완료"]
+      status_string = Purchase::STATUSES.invert.keys
       status_string[o.purchase.status]
     end
     column "Product" do |o|
@@ -43,6 +51,9 @@ ActiveAdmin.register Order do
     end
     column :updated_at
     column :created_at
+    column "Done" do |o|
+      link_to "done", { :action => :change_status_to_done, :id => o.id }, {:class => "done_btn", :onclick => "return confirm('정말 변경하시겠습니까?');"}
+    end
   end
 
   filter :item, :as => :select
@@ -53,12 +64,13 @@ ActiveAdmin.register Order do
   filter :updated_at
   filter :deleted
   filter :purchase_user_country, :as => :select, :collection => proc { User.uniq.pluck(:country) }, :label => "country"
+  filter :purchase_user_email, :as => :string, :label => "email"
 
 
   csv do
     column :id
     column "status" do |o|
-      status_string = ["주문중", "결제완료", "무통장입금확인필요", "배송완료"]
+      status_string = Purchase::STATUSES.invert.keys
       status_string[o.purchase.status]
     end
     column "Product" do |p|

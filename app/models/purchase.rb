@@ -7,10 +7,10 @@ class Purchase < ActiveRecord::Base
   AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요
 
   STATUSES = {
-    0 => '주문중', 
-    1 => '결제완료',
-    2 => '무통장입금확인필요',
-    3 => '배송완료'
+    PURCHASE_ORDERING => '주문중', 
+    PURCHASE_PAID => '결제완료',
+    PURCHASE_PENDING => '무통장입금확인필요',
+    PURCHASE_DONE => '배송완료'
   }
 
   def status_name
