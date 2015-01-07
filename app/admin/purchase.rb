@@ -1,12 +1,20 @@
 ActiveAdmin.register Purchase do
 
+  scope :all, default: true
+  scope :purchase_paid
+  scope :purchase_pending
+  scope :user_kr
+  scope :user_not_kr
+
+
   index do 
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
     column "status" do |p|
-      status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송 완료"]
-      status_string[p.status]
+      status_string = Purchase::STATUSES.invert.keys
+      status_css = ['', 'warning', 'error', 'complete']
+      status_tag( status_string[p.status], status_css[p.status] )
     end
     column "orders" do |p|
       p.orders.map{|o| o.item.display_name}.join("/")
@@ -38,8 +46,8 @@ ActiveAdmin.register Purchase do
         attributes_table do
           row :id
           row "status" do |p|
-            status_string = ["주문중", "결제 완료", "무통장입금확인필요", "배송 완료"]
-            status_css = ['', 'warning', 'warning', 'complete']
+            status_string = Purchase::STATUSES.invert.keys
+            status_css = ['', 'warning', 'error', 'complete']
             status_tag( status_string[p.status], status_css[p.status] )
           end
           row "orders" do |p|

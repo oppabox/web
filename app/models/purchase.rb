@@ -14,6 +14,11 @@ class Purchase < ActiveRecord::Base
     PURCHASE_DONE => '배송완료'
   }
 
+  scope :purchase_paid,      -> { where(status: PURCHASE_PAID) }
+  scope :purchase_pending,   -> { where(status: PURCHASE_PENDING) }
+  scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}
+  scope :user_not_kr,        -> { Purchase.joins(:user).where("users.country != ?", "KR")}
+
   def status_name
     STATUSES[status].to_s
   end

@@ -6,8 +6,8 @@ class Order < ActiveRecord::Base
 
   before_save :period_check, :quantity_check
 
-  scope :purchase_paid,      -> {Order.joins(:purchase).where(purchases: {status: 1})}
-  scope :purchase_pending,   -> {Order.joins(:purchase).where(purchases: {status: 2})}
+  scope :purchase_paid,      -> {Order.joins(:purchase).where(purchases: {status: PURCHASE_PAID})}
+  scope :purchase_pending,   -> {Order.joins(:purchase).where(purchases: {status: PURCHASE_PENDING})}
   scope :user_kr,            -> {Order.joins(purchase: :user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> {Order.joins(purchase: :user).where("users.country != ?", "KR")}
   # scope :purchase_paid,      -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 1})}
