@@ -82,7 +82,7 @@ ActiveAdmin.register Order do
     column "결제금액" do |o|
       o.purchase.amt
     end
-    column "결제시간", :sortable => :approval_ymdhms do |o|
+    column "결제시간" do |o|
       o.purchase.approval_ymdhms
     end
     column :updated_at
