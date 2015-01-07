@@ -1,5 +1,12 @@
 ActiveAdmin.register Order do
 
+  scope :all, default: true
+  scope :purchase_paid
+  scope :purchase_pending
+  scope :user_kr
+  scope :user_not_kr
+  
+
   collection_action :change_status_to_done do
     order = Order.find(params[:id])
     order.purchase.status = PURCHASE_DONE
@@ -56,6 +63,7 @@ ActiveAdmin.register Order do
     end
   end
 
+  filter :id, :label => "Order No."
   filter :item, :as => :select
   filter :purchase_status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
   filter :quantity
@@ -64,6 +72,7 @@ ActiveAdmin.register Order do
   filter :updated_at
   filter :deleted
   filter :purchase_user_country, :as => :select, :collection => proc { User.uniq.pluck(:country) }, :label => "country"
+  filter :purchase_user_country_eq, :as => :string
   filter :purchase_user_email, :as => :string, :label => "email"
 
 

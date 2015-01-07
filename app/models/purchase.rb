@@ -2,6 +2,7 @@ class Purchase < ActiveRecord::Base
   include AllatUtil
   has_many :orders
   belongs_to  :user
+
   AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
   AT_KRW_SHOP_ID   = "oppabox"          #설정필요
   AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요

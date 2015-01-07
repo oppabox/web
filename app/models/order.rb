@@ -6,6 +6,12 @@ class Order < ActiveRecord::Base
 
   before_save :period_check, :quantity_check
 
+  scope :purchase_paid,      -> {Order.joins(:purchase).where(purchases: {status: 1})}
+  scope :purchase_pending,   -> {Order.joins(:purchase).where(purchases: {status: 2})}
+  scope :user_kr,            -> {Order.joins(purchase: :user).where("users.country = ?", "KR")}
+  scope :user_not_kr,        -> {Order.joins(purchase: :user).where("users.country != ?", "KR")}
+
+
   def quantity_check
     if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 
       self.quantity = 1
