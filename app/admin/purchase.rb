@@ -65,7 +65,9 @@ ActiveAdmin.register Purchase do
           row :city
           row :address
           row :postcode
-          row "결제금액", :amt
+          row "결제금액" do |p|
+           p.amt
+          end
           row :replycd
           row :replymsg
           row :order_no
