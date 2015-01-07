@@ -87,7 +87,9 @@ ActiveAdmin.register Purchase do
             column("Option_Details") { |o| 
               ul do
                 o.order_option_items.each do |ooi|
-                  li ooi.option_item.name
+                  unless ooi.option_item.nil?
+                    li ooi.option_item.name
+                  end
                 end
               end
             }
