@@ -425,3 +425,4 @@ cn:
   paid_error: "支付失败"
   purchase_pending: "等待支付"
   mobile_payment: "mobile payment"
+  purchase_pending: "purchase_pending"

@@ -15,6 +15,8 @@ PURCHASE_PAID = 1
 PURCHASE_PENDING = 2
 PURCHASE_DONE = 3
 
+STATUS_NAME = ["purchase_ordering", "purchase_paid", "purchase_pending", "purchase_done"]
+
 ALLAT_TEST_FLAG = "N"
 
 ## FOR EXIMBAY

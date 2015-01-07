@@ -10,6 +10,10 @@ class Order < ActiveRecord::Base
   scope :purchase_pending,   -> {Order.joins(:purchase).where(purchases: {status: 2})}
   scope :user_kr,            -> {Order.joins(purchase: :user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> {Order.joins(purchase: :user).where("users.country != ?", "KR")}
+  # scope :purchase_paid,      -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 1})}
+  # scope :purchase_pending,   -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 2})}
+  # scope :user_kr,            -> {Order.where(deleted: false).joins(purchase: :user).where("users.country = ?", "KR")}
+  # scope :user_not_kr,        -> {Order.where(deleted: false).joins(purchase: :user).where("users.country != ?", "KR")}
 
 
   def quantity_check

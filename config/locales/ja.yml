@@ -393,3 +393,4 @@ ja:
   paid_error: "決済の手続きに失敗しました"
   purchase_pending: "決済の手続きに失敗しました"
   mobile_payment: "mobile payment"
+  purchase_pending: "purchase_pending"

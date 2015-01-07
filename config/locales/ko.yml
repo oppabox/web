@@ -526,3 +526,4 @@ ko:
   paid_error: "결제에 실패했습니다"
   purchase_pending: "결제 대기"
   mobile_payment: "모바일에서 결제"
+  purchase_done: "배송 완료"

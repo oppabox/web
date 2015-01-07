@@ -46,12 +46,11 @@
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
                 <% if index == 0 %>
-                  <% name = ["purchase_ordering", "purchase_paid", "purchase_pending"] %>
                   <td rowspan="<%=purchase.orders.where(deleted: false).count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
-                      <a href="/pay/order"><%= t("#{name[order.purchase.status]}") %></a>
+                      <a href="/pay/order"><%= t("#{STATUS_NAME[order.purchase.status]}") %></a>
                     <% else %>
-                      <%= t("#{name[order.purchase.status]}") %>
+                      <%= t("#{STATUS_NAME[order.purchase.status]}") %>
                     <% end %>
                   </td>
                 <% end %>

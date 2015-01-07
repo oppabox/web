@@ -391,3 +391,4 @@ en:
   paid_error: "Payment is failed."
   purchase_pending: "Standby for payment"
   mobile_payment: "mobile payment"
+  purchase_pending: "purchase_pending"
