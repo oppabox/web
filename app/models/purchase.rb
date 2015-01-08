@@ -166,6 +166,8 @@ class Purchase < ActiveRecord::Base
       self.replymsg = replymsg
       # reference number
       self.set_reference_number
+      # pay option
+      # self.pay_option = PAY_OPTIONS[pay_type]
       self.order_no = order_no
       self.amt = amt
       self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"

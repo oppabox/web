@@ -279,6 +279,8 @@ class PayController < ApplicationController
     p.replymsg = @resmsg
     # reference number
     p.set_reference_number
+    # pay option
+    # self.pay_option = PAY_OPTIONS["CARD"]
     render text: p.save
   end
 end

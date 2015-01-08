@@ -10,6 +10,7 @@ BASE_ITEM_IMAGE_LOCATION = "/images/items"
 
 CURRENCY = 1100
 
+#### purchase status
 PURCHASE_ORDERING = 0
 PURCHASE_PENDING = 1
 PURCHASE_PAID = 2
@@ -17,6 +18,18 @@ PURCHASE_ON_DELIVERY = 3
 PURCHASE_DONE = 4
 
 STATUS_NAME = ["purchase_ordering", "purchase_pending", "purchase_paid", "purchase_on_delivery", "purchase_done"]
+
+#### purchase type
+PURCHASE_VBANK = 0
+PURCHASE_ABANK = 1
+PURCHASE_CARD = 2
+
+PAY_OPTIONS = {
+	"VBANK" => PURCHASE_VBANK,
+	"ABANK" => PURCHASE_ABANK,
+	"CARD" => PURCHASE_CARD
+}
+
 
 ALLAT_TEST_FLAG = "N"
 
