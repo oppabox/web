@@ -21,103 +21,7 @@ ActiveAdmin.register Order do
 
     redirect_to :action => :index
   end
-  ########### download bl #############
-  collection_action :download_bl do
-    csv_builder = ActiveAdmin::CSVBuilder.new
-
-    # set columns
-    csv_builder.column("ReceiverCompanyName") { |o| o.purchase.recipient }
-    csv_builder.column("ReceiverContactName") { |o| o.purchase.recipient }
-    csv_builder.column("ReceiverAddress1") do |o|
-      addr = o.purchase.address.nil? ? "" : o.purchase.address
-      address_array = addr.split(" ")
-      address_split = Array.new(3){""}
-
-      address_array.each do |x|
-        0.upto(address_split.size - 1) do |y|
-          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
-          address_split[y] += " " if address_split[y].size > 1
-          address_split[y] += x
-          break
-        end
-      end
-
-      address_split[0]
-    end
-    csv_builder.column("ReceiverAddress2") do |o|
-      addr = o.purchase.address.nil? ? "" : o.purchase.address
-      address_array = addr.split(" ")
-      address_split = Array.new(3){""}
-
-      address_array.each do |x|
-        0.upto(address_split.size - 1) do |y|
-          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
-          address_split[y] += " " if address_split[y].size > 1
-          address_split[y] += x
-          break
-        end
-      end
-
-      address_split[1]
-    end
-    csv_builder.column("ReceiverAddress3") do |o|
-      addr = o.purchase.address.nil? ? "" : o.purchase.address
-      address_array = addr.split(" ")
-      address_split = Array.new(3){""}
-
-      address_array.each do |x|
-        0.upto(address_split.size - 1) do |y|
-          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
-          address_split[y] += " " if address_split[y].size > 1
-          address_split[y] += x
-          break
-        end
-      end
-
-      address_split[2]
-    end
-    csv_builder.column("ReceiverCity") { |o| o.purchase.city }
-    csv_builder.column("ReceiverState") { |o| o.purchase.state }
-    csv_builder.column("ReceiverPostal") { |o| o.purchase.postcode }
-    csv_builder.column("ReceiverCountry") { |o| o.purchase.user.country }
-    csv_builder.column("ReceiverPhoneNumber") { |o| o.purchase.phonenumber }
-    csv_builder.column("ReceiverEmail") { |o| o.purchase.user.email }
-    csv_builder.column("DescriptionofShipment") { |o| o.item.display_name }
-    csv_builder.column("YOption") { |o| "Y" }
-    csv_builder.column("NOption") { |o| "N" }
-    csv_builder.column("ServiceType") { |o| "Express Saver" }
-    csv_builder.column("ActWeight") { |o| o.item.weight * o.quantity }
-    csv_builder.column("NumofPackage") { |o| "1" }
-    csv_builder.column("PackageType") { |o| "Package" }
-    csv_builder.column("ShippingChargeto") { |o| "Shipper" }
-    csv_builder.column("ShippingTaxto") { |o| "Receiver" }
-    csv_builder.column("ReferenceNumber1") { |o| "refnum" } 
-    csv_builder.column("ReferenceNumber2") { |o| "" }
-    csv_builder.column("ReferenceNumber3") { |o| "" }
-    csv_builder.column("ReferenceNumber4") { |o| "" }
-    csv_builder.column("ReferenceNumber5") { |o| "Saver" }
-
-
-    columns = csv_builder.columns
-
-    data = []
-    data << columns.map(&:name)
-    collection.each do |resource|
-      data << columns.map do |column|
-        call_method_or_proc_on resource, column.data
-      end
-    end
-
-    csv_output = CSV.generate() do |csv|
-      data.each do |row|
-        csv << row
-      end
-    end
-
-    # render plain: csv_output.inspect
-
-    send_data csv_output, :filename => "Shipinfo_BL.csv"
-  end
+  
   ########### download inv #############
   collection_action :download_inv do
     csv_builder = ActiveAdmin::CSVBuilder.new
@@ -130,9 +34,9 @@ ActiveAdmin.register Order do
     csv_builder.column("INVDescriptionofGoods") { |o| o.item.display_name }
     csv_builder.column("INVHsCode") { |o| "" }
     csv_builder.column("INVOriginCountry") { |o| "KR" }
-    csv_builder.column("INVQuantity") { |o| "" }
+    csv_builder.column("INVQuantity") { |o| o.quantity }
     csv_builder.column("INVUnitofMeasure") { |o| "EA" }
-    csv_builder.column("INVUnitPrice") { |o| "" }
+    csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
     csv_builder.column("INVAddComment") { |o| "" }
     csv_builder.column("INVFleightCost") { |o| "" }
     csv_builder.column("INVDiscountCost") { |o| "" }
@@ -160,6 +64,13 @@ ActiveAdmin.register Order do
     send_data csv_output, :filename => "Shipinfo_INV.csv"
   end
 
+
+  ################## sidebar ##########################
+  sidebar :help, :only => :index do
+    button do
+      link_to "Download INV", { :action => :download_inv }, {:style => "color:white;text-decoration:none"}
+    end
+  end
 
 
 
@@ -231,15 +142,6 @@ ActiveAdmin.register Order do
     end
     column "Cancel" do |o|
       link_to "return", { :action => :cancel, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;letter-spacing: 0.5px;line-height: 200%;text-decoration: none !important;background: #d45f53;background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);background: linear, 180deg, #d45f53, #d05a49;border: solid 1px #b43f33;border-color: #b43f33;padding: 3px 5px;color: #ffffff !important;"}
-    end
-  end
-
-  sidebar :help, :only => :index do
-    button do
-      link_to "Download BL", { :action => :download_bl }, {:style => "color:white;text-decoration:none"}
-    end
-    button do
-      link_to "Download INV", { :action => :download_inv }, {:style => "color:white;text-decoration:none"}
     end
   end
 

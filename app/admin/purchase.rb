@@ -6,7 +6,124 @@ ActiveAdmin.register Purchase do
   scope :user_kr
   scope :user_not_kr
 
+  ########### download bl #############
+  collection_action :download_bl do
+    csv_builder = ActiveAdmin::CSVBuilder.new
 
+    # set columns
+    csv_builder.column("ReceiverCompanyName") { |p| p.recipient }
+    csv_builder.column("ReceiverContactName") { |p| p.recipient }
+    csv_builder.column("ReceiverAddress1") do |p|
+      addr = p.address.nil? ? "" : p.address
+      address_array = addr.split(" ")
+      address_split = Array.new(3){""}
+
+      address_array.each do |x|
+        0.upto(address_split.size - 1) do |y|
+          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
+          address_split[y] += " " if address_split[y].size > 1
+          address_split[y] += x
+          break
+        end
+      end
+
+      address_split[0]
+    end
+    csv_builder.column("ReceiverAddress2") do |p|
+      addr = p.address.nil? ? "" : p.address
+      address_array = addr.split(" ")
+      address_split = Array.new(3){""}
+
+      address_array.each do |x|
+        0.upto(address_split.size - 1) do |y|
+          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
+          address_split[y] += " " if address_split[y].size > 1
+          address_split[y] += x
+          break
+        end
+      end
+
+      address_split[1]
+    end
+    csv_builder.column("ReceiverAddress3") do |p|
+      addr = p.address.nil? ? "" : p.address
+      address_array = addr.split(" ")
+      address_split = Array.new(3){""}
+
+      address_array.each do |x|
+        0.upto(address_split.size - 1) do |y|
+          next if (address_split[y] + x).size > 35 #UPS can have address with legnth 35.
+          address_split[y] += " " if address_split[y].size > 1
+          address_split[y] += x
+          break
+        end
+      end
+
+      address_split[2]
+    end
+    csv_builder.column("ReceiverCity") { |p| p.city }
+    csv_builder.column("ReceiverState") { |p| p.state }
+    csv_builder.column("ReceiverPostal") { |p| p.postcode }
+    csv_builder.column("ReceiverCountry") { |p| p.user.country }
+    csv_builder.column("ReceiverPhoneNumber") { |p| p.phonenumber }
+    csv_builder.column("ReceiverEmail") { |p| p.user.email }
+    csv_builder.column("DescriptionofShipment") { |p| "Woman long sleeve" }
+    csv_builder.column("YOption") { |p| "Y" }
+    csv_builder.column("NOption") { |p| "N" }
+    csv_builder.column("ServiceType") { |p| "Express Saver" }
+    csv_builder.column("ActWeight") do |p|
+      sum = 0
+      p.orders.each do |o|
+        sum += (o.item.weight * o.quantity)
+      end
+      sum
+    end
+    csv_builder.column("NumofPackage") do |p|
+      sum = 0
+      p.orders.each do |o|
+        sum += o.quantity
+      end
+      sum
+    end
+    csv_builder.column("PackageType") { |p| "Package" }
+    csv_builder.column("ShippingChargeto") { |p| "Shipper" }
+    csv_builder.column("ShippingTaxto") { |p| "Receiver" }
+    csv_builder.column("ReferenceNumber1") { |p| "refnum" } 
+    csv_builder.column("ReferenceNumber2") { |p| "" }
+    csv_builder.column("ReferenceNumber3") { |p| "" }
+    csv_builder.column("ReferenceNumber4") { |p| "" }
+    csv_builder.column("ReferenceNumber5") { |p| "Saver" }
+
+
+    columns = csv_builder.columns
+
+    data = []
+    data << columns.map(&:name)
+    collection.each do |resource|
+      data << columns.map do |column|
+        call_method_or_proc_on resource, column.data
+      end
+    end
+
+    csv_output = CSV.generate() do |csv|
+      data.each do |row|
+        csv << row
+      end
+    end
+
+    # render plain: csv_output.inspect
+
+    send_data csv_output, :filename => "Shipinfo_BL.csv"
+  end
+
+  ################## sidebar ##########################
+  sidebar :help, :only => :index do
+    button do
+      link_to "Download BL", { :action => :download_bl }, {:style => "color:white;text-decoration:none"}
+    end
+  end
+
+  ################## view ##########################
   index do 
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
