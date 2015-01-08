@@ -27,10 +27,10 @@ ActiveAdmin.register Order do
     csv_builder = ActiveAdmin::CSVBuilder.new
 
     # set columns
-    csv_builder.column("ReferenceNumber1") { |o| "refnum" } 
+    csv_builder.column("Connector") { |o| o.purchase.reference_number } 
     csv_builder.column("INVCurrency") { |o| "USD" }
     csv_builder.column("INVDeclaration") { |o| "invoice" }
-    csv_builder.column("INVReasonforExport") { |o| "Sale" }
+    csv_builder.column("INVReasonforExport") { |o| "Sample" }
     csv_builder.column("INVDescriptionofGoods") { |o| o.item.display_name }
     csv_builder.column("INVHsCode") { |o| "" }
     csv_builder.column("INVOriginCountry") { |o| "KR" }
@@ -38,7 +38,7 @@ ActiveAdmin.register Order do
     csv_builder.column("INVUnitofMeasure") { |o| "EA" }
     csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
     csv_builder.column("INVAddComment") { |o| "" }
-    csv_builder.column("INVFleightCost") { |o| "" }
+    csv_builder.column("INVFreightCost") { |o| "" }
     csv_builder.column("INVDiscountCost") { |o| "" }
     
 
@@ -94,7 +94,7 @@ ActiveAdmin.register Order do
     end
     column "status" do |o|
       status_string = Purchase::STATUSES.invert.keys
-      status_css = ['', 'warning', 'error', 'complete']
+      status_css = ['', 'warning', 'error', 'yes', 'complete']
       status_tag( status_string[o.purchase.status], status_css[o.purchase.status] )
     end
     column "Product" do |o|
@@ -154,7 +154,7 @@ ActiveAdmin.register Order do
           end
           row "status" do |o|
             status_string = Purchase::STATUSES.invert.keys
-            status_css = ['', 'warning', 'warning', 'complete']
+            status_css = ['', 'warning', 'warning', 'yes',   'complete']
             status_tag( status_string[o.purchase.status], status_css[o.purchase.status] )
           end
           row "Product" do |o|

@@ -2,6 +2,8 @@ class Purchase < ActiveRecord::Base
   include AllatUtil
   has_many :orders
   belongs_to  :user
+  # validates :reference_number, uniqueness: true
+  # before_save :set_reference_number
 
   AT_CROSS_KEY = "efb017021539bb77f652893aca3f05a1"     #설정필요 [사이트 참조 - http://www.allatpay.com/servlet/AllatBiz/support/sp_install_guide_scriptapi.jsp#shop]
   AT_KRW_SHOP_ID   = "oppabox"          #설정필요
@@ -9,8 +11,9 @@ class Purchase < ActiveRecord::Base
 
   STATUSES = {
     PURCHASE_ORDERING => '주문중', 
-    PURCHASE_PAID => '결제완료',
     PURCHASE_PENDING => '무통장 확인',
+    PURCHASE_PAID => '결제완료',
+    PURCHASE_ON_DELIVERY => '배송중',
     PURCHASE_DONE => '배송완료'
   }
 
@@ -18,6 +21,15 @@ class Purchase < ActiveRecord::Base
   scope :purchase_pending,   -> { where(status: PURCHASE_PENDING) }
   scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> { Purchase.joins(:user).where("users.country != ?", "KR")}
+
+
+  def set_reference_number
+    # timestamp(8) + '-' + purchase_id(9)
+    str = DateTime.current().strftime("%Y%m%d")
+    str += '-'
+    str += self.id.to_s.rjust(8, '0')
+    self.reference_number = str
+  end
 
   def status_name
     STATUSES[status].to_s
@@ -152,6 +164,8 @@ class Purchase < ActiveRecord::Base
       result += "에스크로 적용 여부    : " + escrow_yn + "\n"
       self.replycd = replycd
       self.replymsg = replymsg
+      # reference number
+      self.set_reference_number
       self.order_no = order_no
       self.amt = amt
       self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"

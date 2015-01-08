@@ -277,6 +277,8 @@ class PayController < ApplicationController
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
+    # reference number
+    p.set_reference_number
     render text: p.save
   end
 end

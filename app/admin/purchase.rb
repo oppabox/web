@@ -88,7 +88,7 @@ ActiveAdmin.register Purchase do
     csv_builder.column("PackageType") { |p| "Package" }
     csv_builder.column("ShippingChargeto") { |p| "Shipper" }
     csv_builder.column("ShippingTaxto") { |p| "Receiver" }
-    csv_builder.column("ReferenceNumber1") { |p| "refnum" } 
+    csv_builder.column("ReferenceNumber1") { |p| p.purchase_number } 
     csv_builder.column("ReferenceNumber2") { |p| "" }
     csv_builder.column("ReferenceNumber3") { |p| "" }
     csv_builder.column("ReferenceNumber4") { |p| "" }
@@ -154,6 +154,7 @@ ActiveAdmin.register Purchase do
     column :pay_type
     column :approval_ymdhms
     column :seq_no
+    column :reference_number
   end
 
   show do
