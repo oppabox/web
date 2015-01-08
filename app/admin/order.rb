@@ -29,7 +29,8 @@ ActiveAdmin.register Order do
     csv_builder.column("ReceiverCompanyName") { |o| o.purchase.recipient }
     csv_builder.column("ReceiverContactName") { |o| o.purchase.recipient }
     csv_builder.column("ReceiverAddress1") do |o|
-      address_array = o.purchase.address.split(" ")
+      addr = o.purchase.address.nil? ? "" : o.purchase.address
+      address_array = addr.split(" ")
       address_split = Array.new(3){""}
 
       address_array.each do |x|
@@ -44,7 +45,8 @@ ActiveAdmin.register Order do
       address_split[0]
     end
     csv_builder.column("ReceiverAddress2") do |o|
-      address_array = o.purchase.address.split(" ")
+      addr = o.purchase.address.nil? ? "" : o.purchase.address
+      address_array = addr.split(" ")
       address_split = Array.new(3){""}
 
       address_array.each do |x|
@@ -59,7 +61,8 @@ ActiveAdmin.register Order do
       address_split[1]
     end
     csv_builder.column("ReceiverAddress3") do |o|
-      address_array = o.purchase.address.split(" ")
+      addr = o.purchase.address.nil? ? "" : o.purchase.address
+      address_array = addr.split(" ")
       address_split = Array.new(3){""}
 
       address_array.each do |x|
