@@ -11,8 +11,8 @@ class Purchase < ActiveRecord::Base
 
   STATUSES = {
     PURCHASE_ORDERING => '주문중', 
-    PURCHASE_PENDING => '무통장 확인',
     PURCHASE_PAID => '결제완료',
+    PURCHASE_PENDING => '무통장 확인',
     PURCHASE_ON_DELIVERY => '배송중',
     PURCHASE_DONE => '배송완료'
   }
