@@ -6,6 +6,21 @@ ActiveAdmin.register Purchase do
   scope :user_kr
   scope :user_not_kr
 
+
+  ################## batch action ##########################  
+  batch_action :destroy, false
+  Purchase::STATUSES.each_with_index do |s|
+    batch_action s[1] do |selection|
+      Purchase.find(selection).each do |p|
+        p.status = s[0]
+        p.save
+      end
+
+      redirect_to :action => :index
+    end
+  end
+
+
   ########### download bl #############
   collection_action :download_bl do
     csv_builder = ActiveAdmin::CSVBuilder.new
@@ -88,7 +103,7 @@ ActiveAdmin.register Purchase do
     csv_builder.column("PackageType") { |p| "Package" }
     csv_builder.column("ShippingChargeto") { |p| "Shipper" }
     csv_builder.column("ShippingTaxto") { |p| "Receiver" }
-    csv_builder.column("ReferenceNumber1") { |p| p.purchase_number } 
+    csv_builder.column("ReferenceNumber1") { |p| p.reference_number } 
     csv_builder.column("ReferenceNumber2") { |p| "" }
     csv_builder.column("ReferenceNumber3") { |p| "" }
     csv_builder.column("ReferenceNumber4") { |p| "" }
@@ -125,12 +140,13 @@ ActiveAdmin.register Purchase do
 
   ################## view ##########################
   index do 
+    selectable_column
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
     column "status" do |p|
       status_string = Purchase::STATUSES.invert.keys
-      status_css = ['', 'warning', 'error', 'complete']
+      status_css = ['', 'warning', 'error', 'yes', 'complete']
       status_tag( status_string[p.status], status_css[p.status] )
     end
     column "orders" do |p|
@@ -165,7 +181,7 @@ ActiveAdmin.register Purchase do
           row :id
           row "status" do |p|
             status_string = Purchase::STATUSES.invert.keys
-            status_css = ['', 'warning', 'error', 'complete']
+            status_css = ['', 'warning', 'error', 'yes', 'complete']
             status_tag( status_string[p.status], status_css[p.status] )
           end
           row "orders" do |p|

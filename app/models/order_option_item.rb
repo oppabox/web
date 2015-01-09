@@ -3,6 +3,8 @@ class OrderOptionItem < ActiveRecord::Base
   belongs_to  :option_item
   belongs_to  :option
 
+  accepts_nested_attributes_for :option
+
   validate :option_validate
 
   def option_validate

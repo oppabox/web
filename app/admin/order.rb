@@ -6,7 +6,16 @@ ActiveAdmin.register Order do
   scope :user_kr
   scope :user_not_kr
 
+  ################ edit #######################
+  permit_params :quantity, :order_periodic
+  form :partial => "edit"
 
+  ################ edit #######################
+  member_action :edit_options do
+    render plain: params.inspect
+  end
+
+  ################ collection actions #######################
   collection_action :change_status_to_done do
     order = Order.find(params[:id])
     order.purchase.status = PURCHASE_DONE
@@ -64,6 +73,9 @@ ActiveAdmin.register Order do
     send_data csv_output, :filename => "Shipinfo_INV.csv"
   end
 
+  ################ member_action #######################
+
+
 
   ################## sidebar ##########################
   sidebar :help, :only => :index do
@@ -88,6 +100,7 @@ ActiveAdmin.register Order do
   filter :purchase_user_country_eq, :as => :string
   filter :purchase_user_email, :as => :string, :label => "email"
 
+  ################ index #######################
   index do
     column :id do |o|
       link_to o.id, admin_order_path(o)
@@ -137,14 +150,15 @@ ActiveAdmin.register Order do
     end
     column :updated_at
     column :created_at
-    column "Done" do |o|
-      link_to "done", { :action => :change_status_to_done, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
+    column "Show" do |o|
+      link_to "Show", { :action => :show, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
     end
     column "Cancel" do |o|
       link_to "return", { :action => :cancel, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;letter-spacing: 0.5px;line-height: 200%;text-decoration: none !important;background: #d45f53;background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);background: linear, 180deg, #d45f53, #d05a49;border: solid 1px #b43f33;border-color: #b43f33;padding: 3px 5px;color: #ffffff !important;"}
     end
   end
 
+  ################ show #######################
   show do
     columns do
       column do
@@ -194,8 +208,8 @@ ActiveAdmin.register Order do
           end
           row :updated_at
           row :created_at
-          row "Done" do |o|
-            link_to "done", { :action => :change_status_to_done, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
+          row "Edit" do |o|
+            link_to "Edit", { :action => :edit, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
           end
           row "Cancel" do |o|
             link_to "return", { :action => :cancel, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;letter-spacing: 0.5px;line-height: 200%;text-decoration: none !important;background: #d45f53;background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);background: linear, 180deg, #d45f53, #d05a49;border: solid 1px #b43f33;border-color: #b43f33;padding: 3px 5px;color: #ffffff !important;"}
@@ -206,7 +220,18 @@ ActiveAdmin.register Order do
         panel "Order Details" do
           table_for Order.find(params[:id]).order_option_items do |ooi|
             column("Option_Title") { |ooi| ooi.option.title } 
-            column("Option_Details") { |ooi| ooi.option_item.name }
+            column("Option_Details") do |ooi|
+              form do |f|
+                if ooi.option_item_id == -1
+                  ooi.option_text
+                else
+                  ooi.option_item.name
+                end
+              end
+            end
+            column("Edit") do |ooi|
+              link_to "Edit", { :action => :edit_options, :id => ooi.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
+            end
           end
         end
       end
@@ -214,6 +239,7 @@ ActiveAdmin.register Order do
   end
 
 
+  ################ csv #######################
   csv do
     column :id
     column "status" do |o|
@@ -258,19 +284,5 @@ ActiveAdmin.register Order do
     column :updated_at
     column :created_at
   end
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
 
 end

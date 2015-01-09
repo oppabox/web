@@ -6,9 +6,13 @@ ActiveAdmin.register_page "Dashboard" do
 			column do
 				panel "Total" do
 					status = Purchase::STATUSES
-					table_for Purchase.where.not(status: [PURCHASE_ORDERING, PURCHASE_DONE]).group(:status).count do |p|
-						for i in 1..(status.count - 2)
-							column(status[i]) { |p| p[i] }
+					status_exclude = [PURCHASE_ORDERING, PURCHASE_DONE]
+					table_for Purchase.where.not(status: status_exclude).group(:status).count do |p|
+						for s in status
+							# s : [0, '주문중']
+							unless status_exclude.include? s[0]
+								column(s[1]) { |p| p[s[0]] }
+							end
 						end
 					end
 				end
