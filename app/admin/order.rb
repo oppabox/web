@@ -86,9 +86,12 @@ ActiveAdmin.register Order do
 
     # set columns
     csv_builder.column("수취고객명") { |o| o.purchase.recipient }
-    csv_builder.column("수취인") { |o| o.purchase.recipient }
+    csv_builder.column("수취인") { |o| ""}
     csv_builder.column("수취인 전화") { |o| "" }
-    csv_builder.column("수취인 휴대폰") { |o| "'" + o.purchase.phonenumber }
+    csv_builder.column("수취인 휴대폰") do |o|
+      n = o.purchase.phonenumber.nil? ? "" : o.purchase.phonenumber
+      "'" + n
+    end
     csv_builder.column("우편번호") { |o| o.purchase.postcode }
     csv_builder.column("수취인 주소") { |o| o.purchase.address }
     csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
