@@ -175,7 +175,9 @@ class Purchase < ActiveRecord::Base
       self.replycd = replycd
       self.replymsg = replymsg
       # reference number
-      self.set_reference_number
+      unless pay_type == "VBANK"
+        self.set_reference_number 
+      end
       # pay option
       self.pay_option = PAY_OPTIONS[pay_type]
       self.order_no = order_no
