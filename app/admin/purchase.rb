@@ -20,6 +20,20 @@ ActiveAdmin.register Purchase do
     end
   end
 
+  ################## collection action ##########################  
+  collection_action :change_status_to_paid do
+    p = Purchase.find(params[:id])
+
+    message = ""
+    if p.status == PURCHASE_PENDING
+      p.status = PURCHASE_PAID
+      p.set_reference_number
+      p.save
+      message = "success"
+    end
+
+    redirect_to :action => :index
+  end
 
   ########### download bl #############
   collection_action :download_bl do
@@ -128,13 +142,13 @@ ActiveAdmin.register Purchase do
 
     # render plain: csv_output.inspect
 
-    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_BL.csv"
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - UPS_Shipinfo_BL.csv"
   end
 
   ################## sidebar ##########################
   sidebar :help, :only => :index do
     button do
-      link_to "Download BL", { :action => :download_bl }, {:style => "color:white;text-decoration:none"}
+      link_to "Download BL", { :action => :download_bl }, { :class => "btn-normal" }
     end
   end
 
@@ -174,6 +188,11 @@ ActiveAdmin.register Purchase do
     column :approval_ymdhms
     column :seq_no
     column :reference_number
+    column "Pending_Check" do |p|
+      if p.status == PURCHASE_PENDING
+        link_to "Checked!", { :action => :change_status_to_paid, :id => p.id }, { :class => "btn-normal" }
+      end
+    end
   end
 
   show do

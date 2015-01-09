@@ -128,10 +128,10 @@ ActiveAdmin.register Order do
   ################## sidebar ##########################
   sidebar :help, :only => :index do
     button do
-      link_to "Download INV", { :action => :download_inv }, {:style => "color:white;text-decoration:none"}
+      link_to "Download INV", { :action => :download_inv }, { :class => "btn-normal" }
     end
     button do
-      link_to "YAMOOJIN.csv", { :action => :yamoojin_csv }, {:style => "color:white;text-decoration:none"}
+      link_to "YAMOOJIN.csv", { :action => :yamoojin_csv }, { :class => "btn-normal" }
     end
   end
 
@@ -202,10 +202,10 @@ ActiveAdmin.register Order do
     column :updated_at
     column :created_at
     column "Show" do |o|
-      link_to "Show", { :action => :show, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
+      link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
     end
     column "Cancel" do |o|
-      link_to "return", { :action => :cancel, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;letter-spacing: 0.5px;line-height: 200%;text-decoration: none !important;background: #d45f53;background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);background: linear, 180deg, #d45f53, #d05a49;border: solid 1px #b43f33;border-color: #b43f33;padding: 3px 5px;color: #ffffff !important;"}
+      link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
     end
   end
 
@@ -219,7 +219,7 @@ ActiveAdmin.register Order do
           end
           row "status" do |o|
             status_string = Purchase::STATUSES.invert.keys
-            status_css = ['', 'warning', 'warning', 'yes',   'complete']
+            status_css = ['', 'warning', 'error', 'yes', 'complete']
             status_tag( status_string[o.purchase.status], status_css[o.purchase.status] )
           end
           row "Product" do |o|
@@ -260,10 +260,10 @@ ActiveAdmin.register Order do
           row :updated_at
           row :created_at
           row "Edit" do |o|
-            link_to "Edit", { :action => :edit, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
+            link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn-normal" }
           end
           row "Cancel" do |o|
-            link_to "return", { :action => :cancel, :id => o.id }, {:style => "border-radius: 4px;font-size: 14px;letter-spacing: 0.5px;line-height: 200%;text-decoration: none !important;background: #d45f53;background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);background: linear, 180deg, #d45f53, #d05a49;border: solid 1px #b43f33;border-color: #b43f33;padding: 3px 5px;color: #ffffff !important;"}
+            link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
           end
         end
       end
