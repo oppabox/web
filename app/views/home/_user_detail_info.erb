@@ -99,7 +99,7 @@
 </script>
 <% else %>
 <script type="text/javascript">
-$('#signup_state, #signup_city, #signup_address').keyup(function(event){
+$('#signup_name, #signup_state, #signup_city, #signup_address').keyup(function(event){
     var past = $(this).val();
     //$(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
     $(this).val($(this).val().replace(/[^\x00-\x7F]/g, ''));
