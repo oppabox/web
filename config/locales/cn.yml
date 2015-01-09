@@ -425,5 +425,6 @@ cn:
   paid_error: "支付失败"
   purchase_pending: "等待支付"
   mobile_payment: "mobile payment"
-  purchase_pending: "purchase_pending"
+  purchase_pending: "Purchase pending"
+  purchase_on_delivery: "Purchase on delivery"
   seller_and_partner: "Become a Seller or Parter"
