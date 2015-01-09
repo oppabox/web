@@ -128,7 +128,7 @@ ActiveAdmin.register Purchase do
 
     # render plain: csv_output.inspect
 
-    send_data csv_output, :filename => "Shipinfo_BL.csv"
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_BL.csv"
   end
 
   ################## sidebar ##########################
@@ -168,6 +168,9 @@ ActiveAdmin.register Purchase do
     column :replymsg
     column :order_no
     column :pay_type
+    column "결제수단" do |p|
+      PAY_OPTIONS.invert[p.pay_option]
+    end
     column :approval_ymdhms
     column :seq_no
     column :reference_number

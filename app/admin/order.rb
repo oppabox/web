@@ -77,7 +77,48 @@ ActiveAdmin.register Order do
 
     # render plain: csv_output.inspect
 
-    send_data csv_output, :filename => "Shipinfo_INV.csv"
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
+  end
+
+  ########### download YAMOOJIN #############
+  collection_action :yamoojin_csv do
+    csv_builder = ActiveAdmin::CSVBuilder.new
+
+    # set columns
+    csv_builder.column("수취고객명") { |o| o.purchase.recipient }
+    csv_builder.column("수취인") { |o| o.purchase.recipient }
+    csv_builder.column("수취인 전화") { |o| "" }
+    csv_builder.column("수취인 휴대폰") { |o| "'" + o.purchase.phonenumber }
+    csv_builder.column("우편번호") { |o| o.purchase.postcode }
+    csv_builder.column("수취인 주소") { |o| o.purchase.address }
+    csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
+    csv_builder.column("상품명1") { |o| o.item.display_name }
+    csv_builder.column("수량1") { |o| o.quantity }
+    csv_builder.column("물품가격") { |o| o.item.sale_price }
+    csv_builder.column("메모") { |o| "" }
+    csv_builder.column("출력매수") { |o| "" }
+    
+
+    columns = csv_builder.columns
+
+    # Collect the data in an Array to be transposed.
+    data = []
+    data << columns.map(&:name)
+    collection.each do |resource|
+      data << columns.map do |column|
+        call_method_or_proc_on resource, column.data
+      end
+    end
+
+    csv_output = CSV.generate() do |csv|
+      data.each do |row|
+        csv << row
+      end
+    end
+
+    # render plain: csv_output.inspect
+    
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - Yamoojin.csv"
   end
 
   ################ member_action #######################
@@ -88,6 +129,9 @@ ActiveAdmin.register Order do
   sidebar :help, :only => :index do
     button do
       link_to "Download INV", { :action => :download_inv }, {:style => "color:white;text-decoration:none"}
+    end
+    button do
+      link_to "YAMOOJIN.csv", { :action => :yamoojin_csv }, {:style => "color:white;text-decoration:none"}
     end
   end
 
