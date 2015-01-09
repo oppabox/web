@@ -24,8 +24,9 @@ class Purchase < ActiveRecord::Base
 
 
   def set_reference_number
-    # timestamp(8) + '-' + purchase_id(9)
-    str = DateTime.current().strftime("%Y%m%d")
+    # 'P' + timestamp(15) + '-' + purchase_id(8)
+    str = 'P'
+    str += DateTime.current().strftime("%Y%m%d-%H%M%S")
     str += '-'
     str += self.id.to_s.rjust(8, '0')
     self.reference_number = str
