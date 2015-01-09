@@ -32,6 +32,15 @@ class Purchase < ActiveRecord::Base
     self.reference_number = str
   end
 
+  def tmp_set_reference_number
+    # 'P' + timestamp(15) + '-' + purchase_id(8)
+    str = 'P'
+    str += DateTime.new(2014,12,1).strftime("%Y%m%d-%H%M%S")
+    str += '-'
+    str += self.id.to_s.rjust(8, '0')
+    self.reference_number = str
+  end
+
   def status_name
     STATUSES[status].to_s
   end

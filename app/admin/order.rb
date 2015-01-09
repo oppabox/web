@@ -6,6 +6,12 @@ ActiveAdmin.register Order do
   scope :user_kr
   scope :user_not_kr
 
+  controller do
+    def scoped_collection
+      resource_class.includes(:purchase)
+    end
+  end
+
   ################ edit #######################
   permit_params :quantity, :order_periodic
   form :partial => "edit"
@@ -156,7 +162,7 @@ ActiveAdmin.register Order do
     column :id do |o|
       link_to o.id, admin_order_path(o)
     end
-    column :reference do |o|
+    column :reference, sortable: 'purchases.reference_number' do |o|
       o.purchase.reference_number
     end
     column "status" do |o|
