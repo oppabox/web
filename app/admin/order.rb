@@ -156,6 +156,9 @@ ActiveAdmin.register Order do
     column :id do |o|
       link_to o.id, admin_order_path(o)
     end
+    column :reference do |o|
+      o.purchase.reference_number
+    end
     column "status" do |o|
       status_string = Purchase::STATUSES.invert.keys
       status_css = ['', 'warning', 'error', 'yes', 'complete']
