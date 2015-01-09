@@ -3,9 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to  :item
   belongs_to  :purchase
   has_many    :order_option_items
-
-  accepts_nested_attributes_for :order_option_items
-
+  
   before_save :period_check, :quantity_check
 
   scope :purchase_paid,      -> {Order.joins(:purchase).where(purchases: {status: PURCHASE_PAID})}

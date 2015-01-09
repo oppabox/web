@@ -11,8 +11,15 @@ ActiveAdmin.register Order do
   form :partial => "edit"
 
   ################ edit #######################
-  member_action :edit_options do
-    render plain: params.inspect
+  collection_action :edit_options, :method => :patch do
+    ooi = OrderOptionItem.find(params[:options]['id'])
+    if params[:options]['type'] == "text"
+      ooi.option_text = params[:options]['details']
+    else
+      ooi.option_item_id = params[:options]['details']
+    end
+    ooi.save
+    redirect_to params[:options]['target']
   end
 
   ################ collection actions #######################
@@ -221,16 +228,12 @@ ActiveAdmin.register Order do
           table_for Order.find(params[:id]).order_option_items do |ooi|
             column("Option_Title") { |ooi| ooi.option.title } 
             column("Option_Details") do |ooi|
-              form do |f|
-                if ooi.option_item_id == -1
-                  ooi.option_text
-                else
-                  ooi.option_item.name
-                end
+              if ooi.option_item_id == -1
+                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
+              else
+                col = ooi.option.option_items.pluck(:name, :id)
+                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
               end
-            end
-            column("Edit") do |ooi|
-              link_to "Edit", { :action => :edit_options, :id => ooi.id }, {:style => "border-radius: 4px;font-size: 14px;font-weight: bold;line-height: 200%;text-decoration: none !important;background: white;background: -webkit-linear-gradient(-90deg, white, #e7e7e7);background: -moz-linear-gradient(-90deg, white, #e7e7e7);background: linear, 180deg, white, #e7e7e7;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;border: solid 1px #c7c7c7;border-color: #c7c7c7;padding: 3px 5px;color: #5e6469 !important;"}
             end
           end
         end
