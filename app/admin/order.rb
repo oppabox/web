@@ -13,6 +13,15 @@ ActiveAdmin.register Order do
     def scoped_collection
       resource_class.includes(:purchase)
     end
+
+    def fix_kr_phonenumber(length, country, number)
+      if length == 10 &&  country == "KR"
+        fix_phonenumber = number.insert(3, '-').insert(7, '-')
+      elsif length == 11 &&  country == "KR"
+        fix_phonenumber = number.insert(3, '-').insert(8, '-')
+      end
+      return fix_phonenumber
+    end
   end
 
   ################ edit #######################
@@ -97,13 +106,15 @@ ActiveAdmin.register Order do
     csv_builder.column("수취고객명") { |o| o.purchase.recipient }
     csv_builder.column("수취인") { |o| ""}
     csv_builder.column("수취인 전화") { |o| "" }
-    csv_builder.column("수취인 휴대폰") { |o| o.purchase.phonenumber }
+
+    csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.phonenumber.mb_chars.length, o.purchase.user.country, o.purchase.phonenumber) }
+
     csv_builder.column("우편번호") { |o| o.purchase.postcode }
     csv_builder.column("수취인 주소") { |o| o.purchase.address }
     csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
     csv_builder.column("상품명1") { |o| o.item.display_name }
     csv_builder.column("수량1") { |o| o.quantity }
-    csv_builder.column("물품가격") { |o| o.item.sale_price }
+    csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
     csv_builder.column("메모") { |o| "" }
     csv_builder.column("출력매수") { |o| "" }
     
@@ -155,6 +166,8 @@ ActiveAdmin.register Order do
   ################ view #######################
 
   filter :id, :label => "Order No."
+  filter :purchase_user_id, :as => :string, :label => "User No."
+  filter :purchase_recipient, :as => :string, :label => "Recipient Name"
   filter :item, :as => :select
   filter :purchase_status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
   filter :quantity
