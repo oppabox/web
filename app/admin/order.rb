@@ -14,11 +14,14 @@ ActiveAdmin.register Order do
       resource_class.includes(:purchase)
     end
 
-    def fix_kr_phonenumber(length, country, number)
-      if length == 10 &&  country == "KR"
+    # CSV 출력시에만 "-" 입력
+    def fix_kr_phonenumber(country, number)
+      if number.length == 10 && country == "KR"
         fix_phonenumber = number.insert(3, '-').insert(7, '-')
-      elsif length == 11 &&  country == "KR"
+      elsif number.length == 11 && country == "KR"
         fix_phonenumber = number.insert(3, '-').insert(8, '-')
+      else
+        fix_phonenumber = number
       end
       return fix_phonenumber
     end
@@ -106,9 +109,7 @@ ActiveAdmin.register Order do
     csv_builder.column("수취고객명") { |o| o.purchase.recipient }
     csv_builder.column("수취인") { |o| ""}
     csv_builder.column("수취인 전화") { |o| "" }
-
-    csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.phonenumber.mb_chars.length, o.purchase.user.country, o.purchase.phonenumber) }
-
+    csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
     csv_builder.column("우편번호") { |o| o.purchase.postcode }
     csv_builder.column("수취인 주소") { |o| o.purchase.address }
     csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
