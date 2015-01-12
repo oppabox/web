@@ -1,5 +1,8 @@
 ActiveAdmin.register Order do
 
+  # Convert to Euc-kr
+  require 'iconv'
+
   scope :all, default: true
   scope :purchase_paid
   scope :purchase_pending
@@ -122,9 +125,15 @@ ActiveAdmin.register Order do
       end
     end
 
-    # render plain: csv_output.inspect
-    
-    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+    # Iconv set
+    conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
+    csv_output = conv.iconv(csv_output)
+
+    # render plain: csv_output.inspect / euc-kr iso-8859-1
+    # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+    # send_data Iconv.conv('iso-8859-1//IGNORE', 'euc-kr', csv_output), :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+
+    send_data  csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
   end
 
   ################ member_action #######################
