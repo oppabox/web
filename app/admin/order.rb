@@ -144,7 +144,7 @@ ActiveAdmin.register Order do
     # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
     # send_data Iconv.conv('iso-8859-1//IGNORE', 'euc-kr', csv_output), :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
 
-    send_data  csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+    send_data  csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
   end
 
   ################ member_action #######################
