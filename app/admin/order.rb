@@ -81,9 +81,9 @@ ActiveAdmin.register Order do
       end
     end
 
-    # render plain: csv_output.inspect
+    # render plain: params.inspect
 
-    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
   end
 
   ########### download YAMOOJIN #############
@@ -124,7 +124,7 @@ ActiveAdmin.register Order do
 
     # render plain: csv_output.inspect
     
-    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d")+" - Yamoojin.csv"
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
   end
 
   ################ member_action #######################
@@ -134,10 +134,10 @@ ActiveAdmin.register Order do
   ################## sidebar ##########################
   sidebar :help, :only => :index do
     button do
-      link_to "Download INV", { :action => :download_inv }, { :class => "btn-normal" }
+      link_to "Download INV", download_inv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
     end
     button do
-      link_to "YAMOOJIN.csv", { :action => :yamoojin_csv }, { :class => "btn-normal" }
+      link_to "YAMOOJIN.csv", yamoojin_csv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
     end
   end
 

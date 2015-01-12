@@ -142,13 +142,13 @@ ActiveAdmin.register Purchase do
 
     # render plain: csv_output.inspect
 
-    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - UPS_Shipinfo_BL.csv"
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - UPS_Shipinfo_BL.csv"
   end
 
   ################## sidebar ##########################
   sidebar :help, :only => :index do
     button do
-      link_to "Download BL", { :action => :download_bl }, { :class => "btn-normal" }
+      link_to "Download BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn-normal" }
     end
   end
 
