@@ -1,5 +1,26 @@
 $(function(){
+  var generate_ref_num = function(){
+    $.ajax({
+      url: '/pay/generate_ref_num',
+      type: 'POST',
+      success: function(data){
+        if (data == false) {
+          window.location.href = "/pay/order";
+        }
+      },
+      error: function(httpObj) {
+        if(httpObj.status == 401){
+          window.location.href = "/home/login";
+        }else{
+          alert(httpObj.responseText);
+          window.location.href = "/pay/order";
+        }
+      }
+    });
+  };
+
   $("#krw_payment_submit").click(function(){
+    generate_ref_num();
     $.ajax({
       url: '/pay/check_order_quantity',
       type: 'GET',
@@ -16,6 +37,7 @@ $(function(){
     });
   });
   $("#nonkrw_payment_submit").click(function(){
+    generate_ref_num();
     $.ajax({
       url: '/pay/check_order_quantity',
       type: 'GET',

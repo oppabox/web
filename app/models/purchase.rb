@@ -166,10 +166,6 @@ class Purchase < ActiveRecord::Base
       result += "에스크로 적용 여부    : " + escrow_yn + "\n"
       self.replycd = replycd
       self.replymsg = replymsg
-      # reference number
-      unless pay_type == "VBANK"
-        self.set_reference_number 
-      end
       # pay option
       self.pay_option = PAY_OPTIONS[pay_type]
       self.order_no = order_no

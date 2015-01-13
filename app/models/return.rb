@@ -3,6 +3,7 @@ class Return < ActiveRecord::Base
 	belongs_to  :order
 
 	before_save :quantity_check
+	before_create :validate_request
 
 	STATUSES = {
 		RETURN_REQUEST => "return_request",
@@ -32,5 +33,11 @@ class Return < ActiveRecord::Base
     if self.order.nil? or self.quantity > self.order.quantity 
     	return false
     end
+	end
+
+	def validate_request
+		if User.current.nil? or !User.current.orders.pluck(:id).include?(self.order_id)
+			return false
+		end
 	end
 end

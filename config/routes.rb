@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "pay/korean_payment"
   get "pay/nonkorean_payment"
 
+  post "pay/generate_ref_num"
 	post "pay/reorder_quantity"
   post "pay/change_currency"
 

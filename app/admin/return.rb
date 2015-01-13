@@ -1,15 +1,24 @@
 ActiveAdmin.register Return do
+	config.batch_actions = false
+	status_css = ['warning', 'yes', 'complete', 'error', '']
 
 	################# change status #################
 	collection_action :change_status, :method => :patch do
-		render plain: params.inspect
+		r = Return.find(params[:return][:id])
+		r.status = params[:return][:status]
+		r.save
+
+		redirect_to :action => :index
 	end
 
 	################# index #################
 	index do
 		column :id
 		column :status do |r|
-			Return::STATUSES[r.status]
+			status_tag(Return::STATUSES[r.status], status_css[r.status])
+		end
+		column 'Product' do |r|
+			r.order.item.display_name
 		end
 		column "Order quantity" do |r|
 			r.order.quantity

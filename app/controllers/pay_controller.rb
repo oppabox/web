@@ -95,6 +95,12 @@ class PayController < ApplicationController
     @delivery_fee = purchase.get_delivery_fee
   end
 
+  def generate_ref_num
+    purchase = current_user.purchase
+    purchase.set_reference_number
+    render :json => purchase.save
+  end
+
   def korean_payment
     order
   end
