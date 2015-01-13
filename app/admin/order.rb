@@ -15,7 +15,6 @@ ActiveAdmin.register Order do
     end
 
     # CSV 출력시에만 "-" 입력
-<<<<<<< HEAD
     def fix_kr_phonenumber country, number
       if !number.nil? && country == "KR" 
         if (number.gsub "-", "").size == 10
@@ -23,15 +22,6 @@ ActiveAdmin.register Order do
         elsif number.size == 11
           number.insert(3, '-').insert(8, '-')
         end
-=======
-    def fix_kr_phonenumber(country, number)
-      if number.length == 10 && country == "KR"
-        fix_phonenumber = number.insert(3, '-').insert(7, '-')
-      elsif number.length == 11 && country == "KR"
-        fix_phonenumber = number.insert(3, '-').insert(8, '-')
-      else
-        fix_phonenumber = number
->>>>>>> 716358ad6a089e2d48a4540498de4b59c1d436a3
       end
       return number
     end
