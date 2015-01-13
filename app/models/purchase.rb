@@ -17,7 +17,7 @@ class Purchase < ActiveRecord::Base
     PURCHASE_DONE => '배송완료'
   }
 
-  scope :valid,              -> { where.not(status: PURCHASE_ORDERING).order(reference_number: :desc) }
+  scope :valid,              -> { where.not(status: PURCHASE_ORDERING) }
   scope :purchase_paid,      -> { where(status: PURCHASE_PAID) }
   scope :purchase_pending,   -> { where(status: PURCHASE_PENDING) }
   scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}

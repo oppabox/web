@@ -1,5 +1,5 @@
 ActiveAdmin.register Order do
-
+  config.sort_order = 'purchases.reference_number'
   # Convert to Euc-kr
   require 'iconv'
 
@@ -84,7 +84,6 @@ ActiveAdmin.register Order do
     # Collect the data in an Array to be transposed.
     data = []
     data << columns.map(&:name)
-    collection.sort_by { |o| o.purchase.reference_number.nil? ? '' : o.purchase.reference_number }
     collection.each do |resource|
       data << columns.map do |column|
         call_method_or_proc_on resource, column.data
@@ -126,7 +125,6 @@ ActiveAdmin.register Order do
     # Collect the data in an Array to be transposed.
     data = []
     data << columns.map(&:name)
-    collection.sort_by { |o| o.purchase.reference_number.nil? ? '' : o.purchase.reference_number }
     collection.each do |resource|
       data << columns.map do |column|
         call_method_or_proc_on resource, column.data

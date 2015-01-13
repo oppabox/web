@@ -1,4 +1,5 @@
 ActiveAdmin.register Purchase do
+  config.sort_order = "reference_number"
 
   scope :valid, default: true
   scope :purchase_paid
