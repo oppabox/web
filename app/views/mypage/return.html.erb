@@ -4,109 +4,123 @@
     <div class="col-md-10">
     	<h3>Return Request</h3>
       <hr>
-      <!-- order description -->
-      <div style="margin-right:auto; margin-left:auto; padding-left:15px; padding-right:15px">
-	      <div class="row">
-	      	<p>
-	      		<span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
-	      		<span>[<%= @options.join(", ") %>]</span>
-	      	</p>
-	      	<p> Purchase Date:
-	      	 <% @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
-	      	</p>
-	      </div>
-	      <input type="hidden" id="order_id" value="<%= @order.id %>">
-	      <div class="row">
-	      	<h4><b>Select Quantity</b></h4>
-	      	<table class="table">
-	      		<thead>
-	      			<tr class="active">
-		      			<th class="text-center"><%= "Product Info" %></th>
-		      			<th class="text-center"><%= "Payments" %></th>
-		      			<th class="text-center"><%= "Return Quantity" %></th>
-		      			<th class="text-center"><%= "Return Amount" %></th>
-		      		</tr>
-	      		</thead>
-	      		<tbody>
-	      			<tr>
-	      				<td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
-	      				<td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
-	      				<td class="text-center">
-	      					<% opt = Array.new %>
-	      					<% for i in 0..@order.quantity do %>
-	      						<% opt[i] = i %>
-	      					<% end %>
-	      					<%= select_tag "return_quantity", options_for_select(opt, 0)  %>
-	      				</td>
-	      				<td class="text-center return_amount"><%= Order.change_currency(0) %></td>
-	      			</tr>
-	      		</tbody>
-	      	</table>
-	      </div>
+      
+      <ul class="foot_navi nav nav-tabs nav-justified" role="tablist">
+			  <li class="active">
+			  	<a href="#T_body" style="margin:0;" data-toggle="tab"><%= 'FORM' %></a>
+			  </li>
+  			<li>
+			    <a href="#T_info" style="margin:0;" data-toggle="tab"><%= 'MANUAL' %></a>
+			  </li>
+  		</ul>
 
-	      <div class="row">
-	      	<h4><b>Details</b></h4>
-	      	<table class="table">
-	      		<tbody>
-	      			<tr>
-	      				<th class="active">Reason for return</th>
-	      				<td>
-	      					<p><%= select_tag "return_reason", options_for_select(Return::REASONS.invert.keys, 0) %></p>
-	      					<p><%= text_area_tag "return_reason_details", nil, size: "100x5", placeholder: "Please type the detail reasons for return(Optional)" %></p>
-	      				</td>
-	      			</tr>
-	      			<!-- <tr>
-	      				<th class="active">Have you already sent the products back?</th>
-	      				<td>
-	      					<%= label_tag 'return_sent_no' do %>
-	      						<%= radio_button_tag 'return_sent', false, true, { id: 'return_sent_no' } %>
-	      						No, not yet.
-      						<% end %>
-	      					<%= label_tag 'return_sent_no' do %>
-	      						<%= radio_button_tag 'return_sent', true, false, { id: 'return_sent_yes' } %>
-	      						Yes, I've sent them.
-      						<% end %>
-      					</td>
-	      			</tr> -->
-	      			<tr>
-	      				<th class="active">Collection Address</th>
-	      				<td>
-	      					<p>Please type the collection address where courier should take the products back.
-	      						<small>A couier will visit the place and take the products.</small>
-	      					</p>
-	      					<%=render partial: "/home/user_detail_info_modify" %>
-	      				</td>
-	      			</tr>
-	      		</tbody>
-	      	</table>
-	      </div>
+  		<div id="myTabContent" class="tab-content foot_info_box">
+	      <div class="tab-pane fade in active" id="T_body" style="margin-right:auto; margin-left:auto; padding-left:30px; padding-right:30px">
+	      	<!-- order description -->	
+		      <div class="row">
+		      	<p>
+		      		<span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
+		      		<span>[<%= @options.join(", ") %>]</span>
+		      	</p>
+		      	<p> Purchase Date: &nbsp;
+		      	 <%= @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
+		      	</p>
+		      </div>
+		      <input type="hidden" id="order_id" value="<%= @order.id %>">
+		      <div class="row">
+		      	<h4><b>Select Quantity</b></h4>
+		      	<table class="table">
+		      		<thead>
+		      			<tr class="active">
+			      			<th class="text-center"><%= "Product Info" %></th>
+			      			<th class="text-center"><%= "Payments" %></th>
+			      			<th class="text-center"><%= "Return Quantity" %></th>
+			      			<th class="text-center"><%= "Return Amount" %></th>
+			      		</tr>
+		      		</thead>
+		      		<tbody>
+		      			<tr>
+		      				<td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
+		      				<td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
+		      				<td class="text-center">
+		      					<% opt = Array.new %>
+		      					<% for i in 0..@order.quantity do %>
+		      						<% opt[i] = i %>
+		      					<% end %>
+		      					<%= select_tag "return_quantity", options_for_select(opt, 0)  %>
+		      				</td>
+		      				<td class="text-center return_amount"><%= Order.change_currency(0) %></td>
+		      			</tr>
+		      		</tbody>
+		      	</table>
+		      </div>
 
-	      <div class="row">
-	      	<h4><b>Refund</b></h4>
-	      	<table class="table">
-	      		<tbody>
-	      			<tr>
-	      				<th class="active">Cancel Amount</th>
-	      				<td class="return_amount"><%= Order.change_currency(0) %></td>
-	      			</tr>
-	      			<tr>
-	      				<th class="active">Shipping</th>
-	      				<td id="return_shipping"><%= Order.change_currency(0) %></td>
-	      			</tr>
-	      			<tr>
-	      				<th class="active">Actual Refund Amount</th>
-	      				<td id="return_actual_amount"><%= Order.change_currency(0) %></td>
-	      			</tr>
-	      		</tbody>
-	      	</table>
-	      </div>
+		      <div class="row">
+		      	<h4><b>Details</b></h4>
+		      	<table class="table">
+		      		<tbody>
+		      			<tr>
+		      				<th class="active">Reason for return</th>
+		      				<td>
+		      					<p><%= select_tag "return_reason", options_for_select(Return::REASONS.invert.keys, 0) %></p>
+		      					<p><%= text_area_tag "return_reason_details", nil, size: "100x5", placeholder: "Please type the detail reasons for return(Optional)" %></p>
+		      				</td>
+		      			</tr>
+		      			<!-- <tr>
+		      				<th class="active">Have you already sent the products back?</th>
+		      				<td>
+		      					<%= label_tag 'return_sent_no' do %>
+		      						<%= radio_button_tag 'return_sent', false, true, { id: 'return_sent_no' } %>
+		      						No, not yet.
+	      						<% end %>
+		      					<%= label_tag 'return_sent_no' do %>
+		      						<%= radio_button_tag 'return_sent', true, false, { id: 'return_sent_yes' } %>
+		      						Yes, I've sent them.
+	      						<% end %>
+	      					</td>
+		      			</tr> -->
+		      			<tr>
+		      				<th class="active">Collection Address</th>
+		      				<td>
+		      					<p>Please type the collection address where courier should take the products back.
+		      						<small>A couier will visit the place and take the products.</small>
+		      					</p>
+		      					<%=render partial: "/home/user_detail_info_modify" %>
+		      				</td>
+		      			</tr>
+		      		</tbody>
+		      	</table>
+		      </div>
 
-	      <div class="row text-center">
-	      	<button class="btn btn-lg btn-default" onclick="history.back()">Back</button>
-	      	<button class="btn btn-lg btn-danger" id="return_request_button">Request</button>
-	      </div>
+		      <div class="row">
+		      	<h4><b>Refund</b></h4>
+		      	<table class="table">
+		      		<tbody>
+		      			<tr>
+		      				<th class="active">Cancel Amount</th>
+		      				<td class="return_amount"><%= Order.change_currency(0) %></td>
+		      			</tr>
+		      			<tr>
+		      				<th class="active">Shipping</th>
+		      				<td id="return_shipping"><%= Order.change_currency(0) %></td>
+		      			</tr>
+		      			<tr>
+		      				<th class="active">Actual Refund Amount</th>
+		      				<td id="return_actual_amount"><%= Order.change_currency(0) %></td>
+		      			</tr>
+		      		</tbody>
+		      	</table>
+		      </div>
 
-    	</div>
+		      <div class="row text-center">
+		      	<button class="btn btn-lg btn-default" onclick="history.back()">Back</button>
+		      	<button class="btn btn-lg btn-danger" id="return_request_button">Request</button>
+		      </div>
+
+	    	</div>
+  			<%= render :partial => "/item/refund" %>
+	    </div>
+
     </div>
   </div>
 </div>

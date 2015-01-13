@@ -3,7 +3,7 @@ ActiveAdmin.register Order do
   # Convert to Euc-kr
   require 'iconv'
 
-  scope :valid, default: true
+  scope :except_ordering, default: true
   scope :purchase_paid
   scope :purchase_pending
   scope :user_kr
@@ -224,6 +224,9 @@ ActiveAdmin.register Order do
     end
     column "email" do |o|
       o.purchase.user.email
+    end
+    column "결제수단" do |o|
+      PAY_OPTIONS.invert[o.purchase.pay_option]
     end
     column "결제금액" do |o|
       o.purchase.amt

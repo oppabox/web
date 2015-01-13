@@ -17,14 +17,18 @@ ActiveAdmin.register_page "Dashboard" do
 					end
 				end
 			end #column
+			column do
+				panel "Return" do
+					status = Return::STATUSES
+					table_for Return.group(:status).count do |r|
+						for s in status
+							column(s[1]) { |r| r[s[0]] }
+						end
+					end
+				end
+			end #column
 		end # colums
 
-
-	# sidebar :help do
-	#   ul do
-	#     li "First Line of Help"
-	#   end
-	# end
 
 	end
 end
