@@ -2,7 +2,7 @@ class Return < ActiveRecord::Base
 	# :order_id, :quantity, :status, :reason, :reason_details, :sent, + personal info
 	belongs_to  :order
 
-	before_save :quantity_check, :link_to_order
+	before_save :quantity_check
 
 	STATUSES = {
 		RETURN_REQUEST => "return_request",
@@ -32,11 +32,5 @@ class Return < ActiveRecord::Base
     if self.order.nil? or self.quantity > self.order.quantity 
     	return false
     end
-	end
-
-	def link_to_order
-		order = Order.find(self.order_id)
-		order.return_id = self.id
-		order.save
 	end
 end

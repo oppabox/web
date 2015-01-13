@@ -1,6 +1,6 @@
 ActiveAdmin.register Purchase do
 
-  scope :all, default: true
+  scope :valid
   scope :purchase_paid
   scope :purchase_pending
   scope :user_kr
@@ -102,14 +102,14 @@ ActiveAdmin.register Purchase do
     csv_builder.column("ServiceType") { |p| "Express Saver" }
     csv_builder.column("ActWeight") do |p|
       sum = 0
-      p.orders.each do |o|
+      p.orders.valid.each do |o|
         sum += (o.item.weight * o.quantity)
       end
       sum
     end
     csv_builder.column("NumofPackage") do |p|
       sum = 0
-      p.orders.each do |o|
+      p.orders.valid.each do |o|
         sum += o.quantity
       end
       sum
@@ -164,10 +164,10 @@ ActiveAdmin.register Purchase do
       status_tag( status_string[p.status], status_css[p.status] )
     end
     column "orders" do |p|
-      p.orders.map{|o| o.item.display_name}.join("/")
+      p.orders.valid.map{|o| o.item.display_name}.join("/")
     end
     column "weight" do |p|
-      p.orders.map{|o| o.item.weight}.join("/")
+      p.orders.valid.map{|o| o.item.weight}.join("/")
     end
     column "country" do |p|
       p.user.country
@@ -207,10 +207,10 @@ ActiveAdmin.register Purchase do
             status_tag( status_string[p.status], status_css[p.status] )
           end
           row "orders" do |p|
-            p.orders.map{|o| o.item.display_name}.join(" / ")
+            p.orders.valid.map{|o| o.item.display_name}.join(" / ")
           end
           row "weight" do |p|
-            p.orders.map{|o| o.item.weight}.join(" / ")
+            p.orders.valid.map{|o| o.item.weight}.join(" / ")
           end
           row "country" do |p|
             p.user.country
@@ -236,7 +236,7 @@ ActiveAdmin.register Purchase do
 
       column do
         panel "Order Details" do
-          table_for Purchase.find(params[:id]).orders do |o|
+          table_for Purchase.find(params[:id]).orders.valid do |o|
             column("id") do |o|
               link_to o.id, admin_order_path(o)
             end
@@ -266,18 +266,6 @@ ActiveAdmin.register Purchase do
 
     end
   end
-  
-  # sidebar :order, :only => :show do
-  #   orders = Purchase.find(params[:id]).orders
-  #   h3 "Orders"
-  #   div do
-  #     ul do
-  #       table_for orders do |o|
-  #         column "name", :created_at
-  #       end
-  #     end
-  #   end
-  # end
 
 
   # See permitted parameters documentation:
