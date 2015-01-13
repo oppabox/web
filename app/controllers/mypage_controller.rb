@@ -28,6 +28,50 @@ class MypageController < ApplicationController
   def reset_password
   end
 
+  def return
+    @order = Order.find(params[:order_id])
+
+    periodic = if @order.item.periodic then "(" + t("periodoc_#{@order.order_periodic}month") + ")" else nil end
+    @options = Array.new(1){periodic}
+    @order.order_option_items.each do |x|
+     @options << x.option_item.name if  x.option.option_type == 1
+     @options << x.option_text if  x.option.option_type == 2
+    end
+    @options.compact!
+  end
+
+  def change_currency
+    shipping_fee = 5400
+    cancel_amount = Order.change_currency(params[:amount])
+    shipping = Order.change_currency(shipping_fee)
+    actual_amount = Order.change_currency(params[:amount].to_i - shipping_fee)
+    render :json => {'cancel_amount' => cancel_amount, 'shipping' => shipping, 'actual_amount' => actual_amount}
+  end
+
+  def return_request
+    rtn = Return.new
+    rtn.order_id = params['order_id']
+    rtn.quantity = params['quantity']
+    rtn.reason = params['reason']
+    rtn.reason_details = params['reason_detail']
+    rtn.sender = params['sender']
+    rtn.phonenumber = params['phonenumber']
+    rtn.postcode = params['postcode']
+    rtn.address = params['address']
+    rtn.city = params['city']
+    rtn.country = params['country']
+    rtn.state = params['state']
+    
+    data = {}
+    if rtn.save
+      data['message'] = "Return form is successfully requested!"
+    else
+      data['message'] = "Return form has some problems!"
+    end
+
+    render :json => data
+  end
+
   def api_reset_password
     ret = Hash.new
     if current_user.valid_password?(params[:current_password])
