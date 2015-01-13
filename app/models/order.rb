@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   scope :purchase_pending,   -> {Order.valid.joins(:purchase).where(purchases: {status: PURCHASE_PENDING})}
   scope :user_kr,            -> {Order.valid.joins(purchase: :user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> {Order.valid.joins(purchase: :user).where("users.country != ?", "KR")}
-  scope :valid,              -> {Order.where(deleted: true)}
+  scope :valid,              -> {Order.where(deleted: false)}
   # scope :purchase_paid,      -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 1})}
   # scope :purchase_pending,   -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 2})}
   # scope :user_kr,            -> {Order.where(deleted: false).joins(purchase: :user).where("users.country = ?", "KR")}
