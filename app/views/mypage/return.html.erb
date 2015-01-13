@@ -2,15 +2,15 @@
   <div class="row">
     <%= render :partial => "left_list" %>
     <div class="col-md-10">
-    	<h3>Return Request</h3>
+    	<h3><%= t('return_request') %></h3>
       <hr>
       
       <ul class="foot_navi nav nav-tabs nav-justified" role="tablist">
 			  <li class="active">
-			  	<a href="#T_body" style="margin:0;" data-toggle="tab"><%= 'FORM' %></a>
+			  	<a href="#T_body" style="margin:0;" data-toggle="tab"><%= t('return_form') %></a>
 			  </li>
   			<li>
-			    <a href="#T_info" style="margin:0;" data-toggle="tab"><%= 'MANUAL' %></a>
+			    <a href="#T_info" style="margin:0;" data-toggle="tab"><%= t('return_manual') %></a>
 			  </li>
   		</ul>
 
@@ -22,20 +22,20 @@
 		      		<span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
 		      		<span>[<%= @options.join(", ") %>]</span>
 		      	</p>
-		      	<p> Purchase Date: &nbsp;
+		      	<p> <%= t('return_purchase_date') %>: &nbsp;
 		      	 <%= @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
 		      	</p>
 		      </div>
 		      <input type="hidden" id="order_id" value="<%= @order.id %>">
 		      <div class="row">
-		      	<h4><b>Select Quantity</b></h4>
+		      	<h4><b><%= t('return_sel_quantity') %></b></h4>
 		      	<table class="table">
 		      		<thead>
 		      			<tr class="active">
-			      			<th class="text-center"><%= "Product Info" %></th>
-			      			<th class="text-center"><%= "Payments" %></th>
-			      			<th class="text-center"><%= "Return Quantity" %></th>
-			      			<th class="text-center"><%= "Return Amount" %></th>
+			      			<th class="text-center"><%= t('return_product_info') %></th>
+			      			<th class="text-center"><%= t('return_payments') %></th>
+			      			<th class="text-center"><%= t('return_quantity') %></th>
+			      			<th class="text-center"><%= t('return_amount') %></th>
 			      		</tr>
 		      		</thead>
 		      		<tbody>
@@ -56,14 +56,14 @@
 		      </div>
 
 		      <div class="row">
-		      	<h4><b>Details</b></h4>
+		      	<h4><b><%= t('return_details') %></b></h4>
 		      	<table class="table">
 		      		<tbody>
 		      			<tr>
-		      				<th class="active">Reason for return</th>
+		      				<th class="active"><%= t('return_reason') %></th>
 		      				<td>
-		      					<p><%= select_tag "return_reason", options_for_select(Return::REASONS.invert.keys, 0) %></p>
-		      					<p><%= text_area_tag "return_reason_details", nil, size: "100x5", placeholder: "Please type the detail reasons for return(Optional)" %></p>
+		      					<p><%= select_tag "return_reason", options_for_select(t(Return::REASONS.invert.keys), 0) %></p>
+		      					<p><%= text_area_tag "return_reason_details", nil, size: "100x5", placeholder: t('return_reason_phr') %></p>
 		      				</td>
 		      			</tr>
 		      			<!-- <tr>
@@ -80,12 +80,13 @@
 	      					</td>
 		      			</tr> -->
 		      			<tr>
-		      				<th class="active">Collection Address</th>
+		      				<th class="active"><%= t('return_col_address') %></th>
 		      				<td>
-		      					<p>Please type the collection address where courier should take the products back.
-		      						<small>A couier will visit the place and take the products.</small>
+		      					<p><%= t('return_col_txt1') %>
+		      						<small><%= t('return_col_txt2') %></small>
 		      					</p>
 		      					<%=render partial: "/home/user_detail_info_modify" %>
+
 		      				</td>
 		      			</tr>
 		      		</tbody>
@@ -93,19 +94,19 @@
 		      </div>
 
 		      <div class="row">
-		      	<h4><b>Refund</b></h4>
+		      	<h4><b><%= t('return_refund') %></b></h4>
 		      	<table class="table">
 		      		<tbody>
 		      			<tr>
-		      				<th class="active">Cancel Amount</th>
+		      				<th class="active"><%= t('return_cc_amount') %></th>
 		      				<td class="return_amount"><%= Order.change_currency(0) %></td>
 		      			</tr>
 		      			<tr>
-		      				<th class="active">Shipping</th>
+		      				<th class="active"><%= t('return_shipping') %></th>
 		      				<td id="return_shipping"><%= Order.change_currency(0) %></td>
 		      			</tr>
 		      			<tr>
-		      				<th class="active">Actual Refund Amount</th>
+		      				<th class="active"><%= t('return_refund_amount') %></th>
 		      				<td id="return_actual_amount"><%= Order.change_currency(0) %></td>
 		      			</tr>
 		      		</tbody>
@@ -113,8 +114,8 @@
 		      </div>
 
 		      <div class="row text-center">
-		      	<button class="btn btn-lg btn-default" onclick="history.back()">Back</button>
-		      	<button class="btn btn-lg btn-danger" id="return_request_button">Request</button>
+		      	<button class="btn btn-lg btn-default" onclick="history.back()"><%= t('return_back') %></button>
+		      	<button class="btn btn-lg btn-danger" id="return_request_button"><%= t('return_request') %></button>
 		      </div>
 
 	    	</div>
@@ -128,7 +129,7 @@
 <script>
 // Recipient -> Sender
 $(document).ready(function(){
-	$('#recipient_label').html("Sender")
+	$('#recipient_label').html("<%= t('return_js_sender') %>")
 })
 
 $('#return_quantity').change(function(){
