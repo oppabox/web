@@ -3,7 +3,7 @@ ActiveAdmin.register Order do
   # Convert to Euc-kr
   require 'iconv'
 
-  scope :valid
+  scope :valid, default: true
   scope :purchase_paid
   scope :purchase_pending
   scope :user_kr

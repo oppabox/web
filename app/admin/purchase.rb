@@ -1,6 +1,6 @@
 ActiveAdmin.register Purchase do
 
-  scope :valid
+  scope :valid, default: true
   scope :purchase_paid
   scope :purchase_pending
   scope :user_kr
