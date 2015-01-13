@@ -73,4 +73,7 @@ Rails.application.routes.draw do
   post "mypage/api_reset_password"
   get "mypage/api_info"
   post "mypage/edit_address"
+  get "mypage/return(/:order_id)" => "mypage#return", as: :mypage_return
+  post "mypage/change_currency"
+  post "mypage/return_request"
 end

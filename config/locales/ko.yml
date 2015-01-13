@@ -529,3 +529,8 @@ ko:
   purchase_done: "배송 완료"
   purchase_on_delivery: "배송중"
   seller_and_partner: "입점 & 제휴 문의"
+  return_request: "반품 요청"
+  return_on_process: "반품 처리중"
+  return_done: "반품 완료"
+  return_reject: "반품 불가"
+  return_cancel: "반품 취소"
