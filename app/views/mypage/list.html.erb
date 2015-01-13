@@ -11,7 +11,7 @@
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
-            <th class="text-center"><%= 'return_state' %></th>
+            <!-- <th class="text-center"><%= 'return_state' %></th> -->
             <th class="text-center"><%=t('order_state')%></th>
           </tr>
         </thead>
@@ -46,13 +46,13 @@
                 <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <% unless order.return.nil? %>
                     <%= t("#{Return::STATUSES[order.return.status]}") %>
                   <% else %>
                     <%= link_to "New Return", mypage_return_path(:order_id => order.id) %>
                   <% end %>
-                </td>
+                </td> -->
                 <% if index == 0 %>
                   <td rowspan="<%=purchase.orders.where(deleted: false).count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
