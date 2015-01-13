@@ -1,5 +1,5 @@
 ActiveAdmin.register Order do
-  config.sort_order = 'purchases.reference_number'
+  config.sort_order = 'purchases.reference_number_desc'
   # Convert to Euc-kr
   require 'iconv'
 
