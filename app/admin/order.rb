@@ -84,6 +84,7 @@ ActiveAdmin.register Order do
     # Collect the data in an Array to be transposed.
     data = []
     data << columns.map(&:name)
+    collection.sort_by { |o| o.purchase.reference_number.nil? ? '' : o.purchase.reference_number }
     collection.each do |resource|
       data << columns.map do |column|
         call_method_or_proc_on resource, column.data
@@ -96,7 +97,7 @@ ActiveAdmin.register Order do
       end
     end
 
-    # render plain: params.inspect
+    # render plain: csv_output
 
     send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
   end
@@ -125,6 +126,7 @@ ActiveAdmin.register Order do
     # Collect the data in an Array to be transposed.
     data = []
     data << columns.map(&:name)
+    collection.sort_by { |o| o.purchase.reference_number.nil? ? '' : o.purchase.reference_number }
     collection.each do |resource|
       data << columns.map do |column|
         call_method_or_proc_on resource, column.data
@@ -141,7 +143,7 @@ ActiveAdmin.register Order do
     conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
     csv_output = conv.iconv(csv_output)
 
-    # render plain: csv_output.inspect / euc-kr iso-8859-1
+    
     # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
     # send_data Iconv.conv('iso-8859-1//IGNORE', 'euc-kr', csv_output), :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
 
