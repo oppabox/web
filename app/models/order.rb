@@ -12,7 +12,8 @@ class Order < ActiveRecord::Base
   scope :user_kr,            -> {Order.valid.joins(purchase: :user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> {Order.valid.joins(purchase: :user).where("users.country != ?", "KR")}
   scope :except_ordering,    -> {Order.valid.joins(:purchase).where.not(purchases: {status: PURCHASE_ORDERING})}
-  scope :valid,              -> {Order.where(deleted: false)}
+  scope :valid,              -> {Order.ref_ordered.where(deleted: false)}
+  scope :ref_ordered,        -> {Order.includes(:purchase).order("purchases.reference_number DESC")}
   # scope :purchase_paid,      -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 1})}
   # scope :purchase_pending,   -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 2})}
   # scope :user_kr,            -> {Order.where(deleted: false).joins(purchase: :user).where("users.country = ?", "KR")}

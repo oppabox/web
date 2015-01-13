@@ -17,7 +17,7 @@ class Purchase < ActiveRecord::Base
     PURCHASE_DONE => '배송완료'
   }
 
-  scope :valid,              -> { where.not(status: PURCHASE_ORDERING) }
+  scope :valid,              -> { where.not(status: PURCHASE_ORDERING).order(reference_number: :desc) }
   scope :purchase_paid,      -> { where(status: PURCHASE_PAID) }
   scope :purchase_pending,   -> { where(status: PURCHASE_PENDING) }
   scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}
@@ -28,15 +28,6 @@ class Purchase < ActiveRecord::Base
     # 'P' + timestamp(15) + '-' + purchase_id(8)
     str = 'P'
     str += DateTime.current().strftime("%Y%m%d-%H%M%S")
-    str += '-'
-    str += self.id.to_s.rjust(8, '0')
-    self.reference_number = str
-  end
-
-  def tmp_set_reference_number
-    # 'P' + timestamp(15) + '-' + purchase_id(8)
-    str = 'P'
-    str += DateTime.new(2014,12,1).strftime("%Y%m%d-%H%M%S")
     str += '-'
     str += self.id.to_s.rjust(8, '0')
     self.reference_number = str
