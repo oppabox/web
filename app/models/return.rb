@@ -44,10 +44,12 @@ class Return < ActiveRecord::Base
 
 			user.purchases.each do |p|
 				ids += p.orders.pluck(:id)
+			end
 
 			unless ids.include?(self.order_id)
 				return false
 			end
 		end
 	end
+
 end
