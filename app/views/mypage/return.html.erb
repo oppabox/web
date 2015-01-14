@@ -47,7 +47,7 @@
 		      					<% for i in 0..@order.quantity do %>
 		      						<% opt[i] = i %>
 		      					<% end %>
-		      					<%= select_tag "return_quantity", options_for_select(opt, 0)  %>
+		      					<%= select_tag "return_quantity", options_for_select(opt, 0) %>
 		      				</td>
 		      				<td class="text-center return_amount"><%= Order.change_currency(0) %></td>
 		      			</tr>
@@ -62,9 +62,13 @@
 		      			<tr>
 		      				<th class="active"><%= t('return_reason') %></th>
 		      				<td>
-		      					<p><%= select_tag "return_reason", options_for_select(t(Return::REASONS.invert.keys), 0) %></p>
-		      					<p><%= text_area_tag "return_reason_details", nil, size: "100x5", placeholder: t('return_reason_phr') %></p>
-		      				</td>
+                    <div class="form-group">
+		      					  <%= select_tag "return_reason", options_for_select(t(Return::REASONS.invert.keys), 0 ), { :class => 'form-control input-sm' } %>
+                    </div>
+                    <div class="form-group">
+		      					  <%= text_area_tag "return_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: t('return_reason_phr') %>
+                    </div>
+                  </td>
 		      			</tr>
 		      			<!-- <tr>
 		      				<th class="active">Have you already sent the products back?</th>

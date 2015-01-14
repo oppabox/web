@@ -25,7 +25,7 @@ ActiveAdmin.register Return do
 		end
 		column :quantity
 		column :reason do |r|
-			Return::REASONS[r.reason]
+			t(Return::REASONS[r.reason])
 		end
 		column :reason_details
 		column :sender
