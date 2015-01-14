@@ -27,8 +27,7 @@ ActiveAdmin.register_page "Dashboard" do
 					end
 				end
 			end #column
-		end # colums
-
+		end # columns
 
 	end
 end

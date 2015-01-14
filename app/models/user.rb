@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(self).deliver
   end
 
+  def self.send_test_mail
+    UserMailer.test_mail().deliver
+  end
+
   def self.check_sign_params email, password = nil, password_confirm = nil
     if password.nil?
       password = "password123" #Temporary password

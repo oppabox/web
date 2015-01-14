@@ -36,8 +36,18 @@ class Return < ActiveRecord::Base
 	end
 
 	def validate_request
-		if User.current.nil? or !User.current.orders.pluck(:id).include?(self.order_id)
+		if User.current.nil? 
 			return false
+		else
+			user = User.current
+			ids = []
+
+			user.purchases.each do |p|
+				ids += p.orders.pluck(:id)
+
+			unless ids.include?(self.order_id)
+				return false
+			end
 		end
 	end
 end
