@@ -138,6 +138,7 @@ class PayController < ApplicationController
     @pay_url = params[:pay_url]
     @mid = params[:mid]
     @ref = params[:ref]
+    @purchase_id = params[:purchase_id] # send on param1
 
     @cur = params[:cur]
     @product = params[:product]
@@ -261,7 +262,7 @@ class PayController < ApplicationController
     @cardno1 = params['cardno1']
     @cardno4 = params['cardno4']
 
-    p = Purchase.find(@ref)
+    p = Purchase.find(@param1)
 
     if (@rescode == "0000")
       @linkBuf = @secretKey + "?mid=" + @mid +"&ref=" + @ref + "&cur=" + @cur +"&amt=" + @amt +"&rescode=" + @rescode + "&transid=" +@transid
