@@ -31,7 +31,7 @@
               <tr class="list_cell">
 
                 <% if index == 0 %>
-                  <td rowspan="<%=purchase.orders.where(deleted: false).count + 1%>" class="text-center"><%=order.purchase.id%></td>
+                  <td rowspan="<%=purchase.orders.where(deleted: false).count + 1%>" class="text-center"><%=order.purchase.reference_number%></td>
                 <% end %>
 
                 <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
