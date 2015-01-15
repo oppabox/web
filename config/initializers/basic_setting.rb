@@ -30,6 +30,7 @@ PAY_OPTIONS = {
 	"CARD" => PURCHASE_CARD
 }
 
+
 #### return status
 RETURN_REQUEST = 0
 RETURN_ON_PROCESS = 1
