@@ -13,11 +13,6 @@ class Order < ActiveRecord::Base
   scope :user_not_kr,        -> {Order.valid.joins(purchase: :user).where("users.country != ?", "KR")}
   scope :except_ordering,    -> {Order.valid.joins(:purchase).where.not(purchases: {status: PURCHASE_ORDERING})}
   scope :valid,              -> {Order.where(deleted: false)}
-  # scope :purchase_paid,      -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 1})}
-  # scope :purchase_pending,   -> {Order.where(deleted: false).joins(:purchase).where(purchases: {status: 2})}
-  # scope :user_kr,            -> {Order.where(deleted: false).joins(purchase: :user).where("users.country = ?", "KR")}
-  # scope :user_not_kr,        -> {Order.where(deleted: false).joins(purchase: :user).where("users.country != ?", "KR")}
-
 
   def quantity_check
     if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 

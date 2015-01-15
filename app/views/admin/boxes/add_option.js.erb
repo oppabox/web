@@ -1,0 +1,1 @@
+$('#item<%= escape_javascript(@item_id) %>_option_panel').append('<%= escape_javascript(render partial: "new_option", :locals => { :id => @id, :item_id => @item_id }) %>');

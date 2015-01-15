@@ -1,8 +1,8 @@
 class Item < ActiveRecord::Base
   belongs_to  :box
-  has_many    :options
-  has_many    :item_images
-  has_many    :item_names
+  has_many    :options, :dependent => :destroy
+  has_many    :item_images, :dependent => :destroy
+  has_many    :item_names, :dependent => :destroy
   has_many    :orders
   has_many    :baskets
 

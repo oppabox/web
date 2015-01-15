@@ -1,0 +1,14 @@
+<li><label>#Option Item<%= cnt %></label></li>
+<li class="string input required stringish" id="box_item<%= item_id %>_option<%= id %>_option_item<%= cnt %>_input">
+	<label class="label" for="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_name">Name<abbr title="required">*</abbr></label>
+	<input id="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_name" name="box[item<%= item_id %>][option<%= id %>][item<%= cnt %>][name]" type="text">
+	<label class="label" for="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_price_change">Price Change<abbr title="required">*</abbr></label>
+	<input id="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_price_change" name="box[item<%= item_id %>][option<%= id %>][item<%= cnt %>][price_change]" type="text">
+	<label class="label" for="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_quantity">Quantity<abbr title="required">*</abbr></label>
+	<input id="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_quantity" name="box[item<%= item_id %>][option<%= id %>][item<%= cnt %>][quantity]" type="text">
+
+	<input name="box[item<%= item_id %>][option<%= id %>][item<%= cnt %>][limited]" type="hidden" value="0">
+	<label style="width: 80%;padding-left: 20%;padding-right: 10px;text-transform: none !important;font-weight: normal" for="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_limited">
+		<input checked="checked" id="box_item<%= item_id %>_option<%= id %>_item<%= cnt %>_limited" name="box[item<%= item_id %>][option<%= id %>][item<%= cnt %>][limited]" type="checkbox" value="1">Limited<abbr title="required">*</abbr>
+	</label>
+</li>
