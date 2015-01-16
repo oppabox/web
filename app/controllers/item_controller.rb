@@ -59,7 +59,7 @@ class ItemController < ApplicationController
   def add_to_order
     p = current_user.purchase
     if p.nil?
-      p = Purchase.create(user_id: current_user.id, status: PURCHASE_ORDERING)
+      p = Purchase.create(user_id: current_user.id, status: Purchase::STATUS_ORDERING)
     end
 
     new_order_is_needed = true

@@ -56,9 +56,9 @@
                 <% if index == 0 %>
                   <td rowspan="<%=purchase.orders.where(deleted: false).count+1%>" class="text-center">
                     <% if order.purchase.status == 0 %>
-                      <a href="/pay/order"><%= t("#{STATUS_NAME[order.purchase.status]}") %></a>
+                      <a href="/pay/order"><%= t("#{Purchase::STATUSES[order.purchase.status]}") %></a>
                     <% else %>
-                      <%= t("#{STATUS_NAME[order.purchase.status]}") %>
+                      <%= t("#{Purchase::STATUSES[order.purchase.status]}") %>
                     <% end %>
                   </td>
                 <% end %>

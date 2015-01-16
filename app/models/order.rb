@@ -7,11 +7,11 @@ class Order < ActiveRecord::Base
   
   before_save :period_check, :quantity_check
 
-  scope :purchase_paid,      -> {Order.valid.joins(:purchase).where(purchases: {status: PURCHASE_PAID})}
-  scope :purchase_pending,   -> {Order.valid.joins(:purchase).where(purchases: {status: PURCHASE_PENDING})}
+  scope :purchase_paid,      -> {Order.valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PAID})}
+  scope :purchase_pending,   -> {Order.valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PENDING})}
   scope :user_kr,            -> {Order.valid.joins(purchase: :user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> {Order.valid.joins(purchase: :user).where("users.country != ?", "KR")}
-  scope :except_ordering,    -> {Order.valid.joins(:purchase).where.not(purchases: {status: PURCHASE_ORDERING})}
+  scope :except_ordering,    -> {Order.valid.joins(:purchase).where.not(purchases: {status: Purchase::STATUS_ORDERING})}
   scope :valid,              -> {Order.where(deleted: false)}
 
   def quantity_check

@@ -274,7 +274,7 @@ class PayController < ApplicationController
     end
 
     if (@rescode == "0000")
-      p.status = PURCHASE_PAID
+      p.status = Purchase::STATUS_PAID
       p.order_no = "authcode: #{@authcode}"
       p.approval_ymdhms = @resdt
       p.amt = @amt + @cur

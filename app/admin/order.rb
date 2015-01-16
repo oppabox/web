@@ -46,14 +46,14 @@ ActiveAdmin.register Order do
   ################ collection actions #######################
   collection_action :change_status_to_done do
     order = Order.find(params[:id])
-    order.purchase.status = PURCHASE_DONE
+    order.purchase.status = Purchase::STATUS_DONE
     order.purchase.save
 
     redirect_to :action => :index
   end
   collection_action :cancel do
     order = Order.find(params[:id])
-    order.purchase.status = PURCHASE_DONE
+    order.purchase.status = Purchase::STATUS_DONE
     order.purchase.save
 
     redirect_to :action => :index
@@ -175,7 +175,6 @@ ActiveAdmin.register Order do
   filter :order_periodic
   filter :created_at
   filter :updated_at
-  filter :deleted
   filter :purchase_user_country, :as => :select, :collection => proc { User.uniq.pluck(:country) }, :label => "country"
   filter :purchase_user_country_eq, :as => :string
   filter :purchase_user_email, :as => :string, :label => "email"

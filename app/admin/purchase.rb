@@ -26,8 +26,8 @@ ActiveAdmin.register Purchase do
     p = Purchase.find(params[:id])
 
     message = ""
-    if p.status == PURCHASE_PENDING
-      p.status = PURCHASE_PAID
+    if p.status == Purchase::STATUS_PENDING
+      p.status = Purchase::STATUS_PAID
       p.set_reference_number
       p.save
       message = "success"
@@ -190,7 +190,7 @@ ActiveAdmin.register Purchase do
     column :seq_no
     column :reference_number
     column "Pending_Check" do |p|
-      if p.status == PURCHASE_PENDING
+      if p.status == Purchase::STATUS_PENDING
         link_to "Checked!", { :action => :change_status_to_paid, :id => p.id }, { :class => "btn-normal" }
       end
     end

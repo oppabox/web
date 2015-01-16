@@ -14,11 +14,11 @@ class User < ActiveRecord::Base
   end
 
   def purchase
-    self.purchases.where(status: PURCHASE_ORDERING).take
+    self.purchases.where(status: Purchase::STATUS_ORDERING).take
   end
 
   def purchased_find purchase_id
-    self.purchases.where(id: purchase_id).where.not(status: PURCHASE_ORDERING).take
+    self.purchases.where(id: purchase_id).where.not(status: Purchase::STATUS_ORDERING).take
   end
 
   def send_password_reset

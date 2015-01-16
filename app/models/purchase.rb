@@ -9,17 +9,36 @@ class Purchase < ActiveRecord::Base
   AT_KRW_SHOP_ID   = "oppabox"          #설정필요
   AT_USD_SHOP_ID   = "usd_oppbox"       #설정필요
 
-  STATUSES = {
-    PURCHASE_ORDERING => '주문중', 
-    PURCHASE_PAID => '결제완료',
-    PURCHASE_PENDING => '무통장 확인',
-    PURCHASE_ON_DELIVERY => '배송중',
-    PURCHASE_DONE => '배송완료'
+
+  #### purchase status
+  STATUS_ORDERING = 0
+  STATUS_PAID = 1
+  STATUS_PENDING = 2
+  STATUS_CANCEL = 3
+
+  #### purchase type
+  PAY_TYPE_VBANK = 0
+  PAY_TYPE_ABANK = 1
+  PAY_TYPE_CARD = 2
+
+  PAY_OPTIONS = {
+    "VBANK" => PAY_TYPE_VBANK,
+    "ABANK" => PAY_TYPE_ABANK,
+    "CARD" => PAY_TYPE_CARD
   }
 
-  scope :valid,              -> { where.not(status: PURCHASE_ORDERING) }
-  scope :purchase_paid,      -> { where(status: PURCHASE_PAID) }
-  scope :purchase_pending,   -> { where(status: PURCHASE_PENDING) }
+  STATUSES = {
+    STATUS_ORDERING => 'purchase_ordering', 
+    STATUS_PAID => 'purchase_paid',
+    STATUS_PENDING => 'purchase_pending',
+    STATUS_ON_DELIVERY => 'purchase_on_delivery',
+    STATUS_DONE => 'purchase_done'
+  }
+
+
+  scope :valid,              -> { where.not(status: STATUS_ORDERING) }
+  scope :purchase_paid,      -> { where(status: STATUS_PAID) }
+  scope :purchase_pending,   -> { where(status: STATUS_PENDING) }
   scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}
   scope :user_not_kr,        -> { Purchase.joins(:user).where("users.country != ?", "KR")}
 
@@ -173,7 +192,7 @@ class Purchase < ActiveRecord::Base
       self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"
       self.approval_ymdhms = approval_ymdhms
       self.seq_no = seq_no
-      self.status = (pay_type == "VBANK") ? PURCHASE_PENDING : PURCHASE_PAID
+      self.status = (pay_type == "VBANK") ? STATUS_PENDING : STATUS_PAID
       result += "=============== 신용 카드 ===============================\n"
       result += "승인번호              : " + approval_no + "\n"
       result += "카드ID                : " + card_id + "\n"
