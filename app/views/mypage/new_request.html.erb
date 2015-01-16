@@ -12,16 +12,16 @@
       <hr>
       
       <ul class="foot_navi nav nav-tabs nav-justified" role="tablist">
-        <li class="active">
+        <li>
           <a href="#T_body" style="margin:0;" data-toggle="tab"><%= t('return_form') %></a>
         </li>
-        <li>
+        <li class="active">
           <a href="#T_info" style="margin:0;" data-toggle="tab"><%= t('return_manual') %></a>
-        </li>
+        </li class="active">
       </ul>
 
       <div id="tContent" class="tab-content foot_info_box">
-        <div class="tab-pane fade in active" id="T_body" style="margin-right:auto; margin-left:auto; padding-left:30px; padding-right:30px">
+        <div class="tab-pane fade" id="T_body" style="margin-right:auto; margin-left:auto; padding-left:30px; padding-right:30px">
           <ul class="foot_navi nav nav-tabs nav-justified hidden" role="tablist">
             <li>
               <a href="#T_null" style="margin:0;" data-toggle="tab" id="A_null">nothing</a>
@@ -60,6 +60,10 @@
 </div>
 
 <script>
+$(document).ready(function(){
+  $('#T_info').addClass('in active')
+})
+
 $('#request_type').change(function(){
 	id = '#A_' + $(this).val();
 	$(id).tab('show');
