@@ -31,8 +31,7 @@ class Purchase < ActiveRecord::Base
     STATUS_ORDERING => 'purchase_ordering', 
     STATUS_PAID => 'purchase_paid',
     STATUS_PENDING => 'purchase_pending',
-    STATUS_ON_DELIVERY => 'purchase_on_delivery',
-    STATUS_DONE => 'purchase_done'
+    STATUS_CANCEL => 'purchase_cancel'
   }
 
 
