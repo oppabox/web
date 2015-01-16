@@ -11,7 +11,7 @@
       frm.cardco.value = "<%= @cardco %>";
       frm.target = "";
       <% if @rescode == "0000" %>
-        frm.action = "/pay/success/<%=@ref||0%>";
+        frm.action = "/pay/success/<%=@param1||0%>";
       <% else %>
         frm.method = "get"
         frm.action = "/pay/error";
