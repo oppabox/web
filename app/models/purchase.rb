@@ -43,10 +43,8 @@ class Purchase < ActiveRecord::Base
 
 
   def set_reference_number
-    # 'P' + timestamp(15) + '-' + purchase_id(8)
     str = 'P'
-    str += DateTime.current().strftime("%Y%m%d-%H%M%S")
-    str += '-'
+    str += DateTime.current().strftime("%Y%m%d-%H")
     str += self.id.to_s.rjust(8, '0')
     self.reference_number = str
   end
@@ -61,7 +59,7 @@ class Purchase < ActiveRecord::Base
 
   def all_krw_price
     at_amt = 0
-    self.orders.where(deleted: false).each do |o|
+    self.orders.valid.each do |o|
       at_amt += o.total_price.to_i * o.quantity.to_i
     end
     at_amt += get_delivery_fee
@@ -227,16 +225,24 @@ class Purchase < ActiveRecord::Base
 
     logger.info result
 
+    self.item_transaction
+    self.save
+
+    is_success = replycd == success_flag
+    return {is_success: is_success, msg: replymsg}
+  end
+
+  def item_transaction
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
-      self.orders.where(deleted: false).each do |x|
+      self.orders.on_ordering.each do |x|
         i = x.item
         if i.limited == true
           i.quantity -= x.quantity
           if i.quantity >= 0
-            i.save
+            i.save!
           else
-            #TODO : RAISE ERROR HERE
+            raise ActiveRecord::Rollback
             return false
           end
         end
@@ -246,21 +252,20 @@ class Purchase < ActiveRecord::Base
           if option_item.limited == true
             option_item.quantity -= x.quantity
             if option_item.quantity >= 0
-              option_item.save
+              option_item.save!
             else
-              #TODO : RAISE ERROR HERE
+              raise ActiveRecord::Rollback
               return false
             end
           end
         end
       end
-
-      self.save
     end
 
-    is_success = replycd == success_flag
-    return {is_success: is_success, msg: replymsg}
+    return true
   end
+
+
 end
 #  // 올앳 결제 서버와 통신 : ApprovalReq->통신함수, $at_txt->결과값
 #  //----------------------------------------------------------------

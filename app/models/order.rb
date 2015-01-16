@@ -4,15 +4,35 @@ class Order < ActiveRecord::Base
   belongs_to  :purchase
   has_many    :order_option_items
   has_one     :return, dependent: :destroy
+  has_one     :cancel, dependent: :destroy
+  has_one     :change, dependent: :destroy
   
   before_save :period_check, :quantity_check
 
-  scope :purchase_paid,      -> {Order.valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PAID})}
-  scope :purchase_pending,   -> {Order.valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PENDING})}
-  scope :user_kr,            -> {Order.valid.joins(purchase: :user).where("users.country = ?", "KR")}
-  scope :user_not_kr,        -> {Order.valid.joins(purchase: :user).where("users.country != ?", "KR")}
-  scope :except_ordering,    -> {Order.valid.joins(:purchase).where.not(purchases: {status: Purchase::STATUS_ORDERING})}
-  scope :valid,              -> {Order.where(deleted: false)}
+  scope :purchase_paid,      -> { valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PAID}) }
+  scope :purchase_pending,   -> { valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PENDING}) }
+  scope :user_kr,            -> { valid.joins(purchase: :user).where("users.country = ?", "KR") }
+  scope :user_not_kr,        -> { valid.joins(purchase: :user).where("users.country != ?", "KR") }
+  scope :except_ordering,    -> { valid.joins(:purchase).where.not(purchases: {status: Purchase::STATUS_ORDERING}) }
+  scope :valid,              -> { where.not(status: STATUS_DELETED) }
+  scope :on_ordering,        -> { where(status: STATUS_ORDERING) }
+
+  STATUS_ORDERING = 0
+  STATUS_READY = 1
+  STATUS_ON_DELIVERY = 2
+  STATUS_DONE = 3
+  STATUS_CANCEL = 4
+  STATUS_DELETED = 5
+
+  STATUSES = {
+    STATUS_ORDERING => "STATUS_ORDERING",
+    STATUS_READY => "STATUS_READY",
+    STATUS_ON_DELIVERY => "STATUS_ON_DELIVERY",
+    STATUS_DONE => "STATUS_DONE",
+    STATUS_CANCEL => "STATUS_CANCEL",
+    STATUS_DELETED => "STATUS_DELETED"
+  }
+
 
   def quantity_check
     if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 
@@ -57,5 +77,21 @@ class Order < ActiveRecord::Base
       end
     end
     sum * self.order_periodic
+  end
+
+  def has_return?
+    !self.return.nil?
+  end
+
+  def has_cancel?
+    !self.cancel.nil?
+  end
+
+  def has_change?
+    !self.change.nil?
+  end
+
+  def has_request?
+    self.has_return? or self.has_cancel? or self.has_change?
   end
 end

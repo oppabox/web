@@ -1,5 +1,7 @@
 ActiveAdmin.register_page "Dashboard" do
-	
+	controller do
+		# layout 'application'
+	end
 	content :title => "Dashboard" do
 
 		columns do

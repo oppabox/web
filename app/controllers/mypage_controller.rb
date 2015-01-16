@@ -7,7 +7,7 @@ class MypageController < ApplicationController
   end
 
   def basket
-    @baskets = current_user.baskets.where(deleted: false)
+    @baskets = current_user.baskets.valid
   end
 
   def api_info
@@ -28,7 +28,7 @@ class MypageController < ApplicationController
   def reset_password
   end
 
-  def return
+  def new_request
     @order = Order.find(params[:order_id])
 
     periodic = if @order.item.periodic then "(" + t("periodoc_#{@order.order_periodic}month") + ")" else nil end
@@ -64,6 +64,47 @@ class MypageController < ApplicationController
     
     data = {}
     if rtn.save
+      data['message'] = "Return form is successfully requested!"
+    else
+      data['message'] = "Return form has some problems!"
+    end
+
+    render :json => data
+  end
+
+  def cancel_request
+    cancel = Cancel.new
+    cancel.quantity = params['quantity']
+    cancel.reason =  params['reason']
+    cancel.reason_details =  params['reason_detail']
+    cancel.order_id = params['order_id']
+
+    data = {}
+    if cancel.save
+      data['message'] = "Cancel form is successfully requested!"
+    else
+      data['message'] = "Cancel form has some problems!"
+    end
+
+    render :json => data
+  end
+
+  def change_request
+    change = Change.new
+    change.order_id = params['order_id']
+    change.quantity = params['quantity']
+    change.reason = params['reason']
+    change.reason_details = params['reason_detail']
+    change.sender = params['sender']
+    change.phonenumber = params['phonenumber']
+    change.postcode = params['postcode']
+    change.address = params['address']
+    change.city = params['city']
+    change.country = params['country']
+    change.state = params['state']
+    
+    data = {}
+    if change.save
       data['message'] = "Return form is successfully requested!"
     else
       data['message'] = "Return form has some problems!"

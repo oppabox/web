@@ -1,34 +1,24 @@
-class Return < ActiveRecord::Base
-	# :order_id, :quantity, :status, :reason, :reason_details, :sent, + personal info
+class Cancel < ActiveRecord::Base
 	belongs_to  :order
 
 	before_save :quantity_check
 	before_create :validate_request
 
 	STATUS_REQUEST = 0
-	STATUS_ON_PROCESS = 1
-	STATUS_DONE = 2
-	STATUS_REJECT = 3
-	STATUS_CANCEL = 4
+	STATUS_DONE = 1
+	STATUS_CANCEL = 2
 
 	STATUSES = {
 		STATUS_REQUEST => "STATUS_REQUEST",
-		STATUS_ON_PROCESS => "STATUS_ON_PROCESS",
 		STATUS_DONE => "STATUS_DONE",
-		STATUS_REJECT => "STATUS_REJECT",
 		STATUS_CANCEL => "STATUS_CANCEL"
 	}
 
 	REASONS = {
-		0 => 'return_model_reasons0',
-		1 => 'return_model_reasons1',
-		2 => 'return_model_reasons2',
-		3 => 'return_model_reasons3',
-		4 => 'return_model_reasons4',
-		5 => 'return_model_reasons5',
-		6 => 'return_model_reasons6',
-		7 => 'return_model_reasons7',
-		8 => 'return_model_reasons8'
+		0 => 'cancel_reasons0',
+		1 => 'cancel_reasons1',
+		2 => 'cancel_reasons2',
+		3 => 'cancel_reasons3'
 	}
 
 	def quantity_check
@@ -57,5 +47,4 @@ class Return < ActiveRecord::Base
 			end
 		end
 	end
-
 end

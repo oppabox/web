@@ -184,7 +184,7 @@ ActiveAdmin.register Purchase do
     column :order_no
     column :pay_type
     column "결제수단" do |p|
-      PAY_OPTIONS.invert[p.pay_option]
+      Purchase::PAY_OPTIONS.invert[p.pay_option]
     end
     column :approval_ymdhms
     column :seq_no

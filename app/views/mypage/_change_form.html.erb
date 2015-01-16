@@ -1,0 +1,78 @@
+<!-- order description -->  
+<div class="row">
+  <p>
+    <span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
+    <span>[<%= @options.join(", ") %>]</span>
+  </p>
+  <p> <%= t('return_purchase_date') %>: &nbsp;
+   <%= @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
+  </p>
+</div>
+<input type="hidden" id="order_id" value="<%= @order.id %>">
+<div class="row">
+  <h4><b><%= t('return_sel_quantity') %></b></h4>
+  <table class="table">
+    <thead>
+      <tr class="active">
+        <th class="text-center"><%= t('return_product_info') %></th>
+        <th class="text-center"><%= t('return_payments') %></th>
+        <th class="text-center">Change Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
+        <td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
+        <td class="text-center">
+          <% opt = Array.new %>
+          <% for i in 0..@order.quantity do %>
+            <% opt[i] = i %>
+          <% end %>
+          <%= select_tag "change_quantity", options_for_select(opt, 0), :autofocus => 'true' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h4><b><%= t('return_details') %></b></h4>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="active"><%= t('return_reason') %></th>
+        <td>
+          <div class="form-group">
+            <%= select_tag "change_reason", options_for_select(Change::REASONS.invert.keys, 0 ), { :class => 'form-control input-sm' } %>
+          </div>
+          <div class="form-group">
+            <%= text_area_tag "change_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: 'Please tyep the detail options of change here.' %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="active"><%= t('return_col_address') %></th>
+        <td>
+          <p><%= t('return_col_txt1') %>
+            <small><%= t('return_col_txt2') %></small>
+          </p>
+          <%=render partial: "/home/user_detail_info_modify" %>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row text-center">
+  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('return_back') %></button>
+  <button class="btn btn-lg btn-danger" id="change_request_button"><%= t('return_request') %></button>
+</div>
+
+
+<script>
+// Recipient -> Sender
+$(document).ready(function(){
+  $('#recipient_label').html("<%= t('return_js_sender') %>")
+})
+</script>

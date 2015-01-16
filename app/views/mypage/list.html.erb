@@ -6,18 +6,16 @@
       <table class="table">
         <thead>
           <tr class="active">
-            <th class="text-center"><%=t('order_number')%></th>
+            <th class="text-center"><%=t('order_state') + '(' + t('order_number') + ')'%></th>
             <th class="text-center"><%=t('item_display_name')%></th>
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
-            <!-- <th class="text-center"><%= 'return_state' %></th> -->
-            <th class="text-center"><%=t('order_state')%></th>
+            <th class="text-center"><%='New Request'%></th>
           </tr>
         </thead>
         <tbody>
-
-          <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.where(deleted: false).count <= 0) %>
+          <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.valid.count <= 0) %>
             <tr class="list_cell">
               <td class="text-center" colspan="6">
                 <br><%=t('empty_order')%><br>
@@ -27,11 +25,18 @@
           <% else %>
 
           <% current_user.purchases.each do |purchase| %>
-            <% purchase.orders.where(deleted: false).each_with_index do |order, index|%>
+            <% purchase.orders.valid.each_with_index do |order, index|%>
               <tr class="list_cell">
 
                 <% if index == 0 %>
-                  <td rowspan="<%=purchase.orders.where(deleted: false).count + 1%>" class="text-center"><%=order.purchase.reference_number%></td>
+                  <td rowspan="<%=purchase.orders.valid.count+1%>" class="text-center">
+                    <% if order.purchase.status == Purchase::STATUS_ORDERING %>
+                      <a href="/pay/order"><%= t("#{Purchase::STATUSES[order.purchase.status]}") %></a>
+                    <% else %>
+                      <%= t("#{Purchase::STATUSES[order.purchase.status]}") %>
+                      (<%=order.purchase.reference_number%>)
+                    <% end %>
+                  </td>
                 <% end %>
 
                 <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
@@ -46,22 +51,20 @@
                 <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
-                <!-- <td class="text-center">
-                  <% unless order.return.nil? %>
-                    <%= t("#{Return::STATUSES[order.return.status]}") %>
-                  <% else %>
-                    <%= link_to "New Return", mypage_return_path(:order_id => order.id) %>
-                  <% end %>
-                </td> -->
-                <% if index == 0 %>
-                  <td rowspan="<%=purchase.orders.where(deleted: false).count+1%>" class="text-center">
-                    <% if order.purchase.status == 0 %>
-                      <a href="/pay/order"><%= t("#{Purchase::STATUSES[order.purchase.status]}") %></a>
+                <td class="text-center">
+                  <% if order.has_request? %>
+                    <% if order.has_return? %>
+                      Return <%= Return::STATUSES[order.return.status] %>
+                    <% elsif order.has_cancel? %>
+                      Cancel <%= Cancel::STATUSES[order.cancel.status] %>
                     <% else %>
-                      <%= t("#{Purchase::STATUSES[order.purchase.status]}") %>
+                      Change <%= Change::STATUSES[order.change.status] %>
                     <% end %>
-                  </td>
-                <% end %>
+                  <% else %>
+                    <%= link_to "New", mypage_new_request_path(:order_id => order.id) %>
+                  <% end %>
+                </td>
+
               </tr>
             <% end %>
 
@@ -81,7 +84,7 @@
             <tr class="list_cell">
               <td colspan="5">
                 [<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %>
-              <% if purchase.status == 2 %>
+              <% if purchase.status == Purchase::STATUS_PENDING %>
                 <br>[무통장 입금정보] <%=purchase.pay_type%>
               <% end %>
               </td>

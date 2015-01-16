@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   def orders
     p = self.purchase
-    p.nil? ? [] : p.orders.where(deleted: false)
+    p.nil? ? [] : p.orders.valid
   end
 
   def purchase
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def purchased_find purchase_id
-    self.purchases.where(id: purchase_id).where.not(status: Purchase::STATUS_ORDERING).take
+    self.purchases.where(id: purchase_id).where.valid.take
   end
 
   def send_password_reset

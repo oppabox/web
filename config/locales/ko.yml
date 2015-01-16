@@ -564,3 +564,16 @@ ko:
   return_model_reasons6: "Different from what was ordered"
   return_model_reasons7: "Defective/Does not work properly"
   return_model_reasons8: "Etc."
+
+
+  STATUS_REQUEST: "request"
+  STATUS_DONE: "done"
+  STATUS_CANCEL: "cancel"
+  STATUS_ON_PROCESS: "on process"
+  STATUS_REJECT: "reject"
+  STATUS_ON_DELIVERY: "on delivery"
+  STATUS_ORDERING: "ordering"
+  STATUS_READY: "ready"
+  STATUS_DELETED: "deleted"
+  STATUS_PAID: "paid"
+  STATUS_PENDING: "pending"

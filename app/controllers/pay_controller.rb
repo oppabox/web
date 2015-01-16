@@ -6,7 +6,7 @@ class PayController < ApplicationController
 
   def check_order_quantity
     over_quantity_names = Array.new
-    current_user.orders.where(deleted: false).each do |o|
+    current_user.orders.valid.each do |o|
       #item check
       item = o.item
       if item.limited and item.quantity < o.quantity
@@ -81,7 +81,7 @@ class PayController < ApplicationController
     purchase.save
 
     @orders = current_user.orders
-    @baskets = current_user.baskets.where(deleted: false)
+    @baskets = current_user.baskets.valid
     @all_price = 0
     @orders.each do |o|
       @all_price += o.quantity * o.total_price
@@ -281,13 +281,14 @@ class PayController < ApplicationController
       p.seq_no = "transid: #{@transid}"
       p.pay_type = "CARD #{@cardco} #{@cardno1}********#{@cardno4} by: #{@cardholder}"
       #apply your database or file system.
+      p.item_transaction      
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
     # reference number
     p.set_reference_number
     # pay option
-    p.pay_option = PAY_OPTIONS["CARD"]
+    p.pay_option = Purchase::PAY_OPTIONS["CARD"]
     render text: p.save
   end
 end

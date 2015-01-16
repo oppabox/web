@@ -1,0 +1,95 @@
+<!-- order description -->  
+<div class="row">
+  <p>
+    <span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
+    <span>[<%= @options.join(", ") %>]</span>
+  </p>
+  <p> <%= t('return_purchase_date') %>: &nbsp;
+   <%= @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
+  </p>
+</div>
+<input type="hidden" id="order_id" value="<%= @order.id %>">
+<div class="row">
+  <h4><b>Select Quantity</b></h4>
+  <table class="table">
+    <thead>
+      <tr class="active">
+        <th class="text-center">Product Info</th>
+        <th class="text-center">Payments</th>
+        <th class="text-center">Cancel Quantity</th>
+        <th class="text-center">Cancel Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
+        <td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
+        <td class="text-center">
+          <% opt = Array.new %>
+          <% for i in 0..@order.quantity do %>
+            <% opt[i] = i %>
+          <% end %>
+          <%= select_tag "cancel_quantity", options_for_select(opt, 0), :autofocus => 'true' %>
+        </td>
+        <td class="text-center cancel_amount"><%= Order.change_currency(0) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h4><b>Details</b></h4>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="active">Reason for cancel</th>
+        <td>
+          <div class="form-group">
+            <%= select_tag "cancel_reason", options_for_select(Cancel::REASONS.invert.keys, 0 ), { :class => 'form-control input-sm' } %>
+          </div>
+          <div class="form-group">
+            <%= text_area_tag "cancel_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: 'Please type the detail reasons for Cancel(Optional)' %>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h4><b><%= t('return_refund') %></b></h4>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="active">Actual Refund Amount</th>
+        <td class="cancel_amount" id="cancel_actual_amount"><%= Order.change_currency(0) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row text-center">
+  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('return_back') %></button>
+  <button class="btn btn-lg btn-danger" id="cancel_request_button"><%= t('return_request') %></button>
+</div>
+
+
+
+<script>
+
+$('#cancel_quantity').change(function(){
+  amount = $(this).val()
+  price = <%= @order.total_price %>
+  $.ajax({
+    url: "/mypage/change_currency/",
+    type: "POST",
+    dataType:"JSON",
+    data: {
+      amount: amount * price
+    },
+    success: function(data) {
+      $('.cancel_amount').html(data['cancel_amount'])
+    }
+  })
+})
+</script>

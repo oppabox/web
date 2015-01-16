@@ -225,7 +225,7 @@ ActiveAdmin.register Order do
       o.purchase.user.email
     end
     column "결제수단" do |o|
-      PAY_OPTIONS.invert[o.purchase.pay_option]
+      Purchase::PAY_OPTIONS.invert[o.purchase.pay_option]
     end
     column "결제금액" do |o|
       o.purchase.amt
