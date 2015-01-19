@@ -45,7 +45,7 @@ ActiveAdmin.register Purchase do
       order.save
     end
 
-    flash[:alert] = "#{order.purchase.reference_number} is cancelled."
+    flash[:alert] = "#{p.reference_number} is cancelled."
     redirect_to :action => :index
   end
 
