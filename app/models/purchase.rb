@@ -41,7 +41,7 @@ class Purchase < ActiveRecord::Base
   scope :valid,              -> { where.not(status: STATUS_ORDERING) }
   scope :paid,               -> { where(status: STATUS_PAID) }
   scope :pending,            -> { where(status: STATUS_PENDING) }
-  scope :canceled,           -> { where(status: STATUS_CANCEL) }
+  scope :cancelled,           -> { where(status: STATUS_CANCEL) }
 
 
   def set_reference_number

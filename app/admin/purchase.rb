@@ -6,6 +6,7 @@ ActiveAdmin.register Purchase do
   scope 'all', :valid, default: true
   scope :paid
   scope :pending
+  scope :cancelled
 
 
 
