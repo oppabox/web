@@ -1,4 +1,5 @@
 ActiveAdmin.register Purchase do
+  menu :priority => 2
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
 
@@ -35,6 +36,17 @@ ActiveAdmin.register Purchase do
   end
 
   collection_action :cancel do
+    p = Purchase.find(params[:id])
+    p.status = Purchase::STATUS_CANCEL
+
+    p.orders.each do |order|
+      order.status = Order::STATUS_CANCEL
+      order.cancel_transaction
+      order.save
+    end
+
+    flash[:alert] = "#{order.purchase.reference_number} is cancelled."
+    redirect_to :action => :index
   end
 
   ########### download bl #############

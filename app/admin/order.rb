@@ -1,4 +1,5 @@
 ActiveAdmin.register Order do
+  menu :priority => 3
   config.sort_order = 'purchases.reference_number_desc'
   # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
   purchase_status_css = ['', '', '', '', '']
@@ -64,6 +65,7 @@ ActiveAdmin.register Order do
   collection_action :cancel do
     order = Order.find(params[:id])
     order.status = Order::STATUS_CANCEL
+    order.cancel_transaction
     order.save
 
     flash[:alert] = "#{order.purchase.reference_number} is cancelled."

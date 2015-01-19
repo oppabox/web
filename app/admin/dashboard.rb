@@ -1,4 +1,5 @@
 ActiveAdmin.register_page "Dashboard" do
+	menu :priority => 1
 	controller do
 		# layout 'application'
 	end

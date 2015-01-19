@@ -1,4 +1,5 @@
 ActiveAdmin.register Change do
+	menu :parent => "Cancel/Return/Change"
 	config.batch_actions = false
 	status_css = ['warning', 'yes', 'complete', 'error', '', '']
 

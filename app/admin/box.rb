@@ -1,4 +1,5 @@
 ActiveAdmin.register Box do
+	menu :priority => 5
 	config.batch_actions = false
 
 	################# new ##################

@@ -1,4 +1,5 @@
 ActiveAdmin.register Return do
+	menu :parent => "Cancel/Return/Change"
 	config.batch_actions = false
 	status_css = ['warning', 'yes', 'complete', 'error', '']
 
@@ -13,8 +14,12 @@ ActiveAdmin.register Return do
 	################# change status #################
 	collection_action :change_status, :method => :patch do
 		r = Return.find(params[:form][:id])
-		r.status = params[:form][:status]
-		r.save
+		if params[:form][:status] == Return::STATUS_DONE
+			r.request_done
+		else
+			r.status = params[:form][:status]
+			r.save
+		end
 
 		redirect_to :action => :index
 	end
