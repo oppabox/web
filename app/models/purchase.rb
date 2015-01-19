@@ -22,12 +22,12 @@ class Purchase < ActiveRecord::Base
   PAY_TYPE_CARD = 2
 
   PAY_OPTIONS = {
-    "VBANK" => PAY_TYPE_VBANK,
-    "ABANK" => PAY_TYPE_ABANK,
-    "CARD" => PAY_TYPE_CARD,
     "3D" => PAY_TYPE_CARD,
     "ISP" => PAY_TYPE_CARD,
-    "NOR" => PAY_TYPE_CARD
+    "NOR" => PAY_TYPE_CARD,
+    "VBANK" => PAY_TYPE_VBANK,
+    "ABANK" => PAY_TYPE_ABANK,
+    "CARD" => PAY_TYPE_CARD
   }
 
   STATUSES = {
