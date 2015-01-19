@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   scope :prepare_delivery,    -> { paid.where(status: STATUS_PREPARING_DELIVERY) }
   scope :on_delivery,         -> { paid.where(status: STATUS_ON_DELIVERY) }
   scope :done,                -> { paid.where(status: STATUS_DONE) }
-  scope :cancelled,           -> { paid.where(status: STATUS_CANCEL) }
+  scope :cancelled,           -> { where(status: STATUS_CANCEL) }
 
 
   STATUS_ORDERING = 0
