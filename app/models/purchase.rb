@@ -260,13 +260,15 @@ class Purchase < ActiveRecord::Base
 
         x.order_option_items.each do |y|
           option_item = y.option_item
-          if option_item.limited == true
-            option_item.quantity -= x.quantity
-            if option_item.quantity >= 0
-              option_item.save!
-            else
-              raise ActiveRecord::Rollback
-              return false
+          unless option_item.nil?
+            if option_item.limited == true
+              option_item.quantity -= x.quantity
+              if option_item.quantity >= 0
+                option_item.save!
+              else
+                raise ActiveRecord::Rollback
+                return false
+              end
             end
           end
         end
