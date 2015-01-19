@@ -276,7 +276,7 @@ class PayController < ApplicationController
     if (@rescode == "0000")
       p.status = Purchase::STATUS_PAID
       p.order_no = "authcode: #{@authcode}"
-      p.approval_ymdhms = @resdt
+      p.approval_datetime = DateTime.strptime(@resdt, '%Y%m%d%H%M%S')
       p.amt = @amt + @cur
       p.seq_no = "transid: #{@transid}"
       p.pay_type = "CARD #{@cardco} #{@cardno1}********#{@cardno4} by: #{@cardholder}"

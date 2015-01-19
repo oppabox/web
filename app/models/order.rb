@@ -9,30 +9,42 @@ class Order < ActiveRecord::Base
   
   before_save :period_check, :quantity_check
 
-  scope :purchase_paid,      -> { valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PAID}) }
-  scope :purchase_pending,   -> { valid.joins(:purchase).where(purchases: {status: Purchase::STATUS_PENDING}) }
-  scope :user_kr,            -> { valid.joins(purchase: :user).where("users.country = ?", "KR") }
-  scope :user_not_kr,        -> { valid.joins(purchase: :user).where("users.country != ?", "KR") }
-  scope :except_ordering,    -> { valid.joins(:purchase).where.not(purchases: {status: Purchase::STATUS_ORDERING}) }
-  scope :valid,              -> { where.not(status: STATUS_DELETED) }
-  scope :on_ordering,        -> { where(status: STATUS_ORDERING) }
+  scope :valid,               -> { where.not(status: STATUS_DELETED) }
+  scope :on_ordering,         -> { where(status: STATUS_ORDERING) }
+
+  scope :paid,                -> { valid.joins(:purchase).merge(Purchase.paid) }
+  scope :pending,             -> { valid.joins(:purchase).merge(Purchase.pending) }
+  scope :except_ordering,     -> { valid.joins(:purchase).merge(Purchase.valid) }
+
+  scope :ordered,             -> { paid.on_ordering }
+  scope :prepare_order,       -> { paid.where(status: STATUS_PREPARING_ORDER) }
+  scope :prepare_delivery,    -> { paid.where(status: STATUS_PREPARING_DELIVERY) }
+  scope :on_delivery,         -> { paid.where(status: STATUS_ON_DELIVERY) }
+  scope :done,                -> { paid.where(status: STATUS_DONE) }
+  scope :cancelled,           -> { paid.where(status: STATUS_CANCEL) }
+
 
   STATUS_ORDERING = 0
-  STATUS_READY = 1
-  STATUS_ON_DELIVERY = 2
-  STATUS_DONE = 3
-  STATUS_CANCEL = 4
-  STATUS_DELETED = 5
+  STATUS_PREPARING_ORDER = 1
+  STATUS_PREPARING_DELIVERY = 2
+  STATUS_ON_DELIVERY = 3
+  STATUS_DONE = 4
+  STATUS_CANCEL = 5
+  STATUS_DELETED = 6
 
   STATUSES = {
     STATUS_ORDERING => "STATUS_ORDERING",
-    STATUS_READY => "STATUS_READY",
+    STATUS_PREPARING_ORDER => "STATUS_PREPARING_ORDER",
+    STATUS_PREPARING_DELIVERY => "STATUS_PREPARING_DELIVERY",
     STATUS_ON_DELIVERY => "STATUS_ON_DELIVERY",
     STATUS_DONE => "STATUS_DONE",
     STATUS_CANCEL => "STATUS_CANCEL",
     STATUS_DELETED => "STATUS_DELETED"
   }
 
+  def status_name
+    STATUSES[status].to_s
+  end
 
   def quantity_check
     if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 
@@ -94,4 +106,25 @@ class Order < ActiveRecord::Base
   def has_request?
     self.has_return? or self.has_cancel? or self.has_change?
   end
+
+  def cancel_transaction
+    ActiveRecord::Base.transaction do
+      #ITEM QUANTITY
+      i = self.item
+      if i.limited == true
+        i.quantity += self.quantity
+        i.save!
+      end
+
+      self.order_option_items.each do |ooi|
+        oi = ooi.option_item
+        if oi.limited == true
+          oi.quantity += self.quantity
+          oi.save!
+        end
+      end
+
+    end
+  end
+
 end

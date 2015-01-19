@@ -24,7 +24,10 @@ class Purchase < ActiveRecord::Base
   PAY_OPTIONS = {
     "VBANK" => PAY_TYPE_VBANK,
     "ABANK" => PAY_TYPE_ABANK,
-    "CARD" => PAY_TYPE_CARD
+    "CARD" => PAY_TYPE_CARD,
+    "3D" => PAY_TYPE_CARD,
+    "ISP" => PAY_TYPE_CARD,
+    "NOR" => PAY_TYPE_CARD
   }
 
   STATUSES = {
@@ -36,10 +39,9 @@ class Purchase < ActiveRecord::Base
 
 
   scope :valid,              -> { where.not(status: STATUS_ORDERING) }
-  scope :purchase_paid,      -> { where(status: STATUS_PAID) }
-  scope :purchase_pending,   -> { where(status: STATUS_PENDING) }
-  scope :user_kr,            -> { Purchase.joins(:user).where("users.country = ?", "KR")}
-  scope :user_not_kr,        -> { Purchase.joins(:user).where("users.country != ?", "KR")}
+  scope :paid,               -> { where(status: STATUS_PAID) }
+  scope :pending,            -> { where(status: STATUS_PENDING) }
+  scope :canceled,           -> { where(status: STATUS_CANCEL) }
 
 
   def set_reference_number
@@ -186,8 +188,14 @@ class Purchase < ActiveRecord::Base
       self.pay_option = PAY_OPTIONS[pay_type]
       self.order_no = order_no
       self.amt = amt
-      self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" if pay_type == "VBANK"
-      self.approval_ymdhms = approval_ymdhms
+      case pay_type
+      when "VBANK"
+        self.pay_type = "#{bank_nm} : #{account_no} (#{account_nm})" 
+      when "3D", "ISP", "NOR"
+        self.pay_type = "#{card_nm} : #{card_id} (#{approval_no})" 
+      when "ABANK"
+      end
+      self.approval_datetime = DateTime.strptime(approval_ymdhms, '%Y%m%d%H%M%S')
       self.seq_no = seq_no
       self.status = (pay_type == "VBANK") ? STATUS_PENDING : STATUS_PAID
       result += "=============== 신용 카드 ===============================\n"
@@ -236,6 +244,9 @@ class Purchase < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       self.orders.on_ordering.each do |x|
+        x.status = Order::STATUS_PREPARING_ORDER
+        x.save!
+
         i = x.item
         if i.limited == true
           i.quantity -= x.quantity

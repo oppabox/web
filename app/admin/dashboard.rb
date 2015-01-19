@@ -31,5 +31,29 @@ ActiveAdmin.register_page "Dashboard" do
 			end #column
 		end # columns
 
+		columns do
+			column do
+				panel "Cancel" do
+					status = Cancel::STATUSES
+					table_for Cancel.all.group(:status).count do |p|
+						for s in status
+							# s : [0, '주문중']
+							column(s[1]) { |p| p[s[0]] }
+						end
+					end
+				end
+			end #column
+			column do
+				panel "Change" do
+					status = Change::STATUSES
+					table_for Change.group(:status).count do |r|
+						for s in status
+							column(s[1]) { |r| r[s[0]] }
+						end
+					end
+				end
+			end #column
+		end # columns
+
 	end
 end

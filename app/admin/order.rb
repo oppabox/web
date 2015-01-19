@@ -1,13 +1,21 @@
 ActiveAdmin.register Order do
   config.sort_order = 'purchases.reference_number_desc'
+  # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
+  purchase_status_css = ['', '', '', '', '']
+  order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
+
+
   # Convert to Euc-kr
   require 'iconv'
 
-  scope :except_ordering, default: true
-  scope :purchase_paid
-  scope :purchase_pending
-  scope :user_kr
-  scope :user_not_kr
+  scope :paid,  default: true
+  scope :prepare_order
+  scope :prepare_delivery
+  scope :on_delivery
+  scope :done
+  scope :cancelled
+  scope :pending
+  scope 'all', :except_ordering
 
   controller do
     def scoped_collection
@@ -44,18 +52,21 @@ ActiveAdmin.register Order do
   end
 
   ################ collection actions #######################
-  collection_action :change_status_to_done do
+  collection_action :transition do
     order = Order.find(params[:id])
-    order.purchase.status = Purchase::STATUS_DONE
-    order.purchase.save
+    target_status = params[:target]
+    order.status = target_status
+    order.save
 
+    flash[:notice] = "#{order.purchase.reference_number} status is changed to #{Order::STATUSES[order.status]}."
     redirect_to :action => :index
   end
   collection_action :cancel do
     order = Order.find(params[:id])
-    order.purchase.status = Purchase::STATUS_DONE
-    order.purchase.save
+    order.status = Order::STATUS_CANCEL
+    order.save
 
+    flash[:alert] = "#{order.purchase.reference_number} is cancelled."
     redirect_to :action => :index
   end
   
@@ -167,17 +178,15 @@ ActiveAdmin.register Order do
   ################ view #######################
 
   filter :id, :label => "Order No."
-  filter :purchase_user_id, :as => :string, :label => "User No."
-  filter :purchase_recipient, :as => :string, :label => "Recipient Name"
+  filter :purchase_reference_number_eq, :as => :string, :label => "Reference number"
+  filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name
+  filter :purchase_approval_datetime, :as => :date_range
+  filter :purchase_recipient_eq, :as => :string, :label => "Recipient Name"
   filter :item, :as => :select
-  filter :purchase_status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
-  filter :quantity
   filter :order_periodic
-  filter :created_at
-  filter :updated_at
-  filter :purchase_user_country, :as => :select, :collection => proc { User.uniq.pluck(:country) }, :label => "country"
-  filter :purchase_user_country_eq, :as => :string
-  filter :purchase_user_email, :as => :string, :label => "email"
+  filter :purchase_user_country_eq, :as => :string, :label => "country"
+  filter :purchase_user_country_not_eq, :as => :string, :label => "country except"
+  filter :purchase_user_email_eq, :as => :string, :label => "email"
 
   ################ index #######################
   index do
@@ -187,42 +196,35 @@ ActiveAdmin.register Order do
     column :reference, sortable: 'purchases.reference_number' do |o|
       o.purchase.reference_number
     end
-    column "status" do |o|
+    column "purchase status" do |o|
       status_string = Purchase::STATUSES.invert.keys
-      status_css = ['', 'warning', 'error', 'yes', 'complete']
-      status_tag( status_string[o.purchase.status], status_css[o.purchase.status] )
+      status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
+    end
+    column "status" do |o|
+      status_string = Order::STATUSES.invert.keys  
+      status_tag( status_string[o.status], order_status_css[o.status] )
     end
     column "Product" do |o|
       o.item.display_name
     end
     column :order_periodic
-    column :quantity
-    column "total_weight" do |o|
-      o.item.weight * o.quantity
+    column "quantity (weight)" do |o|
+      o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
     end
-    column "country" do |o|
-      o.purchase.user.country
-    end
-    column "user_id" do |o|
-      o.purchase.user_id
+    column "user info" do |o|
+      para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
+      para o.purchase.user.email
     end
     column "recipient" do |o|
       o.purchase.recipient
     end
-    column "city" do |o|
-      o.purchase.city
-    end
-    column "address" do |o|
-      o.purchase.address
-    end
-    column "postcode" do |o|
-      o.purchase.postcode
+    column "address / city / postcode" do |o|
+      para o.purchase.address
+      para o.purchase.city
+      para o.purchase.postcode
     end
     column "phonenumber" do |o|
       o.purchase.phonenumber
-    end
-    column "email" do |o|
-      o.purchase.user.email
     end
     column "결제수단" do |o|
       Purchase::PAY_OPTIONS.invert[o.purchase.pay_option]
@@ -230,16 +232,31 @@ ActiveAdmin.register Order do
     column "결제금액" do |o|
       o.purchase.amt
     end
-    column "결제시간" do |o|
-      o.purchase.approval_ymdhms
+    column "결제시간", sortable: 'purchases.approval_datetime' do |o|
+      dt = o.purchase.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : o.purchase.approval_datetime
+      span dt.strftime('%F')
+      span dt.strftime('%T')
     end
-    column :updated_at
-    column :created_at
-    column "Show" do |o|
-      link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
-    end
-    column "Cancel" do |o|
-      link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+    column "Actions" do |o|
+      span link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
+      
+      case o.status
+        when Order::STATUS_PREPARING_ORDER
+          target = Order::STATUS_PREPARING_DELIVERY
+        when Order::STATUS_PREPARING_DELIVERY
+          target = Order::STATUS_ON_DELIVERY
+        when Order::STATUS_ON_DELIVERY
+          target = Order::STATUS_DONE
+        else # ordering, deleted, done, canceled
+          target = ''
+      end
+      unless target == ''
+        span link_to "check", { :action => :transition, :id => o.id, :target => target }, { :class => "btn-normal" }
+      end
+      
+      unless o.status == Order::STATUS_CANCEL
+        span link_to "cancel", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+      end
     end
   end
 
@@ -253,8 +270,7 @@ ActiveAdmin.register Order do
           end
           row "status" do |o|
             status_string = Purchase::STATUSES.invert.keys
-            status_css = ['', 'warning', 'error', 'yes', 'complete']
-            status_tag( status_string[o.purchase.status], status_css[o.purchase.status] )
+            status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
           end
           row "Product" do |o|
             o.item.display_name

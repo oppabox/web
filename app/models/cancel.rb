@@ -4,6 +4,10 @@ class Cancel < ActiveRecord::Base
 	before_save :quantity_check
 	before_create :validate_request
 
+	scope :requested,						-> { where(status: STATUS_REQUEST) }
+	scope :done,								-> { where(status: STATUS_DONE) }
+	scope :cancelled,						-> { where(status: STATUS_CANCEL) }
+
 	STATUS_REQUEST = 0
 	STATUS_DONE = 1
 	STATUS_CANCEL = 2
@@ -46,5 +50,11 @@ class Cancel < ActiveRecord::Base
 				return false
 			end
 		end
+	end
+
+	def request_done
+		self.status = STATUS_DONE
+		self.order.cancel_transaction
+		self.save
 	end
 end

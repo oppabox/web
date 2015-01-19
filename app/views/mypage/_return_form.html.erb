@@ -5,7 +5,7 @@
     <span>[<%= @options.join(", ") %>]</span>
   </p>
   <p> <%= t('return_purchase_date') %>: &nbsp;
-   <%= @order.purchase.approval_ymdhms.nil? ? '' : Date.parse(@order.purchase.approval_ymdhms).to_s %>
+   <%= @order.purchase.approval_datetime.nil? ? '' : @order.purchase.approval_datetime.strftime("%F") %>
   </p>
 </div>
 <input type="hidden" id="order_id" value="<%= @order.id %>">

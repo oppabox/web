@@ -4,6 +4,13 @@ class Change < ActiveRecord::Base
 	before_save :quantity_check
 	before_create :validate_request
 
+	scope :requested,						-> { where(status: STATUS_REQUEST) }
+	scope :on_process,					-> { where(status: STATUS_ON_PROCESS) }
+	scope :done,								-> { where(status: STATUS_DONE) }
+	scope :rejected,						-> { where(status: STATUS_REJECT) }
+	scope :cancelled,						-> { where(status: STATUS_CANCEL) }
+	scope :STATUS_ON_DELIVERY,	-> { where(status: STATUS_ON_DELIVERY) }
+
 	STATUS_REQUEST = 0
 	STATUS_ON_PROCESS = 1
 	STATUS_DONE = 2

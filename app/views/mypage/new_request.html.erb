@@ -13,11 +13,11 @@
       
       <ul class="foot_navi nav nav-tabs nav-justified" role="tablist">
         <li>
-          <a href="#T_body" style="margin:0;" data-toggle="tab"><%= t('return_form') %></a>
+          <a id="body_tab" href="#T_body" style="margin:0;" data-toggle="tab"><%= t('return_form') %></a>
         </li>
         <li class="active">
           <a href="#T_info" style="margin:0;" data-toggle="tab"><%= t('return_manual') %></a>
-        </li class="active">
+        </li>
       </ul>
 
       <div id="tContent" class="tab-content foot_info_box">
@@ -67,6 +67,7 @@ $(document).ready(function(){
 $('#request_type').change(function(){
 	id = '#A_' + $(this).val();
 	$(id).tab('show');
+  $('#body_tab').tab('show');
 })
 </script>
 

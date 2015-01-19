@@ -2,10 +2,18 @@ ActiveAdmin.register Return do
 	config.batch_actions = false
 	status_css = ['warning', 'yes', 'complete', 'error', '']
 
+	scope :all, default: true
+	scope :requested
+	scope :on_process
+	scope :done
+	scope :rejected
+	scope :cancelled
+
+
 	################# change status #################
 	collection_action :change_status, :method => :patch do
-		r = Return.find(params[:return][:id])
-		r.status = params[:return][:status]
+		r = Return.find(params[:form][:id])
+		r.status = params[:form][:status]
 		r.save
 
 		redirect_to :action => :index
@@ -28,27 +36,28 @@ ActiveAdmin.register Return do
 			t(Return::REASONS[r.reason])
 		end
 		column :reason_details
-		column :sender
+		column "info" do |r|
+			para r.sender + ' (' + r.country + ')'
+			para r.order.purchase.user.email
+		end
+		column "address / city / postcode" do |r|
+			para r.address
+			para r.city
+			para r.postcode
+		end
 		column :phonenumber
-		column :postcode
-		column :address
-		column :city
-		column :state
-		column :country
 		column "Manage" do |r|
-			render :partial => "change_status", :locals => { :id => r.id, :collection => Return::STATUSES.invert, :data => r.status }
+			render :partial => "/admin/change_status", :locals => { :id => r.id, :collection => Return::STATUSES.invert, :data => r.status }
 		end
 	end
 
 	filter :id
 	filter :status, :as => :select, :collection => Return::STATUSES.invert
 	filter :reason, :as => :select, :collection => Return::REASONS.invert
-	filter :sender
-	filter :phonenumber
-	filter :postcode
-	filter :address
-	filter :city
-	filter :state
-	filter :country
+	filter :sender_eq, :as => :string, :label => 'Sender'
+	filter :phonenumber_eq, :as => :string, :label => 'phonenumber'
+	filter :address_eq, :as => :string, :label => 'Address'
+	filter :country_eq, :as => :string, :label => 'Country'
+	filter :country_not_eq, :as => :string, :label => 'Country except'
 
 end

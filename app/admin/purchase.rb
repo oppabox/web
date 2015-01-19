@@ -1,39 +1,40 @@
 ActiveAdmin.register Purchase do
   config.sort_order = "reference_number_desc"
+  status_css = ['', 'complete', 'warning', 'error']
 
-  scope :valid, default: true
-  scope :purchase_paid
-  scope :purchase_pending
-  scope :user_kr
-  scope :user_not_kr
+  scope 'all', :valid, default: true
+  scope :paid
+  scope :pending
+
 
 
   ################## batch action ##########################  
-  batch_action :destroy, false
-  Purchase::STATUSES.each_with_index do |s|
-    batch_action s[1] do |selection|
-      Purchase.find(selection).each do |p|
-        p.status = s[0]
-        p.save
-      end
+  # batch_action :destroy, false
+  # Purchase::STATUSES.each_with_index do |s|
+  #   batch_action s[1] do |selection|
+  #     Purchase.find(selection).each do |p|
+  #       p.status = s[0]
+  #       p.save
+  #     end
 
-      redirect_to :action => :index
-    end
-  end
+  #     redirect_to :action => :index
+  #   end
+  # end
 
   ################## collection action ##########################  
-  collection_action :change_status_to_paid do
+  collection_action :transition do
     p = Purchase.find(params[:id])
+    target_status = params[:target]
 
-    message = ""
-    if p.status == Purchase::STATUS_PENDING
-      p.status = Purchase::STATUS_PAID
-      p.set_reference_number
-      p.save
-      message = "success"
-    end
+    p.status = target_status
+    p.set_reference_number
+    p.save
 
+    flash[:notice] = "#{p.reference_number} status is changed to #{Purchase::STATUSES[p.status]}."
     redirect_to :action => :index
+  end
+
+  collection_action :cancel do
   end
 
   ########### download bl #############
@@ -153,45 +154,74 @@ ActiveAdmin.register Purchase do
     end
   end
 
+  ################## filter ##########################
+  filter :id
+  filter :reference_number_eq
+  filter :status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
+  filter :approval_datetime
+  filter :recipient_eq
+  filter :user_email_eq, :as => :string
+  filter :user_phonenumber_eq, :as => :string
+
+
   ################## view ##########################
   index do 
-    selectable_column
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
+    column :reference_number
     column "status" do |p|
       status_string = Purchase::STATUSES.invert.keys
-      status_css = ['', 'warning', 'error', 'yes', 'complete']
       status_tag( status_string[p.status], status_css[p.status] )
     end
     column "orders" do |p|
-      p.orders.valid.map{|o| o.item.display_name}.join("/")
+      p.orders.valid.each do |o|
+        para o.item.display_name
+        hr
+      end
     end
-    column "weight" do |p|
-      p.orders.valid.map{|o| o.item.weight}.join("/")
-    end
-    column "country" do |p|
-      p.user.country
+    column "quantity (weight)" do |p|
+      p.orders.valid.each do |o|
+        para o.quantity.to_s + ' (' + o.item.weight.to_s + ')'
+        hr
+      end
     end
     column :recipient
-    column :city
-    column :address
-    column :postcode
+    column "user info" do |p|
+      para p.user.name + ' (' + p.user.country + ')'
+      para p.user.email
+    end
+    
+    column 'address / city / postcode' do |p|
+      para p.address
+      para p.city
+      para p.postcode
+    end
     column :phonenumber
     column "결제금액", :amt
-    column :replycd
-    column :replymsg
-    column :order_no
-    column :pay_type
+    # column "Result", :pay_type
     column "결제수단" do |p|
       Purchase::PAY_OPTIONS.invert[p.pay_option]
     end
-    column :approval_ymdhms
-    column :seq_no
-    column :reference_number
-    column "Pending_Check" do |p|
+    column "결제시간" do |p|
+      dt = p.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : p.approval_datetime
+      span dt.strftime('%F')
+      span dt.strftime('%R')
+    end
+    column "Actions" do |p|
+      span link_to "Show", { :action => :show, :id => p.id }, { :class => "btn-normal" }
+      
       if p.status == Purchase::STATUS_PENDING
-        link_to "Checked!", { :action => :change_status_to_paid, :id => p.id }, { :class => "btn-normal" }
+        target = Purchase::STATUS_PAID
+      else
+        target = ''
+      end
+      unless target == ''
+        span link_to "Checked", { :action => :transition, :id => p.id, :target => target }, { :class => "btn-normal" }
+      end
+      
+      unless p.status == Purchase::STATUS_CANCEL
+        span link_to "cancel", { :action => :cancel, :id => p.id }, { :class => "btn-danger" }
       end
     end
   end
@@ -204,7 +234,7 @@ ActiveAdmin.register Purchase do
           row :id
           row "status" do |p|
             status_string = Purchase::STATUSES.invert.keys
-            status_css = ['', 'warning', 'error', 'yes', 'complete']
+            
             status_tag( status_string[p.status], status_css[p.status] )
           end
           row "orders" do |p|
@@ -229,7 +259,7 @@ ActiveAdmin.register Purchase do
           row :replymsg
           row :order_no
           row :pay_type
-          row :approval_ymdhms
+          row :approval_datetime
           row :seq_no
           active_admin_comments
         end
