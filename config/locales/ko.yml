@@ -566,13 +566,13 @@ ko:
   return_model_reasons8: "Etc."
 
 
-  STATUS_REQUEST: "request"
+  STATUS_REQUEST: "requested"
   STATUS_DONE: "done"
-  STATUS_CANCEL: "cancel"
+  STATUS_CANCEL: "cancelled"
   STATUS_ON_PROCESS: "on process"
-  STATUS_REJECT: "reject"
+  STATUS_REJECT: "rejected"
   STATUS_ON_DELIVERY: "on delivery"
-  STATUS_ORDERING: "ordering"
+  STATUS_ORDERING: "on ordering"
   STATUS_DELETED: "deleted"
   STATUS_PAID: "paid"
   STATUS_PENDING: "pending"

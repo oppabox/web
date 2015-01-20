@@ -11,8 +11,8 @@
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
-            <th class="text-center"><%='Order Status'%></th>
-            <th class="text-center"><%='New Request'%></th>
+            <!-- <th class="text-center"><%='Order Status'%></th>
+            <th class="text-center"><%='New Request'%></th> -->
           </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@
                 <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
-                <td class="text-center"><%= Order::STATUSES[order.status] %></td>
+                <!-- <td class="text-center"><%= Order::STATUSES[order.status] %></td>
                 <td class="text-center">
                   <% if purchase.status == Purchase::STATUS_PAID %>
                   <%# only when status is paid %>
@@ -70,7 +70,7 @@
                       <%= link_to "New", mypage_new_request_path(:order_id => order.id) %>
                     <% end %>
                   <% end %>
-                </td>
+                </td> -->
 
               </tr>
             <% end %>
