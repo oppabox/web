@@ -7,7 +7,9 @@
     		<option value="null">Please Select the Type</option>
     		<option value="change">Change</option>
     		<option value="return">Return</option>
-    		<option value="cancel">Cancel</option>
+        <% if [Order::STATUS_PREPARING_DELIVERY, STATUS_PREPARING_ORDER].include? @order.status %>
+    		  <option value="cancel">Cancel</option>
+        <% end %>
     	</select>
       <hr>
       
