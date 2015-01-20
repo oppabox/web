@@ -47,7 +47,8 @@ ActiveAdmin.register Purchase do
 
     p.orders.each do |order|
       order.status = Order::STATUS_CANCEL
-      order.cancel_transaction
+      # cancel all
+      order.cancel_transaction order.quantity
       order.save
     end
 
