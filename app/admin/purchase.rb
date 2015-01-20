@@ -28,7 +28,7 @@ ActiveAdmin.register Purchase do
     p = Purchase.find(params[:id])
     target_status = params[:target]
 
-    if p.status == Purchase::STATUS_PENDING and target_status == Purchase::STATUE_PAID
+    if p.status == Purchase::STATUS_PENDING and target_status == Purchase::STATUS_PAID
       # when status pending, give new reference_number
       # and set it's orders to preparing status
       p.status = target_status
