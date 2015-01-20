@@ -199,10 +199,8 @@ class Purchase < ActiveRecord::Base
       self.seq_no = seq_no
       if pay_type == "VBANK"
         self.status = STATUS_PENDING
-        # for VBANK, order status transaction will be activated on admin page
       else
         self.status = STATUS_PAID
-        self.status_transaction
       end
       result += "=============== 신용 카드 ===============================\n"
       result += "승인번호              : " + approval_no + "\n"
@@ -247,6 +245,10 @@ class Purchase < ActiveRecord::Base
   end
 
   def item_transaction
+    # for VBANK, order status transaction will be activated on admin page
+    if self.status == STATUS_PAID
+      self.status_transaction
+    end
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       self.orders.on_ordering.each do |x|
@@ -282,9 +284,9 @@ class Purchase < ActiveRecord::Base
   end
 
   def status_transaction
-    self.orders.valid.each do |o|
+    self.orders.on_ordering.each do |o|
       o.status = Order::STATUS_PREPARING_ORDER
-      o.save
+      o.save!
     end
   end
 

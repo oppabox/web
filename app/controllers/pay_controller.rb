@@ -281,7 +281,7 @@ class PayController < ApplicationController
       p.seq_no = "transid: #{@transid}"
       p.pay_type = "CARD #{@cardco} #{@cardno1}********#{@cardno4} by: #{@cardholder}"
       #apply your database or file system.
-      p.item_transaction      
+      p.item_transaction    
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
