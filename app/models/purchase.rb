@@ -244,7 +244,7 @@ class Purchase < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       # when status pendeing, then it will be changed at admin page
-      if x.status == STATUS_PAID
+      if self.status == STATUS_PAID
         self.status_transaction
       end
 
