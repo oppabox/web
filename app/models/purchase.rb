@@ -243,12 +243,12 @@ class Purchase < ActiveRecord::Base
   def item_transaction
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
-      self.orders.on_ordering.each do |x|
-        # when status pendeing, then it will be changed at admin pase
-        if x.status == STATUS_PAID
-          self.status_transaction
-        end
+      # when status pendeing, then it will be changed at admin page
+      if x.status == STATUS_PAID
+        self.status_transaction
+      end
 
+      self.orders.on_ordering.each do |x|
         i = x.item
         if i.limited == true
           i.quantity -= x.quantity
