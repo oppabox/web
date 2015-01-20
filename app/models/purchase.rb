@@ -197,7 +197,13 @@ class Purchase < ActiveRecord::Base
       end
       self.approval_datetime = DateTime.strptime(approval_ymdhms, '%Y%m%d%H%M%S')
       self.seq_no = seq_no
-      self.status = (pay_type == "VBANK") ? STATUS_PENDING : STATUS_PAID
+      if pay_type == "VBANK"
+        self.status = STATUS_PENDING
+        # for VBANK, order status transaction will be activated on admin page
+      else
+        self.status = STATUS_PAID
+        self.status_transaction
+      end
       result += "=============== 신용 카드 ===============================\n"
       result += "승인번호              : " + approval_no + "\n"
       result += "카드ID                : " + card_id + "\n"
@@ -243,11 +249,6 @@ class Purchase < ActiveRecord::Base
   def item_transaction
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
-      # when status pendeing, then it will be changed at admin page
-      if self.status == STATUS_PAID
-        self.status_transaction
-      end
-
       self.orders.on_ordering.each do |x|
         i = x.item
         if i.limited == true
@@ -281,8 +282,10 @@ class Purchase < ActiveRecord::Base
   end
 
   def status_transaction
-    self.status = Order::STATUS_PREPARING_ORDER
-    self.save!
+    self.orders.valid.each do |o|
+      o.status = Order::STATUS_PREPARING_ORDER
+      o.save
+    end
   end
 
 
