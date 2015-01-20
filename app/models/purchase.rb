@@ -244,8 +244,10 @@ class Purchase < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       self.orders.on_ordering.each do |x|
-        x.status = Order::STATUS_PREPARING_ORDER
-        x.save!
+        # when status pendeing, then it will be changed at admin pase
+        if x.status == STATUS_PAID
+          self.status_transaction
+        end
 
         i = x.item
         if i.limited == true
@@ -276,6 +278,11 @@ class Purchase < ActiveRecord::Base
     end
 
     return true
+  end
+
+  def status_transaction
+    self.status = Order::STATUS_PREPARING_ORDER
+    self.save!
   end
 
 

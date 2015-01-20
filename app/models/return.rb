@@ -39,8 +39,8 @@ class Return < ActiveRecord::Base
 	}
 
 	def quantity_check
-		if self.quantity.nil? or self.quantity < 0 
-      self.quantity = 0
+		if self.quantity.nil? or self.quantity <= 0 
+      return false
     end
 
     if self.order.nil? or self.quantity > self.order.quantity 

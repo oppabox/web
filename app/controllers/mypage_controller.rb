@@ -64,8 +64,10 @@ class MypageController < ApplicationController
     
     data = {}
     if rtn.save
+      data['result'] = true
       data['message'] = "Return form is successfully requested!"
     else
+      data['result'] = true
       data['message'] = "Return form has some problems!"
     end
 
@@ -81,8 +83,10 @@ class MypageController < ApplicationController
 
     data = {}
     if cancel.save
+      data['result'] = true
       data['message'] = "Cancel form is successfully requested!"
     else
+      data['result'] = false
       data['message'] = "Cancel form has some problems!"
     end
 
@@ -105,8 +109,10 @@ class MypageController < ApplicationController
     
     data = {}
     if change.save
+      data['result'] = true
       data['message'] = "Return form is successfully requested!"
     else
+      data['result'] = false
       data['message'] = "Return form has some problems!"
     end
 

@@ -29,7 +29,12 @@ ActiveAdmin.register Purchase do
     target_status = params[:target]
 
     p.status = target_status
-    p.set_reference_number
+    if p.status == Purchase::STATUS_PENDING
+      # when status pending, give new reference_number
+      # and set it's orders to preparing status
+      p.set_reference_number
+      p.status_transaction
+    end
     p.save
 
     flash[:notice] = "#{p.reference_number} status is changed to #{Purchase::STATUSES[p.status]}."

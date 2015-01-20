@@ -32,10 +32,12 @@
                 <% if index == 0 %>
                   <td rowspan="<%=purchase.orders.valid.count+1%>" class="text-center">
                     <% if order.purchase.status == Purchase::STATUS_ORDERING %>
-                      <a href="/pay/order"><%= t("#{Purchase::STATUSES[order.purchase.status]}") %></a>
+                      <a href="/pay/order"><%= t("#{Purchase::STATUSES[purchase.status]}") %></a>
                     <% else %>
-                      <%= t("#{Purchase::STATUSES[order.purchase.status]}") %>
-                      (<%=order.purchase.reference_number%>)
+                      <%= t("#{Purchase::STATUSES[purchase.status]}") %>
+                      <% if [Purchase::STATUS_PAID, Purchase::STATUS_CANCEL].include? purchase.status %>
+                        (<%= purchase.reference_number %>)
+                      <% end %>
                     <% end %>
                   </td>
                 <% end %>

@@ -81,8 +81,9 @@ $(function(){
         state: state
       },
       success: function(data) {
-        alert(data["message"])
-        window.location.href = "/mypage"
+        alert(data["message"]);
+        if (data["result"])
+          window.location.href = "/mypage";
       },
       error: function(httpObj) {
         if(httpObj.status == 401){
@@ -109,8 +110,9 @@ $(function(){
         order_id: order_id
       },
       success: function(data) {
-        alert(data["message"])
-        window.location.href = "/mypage"
+        alert(data["message"]);
+        if (data["result"])
+          window.location.href = "/mypage";
       },
       error: function(httpObj) {
         if(httpObj.status == 401){
@@ -151,8 +153,9 @@ $(function(){
         state: state
       },
       success: function(data) {
-        alert(data["message"])
-        window.location.href = "/mypage"
+        alert(data["message"]);
+        if (data["result"])
+          window.location.href = "/mypage";
       },
       error: function(httpObj) {
         if(httpObj.status == 401){

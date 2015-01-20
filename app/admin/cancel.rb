@@ -13,11 +13,13 @@ ActiveAdmin.register Cancel do
 	collection_action :change_status, :method => :patch do
 		c = Cancel.find(params[:form][:id])
 		
-		if params[:form][:status] == Cancel::STATUS_DONE.to_s
-			c.request_done
-		else
-			c.status = params[:form][:status]
-			c.save
+		unless params[:form][:status] == c.status
+			if params[:form][:status] == Cancel::STATUS_DONE.to_s
+				c.request_done
+			else
+				c.status = params[:form][:status]
+				c.save
+			end
 		end
 
 		redirect_to :action => :index
