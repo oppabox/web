@@ -15,7 +15,7 @@ ActiveAdmin.register Return do
 	collection_action :change_status, :method => :patch do
 		r = Return.find(params[:form][:id])
 
-		unless params[:form][:status] == c.status.to_s
+		unless params[:form][:status] == r.status.to_s
 			if params[:form][:status] == Return::STATUS_DONE.to_s
 				r.request_done
 			else
