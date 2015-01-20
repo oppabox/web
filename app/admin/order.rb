@@ -1,387 +1,387 @@
-# ActiveAdmin.register Order do
-#   menu :priority => 3
-#   config.sort_order = 'purchases.reference_number_desc'
-#   # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
-#   purchase_status_css = ['', '', '', '', '']
-#   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
+ActiveAdmin.register Order do
+  menu :priority => 3
+  config.sort_order = 'purchases.reference_number_desc'
+  # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
+  purchase_status_css = ['', '', '', '', '']
+  order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
 
-#   # Convert to Euc-kr
-#   require 'iconv'
+  # Convert to Euc-kr
+  require 'iconv'
 
-#   scope :paid,  default: true
-#   scope :prepare_order
-#   scope :prepare_delivery
-#   scope :on_delivery
-#   scope :done
-#   scope :cancelled
-#   scope :pending
-#   scope 'all', :except_ordering
+  scope :paid,  default: true
+  scope :prepare_order
+  scope :prepare_delivery
+  scope :on_delivery
+  scope :done
+  scope :cancelled
+  scope :pending
+  scope 'all', :except_ordering
 
-#   controller do
-#     def scoped_collection
-#       resource_class.includes(:purchase)
-#     end
+  controller do
+    def scoped_collection
+      resource_class.includes(:purchase)
+    end
 
-#     # CSV 출력시에만 "-" 입력
-#     def fix_kr_phonenumber country, number
-#       if !number.nil? && country == "KR" 
-#         if (number.gsub "-", "").size == 10
-#           number.gsub("-","").insert(3, '-').insert(7, '-')
-#         elsif number.size == 11
-#           number.insert(3, '-').insert(8, '-')
-#         end
-#       end
-#       return number
-#     end
-#   end
+    # CSV 출력시에만 "-" 입력
+    def fix_kr_phonenumber country, number
+      if !number.nil? && country == "KR" 
+        if (number.gsub "-", "").size == 10
+          number.gsub("-","").insert(3, '-').insert(7, '-')
+        elsif number.size == 11
+          number.insert(3, '-').insert(8, '-')
+        end
+      end
+      return number
+    end
+  end
 
-#   ################ edit #######################
-#   permit_params :quantity, :order_periodic
-#   form :partial => "edit"
+  ################ edit #######################
+  permit_params :quantity, :order_periodic
+  form :partial => "edit"
 
-#   ################ edit #######################
-#   collection_action :edit_options, :method => :patch do
-#     ooi = OrderOptionItem.find(params[:options]['id'])
-#     if params[:options]['type'] == "text"
-#       ooi.option_text = params[:options]['details']
-#     else
-#       ooi.option_item_id = params[:options]['details']
-#     end
-#     ooi.save
-#     redirect_to params[:options]['target']
-#   end
+  ################ edit #######################
+  collection_action :edit_options, :method => :patch do
+    ooi = OrderOptionItem.find(params[:options]['id'])
+    if params[:options]['type'] == "text"
+      ooi.option_text = params[:options]['details']
+    else
+      ooi.option_item_id = params[:options]['details']
+    end
+    ooi.save
+    redirect_to params[:options]['target']
+  end
 
-#   ################ collection actions #######################
-#   collection_action :transition do
-#     order = Order.find(params[:id])
-#     target_status = params[:target]
-#     order.status = target_status
-#     order.save
+  ################ collection actions #######################
+  collection_action :transition do
+    order = Order.find(params[:id])
+    target_status = params[:target]
+    order.status = target_status
+    order.save
 
-#     flash[:notice] = "#{order.purchase.reference_number} status is changed to #{Order::STATUSES[order.status]}."
-#     redirect_to :action => :index
-#   end
-#   collection_action :cancel do
-#     order = Order.find(params[:id])
-#     order.status = Order::STATUS_CANCEL
-#     order.cancel_transaction
-#     order.save
+    flash[:notice] = "#{order.purchase.reference_number} status is changed to #{Order::STATUSES[order.status]}."
+    redirect_to :action => :index
+  end
+  collection_action :cancel do
+    order = Order.find(params[:id])
+    order.status = Order::STATUS_CANCEL
+    order.cancel_transaction
+    order.save
 
-#     flash[:alert] = "#{order.purchase.reference_number} is cancelled."
-#     redirect_to :action => :index
-#   end
+    flash[:alert] = "#{order.purchase.reference_number} is cancelled."
+    redirect_to :action => :index
+  end
   
-#   ########### download inv #############
-#   collection_action :download_inv do
-#     csv_builder = ActiveAdmin::CSVBuilder.new
+  ########### download inv #############
+  collection_action :download_inv do
+    csv_builder = ActiveAdmin::CSVBuilder.new
 
-#     # set columns
-#     csv_builder.column("Connector") { |o| o.purchase.reference_number } 
-#     csv_builder.column("INVCurrency") { |o| "USD" }
-#     csv_builder.column("INVDeclaration") { |o| "invoice" }
-#     csv_builder.column("INVReasonforExport") { |o| "Sample" }
-#     csv_builder.column("INVDescriptionofGoods") { |o| o.item.display_name }
-#     csv_builder.column("INVHsCode") { |o| "" }
-#     csv_builder.column("INVOriginCountry") { |o| "KR" }
-#     csv_builder.column("INVQuantity") { |o| o.quantity }
-#     csv_builder.column("INVUnitofMeasure") { |o| "EA" }
-#     csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
-#     csv_builder.column("INVAddComment") { |o| "" }
-#     csv_builder.column("INVFreightCost") { |o| "" }
-#     csv_builder.column("INVDiscountCost") { |o| "" }
+    # set columns
+    csv_builder.column("Connector") { |o| o.purchase.reference_number } 
+    csv_builder.column("INVCurrency") { |o| "USD" }
+    csv_builder.column("INVDeclaration") { |o| "invoice" }
+    csv_builder.column("INVReasonforExport") { |o| "Sample" }
+    csv_builder.column("INVDescriptionofGoods") { |o| o.item.display_name }
+    csv_builder.column("INVHsCode") { |o| "" }
+    csv_builder.column("INVOriginCountry") { |o| "KR" }
+    csv_builder.column("INVQuantity") { |o| o.quantity }
+    csv_builder.column("INVUnitofMeasure") { |o| "EA" }
+    csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
+    csv_builder.column("INVAddComment") { |o| "" }
+    csv_builder.column("INVFreightCost") { |o| "" }
+    csv_builder.column("INVDiscountCost") { |o| "" }
     
 
-#     columns = csv_builder.columns
+    columns = csv_builder.columns
 
-#     # Collect the data in an Array to be transposed.
-#     data = []
-#     data << columns.map(&:name)
-#     collection.each do |resource|
-#       data << columns.map do |column|
-#         call_method_or_proc_on resource, column.data
-#       end
-#     end
+    # Collect the data in an Array to be transposed.
+    data = []
+    data << columns.map(&:name)
+    collection.each do |resource|
+      data << columns.map do |column|
+        call_method_or_proc_on resource, column.data
+      end
+    end
 
-#     csv_output = CSV.generate() do |csv|
-#       data.each do |row|
-#         csv << row
-#       end
-#     end
+    csv_output = CSV.generate() do |csv|
+      data.each do |row|
+        csv << row
+      end
+    end
 
-#     # render plain: csv_output
+    # render plain: csv_output
 
-#     send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
-#   end
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
+  end
 
-#   ########### download YAMOOJIN #############
-#   collection_action :yamoojin_csv do
-#     csv_builder = ActiveAdmin::CSVBuilder.new
+  ########### download YAMOOJIN #############
+  collection_action :yamoojin_csv do
+    csv_builder = ActiveAdmin::CSVBuilder.new
 
-#     # set columns
-#     csv_builder.column("수취고객명") { |o| o.purchase.recipient }
-#     csv_builder.column("수취인") { |o| ""}
-#     csv_builder.column("수취인 전화") { |o| "" }
-#     csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
-#     csv_builder.column("우편번호") { |o| o.purchase.postcode }
-#     csv_builder.column("수취인 주소") { |o| o.purchase.address }
-#     csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
-#     csv_builder.column("상품명1") { |o| o.item.display_name }
-#     csv_builder.column("수량1") { |o| o.quantity }
-#     csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
-#     csv_builder.column("메모") { |o| "" }
-#     csv_builder.column("출력매수") { |o| "" }
+    # set columns
+    csv_builder.column("수취고객명") { |o| o.purchase.recipient }
+    csv_builder.column("수취인") { |o| ""}
+    csv_builder.column("수취인 전화") { |o| "" }
+    csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
+    csv_builder.column("우편번호") { |o| o.purchase.postcode }
+    csv_builder.column("수취인 주소") { |o| o.purchase.address }
+    csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
+    csv_builder.column("상품명1") { |o| o.item.display_name }
+    csv_builder.column("수량1") { |o| o.quantity }
+    csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
+    csv_builder.column("메모") { |o| "" }
+    csv_builder.column("출력매수") { |o| "" }
     
 
-#     columns = csv_builder.columns
+    columns = csv_builder.columns
 
-#     # Collect the data in an Array to be transposed.
-#     data = []
-#     data << columns.map(&:name)
-#     collection.each do |resource|
-#       data << columns.map do |column|
-#         call_method_or_proc_on resource, column.data
-#       end
-#     end
+    # Collect the data in an Array to be transposed.
+    data = []
+    data << columns.map(&:name)
+    collection.each do |resource|
+      data << columns.map do |column|
+        call_method_or_proc_on resource, column.data
+      end
+    end
 
-#     csv_output = CSV.generate() do |csv|
-#       data.each do |row|
-#         csv << row
-#       end
-#     end
+    csv_output = CSV.generate() do |csv|
+      data.each do |row|
+        csv << row
+      end
+    end
 
-#     # Iconv set
-#     conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
-#     csv_output = conv.iconv(csv_output)
+    # Iconv set
+    conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
+    csv_output = conv.iconv(csv_output)
 
     
-#     # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
-#     # send_data Iconv.conv('iso-8859-1//IGNORE', 'euc-kr', csv_output), :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+    # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
+    # send_data Iconv.conv('iso-8859-1//IGNORE', 'euc-kr', csv_output), :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin.csv"
 
-#     send_data  csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
-#   end
+    send_data  csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
+  end
 
-#   ################ member_action #######################
-
-
-
-#   ################## sidebar ##########################
-#   sidebar :help, :only => :index do
-#     button do
-#       link_to "Download INV", download_inv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
-#     end
-#     button do
-#       link_to "YAMOOJIN.csv", yamoojin_csv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
-#     end
-#   end
+  ################ member_action #######################
 
 
 
-#   ################ view #######################
+  ################## sidebar ##########################
+  sidebar :help, :only => :index do
+    button do
+      link_to "Download INV", download_inv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
+    end
+    button do
+      link_to "YAMOOJIN.csv", yamoojin_csv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
+    end
+  end
 
-#   filter :id, :label => "Order No."
-#   filter :purchase_reference_number_eq, :as => :string, :label => "Reference number"
-#   filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name
-#   filter :purchase_approval_datetime, :as => :date_range
-#   filter :purchase_recipient_eq, :as => :string, :label => "Recipient Name"
-#   filter :item, :as => :select
-#   filter :order_periodic
-#   filter :purchase_user_country_eq, :as => :string, :label => "country"
-#   filter :purchase_user_country_not_eq, :as => :string, :label => "country except"
-#   filter :purchase_user_email_eq, :as => :string, :label => "email"
 
-#   ################ index #######################
-#   index do
-#     column :id do |o|
-#       link_to o.id, admin_order_path(o)
-#     end
-#     column :reference, sortable: 'purchases.reference_number' do |o|
-#       o.purchase.reference_number
-#     end
-#     column "purchase status" do |o|
-#       status_string = Purchase::STATUSES.invert.keys
-#       status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
-#     end
-#     column "status" do |o|
-#       status_string = Order::STATUSES.invert.keys  
-#       status_tag( status_string[o.status], order_status_css[o.status] )
-#     end
-#     column "Product" do |o|
-#       o.item.display_name
-#     end
-#     column :order_periodic
-#     column "quantity (weight)" do |o|
-#       o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
-#     end
-#     column "user info" do |o|
-#       para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
-#       para o.purchase.user.email
-#     end
-#     column "recipient" do |o|
-#       o.purchase.recipient
-#     end
-#     column "address / city / postcode" do |o|
-#       para o.purchase.address
-#       para o.purchase.city
-#       para o.purchase.postcode
-#     end
-#     column "phonenumber" do |o|
-#       o.purchase.phonenumber
-#     end
-#     column "결제수단" do |o|
-#       Purchase::PAY_OPTIONS.invert[o.purchase.pay_option]
-#     end
-#     column "결제금액" do |o|
-#       o.purchase.amt
-#     end
-#     column "결제시간", sortable: 'purchases.approval_datetime' do |o|
-#       dt = o.purchase.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : o.purchase.approval_datetime
-#       span dt.strftime('%F')
-#       span dt.strftime('%T')
-#     end
-#     column "Actions" do |o|
-#       span link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
+
+  ################ view #######################
+
+  filter :id, :label => "Order No."
+  filter :purchase_reference_number_eq, :as => :string, :label => "Reference number"
+  filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name
+  filter :purchase_approval_datetime, :as => :date_range
+  filter :purchase_recipient_eq, :as => :string, :label => "Recipient Name"
+  filter :item, :as => :select
+  filter :order_periodic
+  filter :purchase_user_country_eq, :as => :string, :label => "country"
+  filter :purchase_user_country_not_eq, :as => :string, :label => "country except"
+  filter :purchase_user_email_eq, :as => :string, :label => "email"
+
+  ################ index #######################
+  index do
+    column :id do |o|
+      link_to o.id, admin_order_path(o)
+    end
+    column :reference, sortable: 'purchases.reference_number' do |o|
+      o.purchase.reference_number
+    end
+    column "purchase status" do |o|
+      status_string = Purchase::STATUSES.invert.keys
+      status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
+    end
+    column "status" do |o|
+      status_string = Order::STATUSES.invert.keys  
+      status_tag( status_string[o.status], order_status_css[o.status] )
+    end
+    column "Product" do |o|
+      o.item.display_name
+    end
+    column :order_periodic
+    column "quantity (weight)" do |o|
+      o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
+    end
+    column "user info" do |o|
+      para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
+      para o.purchase.user.email
+    end
+    column "recipient" do |o|
+      o.purchase.recipient
+    end
+    column "address / city / postcode" do |o|
+      para o.purchase.address
+      para o.purchase.city
+      para o.purchase.postcode
+    end
+    column "phonenumber" do |o|
+      o.purchase.phonenumber
+    end
+    column "결제수단" do |o|
+      Purchase::PAY_OPTIONS.invert[o.purchase.pay_option]
+    end
+    column "결제금액" do |o|
+      o.purchase.amt
+    end
+    column "결제시간", sortable: 'purchases.approval_datetime' do |o|
+      dt = o.purchase.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : o.purchase.approval_datetime
+      span dt.strftime('%F')
+      span dt.strftime('%T')
+    end
+    column "Actions" do |o|
+      span link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
       
-#       case o.status
-#         when Order::STATUS_PREPARING_ORDER
-#           target = Order::STATUS_PREPARING_DELIVERY
-#         when Order::STATUS_PREPARING_DELIVERY
-#           target = Order::STATUS_ON_DELIVERY
-#         when Order::STATUS_ON_DELIVERY
-#           target = Order::STATUS_DONE
-#         else # ordering, deleted, done, canceled
-#           target = ''
-#       end
-#       unless target == ''
-#         span link_to "check", { :action => :transition, :id => o.id, :target => target }, { :class => "btn-normal" }
-#       end
+      case o.status
+        when Order::STATUS_PREPARING_ORDER
+          target = Order::STATUS_PREPARING_DELIVERY
+        when Order::STATUS_PREPARING_DELIVERY
+          target = Order::STATUS_ON_DELIVERY
+        when Order::STATUS_ON_DELIVERY
+          target = Order::STATUS_DONE
+        else # ordering, deleted, done, canceled
+          target = ''
+      end
+      unless target == ''
+        span link_to "check", { :action => :transition, :id => o.id, :target => target }, { :class => "btn-normal" }
+      end
       
-#       unless o.status == Order::STATUS_CANCEL
-#         span link_to "cancel", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
-#       end
-#     end
-#   end
+      unless o.status == Order::STATUS_CANCEL
+        span link_to "cancel", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+      end
+    end
+  end
 
-#   ################ show #######################
-#   show do
-#     columns do
-#       column do
-#         attributes_table do
-#           row :id do |o|
-#             link_to o.id, admin_order_path(o)
-#           end
-#           row "status" do |o|
-#             status_string = Purchase::STATUSES.invert.keys
-#             status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
-#           end
-#           row "Product" do |o|
-#             o.item.display_name
-#           end
-#           row :order_periodic
-#           row :quantity
-#           row "total_weight" do |o|
-#             o.item.weight * o.quantity
-#           end
-#           row "country" do |o|
-#             o.purchase.user.country
-#           end
-#           row "user_id" do |o|
-#             o.purchase.user_id
-#           end
-#           row "recipient" do |o|
-#             o.purchase.recipient
-#           end
-#           row "city" do |o|
-#             o.purchase.city
-#           end
-#           row "address" do |o|
-#             o.purchase.address
-#           end
-#           row "postcode" do |o|
-#             o.purchase.postcode
-#           end
-#           row "phonenumber" do |o|
-#             o.purchase.phonenumber
-#           end
-#           row "email" do |o|
-#             o.purchase.user.email
-#           end
-#           row "결제금액" do |o|
-#             o.purchase.amt
-#           end
-#           row :updated_at
-#           row :created_at
-#           row "Edit" do |o|
-#             link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn-normal" }
-#           end
-#           row "Cancel" do |o|
-#             link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
-#           end
-#         end
-#       end
-#       column do
-#         panel "Order Details" do
-#           table_for Order.find(params[:id]).order_option_items do |ooi|
-#             column("Option_Title") { |ooi| ooi.option.title } 
-#             column("Option_Details") do |ooi|
-#               if ooi.option_item_id == -1
-#                 render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
-#               else
-#                 col = ooi.option.option_items.pluck(:name, :id)
-#                 render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
-#               end
-#             end
-#           end
-#         end
-#       end
-#     end
-#   end
+  ################ show #######################
+  show do
+    columns do
+      column do
+        attributes_table do
+          row :id do |o|
+            link_to o.id, admin_order_path(o)
+          end
+          row "status" do |o|
+            status_string = Purchase::STATUSES.invert.keys
+            status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
+          end
+          row "Product" do |o|
+            o.item.display_name
+          end
+          row :order_periodic
+          row :quantity
+          row "total_weight" do |o|
+            o.item.weight * o.quantity
+          end
+          row "country" do |o|
+            o.purchase.user.country
+          end
+          row "user_id" do |o|
+            o.purchase.user_id
+          end
+          row "recipient" do |o|
+            o.purchase.recipient
+          end
+          row "city" do |o|
+            o.purchase.city
+          end
+          row "address" do |o|
+            o.purchase.address
+          end
+          row "postcode" do |o|
+            o.purchase.postcode
+          end
+          row "phonenumber" do |o|
+            o.purchase.phonenumber
+          end
+          row "email" do |o|
+            o.purchase.user.email
+          end
+          row "결제금액" do |o|
+            o.purchase.amt
+          end
+          row :updated_at
+          row :created_at
+          row "Edit" do |o|
+            link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn-normal" }
+          end
+          row "Cancel" do |o|
+            link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+          end
+        end
+      end
+      column do
+        panel "Order Details" do
+          table_for Order.find(params[:id]).order_option_items do |ooi|
+            column("Option_Title") { |ooi| ooi.option.title } 
+            column("Option_Details") do |ooi|
+              if ooi.option_item_id == -1
+                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
+              else
+                col = ooi.option.option_items.pluck(:name, :id)
+                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 
 
-#   ################ csv #######################
-#   csv do
-#     column :id
-#     column "status" do |o|
-#       status_string = Purchase::STATUSES.invert.keys
-#       status_string[o.purchase.status]
-#     end
-#     column "Product" do |p|
-#       p.item.display_name
-#     end
-#     column :order_periodic
-#     column :quantity
-#     column "total_weight" do |o|
-#       o.item.weight * o.quantity
-#     end
-#     column "country" do |o|
-#       o.purchase.user.country
-#     end
-#     column "user_id" do |o|
-#       o.purchase.user_id
-#     end
-#     column "recipient" do |o|
-#       o.purchase.recipient
-#     end
-#     column "city" do |o|
-#       o.purchase.city
-#     end
-#     column "address" do |o|
-#       o.purchase.address
-#     end
-#     column "postcode" do |o|
-#       o.purchase.postcode
-#     end
-#     column "phonenumber" do |o|
-#       o.purchase.phonenumber
-#     end
-#     column "email" do |o|
-#       o.purchase.user.email
-#     end
-#     column "결제금액" do |o|
-#       o.purchase.amt
-#     end
-#     column :updated_at
-#     column :created_at
-#   end
+  ################ csv #######################
+  csv do
+    column :id
+    column "status" do |o|
+      status_string = Purchase::STATUSES.invert.keys
+      status_string[o.purchase.status]
+    end
+    column "Product" do |p|
+      p.item.display_name
+    end
+    column :order_periodic
+    column :quantity
+    column "total_weight" do |o|
+      o.item.weight * o.quantity
+    end
+    column "country" do |o|
+      o.purchase.user.country
+    end
+    column "user_id" do |o|
+      o.purchase.user_id
+    end
+    column "recipient" do |o|
+      o.purchase.recipient
+    end
+    column "city" do |o|
+      o.purchase.city
+    end
+    column "address" do |o|
+      o.purchase.address
+    end
+    column "postcode" do |o|
+      o.purchase.postcode
+    end
+    column "phonenumber" do |o|
+      o.purchase.phonenumber
+    end
+    column "email" do |o|
+      o.purchase.user.email
+    end
+    column "결제금액" do |o|
+      o.purchase.amt
+    end
+    column :updated_at
+    column :created_at
+  end
 
-# end
+end
