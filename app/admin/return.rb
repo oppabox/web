@@ -14,7 +14,8 @@ ActiveAdmin.register Return do
 	################# change status #################
 	collection_action :change_status, :method => :patch do
 		r = Return.find(params[:form][:id])
-		if params[:form][:status] == Return::STATUS_DONE
+
+		if params[:form][:status] == Return::STATUS_DONE.to_s
 			r.request_done
 		else
 			r.status = params[:form][:status]
