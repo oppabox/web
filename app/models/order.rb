@@ -107,19 +107,19 @@ class Order < ActiveRecord::Base
     self.has_return? or self.has_cancel? or self.has_change?
   end
 
-  def cancel_transaction
+  def cancel_transaction c_quantity
     ActiveRecord::Base.transaction do
       #ITEM QUANTITY
       i = self.item
       if i.limited == true
-        i.quantity += self.quantity
+        i.quantity += c_quantity
         i.save!
       end
 
       self.order_option_items.each do |ooi|
         oi = ooi.option_item
         if oi.limited == true
-          oi.quantity += self.quantity
+          oi.quantity += c_quantity
           oi.save!
         end
       end

@@ -54,7 +54,7 @@ class Cancel < ActiveRecord::Base
 
 	def request_done
 		self.status = STATUS_DONE
-		self.order.cancel_transaction
+		self.order.cancel_transaction(self.quantity)
 		self.save
 	end
 end
