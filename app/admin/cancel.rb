@@ -34,7 +34,7 @@ ActiveAdmin.register Cancel do
       para c.order.purchase.reference_number
     end
 		column "접수상태" do |c|
-			para status_tag(Cancel::STATUSES[c.status], status_css[c.status])
+			para status_tag(t(Cancel::STATUSES[c.status]), status_css[c.status])
 		end
 		column '상품명' do |c|
 			para c.order.item.display_name
@@ -59,7 +59,7 @@ ActiveAdmin.register Cancel do
       para c.created_at.strftime("%Y-%m-%d")
     end
     column "처리시간" do |c|
-      para c.status == Cancel::STATUS_DONE or c.status == Cancel::STATUS_CANCEL ? c.updated_at.strftime("%Y-%m-%d") : "심사중"
+      para (c.status == Cancel::STATUS_DONE or c.status == Cancel::STATUS_CANCEL) ? c.updated_at.strftime("%Y-%m-%d") : "심사중"
     end
 		column "관리" do |c|
 			render :partial => "/admin/change_status", :locals => { :id => c.id, :collection => Cancel::STATUSES.invert, :data => c.status }
