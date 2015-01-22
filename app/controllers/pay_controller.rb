@@ -1,5 +1,4 @@
 class PayController < ApplicationController
-
   before_action :login_check, only: [:order, :success, :billing, :korean_payment, :nonkorean_payment]
   before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
   skip_before_action :http_basic_authenticate, only: :usd_status
