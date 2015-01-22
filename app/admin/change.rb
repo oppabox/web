@@ -53,7 +53,7 @@ ActiveAdmin.register Change do
 		end
 		column "휴대번호", :phonenumber
     column "신청시간" do |c|
-       para e.created_at.strftime("%Y-%m-%d")
+       para c.created_at.strftime("%Y-%m-%d")
     end
     column "처리시간" do |c|
        para c.status == Change::STATUS_DONE or c.status == Change::STATUS_CANCEL ? c.updated_at.strftime("%Y-%m-%d") : "진행중"
