@@ -4,20 +4,20 @@
     <span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
     <span>[<%= @options.join(", ") %>]</span>
   </p>
-  <p> <%= t('return_purchase_date') %>: &nbsp;
+  <p> <%= t('purchase_date') %>: &nbsp;
    <%= @order.purchase.approval_datetime.nil? ? '' : @order.purchase.approval_datetime.strftime("%F") %>
   </p>
 </div>
 <input type="hidden" id="order_id" value="<%= @order.id %>">
 <div class="row">
-  <h4><b>Select Quantity</b></h4>
+  <h4><b><%= t('select_quantity') %></b></h4>
   <table class="table">
     <thead>
       <tr class="active">
-        <th class="text-center">Product Info</th>
-        <th class="text-center">Payments</th>
-        <th class="text-center">Cancel Quantity</th>
-        <th class="text-center">Cancel Amount</th>
+        <th class="text-center"><%= t("product_info") %></th>
+        <th class="text-center"><%= t("total_payment_billing_price") %></th>
+        <th class="text-center"><%= t("cancel_quantity") %></th>
+        <th class="text-center"><%= t("cancel_amount") %></th>
       </tr>
     </thead>
     <tbody>
@@ -38,17 +38,17 @@
 </div>
 
 <div class="row">
-  <h4><b>Details</b></h4>
+  <h4><b><%= t('details') %></b></h4>
   <table class="table">
     <tbody>
       <tr>
-        <th class="active">Reason for cancel</th>
+        <th class="active"><%= t('reason_for_cancel') %></th>
         <td>
           <div class="form-group">
-            <%= select_tag "cancel_reason", options_for_select(Cancel::REASONS.invert.keys, 0 ), { :class => 'form-control input-sm' } %>
+            <%= select_tag "cancel_reason", options_for_select(Cancel::REASONS.invert.keys.collect { |x| t(x) }, 0 ), { :class => 'form-control input-sm' } %>
           </div>
           <div class="form-group">
-            <%= text_area_tag "cancel_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: 'Please type the detail reasons for Cancel(Optional)' %>
+            <%= text_area_tag "cancel_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: t('cancel_reason_plh') %>
           </div>
         </td>
       </tr>
@@ -57,11 +57,11 @@
 </div>
 
 <div class="row">
-  <h4><b><%= t('return_refund') %></b></h4>
+  <h4><b><%= t('refund_info') %></b></h4>
   <table class="table">
     <tbody>
       <tr>
-        <th class="active">Actual Refund Amount</th>
+        <th class="active"><%= t('cancel_amount') %></th>
         <td class="cancel_amount" id="cancel_actual_amount"><%= Order.change_currency(0) %></td>
       </tr>
     </tbody>
@@ -69,8 +69,8 @@
 </div>
 
 <div class="row text-center">
-  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('return_back') %></button>
-  <button class="btn btn-lg btn-danger" id="cancel_request_button"><%= t('return_request') %></button>
+  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('request_back') %></button>
+  <button class="btn btn-lg btn-danger" id="cancel_request_button"><%= t('type_cancel') %></button>
 </div>
 
 

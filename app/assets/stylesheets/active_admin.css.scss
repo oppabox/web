@@ -11,48 +11,71 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
-td.col-address {
-	min-width: 180px;
+// td.col-address {
+// 	min-width: 180px;
+// }
+
+body {
+	font-size: 12px !important;
 }
 
-a.btn-normal {
-	border-radius: 4px;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 200%;
-	text-decoration: none !important;
-	background: white;
-	background: -webkit-linear-gradient(-90deg, white, #e7e7e7);
-	background: -moz-linear-gradient(-90deg, white, #e7e7e7);
-	background: linear, 180deg, white, #e7e7e7;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;
-	border: solid 1px #c7c7c7;
-	border-color: #c7c7c7;
-	padding: 3px 5px;
-	color: #5e6469 !important;
+p {
+	margin: 0;
+	padding: 0;
 }
 
-td a.btn-danger {
-	border-radius: 4px;
-	font-size: 14px;
-	letter-spacing: 0.5px;
-	line-height: 200%;
-	text-decoration: none !important;
-	background: #d45f53;
-	background: -webkit-linear-gradient(-90deg, #d45f53, #d05a49);
-	background: -moz-linear-gradient(-90deg, #d45f53, #d05a49);
-	background: linear, 180deg, #d45f53, #d05a49;
-	border: solid 1px #b43f33;
-	border-color: #b43f33;
-	padding: 3px 5px;
-	color: #ffffff !important;
+hr {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
 }
 
-button a.btn-normal {
-	color: white;
+a, a:link, a:visited {
+	color: #333333;
 	text-decoration: none;
+}
+
+.panel, .sidebar_section {
+	background: #f4f4f4 !important;
+	-webkit-border-radius: 4px !important;
+	-moz-border-radius: 4px !important;
+	border-radius: 4px !important;
+	box-shadow: inset 0 1px 4px #dddddd !important;
+	-moz-box-shadow: inset 0 1px 4px #dddddd !important;
+	-webkit-box-shadow: inset 0 1px 4px #dddddd !important;
+	margin-bottom: 20px !important;
+	border: none !important;
+
+	input {
+		box-sizing: content-box;
+	}
+	label {
+		text-align: left;
+	}
+}
+
+.btn-danger, .btn-info, .btn-success, .btn-warning, .btn-primary {
+	color: #fff !important;
+}
+
+.margin_p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.index_table {
+	td, th {
+		vertical-align: middle !important;
+	}
+}
+
+.detail_table {
+	td, th {
+		vertical-align: middle !important;
+		text-align: center;
+	}
 }

@@ -2,21 +2,22 @@ ActiveAdmin.register Order do
   menu :priority => 3
   config.sort_order = 'purchases.reference_number_desc'
   # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
-  purchase_status_css = ['', '', '', '', '']
+  purchase_status_css = ['', 'complete', '', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
 
   # Convert to Euc-kr
   require 'iconv'
 
-  scope :paid,  default: true
-  scope :prepare_order
-  scope :prepare_delivery
-  scope :on_delivery
-  scope :done
-  scope :cancelled
-  scope :pending
-  scope 'all', :except_ordering
+  scope proc{ I18n.t("STATUS_ORDER_PREPARING_ORDER") }, :prepare_order
+  scope proc{ I18n.t("STATUS_ORDER_PREPARING_DELIVERY") }, :prepare_delivery
+  scope proc{ I18n.t("STATUS_ORDER_ON_DELIVERY") }, :on_delivery
+  scope proc{ I18n.t("STATUS_ORDER_DONE") }, :done
+  scope proc{ I18n.t("STATUS_ORDER_CANCEL") }, :cancelled
+  scope proc{ I18n.t("purchase_paid") }, :paid, default: true
+  scope proc{ I18n.t("purchase_pending") }, :pending
+  scope proc{ I18n.t("purchase_cancel") }, :purchase_cancelled
+  scope proc{ "전체" }, :except_ordering
 
   controller do
     def scoped_collection
@@ -167,11 +168,11 @@ ActiveAdmin.register Order do
 
   ################## sidebar ##########################
   sidebar :help, :only => :index do
-    button do
-      link_to "Download INV", download_inv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
+    span do
+      link_to "Download INV", download_inv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
-    button do
-      link_to "YAMOOJIN.csv", yamoojin_csv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn-normal" }
+    span do
+      link_to "YAMOOJIN", yamoojin_csv_admin_orders_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
   end
 
@@ -179,53 +180,53 @@ ActiveAdmin.register Order do
 
   ################ view #######################
 
-  filter :id, :label => "Order No."
-  filter :purchase_reference_number_eq, :as => :string, :label => "Reference number"
-  filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name
-  filter :purchase_approval_datetime, :as => :date_range
-  filter :purchase_recipient_eq, :as => :string, :label => "Recipient Name"
-  filter :item, :as => :select
-  filter :order_periodic
-  filter :purchase_user_country_eq, :as => :string, :label => "country"
-  filter :purchase_user_country_not_eq, :as => :string, :label => "country except"
-  filter :purchase_user_email_eq, :as => :string, :label => "email"
+  filter :id
+  filter :purchase_reference_number_contains, :as => :string, :label => "주문번호"
+  filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name, :label => "주문상태"
+  filter :purchase_approval_datetime, :as => :date_range, :label => "결제시간"
+  filter :purchase_recipient_contains, :as => :string, :label => "수취인"
+  filter :item, :as => :select, :label => "상품"
+  filter :order_periodic, :label => "정기구매"
+  filter :purchase_user_country_eq, :as => :string, :label => "국가"
+  filter :purchase_user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
+  filter :purchase_user_email_contains, :as => :string, :label => "Email"
 
   ################ index #######################
   index do
     column :id do |o|
       link_to o.id, admin_order_path(o)
     end
-    column :reference, sortable: 'purchases.reference_number' do |o|
+    column "주문번호", :reference, sortable: 'purchases.reference_number' do |o|
       o.purchase.reference_number
     end
-    column "purchase status" do |o|
+    column "결제상태" do |o|
       status_string = Purchase::STATUSES.invert.keys
-      status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
+      status_tag( t(status_string[o.purchase.status]), purchase_status_css[o.purchase.status] )
     end
-    column "status" do |o|
+    column "주문상태" do |o|
       status_string = Order::STATUSES.invert.keys  
-      status_tag( status_string[o.status], order_status_css[o.status] )
+      status_tag( t(status_string[o.status]), order_status_css[o.status] )
     end
-    column "Product" do |o|
+    column "상품명" do |o|
       o.item.display_name
     end
-    column :order_periodic
-    column "quantity (weight)" do |o|
+    column "정기구매", :order_periodic
+    column "수량 (무게)" do |o|
       o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
     end
-    column "user info" do |o|
+    column "구매자 정보" do |o|
       para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
       para o.purchase.user.email
     end
-    column "recipient" do |o|
+    column "수취인" do |o|
       o.purchase.recipient
     end
-    column "address / city / postcode" do |o|
+    column "주소 / 도시 / 우편번호" do |o|
       para o.purchase.address
       para o.purchase.city
       para o.purchase.postcode
     end
-    column "phonenumber" do |o|
+    column "전화번호" do |o|
       o.purchase.phonenumber
     end
     column "결제수단" do |o|
@@ -239,8 +240,8 @@ ActiveAdmin.register Order do
       span dt.strftime('%F')
       span dt.strftime('%T')
     end
-    column "Actions" do |o|
-      span link_to "Show", { :action => :show, :id => o.id }, { :class => "btn-normal" }
+    column "" do |o|
+      para link_to "상세", { :action => :show, :id => o.id }, { :class => "btn btn-default margin_p" }
       
       case o.status
         when Order::STATUS_PREPARING_ORDER
@@ -253,11 +254,11 @@ ActiveAdmin.register Order do
           target = ''
       end
       unless target == ''
-        span link_to "check", { :action => :transition, :id => o.id, :target => target }, { :class => "btn-normal" }
+        para link_to "진행", { :action => :transition, :id => o.id, :target => target }, { :class => "btn btn-primary margin_p" }
       end
       
       unless o.status == Order::STATUS_CANCEL
-        span link_to "cancel", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+        para link_to "취소", { :action => :cancel, :id => o.id }, { :class => "btn btn-danger margin_p" }
       end
     end
   end
@@ -312,10 +313,10 @@ ActiveAdmin.register Order do
           row :updated_at
           row :created_at
           row "Edit" do |o|
-            link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn-normal" }
+            link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn btn-default" }
           end
           row "Cancel" do |o|
-            link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn-danger" }
+            link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn btn-danger" }
           end
         end
       end

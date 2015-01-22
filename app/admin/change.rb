@@ -9,7 +9,7 @@ ActiveAdmin.register Change do
 	scope :done
 	scope :rejected
 	scope :cancelled
-	scope :STATUS_ON_DELIVERY
+	scope :on_delivery
 
 
 	################# change status #################

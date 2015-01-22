@@ -9,7 +9,7 @@ class Change < ActiveRecord::Base
 	scope :done,								-> { where(status: STATUS_DONE) }
 	scope :rejected,						-> { where(status: STATUS_REJECT) }
 	scope :cancelled,						-> { where(status: STATUS_CANCEL) }
-	scope :STATUS_ON_DELIVERY,	-> { where(status: STATUS_ON_DELIVERY) }
+	scope :on_delivery,					-> { where(status: STATUS_ON_DELIVERY) }
 
 	STATUS_REQUEST = 0
 	STATUS_ON_PROCESS = 1
@@ -19,18 +19,20 @@ class Change < ActiveRecord::Base
 	STATUS_ON_DELIVERY = 5
 
 	STATUSES = {
-		STATUS_REQUEST => "STATUS_REQUEST",
-		STATUS_ON_PROCESS => "STATUS_ON_PROCESS",
-		STATUS_DONE => "STATUS_DONE",
-		STATUS_REJECT => "STATUS_REJECT",
-		STATUS_CANCEL => "STATUS_CANCEL",
-		STATUS_ON_DELIVERY => "STATUS_ON_DELIVERY"
+		STATUS_REQUEST => "STATUS_CHANGE_REQUEST",
+		STATUS_ON_PROCESS => "STATUS_CHANGE_ON_PROCESS",
+		STATUS_DONE => "STATUS_CHANGE_DONE",
+		STATUS_REJECT => "STATUS_CHANGE_REJECT",
+		STATUS_CANCEL => "STATUS_CHANGE_CANCEL",
+		STATUS_ON_DELIVERY => "STATUS_CHANGE_ON_DELIVERY"
 	}
 
 	REASONS = {
 		0 => 'change_reasons0',
 		1 => 'change_reasons1',
 		2 => 'change_reasons2',
+		3 => 'change_reasons3',
+		4 => 'change_reasons4',
 	}
 
 	def quantity_check

@@ -120,15 +120,14 @@ ActiveAdmin.register Box do
 	################# index ##################
 	index do
 		column :id
-		column "Image" do |b|
+		column "제품이미지" do |b|
 			tag :img, :src => "/images/box/#{b.path}.jpg", :width => "100px", :height => "100px"
 		end
-		column :display_name
-		column :path
-		column :opened
-		column :created_at
+		column "제품명", :display_name
+		column "판매중", :opened
+		column "등록일", :created_at
 		column "" do |b|
-			link_to "Show", { :action => :show, :id => b.id }, { :class => 'btn-normal' }
+			para link_to "Show", { :action => :show, :id => b.id }, { :class => 'btn btn-default' }
 		end
 	end
 
@@ -142,7 +141,7 @@ ActiveAdmin.register Box do
 		end #attr_table
 
 		panel "Item Details" do
-			table_for Box.find(params[:id]).items do |item|
+			table_for Box.find(params[:id]).items, class: 'table table-bordered detail_table', row_class: ->elem { 'active' } do |item|
 				column('Image') do |item|
 					tag :img, :src => "/images/box/#{item.path}.jpg", :width => "100px", :height => "100px"
 				end

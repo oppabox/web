@@ -14,6 +14,7 @@ class Order < ActiveRecord::Base
 
   scope :paid,                -> { valid.joins(:purchase).merge(Purchase.paid) }
   scope :pending,             -> { valid.joins(:purchase).merge(Purchase.pending) }
+  scope :purchase_cancelled,             -> { valid.joins(:purchase).merge(Purchase.cancelled) }
   scope :except_ordering,     -> { valid.joins(:purchase).merge(Purchase.valid) }
 
   scope :ordered,             -> { paid.on_ordering }
@@ -33,13 +34,13 @@ class Order < ActiveRecord::Base
   STATUS_DELETED = 6
 
   STATUSES = {
-    STATUS_ORDERING => "STATUS_ORDERING",
-    STATUS_PREPARING_ORDER => "STATUS_PREPARING_ORDER",
-    STATUS_PREPARING_DELIVERY => "STATUS_PREPARING_DELIVERY",
-    STATUS_ON_DELIVERY => "STATUS_ON_DELIVERY",
-    STATUS_DONE => "STATUS_DONE",
-    STATUS_CANCEL => "STATUS_CANCEL",
-    STATUS_DELETED => "STATUS_DELETED"
+    STATUS_ORDERING => "STATUS_ORDER_ORDERING",
+    STATUS_PREPARING_ORDER => "STATUS_ORDER_PREPARING_ORDER",
+    STATUS_PREPARING_DELIVERY => "STATUS_ORDER_PREPARING_DELIVERY",
+    STATUS_ON_DELIVERY => "STATUS__ORDERON_DELIVERY",
+    STATUS_DONE => "STATUS_ORDER_DONE",
+    STATUS_CANCEL => "STATUS_ORDER_CANCEL",
+    STATUS_DELETED => "STATUS_ORDER_DELETED"
   }
 
   def status_name
@@ -73,8 +74,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.change_currency_pretty money
+    "#{number_with_delimiter(money)} KRW <br> (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
+  end
+
   def self.change_currency money
-    "#{number_with_delimiter(money)} KRW (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
+    "#{number_with_delimiter(money)} KRW <br> (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
   end
 
   def self.usd_from_krw money

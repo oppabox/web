@@ -7,6 +7,7 @@ ActiveAdmin.register Cancel do
 	scope :requested
 	scope :done
 	scope :cancelled
+	scope :rejected
 
 
 	################# change status #################
