@@ -79,3 +79,12 @@ a, a:link, a:visited {
 		text-align: center;
 	}
 }
+
+.option_table {
+	td, th {
+		vertical-align: middle !important;
+		background: white !important;
+
+	}
+	margin: 0 !important;
+}

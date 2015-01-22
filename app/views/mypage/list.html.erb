@@ -3,7 +3,7 @@
     <%= render :partial => '/mypage/left_list' %>
     <div class="col-md-10">
       <hr>
-      <table class="table">
+      <table class="table table-bordered">
         <thead>
           <tr class="active align_middle">
             <th class="text-center">
@@ -58,7 +58,7 @@
                 <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                 <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
-                 <td class="text-center"><%= t(Order::STATUSES[order.status]) %></td>
+                <td class="text-center"><%= t(Order::STATUSES[order.status]) %></td>
                 <td class="text-center">
                   <% if purchase.status == Purchase::STATUS_PAID %>
                   <%# only when status is paid %>

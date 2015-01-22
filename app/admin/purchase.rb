@@ -314,30 +314,35 @@ ActiveAdmin.register Purchase do
 
       column do
         panel "Order Details" do
-          table_for Purchase.find(params[:id]).orders.valid do |o|
-            column("id") do |o|
-              link_to o.id, admin_order_path(o)
+          table class: 'table table-bordered option_table' do
+            thead do
+              th 'ID'
+              th 'name'
+              th 'quantity'
+              th 'period'
+              th 'option_title'
+              th 'option_details'
             end
-            column("Name") { |o| o.item.display_name }
-            column("Quantity") { |o| o.quantity }
-            column("Period") { |o| o.order_periodic }
-            column("Option_Title") { |o| 
-              ul do
-                o.order_option_items.each do |ooi|
-                  li ooi.option.title
-                end
-              end
-            }
-            column("Option_Details") { |o| 
-              ul do
-                o.order_option_items.each do |ooi|
-                  unless ooi.option_item.nil?
-                    li ooi.option_item.name
+            tbody do
+              Purchase.find(params[:id]).orders.valid.each do |o|
+                  o.order_option_items.each_with_index do |ooi, idx|
+                    tr do
+                      if idx == 0
+                        td rowspan: o.order_option_items.count do o.id end
+                        td rowspan: o.order_option_items.count do o.item.display_name end
+                        td rowspan: o.order_option_items.count do o.quantity end
+                        td rowspan: o.order_option_items.count do o.order_periodic end
+                        td ooi.option.title
+                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
+                      else
+                        td ooi.option.title
+                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
+                      end
+                    end
                   end
                 end
               end
-            }
-          end
+            end
 
         end
       end

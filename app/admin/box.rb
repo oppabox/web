@@ -141,7 +141,7 @@ ActiveAdmin.register Box do
 		end #attr_table
 
 		panel "Item Details" do
-			table_for Box.find(params[:id]).items, class: 'table table-bordered detail_table', row_class: ->elem { 'active' } do |item|
+			table_for Box.find(params[:id]).items, class: 'table table-bordered detail_table', row_class: ->elem { "" } do |item|
 				column('Image') do |item|
 					tag :img, :src => "/images/box/#{item.path}.jpg", :width => "100px", :height => "100px"
 				end
@@ -172,6 +172,9 @@ ActiveAdmin.register Box do
 							end #column
 						end #table_for
 					end #unless
+				end
+				column('') do |item| 
+					para link_to "수정", edit_admin_item_path(item.id , :target => "/#{params[:controller]}/#{params[:id]}" ), { :class => 'btn btn-default' }
 				end
 			end #table_for
 		end #panel

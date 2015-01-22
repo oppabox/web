@@ -21,25 +21,58 @@ ActiveAdmin.register Item do
 		column :buy_limit	
 		column "Options" do |item|
 			unless item.options.count == 0
-				table_for item.options do |o|
-					column('name') { |o| o.title }
-					column('type') { |o| Option::TYPE[o.option_type] }
-					column('max_length') { |o| o.option_type == OPTION_TYPE_STRING ? o.max_length : '' }
-					column('english_only') { |o| o.option_type == OPTION_TYPE_STRING ? o.english_only : '' }
-					column('others(quantity / limited / price_change)') do |o|
-						unless o.option_items.count == 0
-							table_for o.option_items do |oi|
-								column('name') { |oi| oi.name}
-								column('quantity') { |oi| oi.quantity }
-								column('limited') { |oi| oi.limited.to_s }
-								column('price change') { |oi| oi.price_change }
-							end #table_for
-						end #unless
-					end #column
-				end #table_for
+				table class: 'table table-bordered option_table' do
+					thead do
+						th 'name'
+						th 'type'
+						th 'max_len'
+						th 'eng_only'
+						th 'name'
+						th 'quan'
+						th 'lim'
+						th 'price_chn'
+					end
+					tbody do
+						item.options.each do |o|
+							if (cnt = o.option_items.count) == 0
+								tr do
+									td o.title
+									td Option::TYPE[o.option_type]
+									td o.option_type == OPTION_TYPE_STRING ? o.max_length : ''
+									td o.option_type == OPTION_TYPE_STRING ? o.english_only : ''
+									td colspan: 4
+								end
+							else
+								o.option_items.each_with_index do |oi, idx|
+									tr do
+										if idx == 0
+											td rowspan: cnt do o.title end
+											td rowspan: cnt do Option::TYPE[o.option_type] end
+											td rowspan: cnt do o.option_type == OPTION_TYPE_STRING ? o.max_length : '' end
+											td rowspan: cnt do o.option_type == OPTION_TYPE_STRING ? o.english_only : '' end
+											td oi.name
+											td oi.quantity
+											td oi.limited.to_s
+											td oi.price_change
+										else
+											td oi.name
+											td oi.quantity
+											td oi.limited.to_s
+											td oi.price_change
+										end
+									end
+								end
+							end
+						end
+					end
+				end
 			end #unless
 		end
-		actions
+
+
+		column "" do |item|
+			para link_to "수정", edit_admin_item_path(item.id), { :class => "btn btn-default" }
+		end
 	end
 
 	filter :id
