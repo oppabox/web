@@ -56,7 +56,7 @@ ActiveAdmin.register Return do
 		end
 		column "휴대번호",:phonenumber
     column "신청시간" do |c|
-      para e.created_at.strftime("%Y-%m-%d")
+      para c.created_at.strftime("%Y-%m-%d")
     end
     column "처리시각" do |c|
       para c.status == Return::STATUS_DONE or c.status == Return::STATUS_CANCEL ? c.updated_at.strftime("%Y-%m-%d") : "처리중"
