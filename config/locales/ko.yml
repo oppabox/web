@@ -622,8 +622,8 @@ ko:
   STATUS_RETURN_CANCEL: "반품 요청 취소"
 
   return_successfully: "반품 신청이 접수되었습니다."
-  return_problems: “반품 신청서에 문제가 있습니다. 다시 작성하여 주십시오.”
-  cancel_successfully: “취소 신청이 접수되었습니다.”
-  cancel_problems: “취소 신청서에 문제가 있습니다. 다시 작성하여 주십시오.”
-  change_successfully: “교환 신청이 접수되었습니다.”
-  change_problems: “교환 신청서에 문제가 있습니다. 다시 작성하여 주십시오.”
+  return_problems: "반품 신청서에 문제가 있습니다. 다시 작성하여 주십시오."
+  cancel_successfully: "취소 신청이 접수되었습니다."
+  cancel_problems: "취소 신청서에 문제가 있습니다. 다시 작성하여 주십시오."
+  change_successfully: "교환 신청이 접수되었습니다."
+  change_problems: "교환 신청서에 문제가 있습니다. 다시 작성하여 주십시오."
