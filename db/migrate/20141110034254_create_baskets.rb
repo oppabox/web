@@ -4,6 +4,8 @@ class CreateBaskets < ActiveRecord::Migration
       t.integer :item_id
       t.integer :user_id
 
+      t.boolean :deleted,   :default => false
+
       t.timestamps
     end
   end

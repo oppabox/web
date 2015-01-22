@@ -16,11 +16,11 @@
           </tr>
         </thead>
         <tbody>
-          <% @purchase.orders.each_with_index do |order, index|%>
+          <% @purchase.orders.valid.each_with_index do |order, index|%>
             <tr class="list_cell">
 
               <% if index == 0 %>
-                <td rowspan="<%=@purchase.orders.count%>" class="text-center"><%=order.purchase.id%></td>
+                <td rowspan="<%=@purchase.orders.valid.count%>" class="text-center"><%=order.purchase.reference_number%></td>
               <% end %>
 
               <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
@@ -36,7 +36,7 @@
               <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
               <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
               <% if index == 0 %>
-                <td rowspan="<%=@purchase.orders.count%>" class="text-center">
+                <td rowspan="<%=@purchase.orders.valid.count%>" class="text-center">
                   <%= Order.change_currency(@purchase.amt) %><br>
                   [<%=t('paid_delivery_charge')%> : <%=0%>]
                 </td>

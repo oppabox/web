@@ -52,7 +52,39 @@ $(function(){
   })
 
   $("#signup_step3_button").on("click",function(){
-      submit_address("/home/welcome");
+    var flag = false;
+    var validation = function() {
+      $('#signup_name, #signup_state, #signup_city, #signup_address').each(function(){
+        var past = $(this).val();
+        //$(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
+        $(this).val($(this).val().replace(/[^\x00-\x7F]/g, ''));
+        if($(this).val() != past){
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        var msg = $("#address_msg").data("msg");
+        alert(msg);
+        return false;
+      }
+      else {
+        $('#signup_name, #signup_state, #signup_city, #signup_address, #signup_phonenumber').each(function(){
+          if ($(this).val() == '')
+            flag = true;
+        });
+
+        if (flag) {
+          var msg = "no space allowed";
+          alert(msg);
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (validation())
+      submit_address("/");
   });
 
   $("#signin_button").on("click",function(){

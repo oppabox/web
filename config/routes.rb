@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "pay/korean_payment"
   get "pay/nonkorean_payment"
 
+  post "pay/generate_ref_num"
 	post "pay/reorder_quantity"
   post "pay/change_currency"
 
@@ -73,4 +74,9 @@ Rails.application.routes.draw do
   post "mypage/api_reset_password"
   get "mypage/api_info"
   post "mypage/edit_address"
+  get "mypage/new_request(/:order_id)" => "mypage#new_request", as: :mypage_new_request
+  post "mypage/change_currency"
+  post "mypage/return_request"
+  post "mypage/cancel_request"
+  post "mypage/change_request"
 end

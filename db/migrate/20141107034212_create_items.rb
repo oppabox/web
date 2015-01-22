@@ -12,8 +12,9 @@ class CreateItems < ActiveRecord::Migration
       t.boolean     :limited,     :default => false
       t.boolean     :periodic,    :default => false
       t.boolean     :opened,      :default => true
+      t.float       :weight,      :null => false
 
-      t.integer     :buy_limit,   :default => 300
+      t.integer     :buy_limit,   :default => 20
 
       t.timestamps
     end

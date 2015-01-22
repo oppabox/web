@@ -7,6 +7,7 @@ def designbox
     i.path = "in_my_bag_1"
     i.original_price = "51300"
     i.sale_price = "48500"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 1 : LOCALE NAME
@@ -59,6 +60,7 @@ def designbox
     i.path = "in_my_bag_2"
     i.original_price = "56300"
     i.sale_price = "50500"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 1 : LOCALE NAME
@@ -127,6 +129,7 @@ def designbox
     i.path = "in_my_bag_3"
     i.original_price = "70800"
     i.sale_price = "67500"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 3 : LOCALE NAME
@@ -195,6 +198,7 @@ def designbox
     i.path = "in_my_bag_4"
     i.original_price = "70800"
     i.sale_price = "63500"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 4 : LOCALE NAME
@@ -263,6 +267,7 @@ def designbox
     i.path = "in_my_bag_5"
     i.original_price = "100800"
     i.sale_price = "91000"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 5 : LOCALE NAME
@@ -315,6 +320,7 @@ def designbox
     i.path = "in_my_bag_6"
     i.original_price = "111000"
     i.sale_price = "94500"
+		i.weight = 4.0
   i.save
 
 #IN MY BAG 6 : LOCALE NAME

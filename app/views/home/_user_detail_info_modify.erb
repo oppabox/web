@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4 col-xs-6">
-    <label><%= t('user_detail_recipient') %></label>
+    <label id="recipient_label"><%= t('user_detail_recipient') %></label>
     <input name="userrealname" id="signup_name" value="<%=current_user.name || ""%>" type="text" class="form-control" placeholder="<%= t('user_detail_recipient_name') %>" required autofocus>
   </div>
 </div>
@@ -61,6 +61,7 @@
 <% end %>
 <% if !["KR"].include? current_user.country %>
   <label><%= t('signup_step3_rest_address') %></label>
+  <div id="address_msg" data-msg="<%= t('address_foreign_msg') -%>"><%= t('address_foreign_msg') -%></div>
 <% else %>
   <label><%= t('signup_step3_address') %></label>
 <% end %>
@@ -94,5 +95,48 @@
         }).embed(element);
         element.style.display = 'block';
     }
+</script>
+<% else %>
+<script type="text/javascript">
+$('#signup_name, #signup_state, #signup_city, #signup_address').bind("keydown change paste", function(){
+  var past = $(this).val();
+  //$(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
+  $(this).val($(this).val().replace(/[^\x00-\x7F]/g, ''));
+  if($(this).val() != past){
+    var msg = $("#address_msg").data("msg");
+    alert(msg);
+  }
+});
+$('body').on("click", "input[name=commit]", function(e){
+  var flag = false;
+  $('#signup_name, #signup_state, #signup_city, #signup_address').each(function(){
+    var past = $(this).val();
+    //$(this).val($(this).val().replace(/[^0-9A-Za-z\s\-\_]/g, ''));
+    $(this).val($(this).val().replace(/[^\x00-\x7F]/g, ''));
+    if($(this).val() != past){
+      flag = true;
+    }
+  });
+
+  if (flag) {
+    var msg = $("#address_msg").data("msg");
+    alert(msg);
+    e.preventDefault();
+    return false;
+  }
+  else {
+    $('#signup_name, #signup_state, #signup_city, #signup_address, #signup_phonenumber').each(function(){
+      if ($(this).val() == '')
+        flag = true;
+    });
+
+    if (flag) {
+      var msg = "no space allowed"
+      alert(msg);
+      e.preventDefault();
+      return false;
+    }
+  }
+});
 </script>
 <% end %>

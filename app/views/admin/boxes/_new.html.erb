@@ -1,0 +1,68 @@
+<%= semantic_form_for @box, url: "/admin/boxes", html: {method: "POST"} do |f| %>
+	<%= f.inputs :name => "Box info" do %>
+		<%= f.input :display_name, :required => true %>
+		<%= f.input :opened, :as => :boolean, :required => true %>
+		<%= f.input :image, :as => :file %>
+		<li><%= link_to "Add Item", '#add_item', { :class => "btn-normal", :id => "add_item" } %></li>
+	<% end %>
+	<div id="panel">
+		<%= render partial: 'new_item', :locals => { :id => 1 } %>
+	</div>
+	<input type="hidden" name="item_counter" id="item_counter" value="1" %>
+	<%= f.actions %>
+<% end %>
+
+<script>
+$('#add_item').click(function(){
+	cnt = parseInt($('#item_counter').val()) + 1;
+	$.ajax({
+    url: "/admin/boxes/add_item",
+    type: "POST",
+    dataType:"SCRIPT",
+    data: {
+    	cnt: cnt
+    },
+    success: function(){
+    	$('#item_counter').val(cnt);
+    }
+  });
+});
+
+$('body').on ("click", ".add_option", function(){
+	cnt = parseInt($(this).attr("data-counter")) + 1;
+	item_id = $(this).attr("data-item-id");
+	target = $(this)
+	$.ajax({
+    url: "/admin/boxes/add_option",
+    type: "POST",
+    dataType:"SCRIPT",
+    data: {
+    	cnt: cnt,
+    	item_id: item_id
+    },
+    success: function(){
+    	target.attr("data-counter", cnt);
+    }
+  });
+});
+
+$('body').on ("click", ".add_option_item", function(){
+	cnt = parseInt($(this).attr("data-counter")) + 1;
+	item_id = $(this).attr("data-item-id");
+	option_id = $(this).attr("data-option-id");
+	target = $(this)
+	$.ajax({
+    url: "/admin/boxes/add_option_item",
+    type: "POST",
+    dataType:"SCRIPT",
+    data: {
+    	cnt: cnt,
+    	item_id: item_id,
+    	option_id: option_id
+    },
+    success: function(){
+    	target.attr("data-counter", cnt);
+    }
+  });
+});
+</script>

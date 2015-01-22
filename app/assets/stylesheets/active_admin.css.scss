@@ -11,7 +11,71 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+// td.col-address {
+// 	min-width: 180px;
+// }
+
+body {
+	font-size: 12px !important;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+hr {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+
+a, a:link, a:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+.panel, .sidebar_section {
+	background: #f4f4f4 !important;
+	-webkit-border-radius: 4px !important;
+	-moz-border-radius: 4px !important;
+	border-radius: 4px !important;
+	box-shadow: inset 0 1px 4px #dddddd !important;
+	-moz-box-shadow: inset 0 1px 4px #dddddd !important;
+	-webkit-box-shadow: inset 0 1px 4px #dddddd !important;
+	margin-bottom: 20px !important;
+	border: none !important;
+
+	input {
+		box-sizing: content-box;
+	}
+	label {
+		text-align: left;
+	}
+}
+
+.btn-danger, .btn-info, .btn-success, .btn-warning, .btn-primary {
+	color: #fff !important;
+}
+
+.margin_p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.index_table {
+	td, th {
+		vertical-align: middle !important;
+	}
+}
+
+.detail_table {
+	td, th {
+		vertical-align: middle !important;
+		text-align: center;
+	}
+}

@@ -37,7 +37,8 @@ class ItemController < ApplicationController
   def del_from_basket
     b = Basket.where(user_id: current_user.id,
                      item_id: params[:item_id]).take
-    if b.delete
+    b.deleted = true
+    if b.save
       render :nothing => true, :status => 200
     else
       render :text => t(:something_wrong), :status => 500
@@ -45,8 +46,9 @@ class ItemController < ApplicationController
   end
 
   def del_from_order
-    b = current_user.orders.where(item_id: params[:item_id]).take
-    if b.delete
+    o = current_user.orders.where(item_id: params[:item_id]).take
+    o.status = Order::STATUS_DELETED
+    if o.save
       render :nothing => true, :status => 200
     else
       render :text => t(:something_wrong), :status => 500
@@ -56,11 +58,13 @@ class ItemController < ApplicationController
   def add_to_order
     p = current_user.purchase
     if p.nil?
-      p = Purchase.create(user_id: current_user.id, status: PURCHASE_ORDERING)
+      p = Purchase.create(user_id: current_user.id, status: Purchase::STATUS_ORDERING)
     end
 
     new_order_is_needed = true
-    orders = Order.where(order_periodic: params[:periodic], purchase_id: p.id, item_id: params[:item_id])
+    orders = Order.valid.where(order_periodic: params[:periodic], 
+                          purchase_id: p.id, 
+                          item_id: params[:item_id])
     o = Order.new
 
     if !orders.empty?

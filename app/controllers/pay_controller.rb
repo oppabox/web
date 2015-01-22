@@ -1,11 +1,11 @@
 class PayController < ApplicationController
-  before_action :login_check, only: [:order, :success, :billing]
+  before_action :login_check, only: [:order, :success, :billing, :korean_payment, :nonkorean_payment]
   before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
   skip_before_action :http_basic_authenticate, only: :usd_status
 
   def check_order_quantity
     over_quantity_names = Array.new
-    current_user.orders.each do |o|
+    current_user.orders.valid.each do |o|
       #item check
       item = o.item
       if item.limited and item.quantity < o.quantity
@@ -80,7 +80,7 @@ class PayController < ApplicationController
     purchase.save
 
     @orders = current_user.orders
-    @baskets = current_user.baskets
+    @baskets = current_user.baskets.valid
     @all_price = 0
     @orders.each do |o|
       @all_price += o.quantity * o.total_price
@@ -94,24 +94,39 @@ class PayController < ApplicationController
     @delivery_fee = purchase.get_delivery_fee
   end
 
+  def generate_ref_num
+    purchase = current_user.purchase
+    purchase.set_reference_number
+    render :json => purchase.save
+  end
+
   def korean_payment
     order
   end
 
   def nonkorean_payment
     order
+    if params[:mobile]
+      @pay_url = EXIMBAY_MOBILE_URL
+    else
+      @pay_url = EXIMBAY_URL
+    end
   end
 
   def reorder_quantity
     o = Order.where(id: params[:order_id]).take
-    if params[:method].downcase == "plus"
-      o.quantity += 1
-    else
-      o.quantity -= 1
-    end
 
-    if o.save
-      render :nothing => true, :status => 200
+    if o.purchase.user == current_user
+      if params[:method].downcase == "plus"
+        o.quantity += 1
+      else
+        o.quantity -= 1
+      end
+      if o.save
+        render :nothing => true, :status => 200
+      else
+        render :text => t(:something_wrong), :status => 500
+      end
     else
       render :text => t(:something_wrong), :status => 500
     end
@@ -119,8 +134,10 @@ class PayController < ApplicationController
 
   def usd_request
     @secretKey = EXIMBAY_SECRET_KEY
+    @pay_url = params[:pay_url]
     @mid = params[:mid]
     @ref = params[:ref]
+    @purchase_id = params[:purchase_id] # send on param1
 
     @cur = params[:cur]
     @product = params[:product]
@@ -244,7 +261,7 @@ class PayController < ApplicationController
     @cardno1 = params['cardno1']
     @cardno4 = params['cardno4']
 
-    p = Purchase.find(@ref)
+    p = Purchase.find(@param1)
 
     if (@rescode == "0000")
       @linkBuf = @secretKey + "?mid=" + @mid +"&ref=" + @ref + "&cur=" + @cur +"&amt=" + @amt +"&rescode=" + @rescode + "&transid=" +@transid
@@ -256,16 +273,21 @@ class PayController < ApplicationController
     end
 
     if (@rescode == "0000")
-      p.status = PURCHASE_PAID
+      p.status = Purchase::STATUS_PAID
       p.order_no = "authcode: #{@authcode}"
-      p.approval_ymdhms = @resdt
+      p.approval_datetime = DateTime.strptime(@resdt, '%Y%m%d%H%M%S')
       p.amt = @amt + @cur
       p.seq_no = "transid: #{@transid}"
       p.pay_type = "CARD #{@cardco} #{@cardno1}********#{@cardno4} by: #{@cardholder}"
       #apply your database or file system.
+      p.item_transaction    
     end
     p.replycd = @rescode
     p.replymsg = @resmsg
+    # reference number
+    p.set_reference_number
+    # pay option
+    p.pay_option = Purchase::PAY_OPTIONS["CARD"]
     render text: p.save
   end
 end

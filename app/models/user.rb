@@ -10,15 +10,15 @@ class User < ActiveRecord::Base
 
   def orders
     p = self.purchase
-    p.nil? ? [] : p.orders
+    p.nil? ? [] : p.orders.valid
   end
 
   def purchase
-    self.purchases.where(status: PURCHASE_ORDERING).take
+    self.purchases.where(status: Purchase::STATUS_ORDERING).take
   end
 
   def purchased_find purchase_id
-    self.purchases.where(id: purchase_id).where.not(status: PURCHASE_ORDERING).take
+    self.purchases.where(id: purchase_id).valid.take
   end
 
   def send_password_reset
@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     self.save!
 
     UserMailer.password_reset(self).deliver
+  end
+
+  def self.send_test_mail
+    UserMailer.test_mail().deliver
   end
 
   def self.check_sign_params email, password = nil, password_confirm = nil
@@ -52,5 +56,12 @@ class User < ActiveRecord::Base
       ret[:message] = I18n.t('usercheck_password_confirm_not_equal')
     end
     ret
+  end
+
+  def self.current
+    Thread.current[:user]
+  end
+  def self.current=(user)
+    Thread.current[:user] = user
   end
 end

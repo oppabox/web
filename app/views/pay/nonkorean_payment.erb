@@ -12,13 +12,15 @@
           <div style="height:40px;"></div>
         <% else %>
           <%= form_tag("/pay/usd_request", name: "regForm", method: "post") do %>
+            <input type="hidden" name="pay_url" value="<%=@pay_url%>">
             <input type="hidden" name="cur" value="USD">
             <input type="hidden" name="product" value="<%=@product_nms%>">
             <input type="hidden" name="visitorid" value="<%=current_user.id%>">
             <input type="hidden" name="ver" value="180">
             <input type="hidden" name="mid" value="<%=EXIMBAY_MID%>">
             <input type="hidden" name="txntype" value="SALE">
-            <input type="hidden" name="ref" value="<%=@orders.first.purchase.id%>">
+            <input type="hidden" name="ref" value="<%=@orders.first.purchase.reference_number%>">
+            <input type="hidden" name="purchase_id" value="<%=@orders.first.purchase.id%>">
             <input type="hidden" name="rescode">
             <input type="hidden" name="resmsg">
             <input type="hidden" name="authcode">
@@ -42,6 +44,9 @@
             <div style="height:30px;"></div>
             <h3 class="text-center"><%= t('total_payment_inprogress2') %></h3>
             <div style="height:40px;"></div>
+            <div id="nonkrw_payment">
+              <button class="btn btn-primary" style="width:100%" onclick="payForm();"><%= t('open_payment_popup') %></button>
+            </div>
           <% end %>
         <% end %>
       </div>
@@ -62,7 +67,7 @@
         frm.target = "payment2";
         frm.submit();
       }
-    payForm();
+  payForm();
 //-->
 </script>
 <script type="text/javascript">init_module();</script>

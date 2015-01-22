@@ -1,0 +1,10 @@
+<%= semantic_form_for @order, url: admin_order_path(@order), html: {method: "patch"} do |f| %>
+	<%= f.inputs do %>
+		<%= f.input :quantity %>
+		<%= f.input :order_periodic %>
+		<%= f.input :invoice %>
+	<% end %>
+	<%= f.actions do %>
+		<%= f.action :submit %>
+	<% end %>
+<% end %>

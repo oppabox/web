@@ -3,11 +3,52 @@ class Order < ActiveRecord::Base
   belongs_to  :item
   belongs_to  :purchase
   has_many    :order_option_items
-
+  has_one     :return, dependent: :destroy
+  has_one     :cancel, dependent: :destroy
+  has_one     :change, dependent: :destroy
+  
   before_save :period_check, :quantity_check
 
+  scope :valid,               -> { where.not(status: STATUS_DELETED) }
+  scope :on_ordering,         -> { where(status: STATUS_ORDERING) }
+
+  scope :paid,                -> { valid.joins(:purchase).merge(Purchase.paid) }
+  scope :pending,             -> { valid.joins(:purchase).merge(Purchase.pending) }
+  scope :purchase_cancelled,             -> { valid.joins(:purchase).merge(Purchase.cancelled) }
+  scope :except_ordering,     -> { valid.joins(:purchase).merge(Purchase.valid) }
+
+  scope :ordered,             -> { paid.on_ordering }
+  scope :prepare_order,       -> { paid.where(status: STATUS_PREPARING_ORDER) }
+  scope :prepare_delivery,    -> { paid.where(status: STATUS_PREPARING_DELIVERY) }
+  scope :on_delivery,         -> { paid.where(status: STATUS_ON_DELIVERY) }
+  scope :done,                -> { paid.where(status: STATUS_DONE) }
+  scope :cancelled,           -> { where(status: STATUS_CANCEL) }
+
+
+  STATUS_ORDERING = 0
+  STATUS_PREPARING_ORDER = 1
+  STATUS_PREPARING_DELIVERY = 2
+  STATUS_ON_DELIVERY = 3
+  STATUS_DONE = 4
+  STATUS_CANCEL = 5
+  STATUS_DELETED = 6
+
+  STATUSES = {
+    STATUS_ORDERING => "STATUS_ORDER_ORDERING",
+    STATUS_PREPARING_ORDER => "STATUS_ORDER_PREPARING_ORDER",
+    STATUS_PREPARING_DELIVERY => "STATUS_ORDER_PREPARING_DELIVERY",
+    STATUS_ON_DELIVERY => "STATUS__ORDERON_DELIVERY",
+    STATUS_DONE => "STATUS_ORDER_DONE",
+    STATUS_CANCEL => "STATUS_ORDER_CANCEL",
+    STATUS_DELETED => "STATUS_ORDER_DELETED"
+  }
+
+  def status_name
+    STATUSES[status].to_s
+  end
+
   def quantity_check
-    if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity < 0 
+    if self.quantity.nil? or self.quantity.to_s.empty? or self.quantity <= 0 
       self.quantity = 1
     end
 
@@ -21,7 +62,7 @@ class Order < ActiveRecord::Base
 
     #option limits
     self.order_option_items.each do |x|
-      if (x.option_item.limited == true) and (self.quantity > x.option_item.quantity)
+      if (!x.option_item.nil?) and (x.option_item.limited == true) and (self.quantity > x.option_item.quantity)
         self.quantity = x.option_item.quantity
       end
     end
@@ -33,8 +74,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.change_currency_pretty money
+    "#{number_with_delimiter(money)} KRW <br> (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
+  end
+
   def self.change_currency money
-    "#{number_with_delimiter(money)} KRW (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
+    "#{number_with_delimiter(money)} KRW <br> (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
   end
 
   def self.usd_from_krw money
@@ -50,4 +95,41 @@ class Order < ActiveRecord::Base
     end
     sum * self.order_periodic
   end
+
+  def has_return?
+    !self.return.nil?
+  end
+
+  def has_cancel?
+    !self.cancel.nil?
+  end
+
+  def has_change?
+    !self.change.nil?
+  end
+
+  def has_request?
+    self.has_return? or self.has_cancel? or self.has_change?
+  end
+
+  def cancel_transaction c_quantity
+    ActiveRecord::Base.transaction do
+      #ITEM QUANTITY
+      i = self.item
+      if i.limited == true
+        i.quantity += c_quantity
+        i.save!
+      end
+
+      self.order_option_items.each do |ooi|
+        oi = ooi.option_item
+        if oi.limited == true
+          oi.quantity += c_quantity
+          oi.save!
+        end
+      end
+
+    end
+  end
+
 end

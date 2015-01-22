@@ -1,0 +1,5 @@
+<%= form_for :form, url: "/#{params[:controller]}/change_status", html: {method: "patch"} do |f| %>
+	<%= f.hidden_field :id, :value => id %>
+	<%= f.select :status, options_for_select(collection, data) %>
+	<%= f.submit "Edit" %>
+<% end %>

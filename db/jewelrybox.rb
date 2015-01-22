@@ -8,6 +8,7 @@ def jewelrybox
     i.path = "knot"
     i.original_price = "113000"
     i.sale_price = "49000"
+		i.weight = 0.25
   i.save
 
 #SET 1 : LOCALE NAME
@@ -30,6 +31,7 @@ def jewelrybox
     i.path = "cross"
     i.original_price = "250000"
     i.sale_price = "89000"
+		i.weight = 0.25
   i.save
 
 #SET 2 : LOCALE NAME
@@ -74,6 +76,7 @@ def jewelrybox
     i.path = "ring"
     i.original_price = "69000"
     i.sale_price = "49000"
+		i.weight = 0.25
   i.save
 
 #SET 3 : LOCALE NAME

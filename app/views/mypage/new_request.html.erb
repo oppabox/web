@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <%= render :partial => "left_list" %>
+    <div class="col-md-10">
+    	<h3></h3>
+     	<select class="form-control" id="request_type">
+    		<option value="null"><%= t('please_select_type') %></option>
+    		<option value="change"><%= t('type_change') %></option>
+    		<option value="return"><%= t('type_return') %></option>
+        <% if [Order::STATUS_PREPARING_DELIVERY, Order::STATUS_PREPARING_ORDER].include? @order.status %>
+    		  <option value="cancel"><%= t('type_cancel') %></option>
+        <% end %>
+    	</select>
+      <hr>
+      
+      <ul class="foot_navi nav nav-tabs nav-justified" role="tablist">
+        <li>
+          <a id="body_tab" href="#T_body" style="margin:0;" data-toggle="tab"><%= t('form') %></a>
+        </li>
+        <li class="active">
+          <a href="#T_info" style="margin:0;" data-toggle="tab"><%= t('manual') %></a>
+        </li>
+      </ul>
+
+      <div id="tContent" class="tab-content foot_info_box">
+        <div class="tab-pane fade" id="T_body" style="margin-right:auto; margin-left:auto; padding-left:30px; padding-right:30px">
+          <ul class="foot_navi nav nav-tabs nav-justified hidden" role="tablist">
+            <li>
+              <a href="#T_null" style="margin:0;" data-toggle="tab" id="A_null">nothing</a>
+            </li>
+            <li>
+              <a href="#T_change" style="margin:0;" data-toggle="tab" id="A_change">change</a>
+            </li>
+            <li>
+              <a href="#T_return" style="margin:0;" data-toggle="tab" id="A_return">return</a>
+            </li>
+            <li>
+              <a href="#T_cancel" style="margin:0;" data-toggle="tab" id="A_cancel">cancel</a>
+            </li>
+          </ul>
+
+          <div id="hiddenTabContent" class="tab-content">
+            <div class="tab-pane fade in active text-center" id="T_null">
+              <a href="#" onclick="history.back(); return false;"><h4><%= t('request_back') %></h4></a>
+            </div>
+            <div class="tab-pane fade" id="T_change">
+              <%= render :partial => "change_form" %>
+            </div>
+            <div class="tab-pane fade" id="T_return">
+              <%= render :partial => "return_form" %>
+            </div>
+            <div class="tab-pane fade" id="T_cancel">
+              <%= render :partial => "cancel_form" %>
+            </div>
+          </div>
+        </div>
+        <%= render :partial => "/item/refund" %>
+      </div>
+      
+    </div>
+  </div>		
+</div>
+
+<script>
+$(document).ready(function(){
+  $('#T_info').addClass('in active')
+})
+
+$('#request_type').change(function(){
+	id = '#A_' + $(this).val();
+	$(id).tab('show');
+  $('#body_tab').tab('show');
+})
+</script>
+
+
+
