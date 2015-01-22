@@ -24,7 +24,7 @@ ActiveAdmin.register Change do
 
 	################# index #################
 	index do
-		column :idi
+		column :id
     column "주문번호" do |c|
       para c.order.purchase.reference_number
     end
