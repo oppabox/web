@@ -62,7 +62,7 @@ ActiveAdmin.register Return do
       para (c.status == Return::STATUS_DONE or c.status == Return::STATUS_CANCEL) ? c.updated_at.strftime("%Y-%m-%d") : "처리중"
     end
 		column "관리" do |r|
-			render :partial => "/admin/change_status", :locals => { :id => r.id, :collection => t(Return::STATUSES.invert.keys), :data => r.status }
+			render :partial => "/admin/change_status", :locals => { :id => r.id, :collection => Return::STATUSES.invert.collect{|x| { I18n.t(x[0]) => x[1] }}, :data => r.status }
 		end
 	end
 
