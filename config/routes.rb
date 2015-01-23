@@ -79,4 +79,6 @@ Rails.application.routes.draw do
   post "mypage/return_request"
   post "mypage/cancel_request"
   post "mypage/change_request"
+
+  patch "admin/items/:item_id/update_options" => "admin/items#update_options", as: :admin_items_update_options
 end

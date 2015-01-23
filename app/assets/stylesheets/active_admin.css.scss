@@ -88,3 +88,12 @@ a, a:link, a:visited {
 	}
 	margin: 0 !important;
 }
+
+form input.form-control {
+	width: 100%;
+}
+
+div.nested-col {
+		padding-left: 7px;
+		padding-right: 7px;
+	}
