@@ -138,6 +138,7 @@
 								<th>quan</th>
 								<th>lim</th>
 								<th>price_chn</th>
+								<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -165,7 +166,9 @@
 													<p class="form-control-static"></p>
 												<% end %>
 											</td>
-											<td colspan="4"></td>
+											<td colspan="5">
+												<%= link_to "삭제", { action: 'delete_option', option_id: o.id, id: @item.id }, { 'data-method' => :post, class: 'btn btn-danger pull-right delete' } %>
+											</td>
 										</tr>
 									<% else %>
 										<% o.option_items.each_with_index do |oi, idx| %>
@@ -192,26 +195,19 @@
 																<p class="form-control-static"></p>
 															<% end %>
 														</td>
-														<td><%= fff.text_field :name, { value: oi.name } %></td>
-														<td><%= fff.text_field :quantity, { value: oi.quantity } %></td>
-														<td>
-															<div class="">
-																<% opt = oi.limited ? { checked: 'checked' }  : {} %>
-																<%= fff.check_box :limited, opt %>
-															</div>
-														</td>
-														<td><%= oi.price_change %></td>
-													<% else %>
-														<td><%= fff.text_field :name, { value: oi.name } %></td>
-														<td><%= fff.text_field :quantity, { value: oi.quantity } %></td>
-														<td>
-															<div class="">
-																<% opt = oi.limited ? { checked: 'checked' }  : {} %>
-																<%= fff.check_box :limited, opt %>
-															</div>
-														</td>
-														<td><%= oi.price_change %></td>
 													<% end %>
+													<td><%= fff.text_field :name, { value: oi.name } %></td>
+													<td><%= fff.text_field :quantity, { value: oi.quantity } %></td>
+													<td>
+														<div class="">
+															<% opt = oi.limited ? { checked: 'checked' }  : {} %>
+															<%= fff.check_box :limited, opt %>
+														</div>
+													</td>
+													<td><%= oi.price_change %></td>
+													<td>
+														<%= link_to "삭제", { action: 'delete_option', option_id: o.id, oi_id: oi.id, id: @item.id }, { 'data-method' => :post, class: 'btn btn-danger pull-right delete' } %>
+													</td>
 												</tr>
 											<% end %>
 										<% end %>
@@ -223,8 +219,77 @@
 					<div class="">
 						<%= f.submit '수정', { type: 'reset', class: 'btn btn-primary', id: 'option_form_submit' } %>
 						<%= f.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'option_form_reset' } %>
+						<%#= f.submit '추가', { type: 'reset', class: 'btn btn-success pull-right', id: 'add_option' } %>
 					</div>
 				<% end #form %>
+			</div>
+		</div>
+		<div class="well">
+			<div>
+				<h3>옵션 추가</h3>
+			</div>
+			<div>
+				<%= form_for :new_option, url: add_option_admin_items_path, html: { method: :post, id: 'new_option_form', remote: true } do |f| %>
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#new_option_normal_tab" data-toggle="tab"><b><input class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_NORMAL] %>" readonly></b></a></li>
+						<li><a href="#new_option_string_tab" data-toggle="tab"><b><input class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_STRING] %>" readonly></b></a></li>
+					</ul>
+					<%= f.hidden_field :type %>
+					<%= f.hidden_field :item_id, { :value => @item.id } %>
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="new_option_normal_tab">
+							<div class="">
+								<%= f.submit '세부 옵션 추가', { type: 'reset', class: 'btn btn-success pull-right', id: 'add_option_item' } %>
+							</div>
+							<table class="table table-bordered detail_table">
+								<thead>
+									<tr class="active">
+										<th>옵션 이름</th>
+										<th>세부 옵션 이름</th>
+										<th>수량</th>
+										<th>한정 상품</th>
+										<th>추가 가격</th>
+									</tr>
+								</thead>
+								<tbody id="new_option_panel" data-row="1">
+									<tr>
+										<%= f.fields_for "normal_0" do |ff| %>
+											<td rowspan="15"><%= f.text_field :name %></td>
+											<td><%= ff.text_field :option_name %></td>
+											<td><%= ff.text_field :quantity, { :value => 1 } %></td>
+											<td><%= ff.check_box :limited %></td>
+											<td><%= ff.text_field :price_change, { :value => 0 } %></td>
+										<% end %>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade" id="new_option_string_tab">
+							<%= f.fields_for "string" do |ff| %>
+								<table class="table table-bordered detail_table">
+									<thead>
+										<tr class="active">
+											<th>옵션 이름</th>
+											<th>길이 제한</th>
+											<th>영어만 허용</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= ff.text_field :name %></td>
+											<td><%= ff.text_field :max_length %></td>
+											<td><%= ff.check_box :english_only %></td>
+										</tr>
+									</tbody>
+								</table>
+							<% end %>
+						</div>
+					</div>
+					<div class="">
+						<%= f.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'add_option_submit' } %>
+						
+					</div>
+				<% end %>
 			</div>
 		</div>
 	</div>
@@ -269,6 +334,32 @@
 			$(".flashes").html("<div class='flash flash_notice'>" + xhr.responseText + "</div>");
 		}).on("ajax:error", function(e, xhr, status, error){
 			$(".flashes").html("<div class='flash flash_error'>" + xhr.responseText + "</div>");
+		});
+		$('#add_option_submit').click(function(e){
+			e.preventDefault();
+			var type = $('#new_option_form li.active input').val()
+			$('#new_option_type').val(type)
+			$('#new_option_form')[0].submit();
+		});
+		$('#add_option_item').click(function(e){
+			e.preventDefault();
+			var cnt = $('#new_option_panel').attr("data-row");
+			if (parseInt(cnt) >= 15)
+				return;
+			var htmls = "<tr>" + 
+					"<td><input id='new_option_normal_cnt_option_name' name='new_option[normal_cnt][option_name]' type='text'></td>" + 
+					"<td><input id='new_option_normal_cnt_quantity' name='new_option[normal_cnt][quantity]' type='text' value='1'></td>" + 
+					"<td><input name='new_option[normal_cnt][limited]' type='hidden' value='0'>" + 
+					"<input id='new_option_normal_cnt_limited' name='new_option[normal_cnt][limited]' type='checkbox' value='1'></td>" +
+					"<td><input id='new_option_normal_cnt_price_change' name='new_option[normal_cnt][price_change]' type='text' value='0'></td>" +  
+					"</tr>";
+			htmls = htmls.replace(/cnt/g, cnt);
+			$('#new_option_panel').attr("data-row", parseInt(cnt) + 1);
+			$('#new_option_panel').append(htmls);
+		});
+		$('body').on("click", ".delete", function(){
+			var res =  confirm("정말 삭제 하시겠습니까?");
+			return res;
 		});
 	});
 </script>

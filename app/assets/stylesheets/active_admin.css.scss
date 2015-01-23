@@ -96,4 +96,15 @@ form input.form-control {
 div.nested-col {
 		padding-left: 7px;
 		padding-right: 7px;
-	}
+}
+
+.tab_input {
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	cursor: pointer;
+}
+
+form .tab-content {
+	background: white;
+	border-top: none;
+}

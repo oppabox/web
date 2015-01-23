@@ -1,8 +1,10 @@
 ActiveAdmin.register Item do
 	menu :priority => 6
 
+	#################### controller ####################
 	form :partial => "edit"
 
+	############### update ###############
 	collection_action :update, :method => :patch do
 		data = params[:item]
 		item = Item.find(params[:id])
@@ -36,6 +38,7 @@ ActiveAdmin.register Item do
 		end
 	end
 
+	############### update_options ###############
 	collection_action :update_options, :method => :patch do
 		respond_to do |format|
 
@@ -92,6 +95,73 @@ ActiveAdmin.register Item do
 		end
 	end
 
+	############### add_option ###############
+	collection_action :add_option, :method => :post do
+			ActiveRecord::Base.transaction do 
+				begin
+					data = params[:new_option]
+					item = Item.find(data['item_id'])
+
+					option = Option.new
+					option.option_type = Option::TYPE.invert[data['type']]
+					option.item = item
+
+					if option.option_type == OPTION_TYPE_STRING
+						data = data['string']
+						option.title = data['name']
+						option.max_length = data['max_length'].blank? ? option.max_length : data['max_length']
+						option.english_only = data['english_only'] == '1' ? true : false
+						option.save!
+					else
+						option.title = data['name']
+						option.save!
+
+						oi_cnt = 0
+						while !data["normal_" + oi_cnt.to_s].nil?
+							oi_data = data["normal_" + oi_cnt.to_s]
+							oi = OptionItem.new
+							oi.option = option
+				      oi.name = oi_data['option_name']
+				      oi.quantity = oi_data['quantity']
+				      oi.limited = oi_data['limited'] == '1' ? true : false
+				      oi.price_change = oi_data['price_change']
+				      oi.save!
+
+				      oi_cnt += 1
+						end
+					end
+
+					redirect_to :action => :edit, :id => item.id
+				rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+					flash[:error] = "Fail to add new option. Invalid inputs exits!"
+					redirect_to :back
+				end
+			end
+	end
+
+	############### delete_option ###############
+	collection_action :delete_option, :method => :post do
+		option = Option.find(params['option_id'])
+
+		if params['oi_id'].nil?
+			# just delete option
+			option.destroy
+		else
+			# delete option item
+			oi = OptionItem.find(params['oi_id'])
+			oi.destroy
+
+			# no option items anymore
+			if option.option_items.count == 0
+				option.destroy
+			end
+		end
+
+		redirect_to :action => :edit, :id => params[:id]
+	end
+
+
+	#################### views ####################
 	index do
 		column :id
 		column "Image" do |i|
