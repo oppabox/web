@@ -62,7 +62,7 @@ ActiveAdmin.register Cancel do
       para (c.status == Cancel::STATUS_DONE or c.status == Cancel::STATUS_CANCEL) ? c.updated_at.strftime("%Y-%m-%d") : "심사중"
     end
 		column "관리" do |c|
-			render :partial => "/admin/change_status", :locals => { :id => c.id, :collection => Cancel::STATUSES.invert, :data => c.status }
+			render :partial => "/admin/change_status", :locals => { :id => c.id, :collection => t(Cancel::STATUSES.invert.keys), :data => c.status }
 		end
 	end
 
