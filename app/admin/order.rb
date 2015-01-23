@@ -197,22 +197,22 @@ ActiveAdmin.register Order do
       link_to o.id, admin_order_path(o)
     end
     column "주문번호", :reference, sortable: 'purchases.reference_number' do |o|
-      o.purchase.reference_number
+      para o.purchase.reference_number
     end
     column "결제상태" do |o|
       status_string = Purchase::STATUSES.invert.keys
-      status_tag( t(status_string[o.purchase.status]), purchase_status_css[o.purchase.status] )
+      para status_tag( t(status_string[o.purchase.status]), purchase_status_css[o.purchase.status] )
     end
     column "주문상태" do |o|
       status_string = Order::STATUSES.invert.keys  
-      status_tag( t(status_string[o.status]), order_status_css[o.status] )
+      para status_tag( t(status_string[o.status]), order_status_css[o.status] )
     end
     column "상품명" do |o|
-      o.item.display_name
+      para o.item.display_name
     end
     column "정기구매", :order_periodic
     column "수량 (무게)" do |o|
-      o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
+      para o.quantity.to_s + ' (' + (o.item.weight * o.quantity).to_s + ')'
     end
     column "구매자 정보" do |o|
       para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
@@ -227,7 +227,7 @@ ActiveAdmin.register Order do
       para o.purchase.postcode
     end
     column "전화번호" do |o|
-      o.purchase.phonenumber
+      para o.purchase.phonenumber
     end
     column "결제수단" do |o|
       Purchase::PAY_OPTIONS.invert[o.purchase.pay_option]
