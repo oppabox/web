@@ -193,7 +193,7 @@ ActiveAdmin.register Purchase do
     column "주문번호", :reference_number
     column "결제 상태" do |p|
       status_string = Purchase::STATUSES.invert.keys
-      status_tag( t(status_string[p.status]), status_css[p.status] )
+      para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
     column "주문 내역" do |p|
       pv = p.orders.valid
