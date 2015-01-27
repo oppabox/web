@@ -2,7 +2,68 @@ ActiveAdmin.register Item do
 	menu :priority => 6
 
 	#################### controller ####################
-	form :partial => "edit"
+	form :partial => "form"
+
+	controller do
+	end
+
+	############### create ###############	
+	collection_action :create, :method => :post do
+		data = params[:item]
+		item = Item.new
+		
+		# must have box
+		begin
+			item.box = Box.find(data['box'])
+		
+			ActiveRecord::Base.transaction do 
+				item.path = data['path']
+				item.original_price = data['original_price']
+				item.sale_price = data['sale_price']
+				item.weight	= data['weight']
+				item.buy_limit = data['buy_limit']
+				item.periodic = data['periodic'] == '1' ? true : false
+				item.opened = data['opened'] == '1' ? true : false
+
+				if data['limited'] == '1' ? true : false
+					item.limited = true
+					item.quantity = data['quantity']
+				else
+					item.limited = false
+				end
+
+				['ko', 'en', 'cn', 'ja'].each do |locale|
+					item_name = ItemName.new
+					item_name.item = item
+					item_name.locale = locale
+					item_name.name = data['name'][locale]
+					item_name.save!
+				end
+
+				if item.save
+					# save image
+					FileUtils.mkdir_p Rails.root.join('public', 'images', 'items', item.box.path, item.path)
+					unless data['image'].nil?
+						io = data['image'][0]
+						File.open(Rails.root.join('public', 'images', 'items', item.box.path, item.path, item.path + '.jpg'), 'wb') do |file|
+							file.write(io.read)
+						end
+					end
+
+					flash[:notice] = "The item is saved successfully!"
+					redirect_to :action => :edit, :id => item.id
+				else
+					raise ActiveRecord::Rollback
+					flash[:error] = "Cannot be saved. It contains invalid inputs!"
+					redirect_to :back
+				end
+			end
+		rescue
+			flash[:error] = "Cannot be saved. The box is not existed!"
+			redirect_to :back
+		end
+
+	end
 
 	############### update ###############
 	collection_action :update, :method => :patch do
@@ -30,6 +91,12 @@ ActiveAdmin.register Item do
 		end
 
 		if item.save
+			unless data['image'].nil?
+				io = data['image'][0]
+				File.open(Rails.root.join('public', 'images', 'items', item.box.path, item.path, item.path + '.jpg'), 'wb') do |file|
+					file.write(io.read)
+				end
+			end
 			flash[:notice] = "#{item.display_name} is successfully updated!"
 			redirect_to :action => :edit, :id => params[:id]
 		else
@@ -97,46 +164,46 @@ ActiveAdmin.register Item do
 
 	############### add_option ###############
 	collection_action :add_option, :method => :post do
-			ActiveRecord::Base.transaction do 
-				begin
-					data = params[:new_option]
-					item = Item.find(data['item_id'])
+		ActiveRecord::Base.transaction do 
+			begin
+				data = params[:new_option]
+				item = Item.find(data['item_id'])
 
-					option = Option.new
-					option.option_type = Option::TYPE.invert[data['type']]
-					option.item = item
+				option = Option.new
+				option.option_type = Option::TYPE.invert[data['type']]
+				option.item = item
 
-					if option.option_type == OPTION_TYPE_STRING
-						data = data['string']
-						option.title = data['name']
-						option.max_length = data['max_length'].blank? ? option.max_length : data['max_length']
-						option.english_only = data['english_only'] == '1' ? true : false
-						option.save!
-					else
-						option.title = data['name']
-						option.save!
+				if option.option_type == OPTION_TYPE_STRING
+					data = data['string']
+					option.title = data['name']
+					option.max_length = data['max_length'].blank? ? option.max_length : data['max_length']
+					option.english_only = data['english_only'] == '1' ? true : false
+					option.save!
+				else
+					option.title = data['name']
+					option.save!
 
-						oi_cnt = 0
-						while !data["normal_" + oi_cnt.to_s].nil?
-							oi_data = data["normal_" + oi_cnt.to_s]
-							oi = OptionItem.new
-							oi.option = option
-				      oi.name = oi_data['option_name']
-				      oi.quantity = oi_data['quantity']
-				      oi.limited = oi_data['limited'] == '1' ? true : false
-				      oi.price_change = oi_data['price_change']
-				      oi.save!
+					oi_cnt = 0
+					while !data["normal_" + oi_cnt.to_s].nil?
+						oi_data = data["normal_" + oi_cnt.to_s]
+						oi = OptionItem.new
+						oi.option = option
+			      oi.name = oi_data['option_name']
+			      oi.quantity = oi_data['quantity']
+			      oi.limited = oi_data['limited'] == '1' ? true : false
+			      oi.price_change = oi_data['price_change']
+			      oi.save!
 
-				      oi_cnt += 1
-						end
+			      oi_cnt += 1
 					end
-
-					redirect_to :action => :edit, :id => item.id
-				rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-					flash[:error] = "Fail to add new option. Invalid inputs exits!"
-					redirect_to :back
 				end
+
+				redirect_to :action => :edit, :id => item.id
+			rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+				flash[:error] = "Fail to add new option. Invalid inputs exits!"
+				redirect_to :back
 			end
+		end
 	end
 
 	############### delete_option ###############
@@ -165,7 +232,7 @@ ActiveAdmin.register Item do
 	index do
 		column :id
 		column "Image" do |i|
-			tag :img, :src => "/images/box/#{i.path}.jpg", :width => "100px", :height => "100px"
+			tag :img, :src => "/images/items/#{i.box.path}/#{i.path}/#{i.path}.jpg", :width => "100px", :height => "100px"
 		end
 		column :box
 		column "Name" do |i|

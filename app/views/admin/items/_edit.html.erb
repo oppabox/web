@@ -6,11 +6,11 @@
 				<% if @item.errors.any? %>
 					<div id="error_explanation">
 						<h2>
-			        <%= pluralize(@article.errors.count, "error") %> prohibited
-			        this article from being saved:
+			        <%= pluralize(@item.errors.count, "error") %> prohibited
+			        this item from being saved:
 			      </h2>
 			      <ul>
-			        <% @article.errors.full_messages.each do |msg| %>
+			        <% @item.errors.full_messages.each do |msg| %>
 			          <li><%= msg %></li>
 			        <% end %>
 			      </ul>
@@ -30,6 +30,16 @@
 						<p class="form-control-static"><%= @item.path %></p>
 					</div>
 				</div>
+
+				<div class="form-group">
+          <%= f.label :image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.file_field :image, { 'multiple' => true } %>
+            <div id="files">
+            	<%= image_tag "/images/items/#{@item.box.path}/#{@item.path}/#{@item.path}.jpg", size: "100" %>
+            </div>
+          </div>
+        </div>
 
 				<div class="form-group">
 					<%= f.label :name, 'Name<br>(ko, en, cn, ja)'.html_safe, { class: 'col-sm-2 control-label' } %>
@@ -360,6 +370,9 @@
 		$('body').on("click", ".delete", function(){
 			var res =  confirm("정말 삭제 하시겠습니까?");
 			return res;
+		});
+		$('#item_image').change(function (){
+			$.image_preview($(this), $('#files'));
 		});
 	});
 </script>

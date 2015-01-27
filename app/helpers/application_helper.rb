@@ -17,10 +17,10 @@ module ApplicationHelper
     items.each do |x|
       image_box = #하나의 박스중에 위쪽에 있는 image
         if x.opened != true
-          tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+          tag :img, :src => x.image_url, :class => 'img-responsive center-block'
         else
           content_tag :a, :href => "/#{method}/#{x.path}" do 
-            tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+            tag :img, :src => x.image_url, :class => 'img-responsive center-block'
           end
         end
       text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)

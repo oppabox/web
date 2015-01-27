@@ -1,0 +1,149 @@
+<div class="container-fluid">
+	<%= form_for :item, url: '/admin/items', html: { method: :post, class: "form-horizontal", id: 'item_form' } do |form| %>
+		<div class="col-md-6">
+			<div class="well">
+				<div class="form-group">
+					<%= form.label :box, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.select :box, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: true, :selected => params['box_selected'] }, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= form.label :path, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :path, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+          <%= form.label :image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= form.file_field :image, { 'multiple' => true } %>
+            <div id="files">
+            </div>
+          </div>
+        </div>
+
+				<div class="form-group">
+					<%= form.label :name, 'Name<br>(ko, en, cn, ja)'.html_safe, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.fields_for :name do |ff| %>
+							<% ['ko', 'en', 'cn', 'ja'].each do |locale| %>
+								<div class="col-sm-3 nested-col">
+									<%= ff.text_field "#{locale}", { class: 'form-control nested_input' } %>
+								</div>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= form.label :original_price, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :original_price, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= form.label :sale_price, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :sale_price, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= form.label :weight, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :weight, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= form.label :buy_limit, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :buy_limit, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<div class="checkbox">
+							<%= form.label :limited do %>
+								<%= form.check_box :limited %>한정 상품
+							<% end %>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" id="item_original_quantity" value="-1">
+					<%= form.label :quantity, { class: 'col-sm-2 control-label' } %>
+					<div class="col-sm-9">
+						<%= form.text_field :quantity, { class: 'form-control' } %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<div class="checkbox">
+							<%= form.label :periodic do %>
+								<%= form.check_box :periodic %>정기 구매
+							<% end %>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<div class="checkbox">
+							<%= form.label :opened do %>
+								<%= form.check_box :opened %>판매중
+							<% end %>
+						</div>
+					</div>
+				</div>		
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<%= form.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'item_form_submit' } %>
+						<%= form.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'item_form_reset' } %>
+					</div>			
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
+
+
+<script>
+	var limit_check = function(){
+		var checkbox = $("input[name='item[limited]']");
+		var target = $("#item_quantity");
+		if ( checkbox.is(':checked') ) {
+			target.val( $("#item_original_quantity").val() );
+			target.removeAttr('disabled');
+		}
+		else {
+			target.val('-1');
+			target.attr('disabled', 'disabled');
+		}
+	};
+
+	$(document).ready(function(){
+		limit_check();
+		$('#item_limited').change(limit_check);
+		$("#item_form_reset").click(function(e){
+			e.preventDefault();
+			$('#item_form')[0].reset();
+			limit_check();
+		});
+		$('#item_form_submit').click(function(e){
+			e.preventDefault();
+			$('#item_form').submit();
+		});
+		$('#item_image').change(function (){
+			$.image_preview($(this), $('#files'));
+		});
+	});
+</script>

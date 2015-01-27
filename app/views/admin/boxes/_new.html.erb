@@ -1,68 +1,76 @@
-<%= semantic_form_for @box, url: "/admin/boxes", html: {method: "POST"} do |f| %>
-	<%= f.inputs :name => "Box info" do %>
-		<%= f.input :display_name, :required => true %>
-		<%= f.input :opened, :as => :boolean, :required => true %>
-		<%= f.input :image, :as => :file %>
-		<li><%= link_to "Add Item", '#add_item', { :class => "btn-normal", :id => "add_item" } %></li>
-	<% end %>
-	<div id="panel">
-		<%= render partial: 'new_item', :locals => { :id => 1 } %>
-	</div>
-	<input type="hidden" name="item_counter" id="item_counter" value="1" %>
-	<%= f.actions %>
-<% end %>
+<div class="container-fluid">
+  <div class="col-md-6">
+    <div class="well">
+      <%= form_for @box, url: '/admin/boxes', html: { method: :post, multipart: true, class: "form-horizontal", id: 'box_form' } do |f| %>
+        <% if @box.errors.any? %>
+          <div id="error_explanation">
+            <h2>
+              <%= pluralize(@box.errors.count, "error") %> prohibited
+              this box from being saved:
+            </h2>
+            <ul>
+              <% @box.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :display_name, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.text_field :display_name %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :top_image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.file_field :top_image, { 'multiple' => true } %>
+            <div id="top_image">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.file_field :image, { 'multiple' => true } %>
+            <div id="normal_image">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-9">
+            <div class="checkbox">
+              <%= f.label :opened do %>
+                <%= f.check_box :opened %>오픈 여부
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <%= f.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'box_form_submit' } %>
+        </div>
+
+      <% end # form %>
+    </div><!-- ./well -->
+  </div>
+</div>
 
 <script>
-$('#add_item').click(function(){
-	cnt = parseInt($('#item_counter').val()) + 1;
-	$.ajax({
-    url: "/admin/boxes/add_item",
-    type: "POST",
-    dataType:"SCRIPT",
-    data: {
-    	cnt: cnt
-    },
-    success: function(){
-    	$('#item_counter').val(cnt);
-    }
+  $(document).ready(function(){
+    $('#box_form_submit').click(function(e){
+      e.preventDefault();
+      $('#box_form').submit();
+    });
+    $('#box_image').change(function(){
+      $.image_preview($(this), $('#normal_image'), 300);
+    });
+    $('#box_top_image').change(function(){
+      $.image_preview($(this), $('#top_image'), 300);
+    });
   });
-});
-
-$('body').on ("click", ".add_option", function(){
-	cnt = parseInt($(this).attr("data-counter")) + 1;
-	item_id = $(this).attr("data-item-id");
-	target = $(this)
-	$.ajax({
-    url: "/admin/boxes/add_option",
-    type: "POST",
-    dataType:"SCRIPT",
-    data: {
-    	cnt: cnt,
-    	item_id: item_id
-    },
-    success: function(){
-    	target.attr("data-counter", cnt);
-    }
-  });
-});
-
-$('body').on ("click", ".add_option_item", function(){
-	cnt = parseInt($(this).attr("data-counter")) + 1;
-	item_id = $(this).attr("data-item-id");
-	option_id = $(this).attr("data-option-id");
-	target = $(this)
-	$.ajax({
-    url: "/admin/boxes/add_option_item",
-    type: "POST",
-    dataType:"SCRIPT",
-    data: {
-    	cnt: cnt,
-    	item_id: item_id,
-    	option_id: option_id
-    },
-    success: function(){
-    	target.attr("data-counter", cnt);
-    }
-  });
-});
 </script>

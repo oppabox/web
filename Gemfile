@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# jQuery File Upload
+gem "jquery-fileupload-rails"
+
 # Database
 gem 'mysql2'
 
