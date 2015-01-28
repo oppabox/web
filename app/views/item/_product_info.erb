@@ -88,7 +88,7 @@
         <p><%= o.title %></p>
       </div>
       <div class="col-xs-8 col-md-9">
-        <% if o.option_type == 1 %>
+        <% if o.option_type == OPTION_TYPE_NORMAL %>
         <select data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
           <% o.option_items.each do |i| %>
             <% price_symbol = if i.price_change >= 0 then "+" else "-" end %>

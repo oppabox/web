@@ -214,7 +214,7 @@
 															<%= fff.check_box :limited, opt %>
 														</div>
 													</td>
-													<td><%= oi.price_change %></td>
+													<td><%= fff.text_field :price_change, { value: oi.price_change } %></td>
 													<td>
 														<%= link_to "삭제", { action: 'delete_option', option_id: o.id, oi_id: oi.id, id: @item.id }, { 'data-method' => :post, class: 'btn btn-danger pull-right delete' } %>
 													</td>
@@ -301,6 +301,11 @@
 					</div>
 				<% end %>
 			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="well">
+			<%= render "image_uploader" %>
 		</div>
 	</div>
 </div>

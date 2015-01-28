@@ -16,6 +16,10 @@ class Item < ActiveRecord::Base
     return "/images/items/#{self.box.path}/#{self.path}/#{self.path}.jpg"
   end
 
+  def image_locale_url loc, name
+    return "/images/items/#{self.box.path}/#{self.path}/#{loc}/#{name}.jpg"
+  end
+
   protected
   def remove_images
   	# remove the dir

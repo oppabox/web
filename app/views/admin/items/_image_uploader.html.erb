@@ -1,0 +1,189 @@
+<% locales = ["ko", "ja", "cn", "en"] %>
+<div class="container">
+	<%= form_for :file, url: add_image_admin_items_path, html: { method: :post, class: 'form-inline', id: 'image_form', enctype: "multipart/form-data" } do |f| %>
+		<div class="row">
+			<div class="col-md-4">
+				<!-- button groups -->
+				<%= f.hidden_field :id, { value: @item.id } %>
+				<a href="#" class="btn btn-success" id="input_button">
+					<i class="glyphicon glyphicon-plus"></i>
+          <span>Add files...</span>
+          <div class="">
+        		<%= f.file_field :image, { class: 'hidden', multiple: true} %>
+        	</div>
+				</a>
+				<button type="submit" class="btn btn-primary start">
+          <i class="glyphicon glyphicon-upload"></i>
+          <span>Start upload</span>
+	      </button>
+	      <!-- ./ button group -->
+	      <span class="fileupload-process"></span>
+			</div>
+			<!-- global process state -->
+			<div class="col-md-8">
+				<div class="progress progress-striped fade active" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+        </div>
+			</div>
+		</div> <!-- ./row -->
+	<% end %>
+	<div class="row">
+		<!-- image thumbnail tabs -->
+		<ul class="nav nav-tabs nav-justified">
+			<% locales.each do |l| %>
+				<li class="<%= l == 'ko' ? 'active' : '' %>"><a href="<%= '#image_tab_' + l %>" data-toggle="tab"><b><%= l %></b></a></li>
+			<% end %>	 
+		</ul>
+		<div class="tab-content">
+			<% locales.each do |l| %>
+				<div class="tab-pane fade <%= l == 'ko' ? 'in active' : ''%>" id="<%= 'image_tab_' + l %>"></div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<input type="file" name="file[]" id="image_getter" class="hidden" multiple />
+
+
+<script>
+var locales = ["ko", "ja", "cn", "en"];
+var file_list = {};
+$.each(locales, function (i, v){
+	file_list[v] = new Array();
+});
+var loaded_images;
+
+$(document).ready(function(){
+	// get image data
+	$.ajax({
+		url: "/admin/items/load_image",
+		type: "post",
+		data: { id: <%= @item.id %> },
+		dataType: "json",
+		success: function (data, status, xhr){
+			loaded_images = data;
+			$.image_preview_with_locale (loaded_images, locales, "image_tab_");
+		}
+	});
+	
+	// initialize
+	$('#image_form').fileupload({
+		singleFileUploads: false
+	}).bind('fileuploaddone', function (e, data){
+		$('#progress').removeClass('in');
+		$('#progress .progress-bar').css('width', '0%');
+		// done callback
+		alert(data.jqXHR.responseJSON['msg']);
+	}).bind('fileuploadprogressall', function (e, data){
+		// progress bar
+		var progress = parseInt(data.loaded / data.total * 100, 10);
+		$('#progress .progress-bar').css('width', progress + '%');
+	}).bind('fileuploadstart', function (e){
+		$('#progress').addClass('in');
+	});
+
+
+	// when click add file button then trigger hidden file input
+	$('#input_button').click(function (e){
+		e.preventDefault();
+		$('#image_getter').click();
+	});
+	// for preview
+	// loaded file should be like
+	// "ko_1.jpg"
+	$('#image_getter').change(function(){
+		var files = $(this).prop('files');
+		var file, loc;
+
+		for (var i = 0; i < files.length; i++) {
+			file = files[i];
+			loc = file.name.slice(0, 2) // first two letters
+
+			// invalid name
+			if (file_list[loc] === undefined) {
+				alert("파일 이름이 형식에 맞지 않습니다.")
+				return;
+			}
+
+			// dup check
+			if (file_list[loc].every(function (e,i,a){ return e.name != file.name; })) {
+				// nothing matched
+				file_list[loc].push(file);
+			}
+			else {
+				// update
+				var idx = file_list[loc].indexOfWith(function (e){
+					return e.name == file.name;
+				});
+				if (idx != -1)
+					file_list[loc][idx] = file
+			}
+
+			// put in loaded_image
+			// get the index right before (or right there) it should be inserted
+			// -1 means that it is the biggest
+			var idx = loaded_images[loc].indexOfWith(function (e){
+				var id;
+				if (typeof(e) == "string"){
+					var arr = e.split("/");
+					var name = arr[arr.length - 1]; // ex, 1.jpg
+					id = parseInt(name.split(".")[0]) // ex, 1
+				}
+				else {
+					var name = e.name; // ex, ko_1.jpg
+					id = parseInt(name.match(/_[0-9]+./)[0].match(/[0-9]+/)[0]) // ex, 1
+				}
+
+				if ( parseInt(file.name.match(/_[0-9]+./)[0].match(/[0-9]+/)[0]) <= id )
+					return true;
+				else
+					return false;
+			})
+
+			if (idx == -1) {
+				// file has the biggest number
+				loaded_images[loc].push(file)
+			}
+			else {
+				// should check whether replace or insert
+				var id;
+				var e = loaded_images[loc][idx];
+				if (typeof(e) == "string"){
+					var arr = e.split("/");
+					var name = arr[arr.length - 1]; // ex, 1.jpg
+					id = parseInt(name.split(".")[0]) // ex, 1
+				}
+				else {
+					var name = e.name; // ex, ko_1.jpg
+					id = parseInt(name.match(/_[0-9]+./)[0].match(/[0-9]+/)[0]) // ex, 1
+				}
+				if ( parseInt(file.name.match(/_[0-9]+./)[0].match(/[0-9]+/)[0]) == id ) {
+					// replace!
+					loaded_images[loc][idx] = file;
+				}
+				else {
+					// insert!
+					loaded_images[loc].splice(idx, 0, file);
+				}
+			}
+		}
+		// sorting with file name
+		// file_list[loc].sort(function(a, b){ return parseInt(a.name.split(".",1)[0]) - parseInt(b.name.split(".",1)[0]); });
+
+		// re-rendering
+		$.image_preview_with_locale (loaded_images, locales, "image_tab_");
+	});
+	// send lists
+	$('#image_form').submit(function (e){
+		e.preventDefault();
+		// list of all files
+		var list = new Array();
+		$.each(locales, function (i, v){
+		 	list = list.concat(file_list[v]);
+		});
+		// send
+		if (list.length != 0)
+			$(this).fileupload('add', {files: list});
+	});
+});
+</script>
