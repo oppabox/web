@@ -1,0 +1,151 @@
+<div class="container-fluid">
+  <!-- Form Start -->
+  <%= form_for :purchase, url: '/admin/purchase', html: { method: :post, class: "form-horizontal", id: 'purchase_form' } do |form| %>
+    <!-- purchase panel -->
+    <div class="col-md-6">
+      <div class="well">
+        <div class="purchase_label">
+          <label>Purchase</label>
+        </div>
+        <!-- User ID -->
+        <div class="form-group">
+          <label for="user" class="col-md-2 control-label">User</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="user" value="billing@oppabox.com">
+          </div>
+        </div><!-- /User ID -->
+        <!-- Recipient, Phonenumber -->
+        <div class="form-group">
+          <label for="recipient" class="col-md-2 control-label">수령인</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="recipient">
+          </div>
+          <label for="phonenumber" class="col-md-2 control-label">휴대번호</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="phonenumber">
+          </div>
+        </div><!-- /Recipient, Phonenumber -->
+        <!-- City, State -->
+        <div class="form-group">
+          <label for="city" class="col-md-2 control-label">도시</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="city">
+          </div>
+          <label for="state" class="col-md-2 control-label">주</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="state">
+          </div>
+        </div><!-- /City, State --> 
+        <!-- Postcode -->
+        <div class="form-group">
+          <label for="postcode" class="col-md-2 control-label">우편번호</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="postcode">
+          </div>
+        </div><!-- /Postcode -->
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address" class="col-md-2 control-label">주소</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control" id="address">
+          </div>
+        </div><!-- /State -->
+        <input type="hidden" id="status" value="1">
+
+      </div> 
+    </div><!-- /purchase panel -->
+
+    <div class="clearfix"></div>
+
+    <!-- Order panel -->
+    <div class="col-md-6">
+      <div class="well">
+        <div class="purchase_label">
+          <label>Order</label>
+        </div>
+        <!-- 아이템 -->
+        <div class="form-group">
+          <label for="item" class="col-md-2 control-label">아이템</label>
+          <div class="col-md-4">
+            <select name="item" id="item" class="form-control">
+              <option value="">-------- 박스 선택 --------</option>
+              <% Box.pluck(:id, :display_name).each do |i,n| %>
+                <option value="<%= i %>"><%= n %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select name="item_detail" id="item_detail" class="form-control">
+              <option value="">------- 아이템 선택 -------</option>
+            </select>
+          </div>
+        </div><!-- /아이템 -->
+
+        <!-- 옵션 - 아이템에 옵션이있을 때에만 -->
+        <div class="form-group" style="display:none;">
+          <label for="option" class="col-md-2 control-label">옵션</label>
+          <div class="col-md-3">
+            <input id="option" type="text" class="form-control">
+          </div>
+        </div><!-- /옵션 -->
+
+        <!-- 정기구매 - 김재중박스일때 -->
+        <div class="form-group" style="display:none;">
+          <label for="periodic" class="col-md-2 control-label">정기구매</label>
+          <div class="col-md-3">
+            <select name="periodic" id="periodic" class="form-control">
+              <option value="1" selected>1개 구입</option>
+              <option value="3">3개월</option>
+              <option value="6">6개월</option>
+              <option value="12">12개월</option>
+            </select>
+          </div>
+        </div><!-- /정기구매 -->
+        
+        <!-- 개수 -->
+        <div class="form-group">
+          <label for="quantity" class="col-md-2 control-label">개수</label>
+          <div class="col-md-3">
+            <input id="quantity" type="text" class="form-control text-center">
+          </div>
+        </div><!-- /개수 -->
+
+        <input type="hidden" id="status" value="1">
+      </div> 
+    </div><!-- /Order panel -->
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-6 text-center">
+      <%= form.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'purchase_form_submit' } %>
+      <%= form.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'purchase_form_reset' } %>
+    </div>
+  <% end %> <!-- /Form End -->
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#purchase_form_reset").click(function(e){
+      e.preventDefault();
+      $('#purchase_form')[0].reset();
+    });
+    $('#purchase_form_submit').click(function(e){
+      e.preventDefault();
+      $('#purchase_form').submit();
+    });
+  });
+  $("#item").change(function() {
+    var box_id = $(this).val();
+    $.ajax({
+      url: "/admin/purchase/change_item_details",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        box_id: box_id;
+      },
+      success: function(data) {
+        $.("#item_detail").html(data["result"]);
+      }
+    })
+  });
+</script>

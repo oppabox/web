@@ -23,6 +23,9 @@ ActiveAdmin.register Purchase do
   #   end
   # end
 
+  ################# new ###################
+  form :partial => "new"
+
   ################## collection action ##########################  
   collection_action :transition do
     p = Purchase.find(params[:id])
@@ -57,6 +60,54 @@ ActiveAdmin.register Purchase do
     p.save
     flash[:alert] = "#{p.reference_number} is cancelled."
     redirect_to :action => :index
+  end
+
+  collection_action :create, :method => :post do
+    data = params[:purchase]
+
+    # create purchase
+    p = Purchase.new
+      p.user_id = User.find_by_email.(data['user']).id
+      p.recipient = data['recipient']
+      p.city = data['city']
+      p.state = data['state']
+      p.address = data['address']
+      p.postcode = data['postcode']
+      p.phonenumber = data['phonenumber']
+      p.status = 1
+      p.replycd = "0000"
+      p.replymsg = "현금결제(무통장)"
+      p.amt = data['amt']
+      p.pay_type = "현금결제"
+      p.approval_datetime = DateTime.current().strftime("%Y-%m-%d %H:%M:%S")
+      p.seq_no = "1234567890"
+      p.pay_option = 0
+      p.reference_number = p.set_reference_number
+      p.order_no = p.reference_number
+      p.user.country = data['country']
+    p.save
+
+    o = Order.new
+      o.purchase_id = p.id
+      o.item_id = data['item_id']
+      o.quantity = data['quantity']
+      o.order_periodic = data['order_periodic']
+      o.status = data['status']
+    o.save
+
+    ooi = OrderOptionItem.new
+      ooi.order_id = o.id
+      ooi.option_item_id = data['option_item_id']
+      ooi.option_id = data['option_id']
+      ooi.option_text = data['option_text']
+    ooi.save
+
+    redirect_to :action => :index
+  end
+
+  collection_action :change_item_details do
+    ret = params[:box_id]
+    
   end
 
   ########### download bl #############
