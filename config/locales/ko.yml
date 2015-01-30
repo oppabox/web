@@ -630,3 +630,6 @@ ko:
 
   shipping_select: 'shipping_select'
   bank_transfer_info: '무통장 입금정보'
+
+  shipping_tootip_line1: "EMS : 운송중 물건 분실보험이 포함되어있지 않음 (배송기간 : 10 ~ 15일)"
+  shipping_tootip_line2: "UPS : 운송중 물건 분실보험이 포함되어있음 (배송기간 : 3 ~ 7일)"

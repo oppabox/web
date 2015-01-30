@@ -138,3 +138,17 @@
 #go_top:hover {
   cursor:pointer;
 }
+
+.tooltip-inner {
+  max-width: 500px !important;
+  background-color: rgba(0,0,0,1) !important;
+}
+.tooltip-inner p {
+  margin: 3px 3px;
+  font-size: 14px;
+  text-align: left;
+}
+#shipping_tooltip {
+  font-size: 15px;
+  font-weight: 400;
+}
