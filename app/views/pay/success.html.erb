@@ -12,6 +12,7 @@
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
+            <th class="text-center"><%=t('shipping')%></th>
             <th class="text-center"><%=t('paid_sum')%></th>
           </tr>
         </thead>
@@ -35,8 +36,8 @@
               <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
               <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
               <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
-              
-              <td class="text-center">[<%=t('paid_delivery_charge')%> : <%= Order.change_currency_pretty(order.get_delivery_fee) %>]</td>
+              <td class="text-center"><%= Order.change_currency_pretty(order.get_delivery_fee) %></td>
+              <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity + order.get_delivery_fee) %></td>
             </tr>
           <% end %>
 
@@ -55,7 +56,7 @@
 
           <tr class="list_cell">
             <td></td>
-            <td colspan="6">
+            <td colspan="7">
               <p>[<%= t('mypage_carry')%>]</p>
               <% address_full.each do |a| %>
                 <p><%=a%></p>
@@ -65,7 +66,7 @@
           <% unless @purchase.pay_type == nil %>
           <tr class="list_cell">
             <td></td>
-            <td colspan="6">
+            <td colspan="7">
               <p>[무통장 입금 계좌 정보]</p>
               <p><%=@purchase.pay_type%></p>
             </td>
