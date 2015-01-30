@@ -134,6 +134,21 @@
     </div>
   </div>
   <% end %>
+
+  <!-- sectioin for shipping -->
+  <hr>
+  <div class="row mar-left">
+    <div class="col-xs-4 col-md-3">
+      <p><%= t('shipping_select') %></p>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <select class="form-control input-sm" id="shipping_option">
+        <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.pluck(:name, :id) : @item.shippings.foreign.pluck(:name, :id) %>
+        <% s_opt.collect { |x| x << { 'data-name' => x[0], 'data-fee' => @item.get_delivery_fee(x[0], User.current.country) } } %>
+        <%= options_for_select s_opt %>
+      </select>
+    </div>
+  </div>
   
   <div style="height:20px;"></div>
 

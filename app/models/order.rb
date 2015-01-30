@@ -6,6 +6,8 @@ class Order < ActiveRecord::Base
   has_one     :return, dependent: :destroy
   has_one     :cancel, dependent: :destroy
   has_one     :change, dependent: :destroy
+  has_one     :order_shipping, :dependent => :destroy
+  has_one     :shipping, :through => :order_shipping
   
   before_save :period_check, :quantity_check
 
@@ -42,6 +44,11 @@ class Order < ActiveRecord::Base
     STATUS_CANCEL => "STATUS_ORDER_CANCEL",
     STATUS_DELETED => "STATUS_ORDER_DELETED"
   }
+
+  def get_delivery_fee
+    fee = self.shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.item.weight * self.quantity)
+    fee.ceil
+  end
 
   def status_name
     STATUSES[status].to_s
