@@ -53,6 +53,13 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <%= f.label :display_order, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.text_field :display_order %>우선 순위
+          </div> 
+        </div>
+
         <div class="">
           <%= f.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'box_form_submit' } %>
           <%= link_to '삭제', "/admin/boxes/#{@box.id}", { 'data-method' => :delete, class: 'btn btn-danger', id: 'box_delete' } %>

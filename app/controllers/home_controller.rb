@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   before_action :login_check_ajax,  only: [:api_step3]
 
   def index
-    @boxes = Box.all
+    @boxes = Box.all.sorted
   end
 
   def join
