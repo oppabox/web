@@ -143,8 +143,12 @@
     </div>
     <div class="col-xs-8 col-md-9">
       <select class="form-control input-sm" id="shipping_option">
-        <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.pluck(:name, :id) : @item.shippings.foreign.pluck(:name, :id) %>
-        <% s_opt.collect { |x| x << { 'data-name' => x[0], 'data-fee' => @item.get_delivery_fee(x[0], User.current.country) } } %>
+        <% if User.current.nil? %>
+          <% s_opt = @item.shippings.pluck(:name, :id) %>
+        <% else %>
+          <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.pluck(:name, :id) : @item.shippings.foreign.pluck(:name, :id) %>
+          <% s_opt.collect { |x| x << { 'data-name' => x[0], 'data-fee' => @item.get_delivery_fee(x[0], User.current.country) } } %>
+        <% end %>
         <%= options_for_select s_opt %>
       </select>
     </div>

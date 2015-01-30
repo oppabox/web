@@ -15,7 +15,7 @@ class Shipping < ActiveRecord::Base
 		when 'EMS'
 			return calculate_ems country, weight, month
 		when 'FREE'
-			return 0
+			return 1000
 		when 'STANDARD'
 			return calculate_standard country, weight, month
 		end

@@ -18,7 +18,7 @@
         </td>
       </tr>
     <% else %>
-      <% @orders.each do |o|%>
+      <% @orders.each_with_index do |o, idx|%>
       <tr>
         <% item = o.item %>
         <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
@@ -34,7 +34,18 @@
        &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
          <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="bt btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
         </td>
-        <td class="text-center"><span class="badge badge-default"><%= o.shipping.name %></span> <%= Order.change_currency_pretty(o.get_delivery_fee) %></td>
+        <td class="text-center">
+          <div class="dropdown">
+            <span type="button" class="badge badge-default" id="shipping_dropdown_<%=idx%>" data-toggle="dropdown" aria-expanded="true">
+              <%= o.shipping.name %><span class="caret"></span>
+            </span>
+            <%= Order.change_currency_pretty(o.get_delivery_fee) %>
+            <ul class="dropdown-menu shipping_menu" area-labelledby="shipping_dropdown_<%=idx%>" style="margin-top:-14px;">
+              <li><a tabindex="-1" href="#">a</a></li>
+              <li><a tabindex="-1" href="#">b</a></li>
+            </ul>
+          </div>
+        </td>
         <td class="text-center"><%= Order.change_currency_pretty(o.total_price * o.quantity + o.get_delivery_fee) %></td>
         <td class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></td>
       </tr>

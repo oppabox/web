@@ -13,6 +13,7 @@
             <th class="text-center"><%=t('item_display_name')%></th>
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
+            <th class="text-center"><%=t('shipping')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
             <th class="text-center"><%=t('order_status')%></th>
             <th class="text-center"><%=t('new_request_header')%></th>
@@ -21,7 +22,7 @@
         <tbody>
           <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.valid.count <= 0) %>
             <tr class="list_cell">
-              <td class="text-center" colspan="7">
+              <td class="text-center" colspan="8">
                 <br><%=t('empty_order')%><br>
                 <br><a href="/"><%= t('more_shopping') %></a><br>
               </td>
@@ -57,7 +58,11 @@
                 <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a><br><span><%= options.join(", ") %></span></td>
                 <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
                 <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
-                <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
+                <td class="text-center"><%= Order.change_currency_pretty(order.get_delivery_fee) %></td>
+                <td class="text-center">
+                  <span class="badge badge-default"><%= order.shipping.name %></span>
+                  <%= Order.change_currency_pretty(order.total_price * order.quantity + order.get_delivery_fee) %>
+                </td>
                 <td class="text-center"><%= t(Order::STATUSES[order.status]) %></td>
                 <td class="text-center">
                   <% if purchase.status == Purchase::STATUS_PAID %>
@@ -93,7 +98,7 @@
             <% address_full << [t('user_detail_recipient'), purchase.recipient].join(" : ") %>
 
             <tr class="list_cell">
-              <td colspan="6">
+              <td colspan="7">
                 [<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %>
               <% if purchase.status == Purchase::STATUS_PENDING %>
                 <br>[<%= t('bank_transfer_info') %>] <%=purchase.pay_type%>

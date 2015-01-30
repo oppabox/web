@@ -49,8 +49,11 @@ function recalculate(){
   }
 
   var shipping_fee = 0
-  shipping_fee = $('#shipping_option option:selected').data('fee') * quantity;
-  renderShippingFee(quantity);
+  if ($('#shipping_option option:selected').data('fee') !== undefined) {
+    // only when loged in
+    shipping_fee = $('#shipping_option option:selected').data('fee') * quantity;
+    renderShippingFee(quantity);
+  }
 
   var total_price = periodic_month * quantity * ($("#total_price").data("original-price") + options_total + shipping_fee);
 
