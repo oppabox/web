@@ -162,9 +162,18 @@ footer p{
 }
 
 /* override bootstrap */
+.badge {
+	cursor: pointer;
+}
 .badge.badge-default {
 	background-color: #999999;
 }
+.badge.badge-default:hover {
+	background-color: #aaaaaa;
+}
 .badge.badge-inverse {
 	background-color: #333333;
+}
+.badge.badge-inverse:hover {
+	background-color: #555555;
 }

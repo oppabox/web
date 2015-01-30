@@ -133,6 +133,23 @@ class PayController < ApplicationController
     end
   end
 
+  def reorder_shipping
+    o = Order.find(params[:order_id])
+
+    if o.purchase.user == current_user
+      shipping = Shipping.find(params[:shipping_id])
+
+      o.shipping = shipping
+      if shipping.nil? or o.save
+        render :nothing => true, :status => 200
+      else
+        render :text => t(:something_wrong), :status => 500
+      end
+    else
+      render :text => t(:something_wrong), :status => 500
+    end
+  end
+
   def usd_request
     @secretKey = EXIMBAY_SECRET_KEY
     @pay_url = params[:pay_url]

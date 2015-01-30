@@ -41,8 +41,9 @@
             </span>
             <%= Order.change_currency_pretty(o.get_delivery_fee) %>
             <ul class="dropdown-menu shipping_menu" area-labelledby="shipping_dropdown_<%=idx%>" style="margin-top:-14px;">
-              <li><a tabindex="-1" href="#">a</a></li>
-              <li><a tabindex="-1" href="#">b</a></li>
+              <% o.item.shippings_in(User.current.country).each do |s| %>
+                <li><a tabindex="-1" href="#" onclick="reorder_shipping(<%=o.id%>, <%=s.id%>);"><%= s.name %></a></li>
+              <% end %>
             </ul>
           </div>
         </td>
