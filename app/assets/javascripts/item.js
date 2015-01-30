@@ -1,5 +1,5 @@
 $(function(){
-  $(".select_option_box, #periodic_option").on("change", function(){
+  $(".select_option_box, #periodic_option, #shipping_option").on("change", function(){
     recalculate();
   });
   $("#add_to_cart").click(function() {
@@ -28,22 +28,31 @@ $(function(){
     if ($("#periodic_option").length == 1){
       periodic_month = $("#periodic_option").val();
     }
-    add_to_order(id, quantity, option_array, periodic_month, function() {
+    var shipping_option = $("#shipping_option").val();
+    add_to_order(id, quantity, option_array, periodic_month, shipping_option, function() {
       window.location.href = "/pay/order";
     });
   });
 });
 function recalculate(){
+  var quantity = $("#item_detail_quantity").val();
+
   var options_total = 0;
   $(".select_option_box").each(function(){
     var selected = $(this).find('option:selected');
     options_total += selected.data('price'); 
   });
+
   var periodic_month = 1 
   if ($("#periodic_option").length == 1){
     periodic_month = $("#periodic_option").val();
   }
-  var total_price = periodic_month * $("#item_detail_quantity").val() * ($("#total_price").data("original-price") + options_total);
+
+  var shipping_fee = 0
+  shipping_fee = $('#shipping_option option:selected').data('fee') * quantity;
+  renderShippingFee(quantity);
+
+  var total_price = periodic_month * quantity * ($("#total_price").data("original-price") + options_total + shipping_fee);
 
   $.ajax({
     data: {
@@ -60,12 +69,30 @@ function recalculate(){
   });
 
 }
+function renderShippingFee (quantity) {
+  $('#shipping_option option').each(function(){
+    var option = $(this);
+    $.ajax({
+      data: {
+        total_price: option.data('fee') * quantity
+      },
+      url: '/pay/change_currency',
+      type: 'POST',
+      success: function(httpObj){
+        option.html( option.data('name') + " [+ " + httpObj + "]" );
+      },
+      error: function(httpObj) {
+        alert(httpObj.responseText);
+      }
+    });
+  });
+}
 function formatNumber (num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
 function move_to_order(id) {
   var option_array = new Object();
-  add_to_order(id, 1, option_array, 1, function() {
+  add_to_order(id, 1, option_array, 1, null, function() {
     del_from_basket(id, function() {
       window.location.href = "/pay/order";
     });
@@ -100,7 +127,7 @@ function add_to_basket(id, callback) {
     }
   });
 }
-function add_to_order(id, qty, options, periodic, callback) {
+function add_to_order(id, qty, options, periodic, shipping, callback) {
   if (callback == undefined) {
     callback = function() {
       window.location.href = "/pay/order";
@@ -111,7 +138,8 @@ function add_to_order(id, qty, options, periodic, callback) {
       item_id: id,
       quantity: qty,
       option_items: options,
-      periodic: periodic
+      periodic: periodic,
+      shipping: shipping
     },
     url: '/item/add_to_order',
     type: 'POST',

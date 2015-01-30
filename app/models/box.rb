@@ -6,6 +6,8 @@ class Box < ActiveRecord::Base
 
   after_destroy :remove_images
 
+  scope :to_display,      -> { order('display_order DESC, id') }
+
   def top_image_url
     return "/images/top/#{self.path}.jpg"
   end

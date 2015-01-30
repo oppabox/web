@@ -21,7 +21,7 @@
         <tbody>
           <% if (current_user.purchases.size <= 0) or (current_user.purchases.first.orders.valid.count <= 0) %>
             <tr class="list_cell">
-              <td class="text-center" colspan="6">
+              <td class="text-center" colspan="7">
                 <br><%=t('empty_order')%><br>
                 <br><a href="/"><%= t('more_shopping') %></a><br>
               </td>
@@ -96,7 +96,7 @@
               <td colspan="6">
                 [<%= t('mypage_carry')%>]&nbsp;<%= address_full.join(", ") %>
               <% if purchase.status == Purchase::STATUS_PENDING %>
-                <br>[무통장 입금정보] <%=purchase.pay_type%>
+                <br>[<%= t('bank_transfer_info') %>] <%=purchase.pay_type%>
               <% end %>
               </td>
             </tr>

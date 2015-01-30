@@ -5,6 +5,8 @@ class Item < ActiveRecord::Base
   has_many    :item_names, :dependent => :destroy
   has_many    :orders, :dependent => :destroy
   has_many    :baskets, :dependent => :destroy
+  has_many    :item_shippings, :dependent => :destroy
+  has_many    :shippings, :through => :item_shippings
 
   after_destroy :remove_images
 
@@ -18,6 +20,12 @@ class Item < ActiveRecord::Base
 
   def image_locale_url loc, name
     return "/images/items/#{self.box.path}/#{self.path}/#{loc}/#{name}.jpg"
+  end
+
+  def get_delivery_fee shipping_name, country
+    shipping = self.shippings.where(name: shipping_name).take
+    fee = shipping.calculate_box_delivery shipping.name, country, (self.weight * 1)
+    fee.ceil
   end
 
   protected

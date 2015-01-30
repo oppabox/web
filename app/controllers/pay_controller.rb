@@ -91,7 +91,8 @@ class PayController < ApplicationController
     end
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
-    @delivery_fee = purchase.get_delivery_fee
+    # @delivery_fee = purchase.get_delivery_fee
+    @delivery_fee = (@orders.map {|o| o.get_delivery_fee }).inject(:+)
   end
 
   def generate_ref_num
