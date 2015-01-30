@@ -65,6 +65,7 @@ class Purchase < ActiveRecord::Base
       at_amt += o.total_price.to_i * o.quantity.to_i
       at_amt += o.get_delivery_fee
     end
+    return at_amt
   end
   
 
