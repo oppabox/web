@@ -43,6 +43,9 @@ ActiveAdmin.register Item do
 				if item.save
 					# save image
 					FileUtils.mkdir_p Rails.root.join('public', 'images', 'items', item.box.path, item.path)
+					['ko', 'en', 'cn', 'ja'].each do |locale|
+						FileUtils.mkdir_p Rails.root.join('public', 'images', 'items', item.box.path, item.path, locale)
+					end
 					unless data['image'].nil?
 						io = data['image'][0]
 						File.open(Rails.root.join('public', 'images', 'items', item.box.path, item.path, item.path + '.jpg'), 'wb') do |file|
@@ -144,6 +147,7 @@ ActiveAdmin.register Item do
 								option_item.name = option_item_data['name']
 								option_item.quantity = option_item_data['quantity']
 								option_item.limited	= option_item_data['limited'] == '1' ? true : false
+								option_item.price_change = option_item_data['price_change']
 								option_item.save!
 
 								option_item_cnt += 1
@@ -225,6 +229,49 @@ ActiveAdmin.register Item do
 		end
 
 		redirect_to :action => :edit, :id => params[:id]
+	end
+
+	############### load_image ###############
+	collection_action :load_image, :method => :post do
+		item = Item.find(params[:id])
+		images = {}
+
+		['ko', 'en', 'cn', 'ja'].each do |locale|
+			images[locale] = []
+			index = 1
+			Rails.root.join('public', 'images', 'items', item.box.path, item.path, locale)
+			begin
+	      exists = File.exists?(Rails.root.join("public", "images", "items", item.box.path, item.path, locale.to_s, "#{index}.jpg").to_s)
+	      if exists 
+	      	images[locale] << item.image_locale_url(locale, index.to_s)
+	      end
+	      index += 1
+	    end while exists 
+		end
+
+		render json: images
+	end
+
+	############### add_image ###############
+	collection_action :add_image, :method => :post do
+		data = params[:file]
+		item = Item.find(data['id'])
+
+		unless data['image'].nil? and data['image'].empty?
+			data['image'].each do |io|
+
+				tmp = io.original_filename.split("_") # ko_1.jpg
+				locale = tmp[0] # ko
+				file_name = tmp[1] # 1.jpg
+
+				File.open(Rails.root.join('public', 'images', 'items', item.box.path, item.path, locale, file_name), 'wb') do |file|
+					file.write(io.read)
+				end
+
+			end
+		end
+
+		render json: { :msg => "업로드 완료" }
 	end
 
 

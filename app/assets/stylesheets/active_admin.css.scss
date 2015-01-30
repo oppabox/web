@@ -104,7 +104,7 @@ div.nested-col {
 	cursor: pointer;
 }
 
-form .tab-content {
+.tab-content {
 	background: white;
 	border-top: none;
 }
@@ -115,4 +115,9 @@ form .tab-content {
 		font-size: 1.5em;
 	}
 	margin-bottom: 10px;
+}
+
+.img-center {
+  margin: auto;
+  text-align: center;
 }

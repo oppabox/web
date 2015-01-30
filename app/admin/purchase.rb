@@ -25,7 +25,7 @@ ActiveAdmin.register Purchase do
 
   ################# new ###################
   form :partial => "new"
-
+  
   ################## collection action ##########################  
   collection_action :transition do
     p = Purchase.find(params[:id])
@@ -63,11 +63,12 @@ ActiveAdmin.register Purchase do
   end
 
   collection_action :create, :method => :post do
-    data = params[:purchase]
+    data = params[:purchases]
 
     # create purchase
     p = Purchase.new
-      p.user_id = User.find_by_email.(data['user']).id
+      email = data['user']
+      p.user_id = User.where(email: email).pluck(:id).join().to_i
       p.recipient = data['recipient']
       p.city = data['city']
       p.state = data['state']
@@ -86,13 +87,13 @@ ActiveAdmin.register Purchase do
       p.order_no = p.reference_number
       p.user.country = data['country']
     p.save
-
+    puts data['item_id']
     o = Order.new
       o.purchase_id = p.id
       o.item_id = data['item_id']
       o.quantity = data['quantity']
       o.order_periodic = data['order_periodic']
-      o.status = data['status']
+      o.status = 2
     o.save
 
     ooi = OrderOptionItem.new
@@ -105,9 +106,14 @@ ActiveAdmin.register Purchase do
     redirect_to :action => :index
   end
 
-  collection_action :change_item_details do
-    ret = params[:box_id]
-    
+  collection_action :change_item_details, :method => :post do
+    items = Item.where(box_id:params[:box_id]).map { |i| { 'id' => i.id, 'name' => i.display_name } }
+    render :json => items.to_json
+  end
+
+  collection_action :check_country_value, :method => :post do
+    check = COUNTRIES.sort_by { |x, y| y }.map {|m,n| {'code' => n, 'country_name' => m } }
+    render :json => check.to_json
   end
 
   ########### download bl #############

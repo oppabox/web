@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <!-- Form Start -->
-  <%= form_for :purchase, url: '/admin/purchase', html: { method: :post, class: "form-horizontal", id: 'purchase_form' } do |form| %>
+  <%= form_for :purchases, url: '/admin/purchases', html: { method: :post, class: "form-horizontal", id: 'purchase_form' } do |form| %>
     <!-- purchase panel -->
     <div class="col-md-6">
       <div class="well">
@@ -9,49 +9,59 @@
         </div>
         <!-- User ID -->
         <div class="form-group">
-          <label for="user" class="col-md-2 control-label">User</label>
+          <%= form.label :user, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="user" value="billing@oppabox.com">
+            <%= form.text_field :user, { class: 'form-control', value: 'billing@oppabox.com' } %>
           </div>
         </div><!-- /User ID -->
+
         <!-- Recipient, Phonenumber -->
         <div class="form-group">
-          <label for="recipient" class="col-md-2 control-label">수령인</label>
+          <%= form.label :recipient, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="recipient">
+            <%= form.text_field :recipient, { class: 'form-control' } %>
           </div>
-          <label for="phonenumber" class="col-md-2 control-label">휴대번호</label>
+          <%= form.label :phonenumber, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="phonenumber">
+            <%= form.text_field :phonenumber, { class: 'form-control' } %>
           </div>
         </div><!-- /Recipient, Phonenumber -->
+
+        <!-- Country -->
+        <div class="form-group">
+          <%= form.label :country, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-8">
+            <%= form.select :country, "" ,{ :selected => params['country_selected'] }, { class: 'form-control' } %>
+          </div>
+        </div><!-- /Country --> 
+
         <!-- City, State -->
         <div class="form-group">
-          <label for="city" class="col-md-2 control-label">도시</label>
+          <%= form.label :city, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="city">
+            <%= form.text_field :city, { class: 'form-control' } %>
           </div>
-          <label for="state" class="col-md-2 control-label">주</label>
+          <%= form.label :state, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="state">
+            <%= form.text_field :state, { class: 'form-control' } %>
           </div>
         </div><!-- /City, State --> 
+
         <!-- Postcode -->
         <div class="form-group">
-          <label for="postcode" class="col-md-2 control-label">우편번호</label>
+          <%= form.label :postcode, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="postcode">
+            <%= form.text_field :postcode, { class: 'form-control' } %>
           </div>
         </div><!-- /Postcode -->
+
         <!-- Address -->
         <div class="form-group">
-          <label for="address" class="col-md-2 control-label">주소</label>
+          <%= form.label :address, { class: 'col-md-2 control-label' } %>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="address">
+            <%= form.text_field :address, { class: 'form-control' } %>
           </div>
         </div><!-- /State -->
-        <input type="hidden" id="status" value="1">
-
       </div> 
     </div><!-- /purchase panel -->
 
@@ -63,54 +73,43 @@
         <div class="purchase_label">
           <label>Order</label>
         </div>
+
         <!-- 아이템 -->
         <div class="form-group">
-          <label for="item" class="col-md-2 control-label">아이템</label>
+          <%= form.label :item, { class: 'col-md-2 control-label' } %>
           <div class="col-md-4">
-            <select name="item" id="item" class="form-control">
-              <option value="">-------- 박스 선택 --------</option>
-              <% Box.pluck(:id, :display_name).each do |i,n| %>
-                <option value="<%= i %>"><%= n %></option>
-              <% end %>
-            </select>
+            <%= form.select :item, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: "------ 박스 선택 ------", :selected => params['item_selected'] }, { class: 'form-control' } %>
           </div>
           <div class="col-md-4">
-            <select name="item_detail" id="item_detail" class="form-control">
-              <option value="">------- 아이템 선택 -------</option>
-            </select>
+            <%= form.select :item_detail, "",{ include_blank: "------- 아이템 선택 -------", :selected => params['item_detail_selected'] }, { class: 'form-control' } %>
           </div>
         </div><!-- /아이템 -->
 
         <!-- 옵션 - 아이템에 옵션이있을 때에만 -->
         <div class="form-group" style="display:none;">
-          <label for="option" class="col-md-2 control-label">옵션</label>
+          <%= form.label :item_option, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input id="option" type="text" class="form-control">
+            <%= form.text_field :item_option, { class: 'form-control' } %>
           </div>
         </div><!-- /옵션 -->
 
         <!-- 정기구매 - 김재중박스일때 -->
         <div class="form-group" style="display:none;">
-          <label for="periodic" class="col-md-2 control-label">정기구매</label>
+          <%= form.label :periodic, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <select name="periodic" id="periodic" class="form-control">
-              <option value="1" selected>1개 구입</option>
-              <option value="3">3개월</option>
-              <option value="6">6개월</option>
-              <option value="12">12개월</option>
-            </select>
+            <%= form.select :periodic, [["1개 구입",1],["3개월 구입",3],["6개월 구입",6],["12개월 구입",12]], { include_blank: "---- 정기구매 선택 ----", :selected => params['periodic_selected'] }, { class: 'form-control' } %>
           </div>
         </div><!-- /정기구매 -->
         
         <!-- 개수 -->
         <div class="form-group">
-          <label for="quantity" class="col-md-2 control-label">개수</label>
+          <%= form.label :quantity, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <input id="quantity" type="text" class="form-control text-center">
+            <%= form.text_field :quantity, { class: 'form-control text-center' } %>
           </div>
         </div><!-- /개수 -->
 
-        <input type="hidden" id="status" value="1">
+        <%= form.hidden_field :status, { class: 'form-control', value: '1' } %>
       </div> 
     </div><!-- /Order panel -->
 
@@ -125,6 +124,7 @@
 
 <script>
   $(document).ready(function(){
+    console.log( "document loaded" );
     $("#purchase_form_reset").click(function(e){
       e.preventDefault();
       $('#purchase_form')[0].reset();
@@ -134,18 +134,36 @@
       $('#purchase_form').submit();
     });
   });
-  $("#item").change(function() {
-    var box_id = $(this).val();
+  $("#purchases_item").change(function() {
     $.ajax({
-      url: "/admin/purchase/change_item_details",
+      url: "/admin/purchases/change_item_details",
       type: "POST",
       dataType:"JSON",
       data: {
-        box_id: box_id;
+        box_id: $(this).val()
       },
       success: function(data) {
-        $.("#item_detail").html(data["result"]);
-      }
-    })
+        $('#purchases_item_detail').html("<option value=''>아이템 선택</option>");
+        $.each (data, function (i,v) {
+          $('#purchases_item_detail').append("<option value='"+ v['id'] +"'>"+ v['name'] +"</option>");
+        })
+      },
+    });
+  });
+  $("#purchases_country").ready(function() {
+    $.ajax({
+      url: "/admin/purchases/check_country_value",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        first_check: $(this).val()
+      },
+      success: function(data) {
+        $('#purchases_country').html("<option value=''>국가 선택</option>");
+        $.each (data, function (i,v) {
+          $('#purchases_country').append("<option value='"+ v['code'] +"'>"+ v['code'] +' - '+ v['country_name'] +"</option>");
+        })
+      },
+    });
   });
 </script>
