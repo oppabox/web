@@ -73,6 +73,7 @@ ActiveAdmin.register Box do
 		box.display_name = data['display_name']
 		box.path = data['display_name'].gsub(" ", "_").downcase
 		box.opened = data['opened'] == '1' ? true : false
+		box.display_order = data['display_order']
 
 		if box.save
 			# check whether path is changed
