@@ -36,7 +36,7 @@
               <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
               <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
               
-              <td class="text-center">[<%=t('paid_delivery_charge')%> :<%= Order.change_currency_pretty(order.get_delivery_fee)] %></td>
+              <td class="text-center">[<%=t('paid_delivery_charge')%> : <%= Order.change_currency_pretty(order.get_delivery_fee) %>]</td>
             </tr>
           <% end %>
 
