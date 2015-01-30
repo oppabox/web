@@ -141,11 +141,12 @@
 
 .tooltip-inner {
   max-width: 500px !important;
+  min-width: 400px !important;
   background-color: rgba(0,0,0,1) !important;
 }
 .tooltip-inner p {
   margin: 3px 3px;
-  font-size: 14px;
+  font-size: 12px;
   text-align: left;
 }
 #shipping_tooltip {
