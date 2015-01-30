@@ -28,6 +28,14 @@ class Item < ActiveRecord::Base
     fee.ceil
   end
 
+  def shippings_in country
+    if country == "KR"
+      self.shippings.domestic
+    else
+      self.shippings.foreign
+    end
+  end
+
   protected
   def remove_images
   	# remove the dir
