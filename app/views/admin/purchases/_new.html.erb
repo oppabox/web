@@ -78,10 +78,10 @@
         <div class="form-group">
           <%= form.label :item, { class: 'col-md-2 control-label' } %>
           <div class="col-md-4">
-            <%= form.select :item, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: "------ 박스 선택 ------", :selected => params['item_selected'] }, { class: 'form-control' } %>
+            <%= form.select :item, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: "박스 선택", :selected => params['item_selected'] }, { class: 'form-control' } %>
           </div>
           <div class="col-md-4">
-            <%= form.select :item_detail, "",{ include_blank: "------- 아이템 선택 -------", :selected => params['item_detail_selected'] }, { class: 'form-control' } %>
+            <%= form.select :item_detail, "",{ include_blank: "아이템 선택", :selected => params['item_detail_selected'] }, { class: 'form-control' } %>
           </div>
         </div><!-- /아이템 -->
 
@@ -97,7 +97,7 @@
         <div class="form-group" style="display:none;">
           <%= form.label :periodic, { class: 'col-md-2 control-label' } %>
           <div class="col-md-3">
-            <%= form.select :periodic, [["1개 구입",1],["3개월 구입",3],["6개월 구입",6],["12개월 구입",12]], { include_blank: "---- 정기구매 선택 ----", :selected => params['periodic_selected'] }, { class: 'form-control' } %>
+            <%= form.select :periodic, [["1개 구입",1],["3개월 구입",3],["6개월 구입",6],["12개월 구입",12]], { include_blank: "정기구매 선택", :selected => params['periodic_selected'] }, { class: 'form-control' } %>
           </div>
         </div><!-- /정기구매 -->
         
@@ -143,13 +143,17 @@
         box_id: $(this).val()
       },
       success: function(data) {
-        $('#purchases_item_detail').html("<option value=''>아이템 선택</option>");
+        $('#purchases_item_detail').html("<option value=''>-아이템 선택-</option>");
         $.each (data, function (i,v) {
           $('#purchases_item_detail').append("<option value='"+ v['id'] +"'>"+ v['name'] +"</option>");
-        })
+        });
       },
     });
   });
+  $("#purchases_item_detail").change(function() {
+    if $("#purchases_item_detail").val() == 1 { $("#purchases_periodic").css("display:show;"); }
+    else $("#purchases_periodic").css("display:none;");
+  )};
   $("#purchases_country").ready(function() {
     $.ajax({
       url: "/admin/purchases/check_country_value",

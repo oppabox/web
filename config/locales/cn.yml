@@ -146,7 +146,7 @@ cn:
 
   delivery_info_one: "配送方式：oppabox"
   delivery_info_two: "配送费: 国内免费(Korea)，国外另收费"
-  delivery_info_three: "配送公司：UPS"
+  delivery_info_three: "配送公司：UPS, EMS"
   delivery_info_four: "配送期限：七天内"
   delivery_info_five: "根据商品不同，发送日期会不同。（请参考具体网页)"
   delivery_info_five_one: "根据商品库存状态和配送公司（快递公司等）情况，配送有可能延迟，请您谅解。"
@@ -157,7 +157,7 @@ cn:
 
   refund_info_one: "退货换货请咨询：+82-2-794-5558(Email:privacy@oppabox.com)"
   refund_info_two: "退货换货申请期限"
-  refund_info_two_one: "拿到商品后七日以内联系 +82-2-794-5558(Email:privacy@oppabox.com)申请退货换货(请向OPPABOX客服中心或国内的一阳快递，国外的UPS申请退货)"
+  refund_info_two_one: "拿到商品后七日以内联系 +82-2-794-5558(Email:privacy@oppabox.com)申请退货换货(请向OPPABOX客服中心或国内的一阳快递，国外的UPS,EMS申请退货)"
   refund_info_three: "产品出现瑕疵或送错货时退款/换货"
   refund_info_three_one: "这些由oppabox负担，顾客只需退回商品。"
   refund_info_four: "只因顾客的变心退款 / 换货"

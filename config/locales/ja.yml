@@ -147,7 +147,7 @@ ja:
 
   delivery_info_one: "配達形態 : oppabox"
   delivery_info_two: "配達料金 : 海外別途"
-  delivery_info_three: "配達の際 : UPS"
+  delivery_info_three: "配達の際 : UPS, EMS"
   delivery_info_four: "配達期日 ： 7日以内"
   delivery_info_five: "製品によって発送される日が異なることがあります。(詳しい内容は該当するページを参考）"
   delivery_info_five_one: "商品の在庫の状況および輸送業者(宅配便など）の事情によって配達が遅れることがあります。"
@@ -158,7 +158,7 @@ ja:
 
   refund_info_one: "交換および返品の案内 : +82-2-794-5558(Email:privacy@oppabox.com)"
   refund_info_two: "交換・返品の申請期間"
-  refund_info_two_one: "商品を受け取ってから7日以内に +82-2-794-5558(Email:privacy@oppabox.com)まで交換および返品の申込み(オパボックスのカスタマーセンター又は国内(イルヤン宅配)、海外(UPS)に返品の申込みをしてください。)"
+  refund_info_two_one: "商品を受け取ってから7日以内に +82-2-794-5558(Email:privacy@oppabox.com)まで交換および返品の申込み(オパボックスのカスタマーセンター又は国内(イルヤン宅配)、海外(UPS, EMS)に返品の申込みをしてください。)"
   refund_info_three: "製品に問題および配達ミスによる返品・交換"
   refund_info_three_one: "オパボックスの負担なので商品だけ送ってください。"
   refund_info_four: "自己都合での返品・交換"

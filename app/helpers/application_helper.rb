@@ -35,13 +35,14 @@ module ApplicationHelper
             end
           end
         end
-      if x.id == 1 or x.id == 2 and method == "box"
-        size_md = 6 
-        size_xs = 12
-      else
-        size_md = 4
-        size_xs = 6
-      end
+
+        if method != "item" and x.display_order == 1
+          size_md = 6
+          size_xs = 12
+        else
+          size_md = 4
+          size_xs = 6
+        end
       inner_html += #image_box + text_box                             # class로 조절이 안되서 style로 조절
         content_tag :div, :class => "col-md-#{size_md} col-xs-#{size_xs} text-center", :style => 'padding-left:0; padding-right:0;' do
           content_tag :div, :class => "box_view" do 
