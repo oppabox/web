@@ -63,9 +63,8 @@ class Purchase < ActiveRecord::Base
     at_amt = 0
     self.orders.valid.each do |o|
       at_amt += o.total_price.to_i * o.quantity.to_i
-      at_amt += o.shipping.get_delivery_fee self.user
+      at_amt += o.get_delivery_fee
     end
-    # at_amt += get_delivery_fee
   end
   
 
