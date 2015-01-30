@@ -83,3 +83,28 @@
 .delete_link a:hover {
   color: #cc002e;
 }
+
+.shipping_menu {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  background-color: #fff !important;
+  -webkit-background-clip: padding-box !important;
+  background-clip: padding-box !important;
+  border: 1px solid #ccc !important;
+  border: 1px solid rgba(0,0,0,.15) !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+
+  li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+  }
+}
