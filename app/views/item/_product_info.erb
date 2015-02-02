@@ -39,10 +39,18 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p><%= t('product_info_delivery_charge') %></p>
+      <p><%= t('product_info_delivery_charge') %>&nbsp;&nbsp;&nbsp;<i class="fa fa-question-circle" id="shipping_tooltip"></i></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= t('product_info_delivery_charge_footer') %></p>
+      <select class="form-control input-sm" id="shipping_option">
+        <% if User.current.nil? %>
+          <% s_opt = @item.shippings.pluck(:name, :id) %>
+        <% else %>
+          <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.pluck(:name, :id) : @item.shippings.foreign.pluck(:name, :id) %>
+          <% s_opt.collect { |x| x << { 'data-name' => x[0], 'data-fee' => @item.get_delivery_fee(x[0], User.current.country) } } %>
+        <% end %>
+        <%= options_for_select s_opt %>
+      </select>
     </div>
   </div>
   <hr>
@@ -134,25 +142,6 @@
     </div>
   </div>
   <% end %>
-
-  <!-- sectioin for shipping -->
-  <hr>
-  <div class="row mar-left">
-    <div class="col-xs-4 col-md-3">
-      <p><%= t('shipping_select') %></p>
-    </div>
-    <div class="col-xs-8 col-md-9">
-      <select class="form-control input-sm" id="shipping_option">
-        <% if User.current.nil? %>
-          <% s_opt = @item.shippings.pluck(:name, :id) %>
-        <% else %>
-          <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.pluck(:name, :id) : @item.shippings.foreign.pluck(:name, :id) %>
-          <% s_opt.collect { |x| x << { 'data-name' => x[0], 'data-fee' => @item.get_delivery_fee(x[0], User.current.country) } } %>
-        <% end %>
-        <%= options_for_select s_opt %>
-      </select>
-    </div>
-  </div>
   
   <div style="height:20px;"></div>
 
@@ -184,5 +173,16 @@
 <script type="text/javascript">
 $(function(){
   recalculate();
+});
+$(function () {
+  $('#shipping_tooltip').tooltip({
+    animation: false,
+    html: true,
+    placement: 'top',
+    trigger: 'hover',
+    //container: 'body',
+    title: "<p><%= t('shipping_tootip_line1') %></p><p><%= t('shipping_tootip_line2') %></p>"
+    // title: "qpofjpoewfjopwefnpowenpo nponpowenfpoewnfopewpfoewj fpofjpowejfpeow"
+  });
 });
 </script>

@@ -151,8 +151,9 @@
     });
   });
   $("#purchases_item_detail").change(function() {
-    if $("#purchases_item_detail").val() == 1 { $("#purchases_periodic").css("display:show;"); }
-    else $("#purchases_periodic").css("display:none;");
+    if $("#purchases_item_detail").val() == 1 { 
+      $("#purchases_periodic").css("display:show;"); 
+    } else $("#purchases_periodic").css("display:none;");
   )};
   $("#purchases_country").ready(function() {
     $.ajax({
