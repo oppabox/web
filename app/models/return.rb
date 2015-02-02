@@ -66,8 +66,10 @@ class Return < ActiveRecord::Base
 
 	def request_done
 		self.status = STATUS_DONE
-		self.order.status = Order::STATUS_CANCEL
-		self.order.cancel_transaction(self.quantity)
+		o = self.order
+		o.status = Order::STATUS_CANCEL
+		o.cancel_transaction(self.quantity)
+		o.save
 		self.save
 	end
 
