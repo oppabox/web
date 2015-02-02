@@ -5,32 +5,6 @@ ActiveAdmin.register Box do
 	################# new ##################
 	form :partial => "form"
 
-	collection_action :add_item, :method => :post do
-		@id = params[:cnt]
-		respond_to do |format|
-			format.js
-		end
-	end
-
-	collection_action :add_option, :method => :post do
-		@id = params[:cnt]
-		@item_id = params[:item_id]
-		respond_to do |format|
-			format.js
-		end
-	end
-
-	collection_action :add_option_item, :method => :post do
-		@option_id = params[:option_id]
-		@item_id = params[:item_id]
-		@cnt = params[:cnt]
-
-		respond_to do |format|
-			format.js
-		end
-	end
-
-
 	collection_action :create, :method => :post do
 		data = params[:box]
 		
@@ -44,14 +18,14 @@ ActiveAdmin.register Box do
 			# image save
 			unless data['image'].nil?
 				box_io = data['image'][0]
-				File.open(Rails.root.join('public', 'images', 'box', box.path + '.jpg'), 'wb') do |file|
+				File.open(box.image_path, 'wb') do |file|
 					file.write(box_io.read)
 				end
 			end
 
 			unless data['top_image'].nil?
 				box_io = data['top_image'][0]
-				File.open(Rails.root.join('public', 'images', 'top', box.path + '.jpg'), 'wb') do |file|
+				File.open(box.top_image_path, 'wb') do |file|
 					file.write(box_io.read)
 				end
 			end
@@ -79,28 +53,29 @@ ActiveAdmin.register Box do
 			# check whether path is changed
 			unless old_path == box.path
 				# remane file
-				File.rename(Rails.root.join('public', 'images', 'box', old_path + '.jpg'), 
-										Rails.root.join('public', 'images', 'box', box.path + '.jpg'))
+				File.rename(Box.top_image_path(old_path), box.top_image_path)
+				File.rename(Box.image_path(old_path), box.image_path)
+				
 				# rename item image's bot path
-				if File.directory?(Rails.root.join('public', 'images', 'items', old_path))
-					FileUtils.copy_entry(Rails.root.join('public', 'images', 'items', old_path),
-															 Rails.root.join('public', 'images', 'items', box.path),
-															 :preserve => true )
-					FileUtils.remove_dir(Rails.root.join('public', 'images', 'items', old_path), true)
+				if File.directory?(Box.item_path(old_path))
+					FileUtils.copy_entry(Box.item_path(old_path),
+															 box.item_path,
+															 :preserve => true)
+					FileUtils.remove_dir(Box.item_path(old_path), true)
 				end
 			end
 
 			# check whether image is changed
 			unless data['image'].nil?
 				io = data['image']
-				File.open(Rails.root.join('public', 'images', 'box', box.path + '.jpg'), 'wb') do |file|
+				File.open(box.image_path, 'wb') do |file|
 					file.write(io.read)
 				end
 			end
 
 			unless data['top_image'].nil?
 				io = data['top_image'][0]
-				File.open(Rails.root.join('public', 'images', 'top', box.path + '.jpg'), 'wb') do |file|
+				File.open(box.top_image_path, 'wb') do |file|
 					file.write(io.read)
 				end
 			end

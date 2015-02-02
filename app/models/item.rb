@@ -15,11 +15,11 @@ class Item < ActiveRecord::Base
   end
 
   def image_url
-    return "/images/items/#{self.box.path}/#{self.path}/#{self.path}.jpg"
+    "/images/items/#{self.box.path}/#{self.path}/#{self.path}.jpg"
   end
 
   def image_locale_url loc, name
-    return "/images/items/#{self.box.path}/#{self.path}/#{loc}/#{name}.jpg"
+    "/images/items/#{self.box.path}/#{self.path}/#{loc}/#{name}.jpg"
   end
 
   def get_delivery_fee shipping_name, country

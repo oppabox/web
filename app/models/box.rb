@@ -9,25 +9,49 @@ class Box < ActiveRecord::Base
   scope :sorted,      -> { order('display_order DESC, id') }
 
   def top_image_url
-    return "/images/top/#{self.path}.jpg"
+    "/images/top/#{self.path}.jpg"
+  end
+
+  def top_image_path
+    Box.top_image_path(self.path)
   end
 
   def image_url
-    return "/images/box/#{self.path}.jpg"
+    "/images/box/#{self.path}.jpg"
+  end
+
+  def image_path
+    Box.image_path(self.path)
+  end
+
+  def item_path
+    Box.item_path(self.path)
+  end
+
+  def self.top_image_path path
+    Rails.root.join('public', 'images', 'top', path + '.jpg')
+  end
+
+  def self.image_path path
+    Rails.root.join('public', 'images', 'box', path + '.jpg')
+  end
+
+  def self.item_path path
+    Rails.root.join('public', 'images', 'items', path)
   end
 
   protected
   def remove_images
   	# image in box dir
-    if File.file?(Rails.root.join('public', 'images', 'box', self.path + '.jpg'))
-      File.delete(Rails.root.join('public', 'images', 'box', self.path + '.jpg'))
+    if File.file?(self.image_path)
+      File.delete(self.image_path)
     end
-    if File.file?(Rails.root.join('public', 'images', 'top', self.path + '.jpg'))
-      File.delete(Rails.root.join('public', 'images', 'top', self.path + '.jpg'))
+    if File.file?(self.top_image_path)
+      File.delete(self.top_image_path)
     end
   	# remove item wrapper dir
-  	if File.directory?(Rails.root.join('public', 'images', 'items', self.path))
-			FileUtils.remove_dir(Rails.root.join('public', 'images', 'items', self.path), true)
+  	if File.directory?(self.item_path)
+			FileUtils.remove_dir(self.item_path, true)
 		end
   end
 
