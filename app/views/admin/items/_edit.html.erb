@@ -82,6 +82,37 @@
 					</div>
 				</div>
 
+				<% shippings = @item.shippings.pluck(:id) %>
+				<%= f.fields_for :shippings do |ff| %>
+					<div class="form-group">
+						<%= ff.label :domestic_shippings, { class: 'col-sm-2 control-label' } %>
+						<div class="col-sm-9">
+							<div class="checkbox">
+								<% Shipping.domestic.each do |s| %>
+									<%= ff.label s.id, { class: 'checkbox-inline' } do %>
+										<% opt = shippings.include?(s.id) ? {checked: true} : {} %>
+										<%= ff.check_box s.id, opt %><%= s.name.to_s %>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<%= ff.label :foreign_shippings, { class: 'col-sm-2 control-label' } %>
+						<div class="col-sm-9">
+							<div class="checkbox">
+								<% Shipping.foreign.each do |s| %>
+									<%= ff.label s.id, { class: 'checkbox-inline' } do %>
+										<% opt = shippings.include?(s.id) ? {checked: true} : {} %>
+										<%= ff.check_box s.id, opt %><%= s.name.to_s %>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				<% end %>
+
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-9">
 						<div class="checkbox">

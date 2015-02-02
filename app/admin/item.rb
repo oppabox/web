@@ -93,6 +93,18 @@ ActiveAdmin.register Item do
 			item_name.save
 		end
 
+		shipping_list = []
+		data['shippings'].each do |shipping|
+			# data is [name, value]
+			if shipping[1] == '1'
+				shipping_list << shipping[0]
+			end
+		end
+
+		shippings = Shipping.where(id: shipping_list)
+		puts shippings.inspect
+		item.shippings = shippings
+
 		if item.save
 			unless data['image'].nil?
 				io = data['image'][0]

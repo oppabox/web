@@ -49,45 +49,60 @@ function recalculate(){
   }
 
   var shipping_fee = 0
-  if ($('#shipping_option option:selected').data('fee') !== undefined) {
+  if ($('#shipping_option').data('country') !== "") {
     // only when loged in
-    shipping_fee = $('#shipping_option option:selected').data('fee') * quantity;
-    renderShippingFee(quantity);
+    renderShippingFee(quantity, ($("#total_price").data("original-price") + options_total), periodic_month);
   }
+  else {
+    var total_price = periodic_month * quantity * ($("#total_price").data("original-price") + options_total + shipping_fee);
 
-  var total_price = periodic_month * quantity * ($("#total_price").data("original-price") + options_total + shipping_fee);
-
-  $.ajax({
-    data: {
-      total_price: total_price
-    },
-    url: '/pay/change_currency',
-    type: 'POST',
-    success: function(httpObj){
-      $("#total_price").html(httpObj);
-    },
-    error: function(httpObj) {
-      alert(httpObj.responseText);
-    }
-  });
-
-}
-function renderShippingFee (quantity) {
-  $('#shipping_option option').each(function(){
-    var option = $(this);
     $.ajax({
       data: {
-        total_price: option.data('fee') * quantity
+        total_price: total_price
       },
       url: '/pay/change_currency',
       type: 'POST',
       success: function(httpObj){
-        option.html( option.data('name') + " [+ " + httpObj + "]" );
+        $("#total_price").html(httpObj);
       },
       error: function(httpObj) {
         alert(httpObj.responseText);
       }
     });
+  }
+
+}
+function renderShippingFee (quantity, sub_total, month) {
+  // sub_total : original + option
+  var item_id = $('#shipping_option').data('id');
+  var country = $('#shipping_option').data('country');
+  var obj = [];
+  $('#shipping_option option').each(function(){
+    obj.push($(this).data('name'));
+  });
+  $.ajax({
+    url: '/pay/get_delivery_fee',
+    data: {
+      item_id: item_id ,
+      quantity: quantity,
+      shippings: obj,
+      country: country,
+      sub_total: sub_total,
+      month: month,
+      selected: $('#shipping_option option:selected').data('name')
+    },
+    type: 'POST',
+    success: function(httpObj){
+      $('#shipping_option option').each(function(){
+        var option = $(this);
+        var name = option.data('name');
+        option.html( name + " [+ " + httpObj[name] + "]" );
+      });
+      $('#total_price').html(httpObj['total']);
+    },
+    error: function(httpObj){
+      alert(httpObj.responseText);
+    }
   });
 }
 function formatNumber (num) {

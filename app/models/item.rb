@@ -22,9 +22,9 @@ class Item < ActiveRecord::Base
     "/images/items/#{self.box.path}/#{self.path}/#{loc}/#{name}.jpg"
   end
 
-  def get_delivery_fee shipping_name, country
+  def get_delivery_fee shipping_name, country, quantity = 1
     shipping = self.shippings.where(name: shipping_name).take
-    fee = shipping.calculate_box_delivery shipping.name, country, (self.weight * 1)
+    fee = Shipping.calculate_box_delivery shipping.name, country, nil, self.weight, quantity
     fee.ceil
   end
 

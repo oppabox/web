@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 	post "pay/reorder_quantity"
   post "pay/reorder_shipping"
   post "pay/change_currency"
+  post "pay/get_delivery_fee"
 
   # Nonkorean payment
   post "pay/usd_request"

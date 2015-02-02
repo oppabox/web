@@ -20,6 +20,7 @@ a.save
 b = Shipping.new
 b.category = 0
 b.name = 'STANDARD'
+b.threshold = 50000
 b.save
 
 # foreign

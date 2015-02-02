@@ -46,7 +46,7 @@ class Order < ActiveRecord::Base
   }
 
   def get_delivery_fee
-    fee = self.shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.item.weight * self.quantity)
+    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * self.quantity), self.item.weight, self.quantity
     fee.ceil
   end
 

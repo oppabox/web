@@ -8,21 +8,22 @@ class Shipping < ActiveRecord::Base
 	scope :foreign,								-> { where(category: 1) }
 
 
-	def calculate_box_delivery name, country, weight, month = 1
+	def self.calculate_box_delivery name, country, order_price, weight, quantity, month = 1
+		shipping = Shipping.where(name: name).take
 		case name
 		when 'UPS'
-			return calculate_ups country, weight, month
+			return shipping.calculate_ups country, (weight * quantity), month
 		when 'EMS'
-			return calculate_ems country, weight, month
+			return shipping.calculate_ems country, (weight * quantity), month
 		when 'FREE'
 			return 0
 		when 'STANDARD'
-			return calculate_standard country, weight, month
+			return shipping.calculate_standard country, quantity, month, order_price
 		end
 	end
 
 	####################  UPS  ####################
-	def calculate_ups country, weight, month = 1
+	def calculate_ups country, weight, month
 		country_code = Array.new(10)
     country_code[0] = %w[CN MO SG TW]
     country_code[1] = %w[JP VN]
@@ -109,8 +110,12 @@ class Shipping < ActiveRecord::Base
 	end
 
 	####################  STANDARD  ####################
-	def calculate_standard country, weight, month = 1
-		return 2700 * month
+	def calculate_standard country, quantity, month, order_price
+		if !order_price.nil? and order_price >= self.threshold
+			return 0
+		else
+			return 2700 * month * quantity
+		end
 	end
 
 end

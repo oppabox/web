@@ -150,6 +150,30 @@ class PayController < ApplicationController
     end
   end
 
+  def get_delivery_fee
+    quantity = params['quantity'].to_i
+    item_id = params['item_id']
+    shippings = params['shippings']
+    country = params['country']
+    sub_total = params['sub_total'].to_i
+    month = params['month'].to_i
+    selected = params['selected']
+
+    item = Item.find(item_id)
+    rtn = {}
+    fee = 0
+    shippings.each do |s|
+      rtn[s] = Shipping.calculate_box_delivery s, country, (sub_total * quantity), item.weight, quantity, month
+      if s == selected
+        fee = rtn[s]
+      end
+      rtn[s] = Order.change_currency(rtn[s])
+    end
+
+    rtn['total'] = Order.change_currency( month * (quantity * sub_total + fee) )
+    render json: rtn
+  end
+
   def usd_request
     @secretKey = EXIMBAY_SECRET_KEY
     @pay_url = params[:pay_url]
