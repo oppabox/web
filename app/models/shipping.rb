@@ -114,7 +114,7 @@ class Shipping < ActiveRecord::Base
 		if !order_price.nil? and order_price >= self.threshold
 			return 0
 		else
-			return 2700 * month * quantity
+			return 2700 * month
 		end
 	end
 
