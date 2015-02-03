@@ -45,8 +45,15 @@ class Order < ActiveRecord::Base
     STATUS_DELETED => "STATUS_ORDER_DELETED"
   }
 
-  def get_delivery_fee
-    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * self.quantity), self.item.weight, self.quantity
+  def final_order_price
+    self.total_price * self.quantity + self.get_delivery_fee
+  end
+
+  def get_delivery_fee quantity = nil
+    if quantity.nil?
+      quantity = self.quantity
+    end
+    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * quantity), self.item.weight, quantity
     fee.ceil
   end
 

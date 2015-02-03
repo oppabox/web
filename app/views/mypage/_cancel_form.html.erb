@@ -23,7 +23,7 @@
     <tbody>
       <tr>
         <td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
-        <td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
+        <td class="text-center"><%= Order.change_currency(@order.final_order_price) %></td>
         <td class="text-center">
           <% opt = Array.new %>
           <% for i in 0..@order.quantity do %>
@@ -78,17 +78,17 @@
 <script>
 
 $('#cancel_quantity').change(function(){
-  amount = $(this).val()
-  price = <%= @order.total_price %>
+  amount = $(this).val();
   $.ajax({
-    url: "/mypage/change_currency/",
+    url: "/mypage/recalculate_cancel/",
     type: "POST",
     dataType:"JSON",
     data: {
-      amount: amount * price
+      order_id: <%= @order.id %>,
+      amount: amount
     },
     success: function(data) {
-      $('.cancel_amount').html(data['cancel_amount'])
+      $('.cancel_amount').html(data);
     }
   })
 })

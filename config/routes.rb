@@ -77,7 +77,8 @@ Rails.application.routes.draw do
   get "mypage/api_info"
   post "mypage/edit_address"
   get "mypage/new_request(/:order_id)" => "mypage#new_request", as: :mypage_new_request
-  post "mypage/change_currency"
+  post "mypage/recalculate"
+  post "mypage/recalculate_cancel"
   post "mypage/return_request"
   post "mypage/cancel_request"
   post "mypage/change_request"
