@@ -2,7 +2,7 @@ module BoxHelper
 # this will make group according to path name
 	def custom_item_body items, method
     inner_html = "" #storage for return
-
+    # custom names 
     grouped_items = []
     
     while !items.empty?
@@ -20,7 +20,7 @@ module BoxHelper
     	temp_html = ""
     	inner_html +=
     		content_tag :h3 do
-    			items[0].display_name
+    			items[0].first.path.split('_')[0]
     		end
     	inner_html +=
     		content_tag :hr
