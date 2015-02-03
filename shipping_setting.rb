@@ -23,6 +23,19 @@ b.name = 'STANDARD'
 b.threshold = 50000
 b.save
 
+e = Shipping.new
+e.category = 0
+e.name = 'JCOKCOK'
+e.threshold = 50000
+e.save
+
+f = Shipping.new
+f.category = 0
+f.name = 'GGANGI'
+f.threshold = 50000
+f.save
+
+
 # foreign
 c = Shipping.new
 c.category = 1
