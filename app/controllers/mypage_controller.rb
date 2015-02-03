@@ -44,7 +44,7 @@ class MypageController < ApplicationController
     order = Order.find(params[:order_id])
     quantity = params[:amount].to_i
     price = order.total_price
-    shipping_fee = order.get_delivery_fee(quantity) == 0 ? 2700 : order.get_delivery_fee(quantity)
+    shipping_fee = order.get_delivery_fee(quantity) == 0 ? order.shipping.normal_fee : order.get_delivery_fee(quantity)
     diff_quantity = order.quantity - quantity
     diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
     # 총 결제비에서 diff quantity 만큼 구매했다고 생각하고 차액계산

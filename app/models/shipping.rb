@@ -19,12 +19,27 @@ class Shipping < ActiveRecord::Base
 			return 0
 		when 'STANDARD'
 			return shipping.calculate_standard country, quantity, month, order_price
-		end
 		when 'JCOKCOK'
 			return shipping.calculate_3000 country, quantity, month, order_price
-		end
 		when 'GGANGI'
 			return shipping.calculate_2500 country, quantity, month, order_price
+		end
+	end
+
+	def normal_fee
+		case self.name
+		when 'UPS'
+			return shipping.calculate_ups country, (weight * quantity), month
+		when 'EMS'
+			return shipping.calculate_ems country, (weight * quantity), month
+		when 'FREE'
+			return 2700
+		when 'STANDARD'
+			return 2700
+		when 'JCOKCOK'
+			return 3000
+		when 'GGANGI'
+			return 2500
 		end
 	end
 
