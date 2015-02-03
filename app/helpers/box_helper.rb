@@ -4,24 +4,17 @@ module BoxHelper
     inner_html = "" #storage for return
 
     grouped_items = []
-    i = 0
-    puts items.count
-    while i < items.count
-    	rtn = [ items[i] ]
-    	group_name = items[i].path.split('_')[0]
-    	idx = i + 1
-
-    	while idx < items.count
-    		if items[idx].path.split('_')[0] == group_name
-    			rtn << items[idx]
-    			idx = idx + 1
-  			else
-  				break
-  			end
-    	end
+    
+    while !items.empty?
+    	group_name = items.first.path.split('_')[0]
+    	# grouping
+    	rtn = items.select { |i| i.path.split('_')[0] == group_name }
     	grouped_items << rtn
-    	i = idx
+    	# remove selected items
+    	items = items.reject { |i| i.path.split('_')[0] == group_name }
     end
+
+    puts grouped_items.inspect
 
     grouped_items.each do |items|
     	temp_html = ""
@@ -70,12 +63,11 @@ module BoxHelper
 	            image_box + text_box
 	          end
 	        end
-
-	      inner_html +=
-	      	content_tag :div, :class => 'row' do
-	      		temp_html.html_safe
-	      	end
-	    end
+			end
+			inner_html +=
+      	content_tag :div, :class => 'row' do
+      		temp_html.html_safe
+      	end
 	  end
 	  content_tag :div, :class => 'container' do #for bootstrap
       content_tag :div, :class => 'row ' do 
