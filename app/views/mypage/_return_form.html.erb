@@ -110,6 +110,7 @@ $('#return_quantity').change(function(){
     type: "POST",
     dataType:"JSON",
     data: {
+      order_id: <%= @order.id %>,
       amount: amount * price
     },
     success: function(data) {

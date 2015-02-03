@@ -41,7 +41,9 @@ class MypageController < ApplicationController
   end
 
   def change_currency
-    shipping_fee = 5400
+    order = Order.find(params[:order_id])
+    shipping_fee = order.get_delivery_fee == 0 ? 5400 : order.get_delivery_fee * 2
+
     cancel_amount = Order.change_currency(params[:amount])
     shipping = Order.change_currency(shipping_fee)
     actual_amount = Order.change_currency(params[:amount].to_i - shipping_fee)

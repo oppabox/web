@@ -74,7 +74,9 @@
       </tr>
       <tr>
         <th class="active"><%= t('shipping_customer_duty') %></th>
-        <td><%= Order.change_currency(5400) %></td>
+        <td>
+          <%= Order.change_currency((fee = @order.get_delivery_fee * 2) == 0 ? 5400 : fee ) %>
+        </td>
       </tr>
     </tbody>
   </table>
