@@ -84,10 +84,10 @@ class MypageController < ApplicationController
     data = {}
     if rtn.save
       data['result'] = true
-      data['message'] = "Return form is successfully requested!"
+      data['message'] = t('return_successfully')
     else
-      data['result'] = true
-      data['message'] = "Return form has some problems!"
+      data['result'] = false
+      data['message'] = t('return_problems')
     end
 
     render :json => data
@@ -103,10 +103,10 @@ class MypageController < ApplicationController
     data = {}
     if cancel.save
       data['result'] = true
-      data['message'] = "Cancel form is successfully requested!"
+      data['message'] = t('cancel_successfully')
     else
       data['result'] = false
-      data['message'] = "Cancel form has some problems!"
+      data['message'] = t('cancel_problems')
     end
 
     render :json => data
@@ -129,10 +129,10 @@ class MypageController < ApplicationController
     data = {}
     if change.save
       data['result'] = true
-      data['message'] = "Return form is successfully requested!"
+      data['message'] = t('change_successfully')
     else
       data['result'] = false
-      data['message'] = "Return form has some problems!"
+      data['message'] = t('change_problems')
     end
 
     render :json => data
