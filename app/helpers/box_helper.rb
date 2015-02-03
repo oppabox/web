@@ -20,7 +20,7 @@ module BoxHelper
     	temp_html = ""
     	inner_html +=
     		content_tag :h3 do
-    			items[0].path.split('_')[0]
+    			t(items[0].path.split('_')[0])
     		end
     	inner_html +=
     		content_tag :hr
