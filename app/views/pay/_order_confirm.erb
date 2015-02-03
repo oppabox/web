@@ -36,13 +36,13 @@
         </td>
         <td class="text-center">
           <div class="dropdown">
-            <span type="button" class="badge badge-default" id="shipping_dropdown_<%=idx%>" data-toggle="dropdown" aria-expanded="true">
-              <%= o.shipping.name %><span class="caret"></span>
-            </span>
-            <%= Order.change_currency_pretty(o.get_delivery_fee) %>
+            <p type="button" class="badge badge-default" id="shipping_dropdown_<%=idx%>" data-toggle="dropdown" aria-expanded="true">
+              <%= t(o.shipping.name) %><span class="caret"></span>
+            </p>
+            <%= Order.change_currency(o.get_delivery_fee) %>
             <ul class="dropdown-menu shipping_menu" area-labelledby="shipping_dropdown_<%=idx%>" style="margin-top:-14px;">
               <% o.item.shippings_in(User.current.country).each do |s| %>
-                <li><a tabindex="-1" href="#" onclick="reorder_shipping(<%=o.id%>, <%=s.id%>);"><%= s.name %></a></li>
+                <li><a tabindex="-1" href="#" onclick="reorder_shipping(<%=o.id%>, <%=s.id%>);"><%= t(s.name) %></a></li>
               <% end %>
             </ul>
           </div>
