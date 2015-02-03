@@ -44,6 +44,7 @@ class MypageController < ApplicationController
     order = Order.find(params[:order_id])
     quantity = params[:amount].to_i
     price = order.total_price
+    # because of free shipping when over threshold
     shipping_fee = order.get_delivery_fee(quantity) == 0 ? order.shipping.normal_fee : order.get_delivery_fee(quantity)
     diff_quantity = order.quantity - quantity
     diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
