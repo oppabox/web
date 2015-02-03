@@ -240,6 +240,8 @@ ActiveAdmin.register Purchase do
   filter :approval_datetime, :label => "구매일자"
   filter :recipient_contains, :label => "수취인"
   filter :user_email_contains, :as => :string, :label => "Email"
+  filter :user_country_eq, :as => :string, :label => "국가"
+  filter :user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
   filter :user_phonenumber_contains, :as => :string, :label => "전화번호"
 
   ################## view ##########################
