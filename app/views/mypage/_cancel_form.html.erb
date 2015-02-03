@@ -82,7 +82,7 @@ $('#cancel_quantity').change(function(){
   $.ajax({
     url: "/mypage/recalculate_cancel/",
     type: "POST",
-    dataType:"JSON",
+    dataType: "text",
     data: {
       order_id: <%= @order.id %>,
       amount: amount

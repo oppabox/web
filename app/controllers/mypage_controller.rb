@@ -63,6 +63,7 @@ class MypageController < ApplicationController
 
     # diff quantity만큼 구매한 것과 동일, 따라서 차액을 환불
     rtn = Order.change_currency( order.final_order_price - (order.total_price * diff_quantity + diff_shipping_fee) )
+    puts rtn
     render :text => rtn
   end
 
