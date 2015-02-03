@@ -1,5 +1,5 @@
 <%= image_head "/images/top/#{@box[:path]}.jpg"%>
-<% if ['star_box', 'al'].include? @box[:path] %>
+<% if ['star_box', 'blog_store'].include? @box[:path] %>
 	<%= custom_item_body @items, "item" %>
 <% else %>
 	<%= item_body @items, "item" %>
