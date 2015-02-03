@@ -496,3 +496,8 @@ en:
 
   shipping_tootip_line1: "Insurance for loss is not included for the product on delivery by EMS(Delivery period: 7~15 days)."
   shipping_tootip_line2: "Insurance for loss is not included for the product on delivery by UPS(Delivery period: 3~7 days)."
+
+  FREE: "Free for domestic shipping"
+  STANDARD: "Domestic shipping(free if ordering over 50,000)"
+  UPS: "UPS for International Shipping"
+  EMS: "EMS for International Shipping"

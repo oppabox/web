@@ -95,8 +95,9 @@ function renderShippingFee (quantity, sub_total, month) {
     success: function(httpObj){
       $('#shipping_option option').each(function(){
         var option = $(this);
+        var tname = option.data('tname');
         var name = option.data('name');
-        option.html( name + " [+ " + httpObj[name] + "]" );
+        option.html( tname + " [+ " + httpObj[name] + "]" );
       });
       $('#total_price').html(httpObj['total']);
     },

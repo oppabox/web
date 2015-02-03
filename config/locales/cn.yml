@@ -530,3 +530,8 @@ cn:
 
   shipping_tootip_line1: "EMS：不包含配送中物品丢失保险（到货时间: 7 ~ 15日）"
   shipping_tootip_line2: "UPS :包含配送中物品丢失保险。（到货时间：3 ~ 7日）"
+
+  FREE: "Free for domestic shipping"
+  STANDARD: "Domestic shipping(free if ordering over 50,000)"
+  UPS: "UPS for International Shipping"
+  EMS: "EMS for International Shipping"

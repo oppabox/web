@@ -502,3 +502,8 @@ ja:
 
   shipping_tootip_line1: "運送中の商品紛失保険が含まれていない（配送期間７～１５日）"
   shipping_tootip_line2: "運送中の商品紛失保険が含まれている（配送期間３～７日）"
+
+  FREE: "Free for domestic shipping"
+  STANDARD: "Domestic shipping(free if ordering over 50,000)"
+  UPS: "UPS for International Shipping"
+  EMS: "EMS for International Shipping"

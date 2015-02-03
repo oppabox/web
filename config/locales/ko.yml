@@ -632,3 +632,8 @@ ko:
 
   shipping_tootip_line1: "EMS : 운송중 물건 분실보험이 포함되어있지 않음 (배송기간 : 7 ~ 15일)"
   shipping_tootip_line2: "UPS : 운송중 물건 분실보험이 포함되어있음 (배송기간 : 3 ~ 7일)"
+
+  FREE: "국내 무료 배송"
+  STANDARD: "국내 배송(50,000 이상 구매 시 무료 배송)"
+  UPS: "해외 배송 UPS"
+  EMS: "해외 배송 EMS"
