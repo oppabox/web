@@ -67,7 +67,7 @@ module BoxHelper
 	      temp_html += #image_box + text_box                             # class로 조절이 안되서 style로 조절
 	        content_tag :div, :class => "col-md-#{size_md} col-xs-#{size_xs} text-center", :style => 'padding-left:0; padding-right:0;' do
 	          content_tag :div, :class => "box_view" do 
-	            image_box + text_box + order_list.inspect
+	            image_box + text_box
 	          end
 	        end
 
