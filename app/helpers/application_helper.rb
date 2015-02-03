@@ -17,10 +17,10 @@ module ApplicationHelper
     items.each do |x|
       image_box = #하나의 박스중에 위쪽에 있는 image
         if x.opened != true
-          tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+          tag :img, :src => x.image_url, :class => 'img-responsive center-block'
         else
           content_tag :a, :href => "/#{method}/#{x.path}" do 
-            tag :img, :src => "/images/box/#{x.path}.jpg", :class => 'img-responsive center-block'
+            tag :img, :src => x.image_url, :class => 'img-responsive center-block'
           end
         end
       text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)
@@ -35,8 +35,19 @@ module ApplicationHelper
             end
           end
         end
+
+        # customize
+        order_list = Box.order("display_order DESC").pluck(:path)[0..1]
+        if method == "box" and order_list.include? x.path
+          size_md = 6
+          size_xs = 12
+        else
+          size_md = 4
+          size_xs = 6
+        end
+
       inner_html += #image_box + text_box                             # class로 조절이 안되서 style로 조절
-        content_tag :div, :class => 'col-md-4 col-xs-6 text-center', :style => 'padding-left:0; padding-right:0;' do
+        content_tag :div, :class => "col-md-#{size_md} col-xs-#{size_xs} text-center", :style => 'padding-left:0; padding-right:0;' do
           content_tag :div, :class => "box_view" do 
             image_box + text_box
           end

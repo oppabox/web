@@ -1,5 +1,4 @@
 class PayController < ApplicationController
-
   before_action :login_check, only: [:order, :success, :billing, :korean_payment, :nonkorean_payment]
   before_action :login_check_ajax, only: [:reorder_quantity, :check_order_quantity]
   skip_before_action :http_basic_authenticate, only: :usd_status
@@ -92,7 +91,8 @@ class PayController < ApplicationController
     end
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
-    @delivery_fee = purchase.get_delivery_fee
+    # @delivery_fee = purchase.get_delivery_fee
+    @delivery_fee = (@orders.map {|o| o.get_delivery_fee }).inject(:+)
   end
 
   def generate_ref_num
@@ -131,6 +131,47 @@ class PayController < ApplicationController
     else
       render :text => t(:something_wrong), :status => 500
     end
+  end
+
+  def reorder_shipping
+    o = Order.find(params[:order_id])
+
+    if o.purchase.user == current_user
+      shipping = Shipping.find(params[:shipping_id])
+
+      o.shipping = shipping
+      if shipping.nil? or o.save
+        render :nothing => true, :status => 200
+      else
+        render :text => t(:something_wrong), :status => 500
+      end
+    else
+      render :text => t(:something_wrong), :status => 500
+    end
+  end
+
+  def get_delivery_fee
+    quantity = params['quantity'].to_i
+    item_id = params['item_id']
+    shippings = params['shippings']
+    country = params['country']
+    sub_total = params['sub_total'].to_i
+    month = params['month'].to_i
+    selected = params['selected']
+
+    item = Item.find(item_id)
+    rtn = {}
+    fee = 0
+    shippings.each do |s|
+      rtn[s] = Shipping.calculate_box_delivery s, country, (sub_total * quantity), item.weight, quantity, month
+      if s == selected
+        fee = rtn[s]
+      end
+      rtn[s] = Order.change_currency(rtn[s])
+    end
+
+    rtn['total'] = Order.change_currency( month * (quantity * sub_total + fee) )
+    render json: rtn
   end
 
   def usd_request

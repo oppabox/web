@@ -1,0 +1,194 @@
+<div class="container-fluid">
+  <div class="col-md-6">
+    <div class="well">
+      <%= form_for @box, url: "/admin/boxes/#{@box.id}", html: { method: :patch, multipart: true, class: "form-horizontal", id: 'box_form' } do |f| %>
+        <% if @box.errors.any? %>
+          <div id="error_explanation">
+            <h2>
+              <%= pluralize(@box.errors.count, "error") %> prohibited
+              this box from being saved:
+            </h2>
+            <ul>
+              <% @box.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :display_name, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.text_field :display_name %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :top_image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.file_field :top_image, { 'multiple' => true } %>
+            <div id="top_image">
+              <%= image_tag @box.top_image_url, size: "300" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :image, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.file_field :image %>
+            <div id="normal_image">
+              <%= image_tag @box.image_url, size: "300" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-9">
+            <div class="checkbox">
+              <%= f.label :opened do %>
+                <%= f.check_box :opened %>오픈 여부
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :display_order, { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+              <%= f.text_field :display_order %>
+          </div> 
+        </div>
+
+        <div class="">
+          <%= f.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'box_form_submit' } %>
+          <%= link_to '삭제', "/admin/boxes/#{@box.id}", { 'data-method' => :delete, class: 'btn btn-danger', id: 'box_delete' } %>
+        </div>
+
+      <% end # form %>
+    </div><!-- ./well -->
+  </div>
+  <div class="col-md-12">
+    <div class="well">
+      <div class="pull-right">
+        <%= link_to '상품추가', "/admin/items/new?box_selected=#{@box.id}", { class: 'btn btn-success' } %>
+      </div>
+      <table class="table table-bordered detail_table">
+        <thead>
+          <tr class="active">
+            <th>이미지</th>
+            <th>이름</th>
+            <th>원가</th>
+            <th>판매가</th>
+            <th>수량</th>
+            <th>한정상품</th>
+            <th>정기구매</th>
+            <th>판매중</th>
+            <th>무게</th>
+            <th>옵션</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @box.items.each do |item| %>
+            <tr>
+              <td><%= image_tag "/images/items/#{@box.path}/#{item.path}/#{item.path}.jpg", size: "100" %></td>
+              <td><%= item.display_name %></td>
+              <td><%= item.original_price %></td>
+              <td><%= item.sale_price %></td>
+              <td><%= item.quantity %></td>
+              <td><%= item.limited %></td>
+              <td><%= item.periodic %></td>
+              <td><%= item.opened %></td>
+              <td><%= item.weight %></td>
+              <td>
+                <% unless item.options.count == 0 %>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="active">
+                        <th>이름</th>
+                        <th>타입</th>
+                        <th>길이제한</th>
+                        <th>영어만허용</th>
+                        <th>세부옵션명</th>
+                        <th>수량</th>
+                        <th>한정상품</th>
+                        <th>추가가격</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% item.options.each_with_index do |o, i| %>
+                        <% if (cnt = o.option_items.count) == 0 %>
+                          <tr>
+                            <td><%= o.title %></td>
+                            <td><%= Option::TYPE[o.option_type] %></td>
+                            <td>
+                              <% if o.option_type == OPTION_TYPE_STRING %>
+                                <%= o.max_length %>
+                              <% end %>
+                            </td>
+                            <td>
+                              <% if o.option_type == OPTION_TYPE_STRING %>
+                                <%= o.english_only %>
+                              <% end %>
+                            </td>
+                            <td colspan="4">
+                          </tr>
+                        <% else %>
+                          <% o.option_items.each_with_index do |oi, idx| %>
+                            <tr>
+                              <% if idx == 0 %>
+                                <td rowspan="<%=cnt%>"><%= o.title %></td>
+                                <td rowspan="<%=cnt%>"><%= Option::TYPE[o.option_type] %></td>
+                                <td rowspan="<%=cnt%>">
+                                  <% if o.option_type == OPTION_TYPE_STRING %>
+                                    <%= o.max_length %>
+                                  <% end %>
+                                </td>
+                                <td rowspan="<%=cnt%>">
+                                  <% if o.option_type == OPTION_TYPE_STRING %>
+                                    <%= o.english_only %>
+                                  <% end %>
+                                </td>
+                              <% end # if %>
+                              <td><%= oi.name %></td>
+                              <td><%= oi.quantity %></td>
+                              <td><%= oi.limited %></td>
+                              <td><%= oi.price_change %></td>
+                            </tr>
+                          <% end # oi loop %>
+                        <% end # if  %>
+                      <% end # o loop %>
+                    </tbody>
+                  </table>
+                <% end #unless %>
+              </td>
+              <td>
+                <%= link_to '수정', "/admin/items/#{item.id}/edit", { class: 'btn btn-default' } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#box_form_submit').click(function(e){
+      e.preventDefault();
+      $('#box_form').submit();
+    });
+    $('#box_image').change(function(){
+      $.image_preview($(this), $('#normal_image'), 300);
+    });
+    $('#box_top_image').change(function(){
+      $.image_preview($(this), $('#top_image'), 300);
+    });
+    $('#box_delete').click(function(e){
+      if (!confirm("정말 삭제하시겠습니까?"))
+        e.preventDefault();
+    });
+  });
+</script>

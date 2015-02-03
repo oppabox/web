@@ -4,25 +4,25 @@
     <span style="font-size:20px"><b><%= @order.item.display_name %></b></span>&nbsp;
     <span>[<%= @options.join(", ") %>]</span>
   </p>
-  <p> <%= t('return_purchase_date') %>: &nbsp;
+  <p> <%= t('purchase_date') %>: &nbsp;
    <%= @order.purchase.approval_datetime.nil? ? '' : @order.purchase.approval_datetime.strftime("%F") %>
   </p>
 </div>
 <input type="hidden" id="order_id" value="<%= @order.id %>">
 <div class="row">
-  <h4><b><%= t('return_sel_quantity') %></b></h4>
+  <h4><b><%= t('select_quantity') %></b></h4>
   <table class="table">
     <thead>
       <tr class="active">
-        <th class="text-center"><%= t('return_product_info') %></th>
-        <th class="text-center"><%= t('return_payments') %></th>
-        <th class="text-center">Change Quantity</th>
+        <th class="text-center"><%= t('product_info') %></th>
+        <th class="text-center"><%= t('total_payment_billing_price') %></th>
+        <th class="text-center"><%= t('change_quantity') %></th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
-        <td class="text-center"><%= Order.change_currency(@order.total_price * @order.quantity) %></td>
+        <td class="text-center"><%= Order.change_currency(@order.final_order_price) %></td>
         <td class="text-center">
           <% opt = Array.new %>
           <% for i in 0..@order.quantity do %>
@@ -36,25 +36,25 @@
 </div>
 
 <div class="row">
-  <h4><b><%= t('return_details') %></b></h4>
+  <h4><b><%= t('details') %></b></h4>
   <table class="table">
     <tbody>
       <tr>
-        <th class="active"><%= t('return_reason') %></th>
+        <th class="active"><%= t('reason_for_cancel') %></th>
         <td>
           <div class="form-group">
-            <%= select_tag "change_reason", options_for_select(Change::REASONS.invert.keys, 0 ), { :class => 'form-control input-sm' } %>
+            <%= select_tag "change_reason", options_for_select(Change::REASONS.invert.keys.collect { |x| t(x) }, 0 ), { :class => 'form-control input-sm' } %>
           </div>
           <div class="form-group">
-            <%= text_area_tag "change_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: 'Please tyep the detail options of change here.' %>
+            <%= text_area_tag "change_reason_details", nil, size: "100x5", class: 'form-control' ,placeholder: t('change_reason_plh') %>
           </div>
         </td>
       </tr>
       <tr>
-        <th class="active"><%= t('return_col_address') %></th>
+        <th class="active"><%= t('collect_address') %></th>
         <td>
-          <p><%= t('return_col_txt1') %>
-            <small><%= t('return_col_txt2') %></small>
+          <p><%= t('collect_txt1') %>
+            <small><%= t('collect_txt2') %></small>
           </p>
           <%=render partial: "/home/user_detail_info_modify" %>
 
@@ -64,15 +64,48 @@
   </table>
 </div>
 
+<div class="row">
+  <h4><b><%= t('shipping') %></b></h4>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="active"><%= t('shipping_our_duty') %></th>
+        <td><%= Order.change_currency(0) %></td>
+      </tr>
+      <tr>
+        <th class="active"><%= t('shipping_customer_duty') %></th>
+        <td id="change_shipping">
+          <%= Order.change_currency(0) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <div class="row text-center">
-  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('return_back') %></button>
-  <button class="btn btn-lg btn-danger" id="change_request_button"><%= t('return_request') %></button>
+  <button class="btn btn-lg btn-default" onclick="history.back()"><%= t('request_back') %></button>
+  <button class="btn btn-lg btn-danger" id="change_request_button" name="commit"><%= t('type_change') %></button>
 </div>
 
 
 <script>
 // Recipient -> Sender
 $(document).ready(function(){
-  $('#recipient_label').html("<%= t('return_js_sender') %>")
+  $('#recipient_label').html("<%= t('js_sender') %>");
+  $('#change_quantity').change(function(){
+    amount = $(this).val()
+    $.ajax({
+      url: "/mypage/recalculate/",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        order_id: <%= @order.id %>,
+        amount: amount
+      },
+      success: function(data) {
+        $('#change_shipping').html(data['shipping'])
+      }
+    })
+  })
 })
 </script>

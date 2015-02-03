@@ -7,15 +7,18 @@ class Cancel < ActiveRecord::Base
 	scope :requested,						-> { where(status: STATUS_REQUEST) }
 	scope :done,								-> { where(status: STATUS_DONE) }
 	scope :cancelled,						-> { where(status: STATUS_CANCEL) }
+	scope :rejected,						-> { where(status: STATUS_REJECT) }
 
 	STATUS_REQUEST = 0
 	STATUS_DONE = 1
 	STATUS_CANCEL = 2
+	STATUS_REJECT = 3
 
 	STATUSES = {
-		STATUS_REQUEST => "STATUS_REQUEST",
-		STATUS_DONE => "STATUS_DONE",
-		STATUS_CANCEL => "STATUS_CANCEL"
+		STATUS_REQUEST => "STATUS_CANCEL_REQUEST",
+		STATUS_DONE => "STATUS_CANCEL_DONE",
+		STATUS_CANCEL => "STATUS_CANCEL_CANCEL",
+		STATUS_REJECT => "STATUS_CANCEL_REJECT"
 	}
 
 	REASONS = {
@@ -54,7 +57,10 @@ class Cancel < ActiveRecord::Base
 
 	def request_done
 		self.status = STATUS_DONE
-		self.order.cancel_transaction(self.quantity)
+		o = self.order
+		o.status = Order::STATUS_CANCEL
+		o.cancel_transaction(self.quantity)
+		o.save
 		self.save
 	end
 end

@@ -40,12 +40,31 @@ class MypageController < ApplicationController
     @options.compact!
   end
 
-  def change_currency
-    shipping_fee = 5400
-    cancel_amount = Order.change_currency(params[:amount])
-    shipping = Order.change_currency(shipping_fee)
-    actual_amount = Order.change_currency(params[:amount].to_i - shipping_fee)
-    render :json => {'cancel_amount' => cancel_amount, 'shipping' => shipping, 'actual_amount' => actual_amount}
+  def recalculate
+    order = Order.find(params[:order_id])
+    quantity = params[:amount].to_i
+    price = order.total_price
+    shipping_fee = order.get_delivery_fee(quantity) == 0 ? 2700 : order.get_delivery_fee(quantity)
+    diff_quantity = order.quantity - quantity
+    diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
+    # 총 결제비에서 diff quantity 만큼 구매했다고 생각하고 차액계산
+    cancel_amount = (order.final_order_price - (diff_quantity * price + diff_shipping_fee))
+    # 왕복 택배비
+    shipping = Order.change_currency(shipping_fee * 2)
+    # 총 결제비에서 diff quantity 만큼의 물건 비용을 제한 후 취소한 만큼의 취소량의 왕복 택배비를 뺀 금액
+    actual_amount = Order.change_currency(cancel_amount - shipping_fee * 2)
+    render :json => {'cancel_amount' => Order.change_currency(cancel_amount), 'shipping' => shipping, 'actual_amount' => actual_amount}
+  end
+
+  def recalculate_cancel
+    order = Order.find(params[:order_id])
+    diff_quantity = order.quantity - params[:amount].to_i
+    diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
+
+    # diff quantity만큼 구매한 것과 동일, 따라서 차액을 환불
+    rtn = Order.change_currency( order.final_order_price - (order.total_price * diff_quantity + diff_shipping_fee) )
+    puts rtn
+    render :text => rtn
   end
 
   def return_request

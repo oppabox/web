@@ -60,8 +60,11 @@ class ItemController < ApplicationController
     if p.nil?
       p = Purchase.create(user_id: current_user.id, status: Purchase::STATUS_ORDERING)
     end
+    # state of p is always STATUS_ORDERING
+    # which means that orders' state are either STATUS_ORDERING or STATUS_DELETED
 
     new_order_is_needed = true
+    # try to find exist orders whose state is STATUS_ORDERING
     orders = Order.valid.where(order_periodic: params[:periodic], 
                           purchase_id: p.id, 
                           item_id: params[:item_id])
@@ -91,7 +94,12 @@ class ItemController < ApplicationController
       o.item_id = params[:item_id]
       o.quantity = params[:quantity]
       o.order_periodic = params[:periodic].to_i
-      
+      shipping_id = params[:shipping].to_i
+      if shipping_id.nil?
+        o.shipping = User.current.country == "KR" ? o.item.shippings.domestic.take : o.item.shippings.foreign.take
+      else
+        o.shipping = Shipping.find(shipping_id)
+      end
       o.save
 
       #options

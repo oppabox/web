@@ -6,6 +6,8 @@ class Order < ActiveRecord::Base
   has_one     :return, dependent: :destroy
   has_one     :cancel, dependent: :destroy
   has_one     :change, dependent: :destroy
+  has_one     :order_shipping, :dependent => :destroy
+  has_one     :shipping, :through => :order_shipping
   
   before_save :period_check, :quantity_check
 
@@ -14,6 +16,7 @@ class Order < ActiveRecord::Base
 
   scope :paid,                -> { valid.joins(:purchase).merge(Purchase.paid) }
   scope :pending,             -> { valid.joins(:purchase).merge(Purchase.pending) }
+  scope :purchase_cancelled,             -> { valid.joins(:purchase).merge(Purchase.cancelled) }
   scope :except_ordering,     -> { valid.joins(:purchase).merge(Purchase.valid) }
 
   scope :ordered,             -> { paid.on_ordering }
@@ -33,14 +36,26 @@ class Order < ActiveRecord::Base
   STATUS_DELETED = 6
 
   STATUSES = {
-    STATUS_ORDERING => "STATUS_ORDERING",
-    STATUS_PREPARING_ORDER => "STATUS_PREPARING_ORDER",
-    STATUS_PREPARING_DELIVERY => "STATUS_PREPARING_DELIVERY",
-    STATUS_ON_DELIVERY => "STATUS_ON_DELIVERY",
-    STATUS_DONE => "STATUS_DONE",
-    STATUS_CANCEL => "STATUS_CANCEL",
-    STATUS_DELETED => "STATUS_DELETED"
+    STATUS_ORDERING => "STATUS_ORDER_ORDERING",
+    STATUS_PREPARING_ORDER => "STATUS_ORDER_PREPARING_ORDER",
+    STATUS_PREPARING_DELIVERY => "STATUS_ORDER_PREPARING_DELIVERY",
+    STATUS_ON_DELIVERY => "STATUS_ORDER_ON_DELIVERY",
+    STATUS_DONE => "STATUS_ORDER_DONE",
+    STATUS_CANCEL => "STATUS_ORDER_CANCEL",
+    STATUS_DELETED => "STATUS_ORDER_DELETED"
   }
+
+  def final_order_price
+    self.total_price * self.quantity + self.get_delivery_fee
+  end
+
+  def get_delivery_fee quantity = nil
+    if quantity.nil?
+      quantity = self.quantity
+    end
+    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * quantity), self.item.weight, quantity
+    fee.ceil
+  end
 
   def status_name
     STATUSES[status].to_s
@@ -71,6 +86,10 @@ class Order < ActiveRecord::Base
     if ![1,3,6,12].include? self.order_periodic
       self.order_periodic = 1
     end
+  end
+
+  def self.change_currency_pretty money
+    "#{number_with_delimiter(money)} KRW <br> (#{number_with_delimiter(Order.usd_from_krw(money))} USD)".html_safe
   end
 
   def self.change_currency money

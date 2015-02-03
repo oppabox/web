@@ -160,3 +160,20 @@ footer p{
 		 -moz-border-radius: 6px 0 6px 6px;
 					border-radius: 6px 0 6px 6px;
 }
+
+/* override bootstrap */
+.badge {
+	cursor: pointer;
+}
+.badge.badge-default {
+	background-color: #999999;
+}
+.badge.badge-default:hover {
+	background-color: #aaaaaa;
+}
+.badge.badge-inverse {
+	background-color: #333333;
+}
+.badge.badge-inverse:hover {
+	background-color: #555555;
+}

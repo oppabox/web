@@ -1,0 +1,174 @@
+<div class="container-fluid">
+  <!-- Form Start -->
+  <%= form_for :purchases, url: '/admin/purchases', html: { method: :post, class: "form-horizontal", id: 'purchase_form' } do |form| %>
+    <!-- purchase panel -->
+    <div class="col-md-6">
+      <div class="well">
+        <div class="purchase_label">
+          <label>Purchase</label>
+        </div>
+        <!-- User ID -->
+        <div class="form-group">
+          <%= form.label :user, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :user, { class: 'form-control', value: 'billing@oppabox.com' } %>
+          </div>
+        </div><!-- /User ID -->
+
+        <!-- Recipient, Phonenumber -->
+        <div class="form-group">
+          <%= form.label :recipient, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :recipient, { class: 'form-control' } %>
+          </div>
+          <%= form.label :phonenumber, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :phonenumber, { class: 'form-control' } %>
+          </div>
+        </div><!-- /Recipient, Phonenumber -->
+
+        <!-- Country -->
+        <div class="form-group">
+          <%= form.label :country, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-8">
+            <%= form.select :country, "" ,{ :selected => params['country_selected'] }, { class: 'form-control' } %>
+          </div>
+        </div><!-- /Country --> 
+
+        <!-- City, State -->
+        <div class="form-group">
+          <%= form.label :city, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :city, { class: 'form-control' } %>
+          </div>
+          <%= form.label :state, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :state, { class: 'form-control' } %>
+          </div>
+        </div><!-- /City, State --> 
+
+        <!-- Postcode -->
+        <div class="form-group">
+          <%= form.label :postcode, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :postcode, { class: 'form-control' } %>
+          </div>
+        </div><!-- /Postcode -->
+
+        <!-- Address -->
+        <div class="form-group">
+          <%= form.label :address, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-8">
+            <%= form.text_field :address, { class: 'form-control' } %>
+          </div>
+        </div><!-- /State -->
+      </div> 
+    </div><!-- /purchase panel -->
+
+    <div class="clearfix"></div>
+
+    <!-- Order panel -->
+    <div class="col-md-6">
+      <div class="well">
+        <div class="purchase_label">
+          <label>Order</label>
+        </div>
+
+        <!-- 아이템 -->
+        <div class="form-group">
+          <%= form.label :item, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-4">
+            <%= form.select :item, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: "박스 선택", :selected => params['item_selected'] }, { class: 'form-control' } %>
+          </div>
+          <div class="col-md-4">
+            <%= form.select :item_detail, "",{ include_blank: "아이템 선택", :selected => params['item_detail_selected'] }, { class: 'form-control' } %>
+          </div>
+        </div><!-- /아이템 -->
+
+        <!-- 옵션 - 아이템에 옵션이있을 때에만 -->
+        <div class="form-group" style="display:none;">
+          <%= form.label :item_option, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :item_option, { class: 'form-control' } %>
+          </div>
+        </div><!-- /옵션 -->
+
+        <!-- 정기구매 - 김재중박스일때 -->
+        <div class="form-group" style="display:none;">
+          <%= form.label :periodic, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.select :periodic, [["1개 구입",1],["3개월 구입",3],["6개월 구입",6],["12개월 구입",12]], { include_blank: "정기구매 선택", :selected => params['periodic_selected'] }, { class: 'form-control' } %>
+          </div>
+        </div><!-- /정기구매 -->
+        
+        <!-- 개수 -->
+        <div class="form-group">
+          <%= form.label :quantity, { class: 'col-md-2 control-label' } %>
+          <div class="col-md-3">
+            <%= form.text_field :quantity, { class: 'form-control text-center' } %>
+          </div>
+        </div><!-- /개수 -->
+
+        <%= form.hidden_field :status, { class: 'form-control', value: '1' } %>
+      </div> 
+    </div><!-- /Order panel -->
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-6 text-center">
+      <%= form.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'purchase_form_submit' } %>
+      <%= form.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'purchase_form_reset' } %>
+    </div>
+  <% end %> <!-- /Form End -->
+</div>
+
+<script>
+  $(document).ready(function(){
+    console.log( "document loaded" );
+    $("#purchase_form_reset").click(function(e){
+      e.preventDefault();
+      $('#purchase_form')[0].reset();
+    });
+    $('#purchase_form_submit').click(function(e){
+      e.preventDefault();
+      $('#purchase_form').submit();
+    });
+  });
+  $("#purchases_item").change(function() {
+    $.ajax({
+      url: "/admin/purchases/change_item_details",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        box_id: $(this).val()
+      },
+      success: function(data) {
+        $('#purchases_item_detail').html("<option value=''>-아이템 선택-</option>");
+        $.each (data, function (i,v) {
+          $('#purchases_item_detail').append("<option value='"+ v['id'] +"'>"+ v['name'] +"</option>");
+        });
+      },
+    });
+  });
+  $("#purchases_item_detail").change(function() {
+    if $("#purchases_item_detail").val() == 1 { 
+      $("#purchases_periodic").css("display:show;"); 
+    } else $("#purchases_periodic").css("display:none;");
+  )};
+  $("#purchases_country").ready(function() {
+    $.ajax({
+      url: "/admin/purchases/check_country_value",
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        first_check: $(this).val()
+      },
+      success: function(data) {
+        $('#purchases_country').html("<option value=''>국가 선택</option>");
+        $.each (data, function (i,v) {
+          $('#purchases_country').append("<option value='"+ v['code'] +"'>"+ v['code'] +' - '+ v['country_name'] +"</option>");
+        })
+      },
+    });
+  });
+</script>

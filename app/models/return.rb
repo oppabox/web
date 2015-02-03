@@ -19,23 +19,22 @@ class Return < ActiveRecord::Base
 	STATUS_CANCEL = 4
 
 	STATUSES = {
-		STATUS_REQUEST => "STATUS_REQUEST",
-		STATUS_ON_PROCESS => "STATUS_ON_PROCESS",
-		STATUS_DONE => "STATUS_DONE",
-		STATUS_REJECT => "STATUS_REJECT",
-		STATUS_CANCEL => "STATUS_CANCEL"
+		STATUS_REQUEST => "STATUS_RETURN_REQUEST",
+		STATUS_ON_PROCESS => "STATUS_RETURN_ON_PROCESS",
+		STATUS_DONE => "STATUS_RETURN_DONE",
+		STATUS_REJECT => "STATUS_RETURN_REJECT",
+		STATUS_CANCEL => "STATUS_RETURN_CANCEL"
 	}
 
 	REASONS = {
-		0 => 'return_model_reasons0',
-		1 => 'return_model_reasons1',
-		2 => 'return_model_reasons2',
-		3 => 'return_model_reasons3',
-		4 => 'return_model_reasons4',
-		5 => 'return_model_reasons5',
-		6 => 'return_model_reasons6',
-		7 => 'return_model_reasons7',
-		8 => 'return_model_reasons8'
+		0 => 'return_reasons0',
+		1 => 'return_reasons1',
+		2 => 'return_reasons2',
+		3 => 'return_reasons3',
+		4 => 'return_reasons4',
+		5 => 'return_reasons5',
+		6 => 'return_reasons6',
+		7 => 'return_reasons7'
 	}
 
 	def quantity_check
@@ -67,7 +66,10 @@ class Return < ActiveRecord::Base
 
 	def request_done
 		self.status = STATUS_DONE
-		self.order.cancel_transaction(self.quantity)
+		o = self.order
+		o.status = Order::STATUS_CANCEL
+		o.cancel_transaction(self.quantity)
+		o.save
 		self.save
 	end
 

@@ -39,10 +39,18 @@
 
   <div class="row mar-left">
     <div class="col-xs-4 col-md-3">
-      <p><%= t('product_info_delivery_charge') %></p>
+      <p><%= t('product_info_delivery_charge') %>&nbsp;&nbsp;&nbsp;<i class="fa fa-question-circle" id="shipping_tooltip"></i></p>
     </div>
     <div class="col-xs-8 col-md-9">
-      <p><%= t('product_info_delivery_charge_footer') %></p>
+      <select class="form-control input-sm" id="shipping_option" data-id="<%=@item.id%>" data-country="<%=User.current.nil? ? "" : User.current.country%>">
+        <% if User.current.nil? %>
+          <% s_opt = @item.shippings.order(:category).map { |s| [ t(s.name), s.id ] } %>
+        <% else %>
+          <% s_opt = User.current.country == "KR" ? @item.shippings.domestic.map { |s| [ s.name, s.id, s.threshold ] } : @item.shippings.foreign.map { |s| [ s.name, s.id, s.threshold ] } %>
+          <% s_opt.collect! { |x| [ x[0], x[1], { 'data-name' => x[0], 'data-tname' => t(x[0]), 'data-fee' => @item.get_delivery_fee(x[0], User.current.country), 'data-threshold' => x[2] } ] } %>
+        <% end %>
+        <%= options_for_select s_opt %>
+      </select>
     </div>
   </div>
   <hr>
@@ -88,7 +96,7 @@
         <p><%= o.title %></p>
       </div>
       <div class="col-xs-8 col-md-9">
-        <% if o.option_type == 1 %>
+        <% if o.option_type == OPTION_TYPE_NORMAL %>
         <select data-option-id="<%= o.id-%>" data-option-type="<%= o.option_type -%>" class="form-control input-sm select_option_box option_items">
           <% o.option_items.each do |i| %>
             <% price_symbol = if i.price_change >= 0 then "+" else "-" end %>
@@ -165,5 +173,16 @@
 <script type="text/javascript">
 $(function(){
   recalculate();
+});
+$(function () {
+  $('#shipping_tooltip').tooltip({
+    animation: false,
+    html: true,
+    placement: 'top',
+    trigger: 'hover click',
+    //container: 'body',
+    title: "<p><%= t('shipping_tootip_line1') %></p><p><%= t('shipping_tootip_line2') %></p>"
+    // title: "qpofjpoewfjopwefnpowenpo nponpowenfpoewnfopewpfoewj fpofjpowejfpeow"
+  });
 });
 </script>

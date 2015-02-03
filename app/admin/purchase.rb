@@ -3,10 +3,10 @@ ActiveAdmin.register Purchase do
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
 
-  scope 'all', :valid, default: true
-  scope :paid
-  scope :pending
-  scope :cancelled
+  scope proc{ "전체" }, :valid, default: true
+  scope proc{ I18n.t('purchase_paid') }, :paid
+  scope proc{ I18n.t('purchase_pending') }, :pending
+  scope proc{ I18n.t('purchase_cancel') },:cancelled
 
 
 
@@ -23,6 +23,9 @@ ActiveAdmin.register Purchase do
   #   end
   # end
 
+  ################# new ###################
+  form :partial => "new"
+  
   ################## collection action ##########################  
   collection_action :transition do
     p = Purchase.find(params[:id])
@@ -47,7 +50,7 @@ ActiveAdmin.register Purchase do
     p = Purchase.find(params[:id])
     p.status = Purchase::STATUS_CANCEL
 
-    p.orders.each do |order|
+    p.orders.valid.each do |order|
       order.status = Order::STATUS_CANCEL
       # cancel all
       order.cancel_transaction order.quantity
@@ -57,6 +60,60 @@ ActiveAdmin.register Purchase do
     p.save
     flash[:alert] = "#{p.reference_number} is cancelled."
     redirect_to :action => :index
+  end
+
+  collection_action :create, :method => :post do
+    data = params[:purchases]
+
+    # create purchase
+    p = Purchase.new
+      email = data['user']
+      p.user_id = User.where(email: email).pluck(:id).join().to_i
+      p.recipient = data['recipient']
+      p.city = data['city']
+      p.state = data['state']
+      p.address = data['address']
+      p.postcode = data['postcode']
+      p.phonenumber = data['phonenumber']
+      p.status = 1
+      p.replycd = "0000"
+      p.replymsg = "현금결제(무통장)"
+      p.amt = data['amt']
+      p.pay_type = "현금결제"
+      p.approval_datetime = DateTime.current().strftime("%Y-%m-%d %H:%M:%S")
+      p.seq_no = "1234567890"
+      p.pay_option = 0
+      p.reference_number = p.set_reference_number
+      p.order_no = p.reference_number
+      p.user.country = data['country']
+    p.save
+    puts data['item_id']
+    o = Order.new
+      o.purchase_id = p.id
+      o.item_id = data['item_id']
+      o.quantity = data['quantity']
+      o.order_periodic = data['order_periodic']
+      o.status = 2
+    o.save
+
+    ooi = OrderOptionItem.new
+      ooi.order_id = o.id
+      ooi.option_item_id = data['option_item_id']
+      ooi.option_id = data['option_id']
+      ooi.option_text = data['option_text']
+    ooi.save
+
+    redirect_to :action => :index
+  end
+
+  collection_action :change_item_details, :method => :post do
+    items = Item.where(box_id:params[:box_id]).map { |i| { 'id' => i.id, 'name' => i.display_name } }
+    render :json => items.to_json
+  end
+
+  collection_action :check_country_value, :method => :post do
+    check = COUNTRIES.sort_by { |x, y| y }.map {|m,n| {'code' => n, 'country_name' => m } }
+    render :json => check.to_json
   end
 
   ########### download bl #############
@@ -171,55 +228,62 @@ ActiveAdmin.register Purchase do
 
   ################## sidebar ##########################
   sidebar :help, :only => :index do
-    button do
-      link_to "Download BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn-normal" }
+    span do
+      link_to "Download BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
   end
 
   ################## filter ##########################
   filter :id
-  filter :reference_number_eq
-  filter :status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name
-  filter :approval_datetime
-  filter :recipient_eq
-  filter :user_email_eq, :as => :string
-  filter :user_phonenumber_eq, :as => :string
-
+  filter :reference_number_contains, :label => "주문번호"
+  filter :status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name, :label => "결제상태"
+  filter :approval_datetime, :label => "구매일자"
+  filter :recipient_contains, :label => "수취인"
+  filter :user_email_contains, :as => :string, :label => "Email"
+  filter :user_country_eq, :as => :string, :label => "국가"
+  filter :user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
+  filter :user_phonenumber_contains, :as => :string, :label => "전화번호"
 
   ################## view ##########################
   index do 
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
-    column :reference_number
-    column "status" do |p|
+    column "주문번호", :reference_number
+    column "결제 상태" do |p|
       status_string = Purchase::STATUSES.invert.keys
-      status_tag( status_string[p.status], status_css[p.status] )
+      para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
-    column "orders" do |p|
-      p.orders.valid.each do |o|
+    column "주문 내역" do |p|
+      pv = p.orders.valid
+      pv.each_with_index do |o, i|
         para o.item.display_name
-        hr
+        unless i == pv.count - 1
+          hr
+        end
       end
     end
-    column "quantity (weight)" do |p|
-      p.orders.valid.each do |o|
+    column "수량 (무게)" do |p|
+      pv = p.orders.valid
+      pv.each_with_index do |o, i|
         para o.quantity.to_s + ' (' + o.item.weight.to_s + ')'
-        hr
+        unless i == pv.count - 1
+          hr
+        end
       end
     end
-    column :recipient
-    column "user info" do |p|
+    column "수취인", :recipient
+    column "구매자 정보" do |p|
       para p.user.name + ' (' + p.user.country + ')'
       para p.user.email
     end
     
-    column 'address / city / postcode' do |p|
+    column '주소 / 도시 / 우편번호' do |p|
       para p.address
       para p.city
       para p.postcode
     end
-    column :phonenumber
+    column "전화번호", :phonenumber
     column "결제금액", :amt
     # column "Result", :pay_type
     column "결제수단" do |p|
@@ -230,8 +294,8 @@ ActiveAdmin.register Purchase do
       span dt.strftime('%F')
       span dt.strftime('%R')
     end
-    column "Actions" do |p|
-      span link_to "Show", { :action => :show, :id => p.id }, { :class => "btn-normal" }
+    column "" do |p|
+      para link_to "상세", { :action => :show, :id => p.id }, { :class => "btn btn-default margin_p" }
       
       if p.status == Purchase::STATUS_PENDING
         target = Purchase::STATUS_PAID
@@ -239,11 +303,11 @@ ActiveAdmin.register Purchase do
         target = ''
       end
       unless target == ''
-        span link_to "Checked", { :action => :transition, :id => p.id, :target => target }, { :class => "btn-normal" }
+        para link_to "입금확인", { :action => :transition, :id => p.id, :target => target }, { :class => "btn btn-primary margin_p" }
       end
       
       unless p.status == Purchase::STATUS_CANCEL
-        span link_to "cancel", { :action => :cancel, :id => p.id }, { :class => "btn-danger" }
+        para link_to "구매취소", { :action => :cancel, :id => p.id }, { :class => "btn btn-danger margin_p" }
       end
     end
   end
@@ -254,34 +318,54 @@ ActiveAdmin.register Purchase do
       column do
         attributes_table do
           row :id
-          row "status" do |p|
+          row "주문번호" do |p|
+            p.reference_number
+          end
+          row "주문상태" do |p|
             status_string = Purchase::STATUSES.invert.keys
             
-            status_tag( status_string[p.status], status_css[p.status] )
+            status_tag( t(status_string[p.status]), status_css[p.status] )
           end
-          row "orders" do |p|
+          row "주문내역" do |p|
             p.orders.valid.map{|o| o.item.display_name}.join(" / ")
           end
-          row "weight" do |p|
-            p.orders.valid.map{|o| o.item.weight}.join(" / ")
+          row "수량 (무게)" do |p|
+            p.orders.valid.map{|o| o.quantity.to_s + ' (' + o.item.weight.to_s + ')' }.join(" / ")
           end
-          row "country" do |p|
-            p.user.country
+          row "수취인" do |p|
+            p.recipient
           end
-          row :recipient
-          row :phonenumber
-          # minors
-          row :city
-          row :address
-          row :postcode
+          row "구매자 정보" do |p|
+            para p.user.name + ' (' + p.user.country + ')'
+            para p.user.email
+          end
+          row '주소 / 도시 / 우편번호' do |p|
+            para p.address
+            para p.city
+            para p.postcode
+          end
+          row "전화번호" do |p|
+            p.phonenumber
+          end
           row "결제금액" do |p|
-           p.amt
+            p.amt
           end
+          row "결제결과" do |p| 
+            p.pay_type
+          end
+          row "결제수단" do |p|
+            Purchase::PAY_OPTIONS.invert[p.pay_option]
+          end
+          row "결제시간" do |p|
+            dt = p.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : p.approval_datetime
+            span dt.strftime('%F')
+            span dt.strftime('%R')
+          end
+          # minors
           row :replycd
           row :replymsg
           row :order_no
           row :pay_type
-          row :approval_datetime
           row :seq_no
           active_admin_comments
         end
@@ -289,30 +373,35 @@ ActiveAdmin.register Purchase do
 
       column do
         panel "Order Details" do
-          table_for Purchase.find(params[:id]).orders.valid do |o|
-            column("id") do |o|
-              link_to o.id, admin_order_path(o)
+          table class: 'table table-bordered option_table' do
+            thead do
+              th 'ID'
+              th 'name'
+              th 'quantity'
+              th 'period'
+              th 'option_title'
+              th 'option_details'
             end
-            column("Name") { |o| o.item.display_name }
-            column("Quantity") { |o| o.quantity }
-            column("Period") { |o| o.order_periodic }
-            column("Option_Title") { |o| 
-              ul do
-                o.order_option_items.each do |ooi|
-                  li ooi.option.title
-                end
-              end
-            }
-            column("Option_Details") { |o| 
-              ul do
-                o.order_option_items.each do |ooi|
-                  unless ooi.option_item.nil?
-                    li ooi.option_item.name
+            tbody do
+              Purchase.find(params[:id]).orders.valid.each do |o|
+                  o.order_option_items.each_with_index do |ooi, idx|
+                    tr do
+                      if idx == 0
+                        td rowspan: o.order_option_items.count do o.id end
+                        td rowspan: o.order_option_items.count do o.item.display_name end
+                        td rowspan: o.order_option_items.count do o.quantity end
+                        td rowspan: o.order_option_items.count do o.order_periodic end
+                        td ooi.option.title
+                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
+                      else
+                        td ooi.option.title
+                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
+                      end
+                    end
                   end
                 end
               end
-            }
-          end
+            end
 
         end
       end

@@ -12,6 +12,7 @@
             <th class="text-center"><%=t('carry_price')%></th>
             <th class="text-center"><%=t('carry_quantity')%></th>
             <th class="text-center"><%=t('carry_total_price')%></th>
+            <th class="text-center"><%=t('shipping')%></th>
             <th class="text-center"><%=t('paid_sum')%></th>
           </tr>
         </thead>
@@ -32,15 +33,11 @@
               <% options.compact! %>
 
               <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
-              <td class="text-center"><%= Order.change_currency(order.total_price) %></td>
+              <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
               <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
-              <td class="text-center"><%= Order.change_currency(order.total_price * order.quantity) %></td>
-              <% if index == 0 %>
-                <td rowspan="<%=@purchase.orders.valid.count%>" class="text-center">
-                  <%= Order.change_currency(@purchase.amt) %><br>
-                  [<%=t('paid_delivery_charge')%> : <%=0%>]
-                </td>
-              <% end %>
+              <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
+              <td class="text-center"><%= Order.change_currency_pretty(order.get_delivery_fee) %></td>
+              <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity + order.get_delivery_fee) %></td>
             </tr>
           <% end %>
 
@@ -59,21 +56,21 @@
 
           <tr class="list_cell">
             <td></td>
-            <td colspan="6">
+            <td colspan="7">
               <p>[<%= t('mypage_carry')%>]</p>
               <% address_full.each do |a| %>
                 <p><%=a%></p>
               <% end %>
             </td>
           </tr>
-          <% unless @purchase.pay_type == nil %>
-          <tr class="list_cell">
-            <td></td>
-            <td colspan="6">
-              <p>[무통장 입금 계좌 정보]</p>
-              <p><%=@purchase.pay_type%></p>
-            </td>
-          </tr>
+          <% if @purchase.pay_option == Purchase::PAY_TYPE_VBANK %>
+            <tr class="list_cell">
+              <td></td>
+              <td colspan="7">
+                <p>[무통장 입금 계좌 정보]</p>
+                <p><%=@purchase.pay_type%></p>
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>

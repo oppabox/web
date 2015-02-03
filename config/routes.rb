@@ -22,7 +22,9 @@ Rails.application.routes.draw do
 
   post "pay/generate_ref_num"
 	post "pay/reorder_quantity"
+  post "pay/reorder_shipping"
   post "pay/change_currency"
+  post "pay/get_delivery_fee"
 
   # Nonkorean payment
   post "pay/usd_request"
@@ -75,8 +77,11 @@ Rails.application.routes.draw do
   get "mypage/api_info"
   post "mypage/edit_address"
   get "mypage/new_request(/:order_id)" => "mypage#new_request", as: :mypage_new_request
-  post "mypage/change_currency"
+  post "mypage/recalculate"
+  post "mypage/recalculate_cancel"
   post "mypage/return_request"
   post "mypage/cancel_request"
   post "mypage/change_request"
+
+  patch "admin/items/:item_id/update_options" => "admin/items#update_options", as: :admin_items_update_options
 end
