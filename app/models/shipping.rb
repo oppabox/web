@@ -20,6 +20,12 @@ class Shipping < ActiveRecord::Base
 		when 'STANDARD'
 			return shipping.calculate_standard country, quantity, month, order_price
 		end
+		when 'JCOKCOK'
+			return shipping.calculate_3000 country, quantity, month, order_price
+		end
+		when 'GGANGI'
+			return shipping.calculate_2500 country, quantity, month, order_price
+		end
 	end
 
 	####################  UPS  ####################
@@ -117,5 +123,23 @@ class Shipping < ActiveRecord::Base
 			return 2700 * month
 		end
 	end
+
+	####################  3000  ####################
+	def calculate_3000 country, quantity, month, order_price
+		if !order_price.nil? and order_price >= self.threshold
+			return 0
+		else
+			return 3000 * month
+		end
+	end
+
+	####################  2500  ####################
+	def calculate_2500 country, quantity, month, order_price
+		if !order_price.nil? and order_price >= self.threshold
+			return 0
+		else
+			return 2500 * month
+		end
+	end	
 
 end
