@@ -62,7 +62,8 @@ class MypageController < ApplicationController
     diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
 
     # diff quantity만큼 구매한 것과 동일, 따라서 차액을 환불
-    render :text => Order.change_currency( order.final_order_price - (order.total_price * diff_quantity + diff_shipping_fee) )
+    rtn = Order.change_currency( order.final_order_price - (order.total_price * diff_quantity + diff_shipping_fee) )
+    render :text => rtn
   end
 
   def return_request
