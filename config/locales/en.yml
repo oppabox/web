@@ -509,3 +509,8 @@ en:
   jcokcok: "J-CokCok"
   jaejoong: "Kim JaeJoong Box"
   minho: "Lee Minho Box"
+
+  shipping_message_header: "Notice on purchasing"
+  shipping_message1: "Tariff and surtax can be charged when purchasing OPPABOX product.  "
+  shipping_message2: "Customers are liable to pay these taxes. "
+  shipping_message3: "(When purchasing without identifying this notice, it is impossible to return, change or cancel the product.) "

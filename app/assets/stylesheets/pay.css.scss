@@ -116,3 +116,71 @@
     background: #eee !important;
   }
 }
+
+.shipping_infomation {
+//  padding: 15px;
+//  border: 1px solid transparent;
+//  border-radius: 4px;
+//  color: #a94442;
+//  background-color: #f2dede;
+//  border-color: #ebccd1;
+  background: #fff;
+  padding: 12px 18px;
+  margin: 0 auto;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  margin-bottom: 20px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+     -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: -0.05em;
+    margin-bottom: 20px;
+    padding: .1em 0;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    color: #EE3B3B;
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+  }
+  h1:before,
+  h1:after {
+    content: "";
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    height: 1px;
+    vertical-align: middle;
+    background: #DD9858;
+  }
+  h1:before {    
+    left: -.5em;
+    margin: 0 0 0 -50%;
+  }
+  h1:after {    
+    left: .5em;
+    margin: 0 -50% 0 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 11px;
+  }
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+}
