@@ -26,12 +26,12 @@ module ApplicationHelper
       text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)
         if x.opened != true
           content_tag :h4, :class => 'product_title' do 
-            x.display_name
+            t(x.display_name)
           end
         else
           content_tag :a, :href => "/#{method}/#{x.path}" do 
             content_tag :h4, :class => 'product_title' do 
-              x.display_name
+              t(x.display_name)
             end
           end
         end
