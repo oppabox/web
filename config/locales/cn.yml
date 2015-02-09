@@ -543,3 +543,8 @@ cn:
   jcokcok: "J-CokCok"
   jaejoong: "Kim JaeJoong Box"
   minho: "Lee Minho Box"
+
+  shipping_message_header: "购买时注意事项"
+  shipping_message1: "购买OPPABOX商品时，可能产生关说或海关附加税(关税+增值税) 。"
+  shipping_message2: "产生费用时，须顾客负担。"
+  shipping_message3: "( 未确认此公告购买商品时，不可退货、换货或取消。)"

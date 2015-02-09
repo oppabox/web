@@ -515,3 +515,8 @@ ja:
   jcokcok: "J-CokCok"
   jaejoong: "Kim JaeJoong Box"
   minho: "Lee Minho Box"
+
+  shipping_message_header: "ご購入時のご注意"
+  shipping_message1: "OPPABOX製品は関税および消費税などが発生することがあります。"
+  shipping_message2: "発生する料金はお客様のご負担となります。"
+  shipping_message3: "(この案内を確認せず購入した場合の返品および交換、キャンセルはお受けできません。)"
