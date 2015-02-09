@@ -1,7 +1,8 @@
 class Box < ActiveRecord::Base
   has_many :items, :dependent => :destroy
-  has_many :children, class_name: "Box", foreign_key: "parent_id"
+  has_many :children, class_name: "Box", foreign_key: "parent_id", :dependent => :destroy
   belongs_to :parent, class_name: "Box"
+  belongs_to :admin_user
   
   validates :display_name, presence: true
   validates :path, uniqueness: true, format: { with: /\A[0-9a-z_]+\Z/ }

@@ -4,6 +4,14 @@ ActiveAdmin.register Box do
 
 	scope proc{''}, :top, default: true, show_count: false
 
+	scope_to :current_admin_user
+
+	controller do
+		def scoped_collection
+			super.includes(:items => :item_names)
+		end
+	end
+
 	################# new ##################
 	form :partial => "form"
 

@@ -19,9 +19,11 @@ ActiveAdmin.register Order do
   scope proc{ I18n.t("purchase_cancel") }, :purchase_cancelled
   scope proc{ "전체" }, :except_ordering
 
+  scope_to :current_admin_user
+
   controller do
     def scoped_collection
-      resource_class.includes(:purchase)
+      super.includes(:purchase)
     end
 
     # CSV 출력시에만 "-" 입력

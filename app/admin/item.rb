@@ -4,7 +4,12 @@ ActiveAdmin.register Item do
 	#################### controller ####################
 	form :partial => "form"
 
+	scope_to :current_admin_user
+
 	controller do
+		def scoped_collection
+			super.includes(:item_names, :options => :option_items)
+		end
 	end
 
 	############### create ###############	

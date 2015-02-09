@@ -12,6 +12,7 @@ ActiveAdmin.register Change do
 	scope proc{ I18n.t('STATUS_CHANGE_CANCEL') }, :cancelled
 	scope proc{ I18n.t('STATUS_CHANGE_ON_DELIVERY') }, :on_delivery
 
+	scope_to :current_admin_user
 
 	################# change status #################
 	collection_action :change_status, :method => :patch do

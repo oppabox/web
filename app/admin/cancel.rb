@@ -10,6 +10,7 @@ ActiveAdmin.register Cancel do
 	scope proc{ I18n.t('STATUS_CANCEL_CANCEL') }, :cancelled
 	scope proc{ I18n.t('STATUS_CANCEL_REJECT') }, :rejected
 
+	scope_to :current_admin_user
 
 	################# change status #################
 	collection_action :change_status, :method => :patch do
