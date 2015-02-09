@@ -11,7 +11,7 @@ gem 'devise'
 gem 'mailgun_rails'
 gem 'therubyracer'
 gem 'thin'
-gem 'airbrake'
+#gem 'airbrake'
 
 #user omniauth
 gem 'omniauth-facebook'
