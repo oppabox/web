@@ -68,6 +68,37 @@
       <% end # form %>
     </div><!-- ./well -->
   </div>
+  <!-- sub boxes -->
+  <% children = @box.children %>
+  <div class="col-md-12">
+    <div class="well">
+      <div class="pull-right">
+        <%= link_to '박스추가', "/admin/boxes/new?box_selected=#{@box.id}", { class: 'btn btn-success' } %>
+      </div>
+      <table class="table table-bordered detail_table">
+        <thead>
+          <tr class="active">
+            <th>Top Image</th>
+            <th>Image</th>
+            <th>Display Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% children.each do |b| %>
+            <tr>
+              <td><%= image_tag b.top_image_url, size: "100" %></td>
+              <td><%= image_tag b.image_url, size: "100" %></td>
+              <td><%= b.display_name %></td>
+              <td><%= link_to '수정', "/admin/boxes/#{b.id}/edit", { class: 'btn btn-default' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- items -->
   <div class="col-md-12">
     <div class="well">
       <div class="pull-right">
@@ -92,7 +123,7 @@
         <tbody>
           <% @box.items.each do |item| %>
             <tr>
-              <td><%= image_tag "/images/items/#{@box.path}/#{item.path}/#{item.path}.jpg", size: "100" %></td>
+              <td><%= image_tag item.image_url, size: "100" %></td>
               <td><%= item.display_name %></td>
               <td><%= item.original_price %></td>
               <td><%= item.sale_price %></td>

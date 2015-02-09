@@ -2,6 +2,8 @@ ActiveAdmin.register Box do
 	menu :priority => 5
 	config.batch_actions = false
 
+	scope proc{''}, :top, default: true, show_count: false
+
 	################# new ##################
 	form :partial => "form"
 
@@ -13,6 +15,9 @@ ActiveAdmin.register Box do
 		box.display_name = data['display_name']
 		box.path = data['display_name'].gsub(" ", "_").downcase
 		box.opened = data['opened'] == '1' ? true : false
+		unless data['parent'] == ""
+			box.parent = Box.find(data['parent'].to_i)
+		end
 		
 		if box.save
 			# image save

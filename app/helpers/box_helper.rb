@@ -58,7 +58,6 @@ module BoxHelper
 	        end
 
 	        # customize
-	        # get top 2
 	        if method == "box"
 	          size_md = 6
 	          size_xs = 12

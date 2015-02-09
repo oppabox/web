@@ -1,6 +1,11 @@
 <%= image_head "/images/top/#{@box[:path]}.jpg"%>
-<% if ['star_box', 'blog_store'].include? @box[:path] %>
-	<%= custom_item_body @items, "item" %>
-<% else %>
-	<%= item_body @items, "item" %>
+<%# render children box first %>
+<% unless @children.nil? %>
+	<%= item_body @children, "box" %>
 <% end %>
+
+<%# if ['star_box', 'blog_store'].include? @box[:path] %>
+	<%#= custom_item_body @items, "item" %>
+<%# else %>
+	<%= item_body @items, "item" %>
+<%# end %>

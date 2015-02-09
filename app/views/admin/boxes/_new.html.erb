@@ -16,6 +16,9 @@
           </div>
         <% end %>
 
+        <%# hidden %>
+        <%= f.hidden_field :parent, { value: params[:box_selected] } %>
+
         <div class="form-group">
           <%= f.label :display_name, { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
