@@ -44,7 +44,8 @@ class MypageController < ApplicationController
     order = Order.find(params[:order_id])
     quantity = params[:amount].to_i
     price = order.total_price
-    shipping_fee = order.get_delivery_fee(quantity) == 0 ? 2700 : order.get_delivery_fee(quantity)
+    # because of free shipping when over threshold
+    shipping_fee = order.get_delivery_fee(quantity) == 0 ? order.shipping.normal_fee : order.get_delivery_fee(quantity)
     diff_quantity = order.quantity - quantity
     diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
     # 총 결제비에서 diff quantity 만큼 구매했다고 생각하고 차액계산
@@ -84,10 +85,10 @@ class MypageController < ApplicationController
     data = {}
     if rtn.save
       data['result'] = true
-      data['message'] = "Return form is successfully requested!"
+      data['message'] = t('return_successfully')
     else
-      data['result'] = true
-      data['message'] = "Return form has some problems!"
+      data['result'] = false
+      data['message'] = t('return_problems')
     end
 
     render :json => data
@@ -103,10 +104,10 @@ class MypageController < ApplicationController
     data = {}
     if cancel.save
       data['result'] = true
-      data['message'] = "Cancel form is successfully requested!"
+      data['message'] = t('cancel_successfully')
     else
       data['result'] = false
-      data['message'] = "Cancel form has some problems!"
+      data['message'] = t('cancel_problems')
     end
 
     render :json => data
@@ -129,10 +130,10 @@ class MypageController < ApplicationController
     data = {}
     if change.save
       data['result'] = true
-      data['message'] = "Return form is successfully requested!"
+      data['message'] = t('change_successfully')
     else
       data['result'] = false
-      data['message'] = "Return form has some problems!"
+      data['message'] = t('change_problems')
     end
 
     render :json => data

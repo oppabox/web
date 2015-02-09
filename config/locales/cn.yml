@@ -1,6 +1,7 @@
 cn:
   company_name: "OPPABOX Corp."
   ceo: "CEO"
+  registration_number: "Business Registration Number : 261-81-12788"
   company_address: "455-fourth floor, Gangnam-gu, Eonju-ro, 647, Seoul, Republic of Korea, 135-996"
   company_privacy: "Privacy Officer : Young-hun Jun (privacy@oppabox.com)"
   company_copyright: "Copyright &copy; OPPABOX Corp. All rights reserved"
@@ -535,8 +536,10 @@ cn:
   STANDARD: "Domestic shipping(free if ordering over 50,000)"
   UPS: "UPS for International Shipping"
   EMS: "EMS for International Shipping"
+  JCOKCOK: "Domestic shipping(free if ordering over 50,000)"
+  GGANGI: "Domestic shipping(free if ordering over 50,000)"
 
-  ggangjiggogga: "GganjiGgogga"
+  ggogga: "GganjiGgogga"
   jcokcok: "J-CokCok"
   jaejoong: "Kim JaeJoong Box"
   minho: "Lee Minho Box"

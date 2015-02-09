@@ -34,15 +34,25 @@ module BoxHelper
 	            tag :img, :src => x.image_url, :class => 'img-responsive center-block'
 	          end
 	        end
+
+	      # split display_name with '_' and make them displayed at another line
+	      display_names = x.display_name.split('_')
+	      display_name = ""
+	      display_names.each_with_index do |name, idx|
+	      	display_name += name
+        	if idx != display_names.length - 1 # if not last elem
+        		display_name += tag("br", nil, true)
+        	end
+        end
 	      text_box = #하나의 박스중에 아래쪽에 있는 이름(ex. STAR BOX)
 	        if x.opened != true
 	          content_tag :h4, :class => 'product_title' do 
-	            x.display_name
+	            display_name.html_safe
 	          end
 	        else
 	          content_tag :a, :href => "/#{method}/#{x.path}" do 
 	            content_tag :h4, :class => 'product_title' do 
-	              x.display_name
+	              display_name.html_safe
 	            end
 	          end
 	        end

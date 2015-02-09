@@ -19,6 +19,27 @@ class Shipping < ActiveRecord::Base
 			return 0
 		when 'STANDARD'
 			return shipping.calculate_standard country, quantity, month, order_price
+		when 'JCOKCOK'
+			return shipping.calculate_3000 country, quantity, month, order_price
+		when 'GGANGI'
+			return shipping.calculate_2500 country, quantity, month, order_price
+		end
+	end
+
+	def normal_fee
+		case self.name
+		when 'UPS'
+			return shipping.calculate_ups country, (weight * quantity), month
+		when 'EMS'
+			return shipping.calculate_ems country, (weight * quantity), month
+		when 'FREE'
+			return 2700
+		when 'STANDARD'
+			return 2700
+		when 'JCOKCOK'
+			return 3000
+		when 'GGANGI'
+			return 2500
 		end
 	end
 
@@ -66,6 +87,7 @@ class Shipping < ActiveRecord::Base
 
     array_position = (weight * 2).ceil - 1
     array_position = 100 if array_position > 100
+    array_position = 0 if array_position < 0
 
     return fee[country_number][array_position].to_f * month
 	end
@@ -106,6 +128,7 @@ class Shipping < ActiveRecord::Base
 
     array_position = (weight * 2).ceil - 1
     array_position = 59 if array_position > 59
+    array_position = 0 if array_position < 0
 
     return fee[country_number][array_position].to_f * month
 	end
@@ -118,5 +141,23 @@ class Shipping < ActiveRecord::Base
 			return 2700 * month
 		end
 	end
+
+	####################  3000  ####################
+	def calculate_3000 country, quantity, month, order_price
+		if !order_price.nil? and order_price >= self.threshold
+			return 0
+		else
+			return 3000 * month
+		end
+	end
+
+	####################  2500  ####################
+	def calculate_2500 country, quantity, month, order_price
+		if !order_price.nil? and order_price >= self.threshold
+			return 0
+		else
+			return 2500 * month
+		end
+	end	
 
 end

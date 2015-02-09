@@ -3,19 +3,23 @@ class ItemController < ApplicationController
   before_action :input_option_validation, only: [:add_to_order]
 
   def view
-    @item = Item.where(:path => params[:name]).first
-    @item_image_files = Array.new
-    index = 1
-    begin
-      exists = File.exists?(Rails.root.join("public", "images", "items", @item.box.path, @item.path, I18n.locale.to_s, "#{index}.jpg").to_s)
-      @item_image_files << index if exists 
-      index += 1
-    end while exists 
+    # 자꾸 jj로 들어옴
+    if params[:name] == "jj"
+      redirect_to :action => :view, :name => "jaejoong"
+    else
+      @item = Item.where(:path => params[:name]).first
+      @item_image_files = Array.new
+      index = 1
+      begin
+        exists = File.exists?(Rails.root.join("public", "images", "items", @item.box.path, @item.path, I18n.locale.to_s, "#{index}.jpg").to_s)
+        @item_image_files << index if exists 
+        index += 1
+      end while exists 
 
-    if @item.opened != true
-      render :nothing => true, :status => 401
+      if @item.opened != true
+        render :nothing => true, :status => 401
+      end
     end
-
 
   end
 
