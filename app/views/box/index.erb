@@ -4,8 +4,8 @@
 	<%= item_body @children, "box" %>
 <% end %>
 
-<%# if ['star_box', 'blog_store'].include? @box[:path] %>
-	<%#= custom_item_body @items, "item" %>
-<%# else %>
+<% if ['blog_store'].include? @box[:path] %>
+	<%= custom_item_body @items, "item" %>
+<% else %>
 	<%= item_body @items, "item" %>
-<%# end %>
+<% end %>
