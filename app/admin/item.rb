@@ -295,44 +295,44 @@ ActiveAdmin.register Item do
 	#################### views ####################
 	index do
 		column :id
-		column "Image" do |i|
+		column "썸네일" do |i|
 			tag :img, :src => "/images/items/#{i.box.path}/#{i.path}/#{i.path}.jpg", :width => "100px", :height => "100px"
 		end
-		column :box
-		column "Name" do |i|
+		column "박스", :box
+		column "상품명" do |i|
 			i.display_name
 		end
-		column :original_price
-		column :sale_price
-		column :quantity do |i|
+		column "기존가", :original_price
+		column "판매가", :sale_price
+		column "수량", :quantity do |i|
 			if i.limited
 				i.quantity
 			else
-				'unlimited'
+				'∞'
 			end
 		end
-		column :periodic
-		column :weight
-		column :buy_limit	
-		column "Options" do |item|
+		column "정기구매", :periodic
+		column "무게", :weight
+		column "제한수량", :buy_limit	
+		column "옵션" do |item|
 			unless item.options.count == 0
 				table class: 'table table-bordered option_table' do
 					thead do
-						th 'name'
-						th 'type'
-						th 'max_len'
-						th 'eng_only'
-						th 'name'
-						th 'quan'
-						th 'lim'
-						th 'price_chn'
+						th '이름'
+						th '타입'
+						th '최대 길이'
+						th '영어만'
+						th '이름'
+						th '수량'
+						th '한정판매'
+						th '추가 가격'
 					end
 					tbody do
 						item.options.each do |o|
 							if (cnt = o.option_items.count) == 0
 								tr do
 									td o.title
-									td Option::TYPE[o.option_type]
+									td Option::TYPE_STRING_LOAD[Option::TYPE[o.option_type]]
 									td o.option_type == OPTION_TYPE_STRING ? o.max_length : ''
 									td o.option_type == OPTION_TYPE_STRING ? o.english_only : ''
 									td colspan: 4
@@ -342,7 +342,7 @@ ActiveAdmin.register Item do
 									tr do
 										if idx == 0
 											td rowspan: cnt do o.title end
-											td rowspan: cnt do Option::TYPE[o.option_type] end
+											td rowspan: cnt do Option::TYPE_STRING_LOAD[Option::TYPE[o.option_type]] end
 											td rowspan: cnt do o.option_type == OPTION_TYPE_STRING ? o.max_length : '' end
 											td rowspan: cnt do o.option_type == OPTION_TYPE_STRING ? o.english_only : '' end
 											td oi.name
@@ -371,12 +371,13 @@ ActiveAdmin.register Item do
 	end
 
 	filter :id
-	filter :box
-	filter :original_price
-	filter :sale_price
-	filter :quantity
-	filter :limited
-	filter :periodic
-	filter :weight
-	filter :buy_limit
+	filter :box, :label => "박스 선택"
+	filter :original_price, :label => "기존가"
+	filter :sale_price, :label => "판매가"
+	filter :quantity, :label => "수량"
+	filter :limited, :label => "한정판매"
+	filter :periodic, :label => "정기구매"
+	filter :weight, :label => "무게"
+	filter :buy_limit, :label => "구매개수제한"
+
 end

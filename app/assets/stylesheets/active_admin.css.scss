@@ -70,6 +70,8 @@ a, a:link, a:visited {
 .index_table {
 	td, th {
 		vertical-align: middle !important;
+    min-width: 50px !important;
+    text-align:center;
 	}
 }
 
@@ -84,7 +86,7 @@ a, a:link, a:visited {
 	td, th {
 		vertical-align: middle !important;
 		background: white !important;
-
+    min-width: 45px;
 	}
 	margin: 0 !important;
 }
@@ -151,4 +153,8 @@ div.nested-col {
 		background-color: white;
 		font-size: 15px;
 	}
+}
+
+#option_form td th{
+  min-width: 50px;
 }

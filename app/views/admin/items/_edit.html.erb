@@ -18,21 +18,21 @@
 				<% end %>
 
 				<div class="form-group">
-					<%= f.label :box, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :box, '박스 선택', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<p class="form-control-static"><%= @item.box.display_name %></p>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= f.label :path, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :path, '박스 URL', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<p class="form-control-static"><%= @item.path %></p>
 					</div>
 				</div>
 
 				<div class="form-group">
-          <%= f.label :image, { class: 'col-sm-2 control-label' } %>
+          <%= f.label :image, '썸네일', { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
             <%= f.file_field :image, { 'multiple' => true } %>
             <div id="files">
@@ -42,7 +42,7 @@
         </div>
 
 				<div class="form-group">
-					<%= f.label :name, 'Name<br>(ko, en, cn, ja)'.html_safe, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :name, '이름<br><p style="font-size:10px">(한글,영어,중문,일어)</p>'.html_safe, { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.fields_for :name do |ff| %>
 							<% ['ko', 'en', 'cn', 'ja'].each do |locale| %>
@@ -55,28 +55,28 @@
 				</div>
 
 				<div class="form-group">
-					<%= f.label :original_price, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :original_price, '원상품가격', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.text_field :original_price, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= f.label :sale_price, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :sale_price, '판매가', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.text_field :sale_price, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= f.label :weight, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :weight, '상품 무게', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.text_field :weight, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= f.label :buy_limit, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :buy_limit, '갯수 제한', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.text_field :buy_limit, { class: 'form-control' } %>
 					</div>
@@ -85,7 +85,7 @@
 				<% shippings = @item.shippings.pluck(:id) %>
 				<%= f.fields_for :shippings do |ff| %>
 					<div class="form-group">
-						<%= ff.label :domestic_shippings, { class: 'col-sm-2 control-label' } %>
+						<%= ff.label :domestic_shippings, '국내 배송사', { class: 'col-sm-2 control-label' } %>
 						<div class="col-sm-9">
 							<div class="checkbox">
 								<% Shipping.domestic.each do |s| %>
@@ -99,7 +99,7 @@
 					</div>
 
 					<div class="form-group">
-						<%= ff.label :foreign_shippings, { class: 'col-sm-2 control-label' } %>
+						<%= ff.label :foreign_shippings, '해외 배송사', { class: 'col-sm-2 control-label' } %>
 						<div class="col-sm-9">
 							<div class="checkbox">
 								<% Shipping.foreign.each do |s| %>
@@ -125,7 +125,7 @@
 
 				<div class="form-group">
 					<input type="hidden" id="item_original_quantity" value="<%= @item.quantity.nil? ? '-1' : @item.quantity %>">
-					<%= f.label :quantity, { class: 'col-sm-2 control-label' } %>
+					<%= f.label :quantity, '수량', { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= f.text_field :quantity, { class: 'form-control' } %>
 					</div>
@@ -171,14 +171,14 @@
 					<table class="table table-bordered detail_table">
 						<thead>
 							<tr class="active">
-								<th>name</th>
-								<th>type</th>
-								<th>max_len</th>
-								<th>eng_only</th>
-								<th>name</th>
-								<th>quan</th>
-								<th>lim</th>
-								<th>price_chn</th>
+								<th>이름</th>
+								<th>타입</th>
+								<th>최대 길이</th>
+								<th>영어만 입력</th>
+								<th>이름</th>
+								<th>수량</th>
+								<th>한정 상품</th>
+								<th>추가 가격</th>
 								<th>삭제</th>
 							</tr>
 						</thead>
@@ -189,7 +189,7 @@
 									<% if (cnt = o.option_items.count) == 0 %>
 										<tr>
 											<td><%= ff.text_field :title, { value: o.title } %></td>
-											<td><p class="form-control-static"><%= Option::TYPE[o.option_type] %></p></td>
+											<td><p class="form-control-static"><%= Option::TYPE_STRING_LOAD[Option::TYPE[o.option_type]] %></p></td>
 											<td>
 												<% if o.option_type == OPTION_TYPE_STRING %>
 													<%= ff.text_field :max_length, { value: o.max_length } %>
@@ -218,7 +218,7 @@
 													<%= fff.hidden_field :id, { value: oi.id } %>
 													<% if idx == 0 %>
 														<td rowspan="<%=cnt%>"><%= ff.text_field :title, { value: o.title } %></td>
-														<td rowspan="<%=cnt%>"><p class="form-control-static"><%= Option::TYPE[o.option_type] %></p></td>
+														<td rowspan="<%=cnt%>"><p class="form-control-static"><%= Option::TYPE_STRING_LOAD[Option::TYPE[o.option_type]] %></p></td>
 														<td rowspan="<%=cnt%>">
 															<% if o.option_type == OPTION_TYPE_STRING %>
 																<%= ff.text_field :max_length, { value: o.max_length } %>
@@ -272,8 +272,8 @@
 			<div>
 				<%= form_for :new_option, url: add_option_admin_items_path, html: { method: :post, id: 'new_option_form', remote: true } do |f| %>
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#new_option_normal_tab" data-toggle="tab"><b><input class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_NORMAL] %>" readonly></b></a></li>
-						<li><a href="#new_option_string_tab" data-toggle="tab"><b><input class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_STRING] %>" readonly></b></a></li>
+						<li class="active"><a href="#new_option_normal_tab" data-toggle="tab"><b>선택 옵션<input type="hidden" class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_NORMAL] %>" readonly></b></a></li>
+						<li><a href="#new_option_string_tab" data-toggle="tab"><b>문자 입력 옵션<input type="hidden" class="tab_input" value="<%= Option::TYPE[OPTION_TYPE_STRING] %>" readonly></b></a></li>
 					</ul>
 					<%= f.hidden_field :type %>
 					<%= f.hidden_field :item_id, { :value => @item.id } %>

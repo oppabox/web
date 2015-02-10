@@ -7,4 +7,8 @@ class Option < ActiveRecord::Base
     OPTION_TYPE_NORMAL => 'normal', 
     OPTION_TYPE_STRING => 'string'
   }
+  TYPE_STRING_LOAD = {
+    'normal' => "선택",
+    'string' => "문자"
+  }
 end
