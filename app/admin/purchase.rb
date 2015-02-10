@@ -6,7 +6,7 @@ ActiveAdmin.register Purchase do
   scope proc{ "전체" }, :valid, default: true
   scope proc{ I18n.t('purchase_paid') }, :paid
   scope proc{ I18n.t('purchase_pending') }, :pending
-  scope proc{ I18n.t('purchase_cancel') },:cancelled
+  scope proc{ I18n.t('purchase_cancel') }, :cancelled
 
   scope_to :current_admin_user
 
