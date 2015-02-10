@@ -1,4 +1,5 @@
 <% locales = ["ko", "ja", "cn", "en"] %>
+<% country_string = { "ko" => "한국", "ja" => "일본", "cn" => "중국", "en" => "영어" } %>
 <div class="container">
 	<%= form_for :file, url: add_image_admin_items_path, html: { method: :post, class: 'form-inline', id: 'image_form', enctype: "multipart/form-data" } do |f| %>
 		<div class="row">
@@ -7,14 +8,14 @@
 				<%= f.hidden_field :id, { value: @item.id } %>
 				<a href="#" class="btn btn-success" id="input_button">
 					<i class="glyphicon glyphicon-plus"></i>
-          <span>Add files...</span>
+          <span>파일 추가</span>
           <div class="">
         		<%= f.file_field :image, { class: 'hidden', multiple: true} %>
         	</div>
 				</a>
 				<button type="submit" class="btn btn-primary start">
           <i class="glyphicon glyphicon-upload"></i>
-          <span>Start upload</span>
+          <span>상세페이지 업로드</span>
 	      </button>
 	      <!-- ./ button group -->
 	      <span class="fileupload-process"></span>
@@ -31,7 +32,7 @@
 		<!-- image thumbnail tabs -->
 		<ul class="nav nav-tabs nav-justified">
 			<% locales.each do |l| %>
-				<li class="<%= l == 'ko' ? 'active' : '' %>"><a href="<%= '#image_tab_' + l %>" data-toggle="tab"><b><%= l %></b></a></li>
+				<li class="<%= l == 'ko' ? 'active' : '' %>"><a href="<%= '#image_tab_' + l %>" data-toggle="tab"><b><%= country_string[l] %></b></a></li>
 			<% end %>	 
 		</ul>
 		<div class="tab-content">
@@ -74,6 +75,8 @@ $(document).ready(function(){
 		$('#progress .progress-bar').css('width', '0%');
 		// done callback
 		alert(data.jqXHR.responseJSON['msg']);
+    // refresh page
+    // location.reload();
 	}).bind('fileuploadprogressall', function (e, data){
 		// progress bar
 		var progress = parseInt(data.loaded / data.total * 100, 10);

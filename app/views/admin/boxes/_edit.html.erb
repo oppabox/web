@@ -17,14 +17,14 @@
         <% end %>
 
         <div class="form-group">
-          <%= f.label :display_name, { class: 'col-sm-2 control-label' } %>
+          <%= f.label :box, "박스 이름", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
             <%= f.text_field :display_name %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :top_image, { class: 'col-sm-2 control-label' } %>
+          <%= f.label :top_image, "배너 이미지", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
             <%= f.file_field :top_image, { 'multiple' => true } %>
             <div id="top_image">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :image, { class: 'col-sm-2 control-label' } %>
+          <%= f.label :image, "썸네일 이미지", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
             <%= f.file_field :image %>
             <div id="normal_image">
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :display_order, { class: 'col-sm-2 control-label' } %>
+          <%= f.label :display_order, "표시 순서", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
               <%= f.text_field :display_order %>
           </div> 
@@ -78,9 +78,9 @@
       <table class="table table-bordered detail_table">
         <thead>
           <tr class="active">
-            <th>Top Image</th>
-            <th>Image</th>
-            <th>Display Name</th>
+            <th>배너 이미지</th>
+            <th>썸네일 이미지</th>
+            <th>박스 이름</th>
             <th></th>
           </tr>
         </thead>

@@ -133,6 +133,8 @@
       e.preventDefault();
       $('#purchase_form').submit();
     });
+    alert("미완성페이지입니다.");
+    console.log( "loaded" );
   });
   $("#purchases_item").change(function() {
     $.ajax({
@@ -151,10 +153,10 @@
     });
   });
   $("#purchases_item_detail").change(function() {
-    if $("#purchases_item_detail").val() == 1 { 
+    if ($("#purchases_item_detail").val() == 1) { 
       $("#purchases_periodic").css("display:show;"); 
     } else $("#purchases_periodic").css("display:none;");
-  )};
+  });
   $("#purchases_country").ready(function() {
     $.ajax({
       url: "/admin/purchases/check_country_value",

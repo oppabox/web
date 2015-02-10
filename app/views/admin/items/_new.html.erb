@@ -3,21 +3,21 @@
 		<div class="col-md-6">
 			<div class="well">
 				<div class="form-group">
-					<%= form.label :box, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :box, "박스 선택", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.select :box, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: true, :selected => params['box_selected'] }, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= form.label :path, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :path, "박스 URL", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :path, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-          <%= form.label :image, { class: 'col-sm-2 control-label' } %>
+          <%= form.label :image, "썸네일 이미지", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
             <%= form.file_field :image, { 'multiple' => true } %>
             <div id="files">
@@ -26,7 +26,7 @@
         </div>
 
 				<div class="form-group">
-					<%= form.label :name, 'Name<br>(ko, en, cn, ja)'.html_safe, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :name, '이름<br><p style="font-size:10px;">(한글,영어,중문,일어)</p>'.html_safe, { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.fields_for :name do |ff| %>
 							<% ['ko', 'en', 'cn', 'ja'].each do |locale| %>
@@ -39,28 +39,28 @@
 				</div>
 
 				<div class="form-group">
-					<%= form.label :original_price, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :original_price, "원상품가격", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :original_price, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= form.label :sale_price, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :sale_price, "판매가", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :sale_price, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= form.label :weight, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :weight, "상품무게", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :weight, { class: 'form-control' } %>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<%= form.label :buy_limit, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :buy_limit, "갯수제한", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :buy_limit, { class: 'form-control' } %>
 					</div>
@@ -78,7 +78,7 @@
 
 				<div class="form-group">
 					<input type="hidden" id="item_original_quantity" value="-1">
-					<%= form.label :quantity, { class: 'col-sm-2 control-label' } %>
+					<%= form.label :quantity, "수량", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
 						<%= form.text_field :quantity, { class: 'form-control' } %>
 					</div>
