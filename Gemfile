@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# flot chart
+gem 'flot-rails', :git => "https://github.com/Kjarrigan/flot-rails.git"
+
 # jQuery File Upload
 gem "jquery-fileupload-rails"
 

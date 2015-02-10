@@ -70,7 +70,7 @@ ActiveAdmin.register Purchase do
       p.approval_datetime = DateTime.current().strftime("%Y-%m-%d %H:%M:%S")
       p.seq_no = "1234567890"
       p.pay_option = 0
-      p.reference_number = p.set_reference_number
+      p.set_reference_number
       p.order_no = p.reference_number
       p.user.country = data['country']
     p.save

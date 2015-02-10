@@ -45,7 +45,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 				true
 			end
 		when ActiveAdmin::Page
-			action == :read && subject.name == "Dashboard"
+			subject.name == "Dashboard"
 		when normalized(User), normalized(AdminUser), ActiveAdmin::Comment
 			# for only master admin user
 			user.master

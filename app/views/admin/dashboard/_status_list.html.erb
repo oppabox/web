@@ -1,0 +1,68 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3><i class="fa fa-bar-chart"></i> 전체 현황</h3>
+	</div>
+	<table class="table table-bordered dashboard_table">
+		<tbody>
+			<%# section for purchase %>
+			<tr>
+				<td class="active">결제 현황</td>
+				<% p = current_admin_user.purchases.valid.group(:status).count %>
+				<% Purchase::STATUSES.each do |s| %>
+					<% unless s[0] == Purchase::STATUS_ORDERING %>
+						<td>
+							<%= t(s[1]) %> <span class="badge pull-right"><%= p[s[0]].nil? ? 0 : p[s[0]] %></span>
+						</td>
+					<% end %>
+				<% end %>
+				<td colspan="3"></td>
+			</tr>
+			<%# section for order %>
+			<tr>
+				<td class="active">주문 현황</td>
+				<% p = current_admin_user.orders.valid.group(:status).count %>
+				<% Order::STATUSES.each do |s| %>
+					<% unless s[0] == Order::STATUS_ORDERING or s[0] == Order::STATUS_DELETED %>
+						<td>
+							<%= t(s[1]) %> <span class="badge pull-right"><%= p[s[0]].nil? ? 0 : p[s[0]] %></span>
+						</td>
+					<% end %>
+				<% end %>
+				<td></td>
+			</tr>
+			<%# section for cancel %>
+			<tr>
+				<td class="active">취소 현황</td>
+				<% p = current_admin_user.cancels.group(:status).count %>
+				<% Cancel::STATUSES.each do |s| %>
+					<td>
+						<%= t(s[1]) %> <span class="badge pull-right"><%= p[s[0]].nil? ? 0 : p[s[0]] %></span>
+					</td>
+				<% end %>
+				<td colspan="2"></td>
+			</tr>
+			<%# section for return %>
+			<tr>
+				<td class="active">환불 현황</td>
+				<% p = current_admin_user.returns.group(:status).count %>
+				<% Return::STATUSES.each do |s| %>
+					<td>
+						<%= t(s[1]) %> <span class="badge pull-right"><%= p[s[0]].nil? ? 0 : p[s[0]] %></span>
+					</td>
+				<% end %>
+				<td></td>
+			</tr>
+			<%# section for change %>
+			<tr>
+				<td class="active">교환 현황</td>
+				<% p = current_admin_user.changes.group(:status).count %>
+				<% Change::STATUSES.each do |s| %>
+					<td>
+						<%= t(s[1]) %> <span class="badge pull-right"><%= p[s[0]].nil? ? 0 : p[s[0]] %></span>
+					</td>
+				<% end %>
+			</tr>
+
+		</tbody>
+	</table>
+</div>

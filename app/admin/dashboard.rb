@@ -1,59 +1,37 @@
 ActiveAdmin.register_page "Dashboard" do
 	menu :priority => 1
-
 	content :title => "Dashboard" do
-
 		render "dashboard"
-		# columns do
-		# 	column do
-		# 		panel "Total" do
-		# 			status = Purchase::STATUSES
-		# 			status_exclude = [Purchase::STATUS_ORDERING]
-		# 			table_for current_admin_user.purchases.where.not(status: status_exclude).group(:status).count do |p|
-		# 				for s in status
-		# 					# s : [0, '주문중']
-		# 					unless status_exclude.include? s[0]
-		# 						column( t(s[1]) ) { |p| p[s[0]] }
-		# 					end
-		# 				end
-		# 			end
-		# 		end
-		# 	end #column
-		# 	column do
-		# 		panel "Return" do
-		# 			status = Return::STATUSES
-		# 			table_for current_admin_user.returns.group(:status).count do |r|
-		# 				for s in status
-		# 					column( t(s[1]) ) { |r| r[s[0]] }
-		# 				end
-		# 			end
-		# 		end
-		# 	end #column
-		# end # columns
+	end
 
-		# columns do
-		# 	column do
-		# 		panel "Cancel" do
-		# 			status = Cancel::STATUSES
-		# 			table_for current_admin_user.cancels.group(:status).count do |p|
-		# 				for s in status
-		# 					# s : [0, '주문중']
-		# 					column( t(s[1]) ) { |p| p[s[0]] }
-		# 				end
-		# 			end
-		# 		end
-		# 	end #column
-		# 	column do
-		# 		panel "Change" do
-		# 			status = Change::STATUSES
-		# 			table_for current_admin_user.changes.group(:status).count do |r|
-		# 				for s in status
-		# 					column( t(s[1]) ) { |r| r[s[0]] }
-		# 				end
-		# 			end
-		# 		end
-		# 	end #column
-		# end # columns
+	################# change status #################
+	page_action :get_all_statistic, :method => :post do
 
+		now = Date.current()
+		date_from = Date.strptime(params[:date_from], "%Y-%m-%d")
+		date_to = Date.strptime(params[:date_to], "%Y-%m-%d") + 1
+
+		date_from = "P" + date_from.strftime("%Y%m%d")
+		date_to = "P" + date_to.strftime("%Y%m%d")
+
+		if Rails.env == 'production'
+			# for mysql
+			res = current_admin_user.orders.paid
+			.where("purchases.reference_number >= ? AND purchases.reference_number <= ?", date_from, date_to)
+			.group("SUBSTRING(purchases.reference_number, 2, 8)")
+			.sum("orders.quantity")
+		else
+			# for sqlite
+			res = current_admin_user.orders.paid
+			.where("purchases.reference_number >= ? AND purchases.reference_number <= ?", date_from, date_to)
+			.group("SUBSTR(purchases.reference_number, 2, 8)")
+			.sum("orders.quantity")
+		end
+
+		res.each do |data|
+			puts data
+		end
+		
+		render json: res
 	end
 end

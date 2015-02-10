@@ -1,0 +1,64 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3><i class="fa fa-check-square-o"></i> Check List</h3>
+	</div>
+	<div class="panel-body">
+		<ul class="things-to-do">
+			<%# section for prepare_order %>
+			<% unless (cnt = current_admin_user.orders.prepare_order.count) == 0 %>
+				<li>
+					<p>
+						<i class="fa fa-shopping-cart fa-2x"></i>
+						<span class="text-danger"><%= cnt %></span>
+						새로운 주문
+						<a class="btn btn-success pull-right" href="/admin/orders?scope=prepare_order">Go</a>
+					</p>
+				</li>
+			<% end %>
+			<%# section for purchase pending %>
+			<% unless (cnt = current_admin_user.purchases.pending.count) == 0 %>
+				<li>
+					<p>
+						<i class="fa fa-question fa-2x"></i>
+						<span class="text-danger"><%= cnt %></span>
+						무통장 입금 대기
+						<a class="btn btn-success pull-right" href="/admin/purchases?scope=pending">Go</a>
+					</p>
+				</li>
+			<% end %>
+			<%# section for cancel request %>
+			<% unless (cnt = current_admin_user.cancels.requested.count) == 0 %>
+				<li>
+					<p>
+						<i class="fa fa-times fa-2x"></i>
+						<span class="text-danger"><%= cnt %></span>
+						주문 취소 요청
+						<a class="btn btn-success pull-right" href="/admin/cancels?scope=requested">Go</a>
+					</p>
+				</li>
+			<% end %>
+			<%# section for return request %>
+			<% unless (cnt = current_admin_user.returns.requested.count) == 0 %>
+				<li>
+					<p>
+						<i class="fa fa-reply fa-2x"></i>
+						<span class="text-danger"><%= cnt %></span>
+						반품 요청
+						<a class="btn btn-success pull-right" href="/admin/returns?scope=requested">Go</a>
+					</p>
+				</li>
+			<% end %>
+			<%# section for change request %>
+			<% unless (cnt = current_admin_user.changes.requested.count) == 0 %>
+				<li>
+					<p>
+						<i class="fa fa-exchange fa-2x"></i>
+						<span class="text-danger"><%= cnt %></span>
+						교환 요청
+						<a class="btn btn-success pull-right" href="/admin/changes?scope=requested">Go</a>
+					</p>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</div>

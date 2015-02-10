@@ -1,0 +1,43 @@
+<div class="graph">
+	<div class="">
+		<ul class="nav nav-tabs">
+			<li><a class="btn disabled" href="#">판매량</a></li>
+			<li class="active"><a href="#D_all" data-toggle="tab" data-ref="">전체</a></li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" data-ref="">
+					박스 <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<% current_admin_user.boxes.each do |b| %>
+						<li><a href="#D_box" data-toggle="tab" data-ref="box_<%=b.id%>"><%= b.display_name %></a></li>
+					<% end %>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" data-ref="">
+					아이템 <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<% current_admin_user.items.each do |i| %>
+						<li><a href="#D_item" data-toggle="tab" data-ref="item_<%=i.id%>"><%= i.display_name %></a></li>
+					<% end %>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane fade in active placeholder" id="D_all"></div>
+		<div class="tab-pane fade placeholder" id="D_box"></div>
+		<div class="tab-pane fade placeholder" id="D_item"></div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+//$.plot($(".placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+	$.get_dashboard_statistic("all", null, function (data){
+		console.log(data);
+		$.plot($("#D_all"), data, { xaxis: { mode: "time", timeformat: "%Y%m%d" } });
+	});
+})
+</script>

@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
 
   scope :paid,                -> { valid.joins(:purchase).merge(Purchase.paid) }
   scope :pending,             -> { valid.joins(:purchase).merge(Purchase.pending) }
-  scope :purchase_cancelled,             -> { valid.joins(:purchase).merge(Purchase.cancelled) }
+  scope :purchase_cancelled,  -> { valid.joins(:purchase).merge(Purchase.cancelled) }
   scope :except_ordering,     -> { valid.joins(:purchase).merge(Purchase.valid) }
 
   scope :ordered,             -> { paid.on_ordering }

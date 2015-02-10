@@ -4,3 +4,6 @@
 #= require jquery-fileupload/cors/jquery.postmessage-transport
 #= require jquery-fileupload/cors/jquery.xdr-transport
 #= require active_admin_custom
+#= require jquery
+#= require jquery.flot
+#= require jquery.flot.pie

@@ -79,4 +79,32 @@ $(function () {
 		}
 		return -1;
 	};
+
+	$.get_dashboard_statistic = function (type, id, callbacks) {
+		var url;
+		switch (type) {
+			case "all":
+				url = "/admin/dashboard/get_all_statistic";
+				break;
+			case "box":
+				url = "/admin/dashboard/get_box_statistic"
+				break;
+			case "item":
+				url = "/admin/dashboard/get_item_statistic"
+				break;
+		}
+		$.ajax({
+      url: url,
+      type: "POST",
+      dataType:"JSON",
+      data: {
+        id: id,
+        date_from: "2015-01-01",
+        date_to: "2015-02-10"
+      },
+      success: function(data) {
+        callbacks(data);
+      }
+    });
+	};
 })
