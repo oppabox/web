@@ -16,21 +16,25 @@ ActiveAdmin.register_page "Dashboard" do
 
 		if ActiveRecord::Base::connection.instance_values["config"][:adapter] == "mysql2"
 			# for mysql
-			res = current_admin_user.orders.paid
+			query = current_admin_user.orders.paid
 			.where("purchases.reference_number >= ? AND purchases.reference_number <= ?", date_from, date_to)
 			.group("SUBSTRING(purchases.reference_number, 2, 8)")
 			.sum("orders.quantity")
 		else
 			# for sqlite
-			res = current_admin_user.orders.paid
+			query = current_admin_user.orders.paid
 			.where("purchases.reference_number >= ? AND purchases.reference_number <= ?", date_from, date_to)
 			.group("SUBSTR(purchases.reference_number, 2, 8)")
 			.sum("orders.quantity")
 		end
 
-		res.each do |data|
-			puts data
+		res = []
+		query.keys.each do |k|
+			res << [DateTime.strptime(k, "%Y%m%d").to_i * 1000, query[k]]
 		end
+		res << [DateTime.now.to_i * 1000, 10]
+
+		puts res.inspect
 		
 		render json: res
 	end

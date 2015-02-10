@@ -6,4 +6,5 @@
 #= require active_admin_custom
 #= require jquery
 #= require jquery.flot
+#= require jquery.flot.time
 #= require jquery.flot.pie

@@ -36,8 +36,16 @@
 $(document).ready(function(){
 //$.plot($(".placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
 	$.get_dashboard_statistic("all", null, function (data){
-		console.log(data);
-		$.plot($("#D_all"), data, { xaxis: { mode: "time", timeformat: "%Y%m%d" } });
+		
+		$.plot($("#D_all"), [{ data: data }], { 
+			xaxis: { mode: "time", timeformat: "%Y/%m/%d" },
+			tickSize: [1, "day"],
+			series: {
+				lines: { show: true, fill: true, fillColor: "rgba(255, 255, 255, 0.8)" },
+        points: { show: true, fill: false }
+			},
+			grid: { hoverable: true }
+		});
 	});
 })
 </script>
