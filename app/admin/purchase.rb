@@ -10,19 +10,6 @@ ActiveAdmin.register Purchase do
 
   scope_to :current_admin_user
 
-  ################## batch action ##########################  
-  # batch_action :destroy, false
-  # Purchase::STATUSES.each_with_index do |s|
-  #   batch_action s[1] do |selection|
-  #     Purchase.find(selection).each do |p|
-  #       p.status = s[0]
-  #       p.save
-  #     end
-
-  #     redirect_to :action => :index
-  #   end
-  # end
-
   ################# new ###################
   form :partial => "new"
   
@@ -306,7 +293,7 @@ ActiveAdmin.register Purchase do
         para link_to "입금확인", { :action => :transition, :id => p.id, :target => target }, { :class => "btn btn-primary margin_p" }
       end
       
-      unless p.status == Purchase::STATUS_CANCEL
+      if p.status != Purchase::STATUS_CANCEL and current_admin_user.master
         para link_to "구매취소", { :action => :cancel, :id => p.id }, { :class => "btn btn-danger margin_p" }
       end
     end
