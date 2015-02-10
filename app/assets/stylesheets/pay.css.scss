@@ -118,12 +118,6 @@
 }
 
 .shipping_infomation {
-//  padding: 15px;
-//  border: 1px solid transparent;
-//  border-radius: 4px;
-//  color: #a94442;
-//  background-color: #f2dede;
-//  border-color: #ebccd1;
   background: #fff;
   padding: 12px 18px;
   margin: 0 auto;
@@ -183,4 +177,15 @@
     margin-right: auto;
     margin-bottom: 20px;
   }
+}
+
+.exclamation {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px !important;
+}
+
+.exclamation_triangle {
+    color:#f26555;
+    font-size: 50px !important;
 }
