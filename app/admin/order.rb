@@ -9,15 +9,16 @@ ActiveAdmin.register Order do
   # Convert to Euc-kr
   require 'iconv'
 
+  scope proc{ "전체" }, :except_ordering
+  scope proc{ I18n.t("purchase_paid") }, :paid, default: true
   scope proc{ I18n.t("STATUS_ORDER_PREPARING_ORDER") }, :prepare_order
   scope proc{ I18n.t("STATUS_ORDER_PREPARING_DELIVERY") }, :prepare_delivery
   scope proc{ I18n.t("STATUS_ORDER_ON_DELIVERY") }, :on_delivery
   scope proc{ I18n.t("STATUS_ORDER_DONE") }, :done
   scope proc{ I18n.t("STATUS_ORDER_CANCEL") }, :cancelled
-  scope proc{ I18n.t("purchase_paid") }, :paid, default: true
   scope proc{ I18n.t("purchase_pending") }, :pending
   scope proc{ I18n.t("purchase_cancel") }, :purchase_cancelled
-  scope proc{ "전체" }, :except_ordering
+  
 
   scope_to :current_admin_user
 
