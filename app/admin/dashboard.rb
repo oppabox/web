@@ -14,7 +14,7 @@ ActiveAdmin.register_page "Dashboard" do
 		date_from = "P" + date_from.strftime("%Y%m%d")
 		date_to = "P" + date_to.strftime("%Y%m%d")
 
-		if Rails.env == 'production'
+		if ActiveRecord::Base::connection.instance_values["config"][:adapter] == "mysql2"
 			# for mysql
 			res = current_admin_user.orders.paid
 			.where("purchases.reference_number >= ? AND purchases.reference_number <= ?", date_from, date_to)
