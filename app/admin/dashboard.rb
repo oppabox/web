@@ -31,8 +31,6 @@ ActiveAdmin.register_page "Dashboard" do
 		res = []
 		query.keys.each do |k|
 			res << [DateTime.strptime(k, "%Y%m%d").to_i * 1000, query[k]]
-			res << [(DateTime.strptime(k, "%Y%m%d")-1).to_i * 1000, query[k]+1]
-			res << [(DateTime.strptime(k, "%Y%m%d")-5).to_i * 1000, query[k]+3]
 		end
 		
 		render json: { range: diff, data: res }
