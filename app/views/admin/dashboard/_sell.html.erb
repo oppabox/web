@@ -26,7 +26,7 @@
 			<form class="form-inline">
 				<div class="form-group">
 					<input class="form-control" id="selected_category" type="text" readonly>
-					<input class="form-control datepicker" id="date_from" type="text" value=<%= (Date.current - 50).strftime("%Y-%m-%d") %>>
+					<input class="form-control datepicker" id="date_from" type="text" value=<%= (Date.current - 7).strftime("%Y-%m-%d") %>>
 					<label for="date_from">-</label>
 					<input class="form-control datepicker" id="date_to" type="text" value=<%= Date.current.strftime("%Y-%m-%d") %>>
 					<a class="btn btn-default" onclick="plot()">검색</a>
@@ -60,13 +60,21 @@ var plot = function() {
 		var title = $("#selected_category").val() + " (" + $("#date_from").val() + " ~ " + $("#date_to").val() + ")";
 		$("#D_" + type + " .D_title").html(title);
 		$.plot($("#D_" + type + " .placeholder"), [{ data: data['data'] }], { 
-			xaxis: { mode: "time", timeformat: "%Y/%m/%d" },
-			tickSize: [Math.floor(data['range'] / 7), "day"],
-			series: {
-				lines: { show: true, fill: true, fillColor: "rgba(255, 255, 255, 0.8)" },
-        points: { show: true, fill: false, hoverable: true }
+			yaxis: {
+				tickLength: 0
 			},
-			grid: { hoverable: true, clickable: true }
+			xaxis: { 
+				mode: "time",
+				timeformat: "%m/%d",
+				minTickSize: [1, "day"],
+				tickSize: [(data['range'] - 1) % 10, "day"]
+			},
+			series: {
+				lines: { show: true, fill: true, lineWidth: 3, fillColor: "rgba(255, 255, 255, 0.7)" },
+        points: { show: true, fill: false, lineWidth: 3 }
+			},
+			grid: { hoverable: true, clickable: true },
+			legend: { show: false }
 		});
 	});
 
