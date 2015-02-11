@@ -35,9 +35,9 @@
 		</ul>
 	</div>
 	<div class="tab-content">
-		<div class="tab-pane fade in active" id="D_all"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
-		<div class="tab-pane fade" id="D_box"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
-		<div class="tab-pane fade" id="D_item"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
+		<div class="tab-pane fade in active" id="D_all"><h5 class="text-center D_title"></h5><div class="placeholder" data-type="all"></div></div>
+		<div class="tab-pane fade" id="D_box"><h5 class="text-center D_title"></h5><div class="placeholder" data-type="box"></div></div>
+		<div class="tab-pane fade" id="D_item"><h5 class="text-center D_title"></h5><div class="placeholder" data-type="item"></div></div>
 	</div>
 </div>
 
@@ -59,6 +59,7 @@ var plot = function() {
 		// callback
 		var title = $("#selected_category").val() + " (" + $("#date_from").val() + " ~ " + $("#date_to").val() + ")";
 		$("#D_" + type + " .D_title").html(title);
+		$("#D_" + type + " .placeholder").attr("data-id", id);
 		$.plot($("#D_" + type + " .placeholder"), [{ data: data['data'] }], { 
 			yaxis: {
 				tickLength: 0
@@ -106,6 +107,30 @@ $(document).ready(function(){
 		}
 		else {
 			$("#tooltip").hide();
+		}
+	});
+
+	// bind href
+	$(".placeholder").bind("plotclick", function (event, pos, item){
+		if (item) {
+			var date = new Date(item.datapoint[0]),
+					str = "P" + date.getFullYear() + toTwoDigits(date.getMonth() + 1) + toTwoDigits(date.getDate()),
+					id = $(this).attr("data-id"),
+					url;
+
+			switch ($(this).attr("data-type")) {
+				case "all":
+					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str
+					break;
+				case "box":
+					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str + "&q%5Bitem_box_id_eq%5D=" + id
+					break;
+				case "item":
+					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str + "&q%5Bitem_id_eq%5D=" + id
+					break;
+			}
+			
+			window.location.href = url;
 		}
 	});
 
