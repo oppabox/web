@@ -189,6 +189,14 @@ div.nested-col {
 			width: 100%;
 			height: 300px;
 		}
+
+		input {
+			width: 110px;
+		}
+		.datepicker {
+			background: white url(/assets/active_admin/datepicker/datepicker-input-icon.png) no-repeat 100% 10px;
+			padding-right: 27px;
+		}
 	}
 }
 

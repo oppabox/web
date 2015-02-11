@@ -80,7 +80,7 @@ $(function () {
 		return -1;
 	};
 
-	$.get_dashboard_statistic = function (type, id, callbacks) {
+	$.get_dashboard_statistic = function (type, options, callbacks) {
 		var url;
 		switch (type) {
 			case "all":
@@ -98,9 +98,9 @@ $(function () {
       type: "POST",
       dataType:"JSON",
       data: {
-        id: id,
-        date_from: "2015-01-01",
-        date_to: "2015-02-10"
+      	id: options["id"],
+        date_from: options["from"],
+        date_to: options["to"]
       },
       success: function(data) {
         callbacks(data);

@@ -2,7 +2,7 @@
 	<div class="">
 		<ul class="nav nav-tabs">
 			<li><a class="btn disabled" href="#">판매량</a></li>
-			<li class="active"><a href="#D_all" data-toggle="tab" data-ref="">전체</a></li>
+			<li><a href="#D_all" data-toggle="tab" data-ref="all">전체</a></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" data-ref="">
 					박스 <span class="caret"></span>
@@ -23,29 +23,91 @@
 					<% end %>
 				</ul>
 			</li>
+			<form class="form-inline">
+				<div class="form-group">
+					<input class="form-control" id="selected_category" type="text" readonly>
+					<input class="form-control datepicker" id="date_from" type="text" value=<%= (Date.current - 50).strftime("%Y-%m-%d") %>>
+					<label for="date_from">-</label>
+					<input class="form-control datepicker" id="date_to" type="text" value=<%= Date.current.strftime("%Y-%m-%d") %>>
+					<a class="btn btn-default" onclick="plot()">검색</a>
+				</div>
+			</form>
 		</ul>
 	</div>
 	<div class="tab-content">
-		<div class="tab-pane fade in active placeholder" id="D_all"></div>
-		<div class="tab-pane fade placeholder" id="D_box"></div>
-		<div class="tab-pane fade placeholder" id="D_item"></div>
+		<div class="tab-pane fade in active" id="D_all"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
+		<div class="tab-pane fade" id="D_box"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
+		<div class="tab-pane fade" id="D_item"><h5 class="text-center D_title"></h5><div class="placeholder"></div></div>
 	</div>
 </div>
 
 <script>
-$(document).ready(function(){
-//$.plot($(".placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
-	$.get_dashboard_statistic("all", null, function (data){
-		
-		$.plot($("#D_all"), [{ data: data }], { 
+// hover bind settings
+var toTwoDigits = function (str) {
+	return (str < 10) ? ("0" + str) : str
+};
+
+// function for plot
+var plot = function() {
+	var from 	= $('#date_from').val(),
+			to 		= $('#date_to').val(),
+			type_ref 	= $('.graph li.active').last().find('a').attr('data-ref').split("_"),
+			type = type_ref[0], // all, box, item
+			id = type_ref[1]; // id, if it has
+
+	$.get_dashboard_statistic(type, { "from": from, "to": to, "id": id }, function (data){
+		// callback
+		var title = $("#selected_category").val() + " (" + $("#date_from").val() + " ~ " + $("#date_to").val() + ")";
+		$("#D_" + type + " .D_title").html(title);
+		$.plot($("#D_" + type + " .placeholder"), [{ data: data['data'] }], { 
 			xaxis: { mode: "time", timeformat: "%Y/%m/%d" },
-			tickSize: [1, "day"],
+			tickSize: [Math.floor(data['range'] / 7), "day"],
 			series: {
 				lines: { show: true, fill: true, fillColor: "rgba(255, 255, 255, 0.8)" },
-        points: { show: true, fill: false }
+        points: { show: true, fill: false, hoverable: true }
 			},
-			grid: { hoverable: true }
+			grid: { hoverable: true, clickable: true }
 		});
 	});
+
+};
+
+$(document).ready(function(){
+	// make tooltip
+	$("<div id='tooltip'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>").css({
+		position: "absolute",
+		display: "none"
+	}).appendTo("body");
+	$("#tooltip > div.tooltip-arrow").css({
+		"bottom": "-5px",
+		"left": "50%",
+		"margin-left": "-5px",
+		"border-width": "5px 5px 0",
+		"border-top-color": "#000"
+	});
+
+	// bind tooltip
+	$(".placeholder").bind("plothover", function (event, pos, item){
+		if (item) {
+			var date = new Date(item.datapoint[0]),
+					value = item.datapoint[1];
+			var str = date.getFullYear() + "/" + toTwoDigits(date.getMonth() + 1) + "/" + toTwoDigits(date.getDate());
+			$("#tooltip > div.tooltip-inner").html(value + "개 (" + str + ")");
+			$("#tooltip").css({ top: item.pageY - 40, left: item.pageX - 55})
+									.fadeIn(200);
+		}
+		else {
+			$("#tooltip").hide();
+		}
+	});
+
+	// bind tab
+	$('a[data-toggle="tab"]').on('show.bs.tab', function (e){
+		$("#selected_category").val($(e.target).text());
+	});
+
+	// plot
+	$('a[data-toggle="tab"]').first().tab('show')
+	plot();
 })
 </script>
