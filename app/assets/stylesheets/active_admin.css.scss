@@ -22,6 +22,19 @@
 
 body {
 	font-size: 12px !important;
+	#sidebar {
+		.filter_string_range {
+			input {
+				margin-left: 0;
+				width: 88px;
+			}
+			.seperator {
+				display: inline-block;
+				text-align: center;
+				width: 12px;
+			}
+		}
+	}
 }
 
 p {
