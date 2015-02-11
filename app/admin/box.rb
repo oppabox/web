@@ -26,6 +26,7 @@ ActiveAdmin.register Box do
 		unless data['parent'] == ""
 			box.parent = Box.find(data['parent'].to_i)
 		end
+		box.admin_user = current_admin_user
 		
 		if box.save
 			# image save
