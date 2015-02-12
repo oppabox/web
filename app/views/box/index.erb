@@ -1,3 +1,16 @@
+<% if ['alvinaroom'].include? @box[:path] and !User.current.nil? and User.current.country == "KR" %>
+	<div class="container">
+		<div class="alert alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<strong><%= t('notice_1') %></strong><br> <%= t('notice_2') %>
+	  	<br>
+	  	<%= t('notice_3') %>
+	  	<br>
+	  	<%= t('notice_4') %>
+		</div>
+	</div>
+<% end %>
+
 <%= image_head "/images/top/#{@box[:path]}.jpg"%>
 <%# render children box first %>
 <% unless @children.nil? %>

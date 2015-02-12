@@ -47,7 +47,7 @@ ActiveAdmin.register Box do
 			flash[:notice] = "Box #{data['display_name']} is created successfully!"
 			redirect_to :action => :edit, :id => box.id
 		else
-			flash[:error] = "Box #{data['display_name']} cannot be created. Invalid inputs exist!"
+			flash[:error] = box.errors.full_messages
 			redirect_to :back
 		end
 	end

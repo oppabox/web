@@ -6,28 +6,60 @@ class AdminUser < ActiveRecord::Base
 
   has_many :boxes, :dependent => :destroy
 
+  def boxes
+    if self.master
+      Box.all
+    else
+      Box.where(admin_user_id: self.id)
+    end
+  end
+
   def items
-  	Item.includes(:box).where(box_id: self.boxes.pluck(:id))
+    if self.master
+      Item.all
+    else
+  	 Item.includes(:box).where(box_id: self.boxes.pluck(:id))
+    end
   end
 
   def orders
-  	Order.includes(:item).where(item_id: self.items.pluck(:id))
+    if self.master
+      Order.all
+    else
+  	 Order.includes(:item).where(item_id: self.items.pluck(:id))
+    end
   end
 
   def purchases
-  	Purchase.where(id: self.orders.pluck(:purchase_id).uniq)
+    if self.master
+      Purchase.all
+    else
+  	 Purchase.where(id: self.orders.pluck(:purchase_id).uniq)
+    end
   end
 
   def cancels
-  	Cancel.where(order_id: self.orders.pluck(:id))
+    if self.master
+      Cancel.all
+    else
+  	 Cancel.where(order_id: self.orders.pluck(:id))
+    end
   end
 
   def returns
-  	Return.where(order_id: self.orders.pluck(:id))
+    if self.master
+      Return.all
+    else
+  	 Return.where(order_id: self.orders.pluck(:id))
+    end
   end
 
   def changes
-  	Change.where(order_id: self.orders.pluck(:id))
+    if self.master
+      Change.all
+    else
+  	 Change.where(order_id: self.orders.pluck(:id))
+    end
   end
 
 end
