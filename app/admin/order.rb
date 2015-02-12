@@ -184,7 +184,7 @@ ActiveAdmin.register Order do
   ################ view #######################
 
   filter :id
-  # filter :purchase_reference_number, :as => :string_range, :label => "주문번호"
+  filter :purchase_reference_number, :as => :string_range, :label => "주문번호"
   filter :purchase_reference_number_contains, :as => :string, :label => "주문번호"
   filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name, :label => "주문상태"
   filter :purchase_approval_datetime, :as => :date_range, :label => "결제시간"
