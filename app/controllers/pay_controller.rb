@@ -79,20 +79,27 @@ class PayController < ApplicationController
       purchase.state = current_user.state
     purchase.save
 
-    @orders = current_user.orders
+    @purchase = current_user.purchase
+    @orders = OrderGroup.grouping current_user.orders
     @baskets = current_user.baskets.valid
+    
+    # 총 상품 비용
     @all_price = 0
     @orders.each do |o|
-      @all_price += o.quantity * o.total_price
+      # @all_price += o.quantity * o.total_price
+      @all_price += o.product_price
     end
+    # 총 배송 비용
+    @delivery_fee = (@orders.map {|o| o.get_delivery_fee }).inject(:+)
+
     items = Array.new
-    @orders.each do |o|
+    current_user.orders do |o|
       items << o.item
     end
+
     @product_cds = items.map{|p| p.id}.join("||")
     @product_nms = items.map{|p| p.display_name}.join("||")
-    # @delivery_fee = purchase.get_delivery_fee
-    @delivery_fee = (@orders.map {|o| o.get_delivery_fee }).inject(:+)
+    
   end
 
   def generate_ref_num

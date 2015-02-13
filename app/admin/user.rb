@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-    menu :priority => 6
+    menu :priority => 8
   config.batch_actions = false
 
   index do

@@ -4,6 +4,7 @@
       <th class="text-center"><%= t('order_confirm_product_name') %></th>
       <th class="text-center"><%= t('order_confirm_price') %></th>
       <th class="text-center"><%= t('order_confirm_quantity') %></th>
+      <th class="text-center"><%= t('mypage_carry') %></th>
       <th class="text-center"><%= t('shipping') %></th>
       <th class="text-center"><%= t('order_confirm_sum') %></th>
       <th class="text-center">-</th>
@@ -18,39 +19,44 @@
         </td>
       </tr>
     <% else %>
-      <% @orders.each_with_index do |o, idx|%>
-      <tr>
-        <% item = o.item %>
-        <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
-        <td class="text-center display_link">
-          <a href="/item/<%= item.path-%>"><%= item.display_name %><%= periodic -%></a><br>
-          <% if o.order_option_items.size > 0 %>
-            [<%= t('order_option') -%>] <%= option_string(o) %>
-          <% end %>
-        </td>
-        <td class="text-center"><%= Order.change_currency_pretty(o.total_price) %></td>
-        <td class="text-center">
-         <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
-       &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
-         <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="bt btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
-        </td>
-        <td class="text-center">
-          <div class="dropdown">
-            <span type="button" class="badge badge-default" id="shipping_dropdown_<%=idx%>" data-toggle="dropdown" aria-expanded="true">
-              <%= t(o.shipping.name) %><span class="caret"></span>
-            </span>
-            <br>
-            <span><%= Order.change_currency(o.get_delivery_fee) %></span>
-            <ul class="dropdown-menu shipping_menu" area-labelledby="shipping_dropdown_<%=idx%>" style="margin-top:-14px;">
-              <% o.item.shippings_in(User.current.country).each do |s| %>
-                <li><a tabindex="-1" href="#" onclick="reorder_shipping(<%=o.id%>, <%=s.id%>);"><%= t(s.name) %></a></li>
+      <% @orders.each_with_index do |order_group, idx|%>
+        <% cnt = order_group.orders.length %>
+        <% order_group.orders.each_with_index do |o, sub_idx| %>
+          <tr>
+            <% item = o.item %>
+            <% periodic = if item.periodic then " (" + t("periodoc_#{o.order_periodic}month") + ")" else "" end %>
+            <td class="text-center display_link">
+              <a href="/item/<%= item.path-%>"><%= item.display_name %><%= periodic -%></a><br>
+              <% if o.order_option_items.size > 0 %>
+                [<%= t('order_option') -%>] <%= option_string(o) %>
               <% end %>
-            </ul>
-          </div>
-        </td>
-        <td class="text-center"><%= Order.change_currency_pretty(o.total_price * o.quantity + o.get_delivery_fee) %></td>
-        <td class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></td>
-      </tr>
+            </td>
+            <td class="text-center"><%= Order.change_currency_pretty(o.total_price) %></td>
+            <td style="min-width:100px" class="text-center">
+             <a href="#" onclick="reorder_quantity('minus', <%= o.id -%>);return false;"><button type="button" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></a>
+           &nbsp;&nbsp;<%= o.quantity %>&nbsp;&nbsp;
+             <a href="#" onclick="reorder_quantity('plus', <%= o.id -%>);return false;"><button type="button" class="bt btn-xs btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a>
+            </td>
+            <td class="text-center">
+              <div class="dropdown">
+                <p style="max-width:150px;white-space:normal" class="badge badge-default" id="shipping_dropdown_<%=idx%>" data-toggle="dropdown" aria-expanded="true">
+                  <%= t(o.shipping.name) %><span class="caret"></span>
+                </p>
+                <ul class="dropdown-menu shipping_menu" area-labelledby="shipping_dropdown_<%=idx%>" style="margin-top:-14px;">
+                  <% o.item.shippings_in(User.current.country).each do |s| %>
+                    <li><a tabindex="-1" href="#" onclick="reorder_shipping(<%=o.id%>, <%=s.id%>);"><%= t(s.name) %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            </td>
+            <%# group info %>
+            <% if sub_idx == 0 %>
+              <td rowspan="<%=cnt%>" class="text-center"><%= Order.change_currency_pretty(order_group.get_delivery_fee) %></td>
+              <td rowspan="<%=cnt%>" class="text-center"><%= Order.change_currency_pretty(order_group.final_order_price) %></td>
+            <% end %>
+            <td class="text-center delete_link"><a href="#" onclick="move_to_basket(<%=item.id%>);"><%= t('order_confirm_cancel') %></a></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>

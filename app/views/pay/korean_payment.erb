@@ -13,8 +13,8 @@
         <% else %>
           <%= form_tag("/pay/billing", name: "fm", method: "post") do %>
           <% callback_url = request.protocol + request.host_with_port + "/pay/callback"%>
-          <input type="hidden" name="purchase_id" value="<%=@orders.first.purchase.id%>">
-          <input type="hidden" name="allat_order_no" value="<%=@orders.first.purchase.reference_number%>">
+          <input type="hidden" name="purchase_id" value="<%=@purchase.id%>">
+          <input type="hidden" name="allat_order_no" value="<%=@purchase.reference_number%>">
           <input type="hidden" name="allat_product_cd" value="<%=@product_cds%>">
           <input type="hidden" name="allat_product_nm" value="<%=@product_nms%>">
           <input type="hidden" name="allat_recp_nm" value="<%=current_user.name%>">

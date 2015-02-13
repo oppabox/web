@@ -47,6 +47,12 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 				else
 					true
 				end
+			when normalized(GroupShipping)
+				if action == :update || action == :destroy
+					user.group_shippings.include?(subject)
+				else
+					true
+				end
 			when ActiveAdmin::Page
 				subject.name == "Dashboard"
 			when normalized(User), normalized(AdminUser), ActiveAdmin::Comment

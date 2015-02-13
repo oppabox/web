@@ -5,7 +5,7 @@
 				<div class="form-group">
 					<%= form.label :box, "박스 선택", { class: 'col-sm-2 control-label' } %>
 					<div class="col-sm-9">
-						<%= form.select :box, Box.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: true, :selected => params['box_selected'] }, { class: 'form-control' } %>
+						<%= form.select :box, current_admin_user.boxes.select(:display_name, :id).distinct.pluck(:display_name, :id), { include_blank: true, :selected => params['box_selected'] }, { class: 'form-control' } %>
 					</div>
 				</div>
 

@@ -1,0 +1,90 @@
+<div class="container">
+	<div class="well">
+		<%= form_for @group_shipping, url: @group_shipping.new_record? ? '/admin/group_shippings' : admin_group_shipping_path(@group_shipping), html: {class: "form-horizontal" } do |f| %>
+
+			<% if @group_shipping.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@group_shipping.errors.count, "error") %> prohibited
+            this group_shipping from being saved:
+          </h2>
+          <ul>
+            <% @group_shipping.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+	    <div class="form-group">
+	      <%= f.label :name, "그룹 이름", { class: 'col-sm-2 control-label' } %>
+	      <div class="col-sm-9">
+	        <%= f.text_field :name, { class: "form-control", value: @group_shipping.name } %>
+	      </div>
+	    </div>
+
+	    <div class="form-group">
+	      <%= f.label :items, "상품", { class: 'col-sm-2 control-label' } %>
+	      <div class="col-sm-4">
+	      	<% collection = current_admin_user.items.collect { |i| [i.display_name, i.id] } %>
+	      	<% size = collection.count <= 5 ? 5 : collection.count %>
+	        <%= select nil, nil, collection, {}, { class: "form-control", multiple: true, id: "select_list", size: size } %>
+	      </div>
+	      <div class="col-sm-1">
+	      	<p><a id="item_add" class="btn btn-default"><i class="fa fa-arrow-right"></i></a></p>
+	      	<br>
+	      	<p><a id="item_remove" class="btn btn-default"><i class="fa fa-arrow-left"></i></a></p>
+	      </div>
+	      <div class="col-sm-4">
+	      	<% collection = @group_shipping.items.collect { |i| [i.display_name, i.id] } %>
+	      	<% size = collection.count <= 5 ? 5 : collection.count %>
+	        <%= f.select :items, collection, {}, { class: "form-control", multiple: true, size: size } %>
+	      </div>
+	    </div>
+
+      <%= f.submit '수정', { type: 'reset', class: 'col-sm-offset-2 btn btn-primary', id: 'form_submit' } %>
+		<% end %>
+	</div>
+</div>
+
+<script>
+var resize = function () {
+	var size = $("#group_shipping_items option");
+	size = (size <= 5) ? 5 : size;
+	$("#group_shipping_items").attr("size", size);
+};
+
+$(document).ready(function() {
+	$("#form_submit").click(function (e){
+		e.preventDefault();
+		$.each($("#group_shipping_items option"), function (idx, val){
+			$(val).attr("selected", "");
+		});
+    $('form').submit();
+	});
+
+	$("#item_add").click(function(){
+		var obj = $("#select_list option:selected");
+
+		if (obj.length > 0) {
+			var value = obj.val();
+			var text = obj.text();
+			var query = obj.clone();;
+			
+			// not allowed duplication
+			var dup = false;
+			$.each($("#group_shipping_items option"), function (idx, val){
+				if ($(val).val() == value)
+					dup = true
+			});
+
+			if (!dup)
+				$("#group_shipping_items").append(query);
+			}
+		});
+
+		$("#item_remove").click(function(){
+			$("#group_shipping_items option:selected").remove();
+		});
+})
+</script>

@@ -5,6 +5,7 @@ class AdminUser < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :boxes, :dependent => :destroy
+  has_many :group_shippings, :dependent => :destroy
 
   def boxes
     if self.master
@@ -59,6 +60,14 @@ class AdminUser < ActiveRecord::Base
       Change.all
     else
   	 Change.where(order_id: self.orders.pluck(:id))
+    end
+  end
+
+  def group_shippings
+    if self.master
+      GroupShipping.all
+    else
+      GroupShipping.where(admin_user_id: self.id)
     end
   end
 

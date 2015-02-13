@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to  :box
+  belongs_to  :group_shipping
   has_many    :options, :dependent => :destroy
   has_many    :item_images, :dependent => :destroy
   has_many    :item_names, :dependent => :destroy

@@ -26,7 +26,6 @@ class Order < ActiveRecord::Base
   scope :done,                -> { paid.where(status: STATUS_DONE) }
   scope :cancelled,           -> { where(status: STATUS_CANCEL) }
 
-
   STATUS_ORDERING = 0
   STATUS_PREPARING_ORDER = 1
   STATUS_PREPARING_DELIVERY = 2
