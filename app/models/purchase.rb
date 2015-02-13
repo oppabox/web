@@ -61,9 +61,9 @@ class Purchase < ActiveRecord::Base
 
   def all_krw_price
     at_amt = 0
-    self.orders.valid.each do |o|
-      at_amt += o.total_price.to_i * o.quantity.to_i
-      at_amt += o.get_delivery_fee
+
+    OrderGroup.grouping(self.orders.valid).each do |order_group|
+      at_amt += order_group.final_order_price
     end
     return at_amt
   end
