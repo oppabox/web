@@ -17,28 +17,37 @@
           </tr>
         </thead>
         <tbody>
-          <% @purchase.orders.valid.each_with_index do |order, index|%>
-            <tr class="list_cell">
+          <% OrderGroup.grouping(@purchase.orders.valid).each_with_index do |order_group, index|%>
+            <% cnt = order_group.orders.length %>
+            <% order_group.orders.each_with_index do |order, sub_idx| %>
+              <tr class="list_cell">
 
-              <% if index == 0 %>
-                <td rowspan="<%=@purchase.orders.valid.count%>" class="text-center"><%=order.purchase.reference_number%></td>
-              <% end %>
+                <% if index == 0 and sub_idx == 0 %>
+                  <td rowspan="<%=@purchase.orders.valid.count%>" class="text-center"><%=@purchase.reference_number%></td>
+                <% end %>
 
-              <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
-              <% options = Array.new(1){periodic} %>
-              <% order.order_option_items.each do |x| %>
-                <% options << x.option_item.name if  x.option.option_type == 1 %>
-                <% options << x.option_text if  x.option.option_type == 2 %>
-              <% end %>
-              <% options.compact! %>
+                <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
+                <% options = Array.new(1){periodic} %>
+                <% order.order_option_items.each do |x| %>
+                  <% options << x.option_item.name if  x.option.option_type == 1 %>
+                  <% options << x.option_text if  x.option.option_type == 2 %>
+                <% end %>
+                <% options.compact! %>
 
-              <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
-              <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
-              <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
-              <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
-              <td class="text-center"><%= Order.change_currency_pretty(order.get_delivery_fee) %></td>
-              <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity + order.get_delivery_fee) %></td>
-            </tr>
+                <td><a href="/item/<%=order.item.path%>"><%= order.item.display_name %></a>&nbsp;<span><%= options.join(", ") %></span></td>
+                <td class="text-center"><%= Order.change_currency_pretty(order.total_price) %></td>
+                <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
+                <td class="text-center"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
+                <% if sub_idx == 0 %>
+                  <td rowspan="<%=cnt%>" class="text-center">
+                    <%= Order.change_currency_pretty(order_group.get_delivery_fee) %>
+                  </td>
+                  <td rowspan="<%=cnt%>" class="text-center">
+                    <%= Order.change_currency_pretty(order_group.final_order_price) %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
 
           <% address_full = Array.new %>
