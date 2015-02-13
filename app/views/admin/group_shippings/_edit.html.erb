@@ -49,7 +49,7 @@
 
 <script>
 var resize = function () {
-	var size = $("#group_shipping_items option");
+	var size = $("#group_shipping_items option").length;
 	size = (size <= 5) ? 5 : size;
 	$("#group_shipping_items").attr("size", size);
 };
@@ -80,11 +80,13 @@ $(document).ready(function() {
 
 			if (!dup)
 				$("#group_shipping_items").append(query);
+				resize();
 			}
 		});
 
 		$("#item_remove").click(function(){
 			$("#group_shipping_items option:selected").remove();
+			resize();
 		});
 })
 </script>
