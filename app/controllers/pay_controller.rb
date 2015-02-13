@@ -93,7 +93,7 @@ class PayController < ApplicationController
     @delivery_fee = (@orders.map {|o| o.get_delivery_fee }).inject(:+)
 
     items = Array.new
-    current_user.orders do |o|
+    current_user.orders.each do |o|
       items << o.item
     end
 
