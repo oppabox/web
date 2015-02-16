@@ -272,7 +272,6 @@ ActiveAdmin.register Purchase do
     end
     column "전화번호", :phonenumber
     column "결제금액", :amt
-    # column "Result", :pay_type
     column "결제수단" do |p|
       Purchase::PAY_OPTIONS.invert[p.pay_option]
     end
