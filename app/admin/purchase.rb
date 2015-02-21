@@ -396,7 +396,9 @@ ActiveAdmin.register Purchase do
               og.each do |order_group|
                 cnt = 0
                 order_group.orders.each do |order|
-                  cnt += order.order_option_items.count
+                  tmp = order.order_option_items.count
+                  tmp = tmp == 0 ? 1 : tmp
+                  cnt += tmp
                 end
                 order_group.orders.each_with_index do |order, idx|
                   sub_cnt = order.order_option_items.count
