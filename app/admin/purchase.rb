@@ -241,40 +241,42 @@ ActiveAdmin.register Purchase do
       status_string = Purchase::STATUSES.invert.keys
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
-    column "주문 내역" do |p|
-      pv = p.orders.valid
-      pv.each_with_index do |o, i|
-        para o.item.display_name
-        unless i == pv.count - 1
-          hr
+    column "주문 내역(수량/무게/배송)" do |p|
+      og = OrderGroup.grouping(p.orders.valid)
+      table do
+        og.each_with_index do |order_group, index|
+          cnt = order_group.orders.length
+          order_group.orders.each_with_index do |order, sub_idx|
+            tr do 
+              td order.item.display_name
+              td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
+              if sub_idx == 0
+                td rowspan: cnt do 
+                  t(order.shipping.name) 
+                end
+              end
+            end
+          end
         end
       end
     end
-    column "수량 (무게)" do |p|
-      pv = p.orders.valid
-      pv.each_with_index do |o, i|
-        para o.quantity.to_s + ' (' + o.item.weight.to_s + ')'
-        unless i == pv.count - 1
-          hr
-        end
-      end
-    end
-    column "수취인", :recipient
     column "구매자 정보" do |p|
       para p.user.name + ' (' + p.user.country + ')'
       para p.user.email
+      para p.phonenumber
     end
-    
-    column '주소 / 도시 / 우편번호' do |p|
+    column '수취인 / 주소 / 도시 / 우편번호' do |p|
+      para p.recipient
       para p.address
       para p.city
       para p.postcode
     end
-    column "전화번호", :phonenumber
-    column "결제금액", :amt
-    column "결제수단" do |p|
-      Purchase::PAY_OPTIONS.invert[p.pay_option]
-    end
+    column "결제금액(결제수단)" do |p|
+      amt = p.amt.nil? ? "" : p.amt
+      opt = Purchase::PAY_OPTIONS.invert[p.pay_option]
+      opt = opt.nil? ? "" : opt
+      para amt + " (" + opt + ")"
+   end
     column "결제시간" do |p|
       dt = p.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : p.approval_datetime
       span dt.strftime('%F')
@@ -408,6 +410,5 @@ ActiveAdmin.register Purchase do
   #   permitted << :other if resource.something?
   #   permitted
   # end
-
-
+  
 end

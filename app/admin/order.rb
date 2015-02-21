@@ -188,6 +188,7 @@ ActiveAdmin.register Order do
   filter :purchase_reference_number_contains, :as => :string, :label => "주문번호"
   filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name, :label => "주문상태"
   filter :purchase_approval_datetime, :as => :date_range, :label => "결제시간"
+  filter :shipping_id, :as => :select, :collection => proc {Shipping.all.map { |s| [t(s.name), s.id] }}, :label => "택배"
   filter :purchase_recipient_contains, :as => :string, :label => "수취인"
   filter :item, :as => :select, :label => "상품"
   filter :item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.pluck(:display_name, :id) }, :label => "박스"
@@ -222,6 +223,9 @@ ActiveAdmin.register Order do
     column "구매자 정보" do |o|
       para o.purchase.user.name + ' (' + o.purchase.user.country + ')'
       para o.purchase.user.email
+    end
+    column "택배" do |o|
+      t(o.shipping.name)
     end
     column "수취인" do |o|
       o.purchase.recipient
