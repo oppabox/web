@@ -403,7 +403,7 @@ ActiveAdmin.register Purchase do
                   if sub_cnt == 0
                     # no option
                     tr do
-                      td t(order.shipping.name)
+                      td rowspan: cnt do t(order.shipping.name) end
                       td order.id
                       td do
                         status_string = Order::STATUSES.invert.keys  
