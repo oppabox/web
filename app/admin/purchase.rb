@@ -427,11 +427,11 @@ ActiveAdmin.register Purchase do
                             target = ''
                         end
                         unless target == ''
-                          para link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                          span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
                         end
                         
                         unless order.status == Order::STATUS_CANCEL
-                          para link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                          span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
                         end
                       end
                     end
