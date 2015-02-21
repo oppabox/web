@@ -1,11 +1,15 @@
-<%= form_for :options, url: "/admin/orders/edit_options", html: {method: "patch"} do |f| %>
+<%= form_for :options, url: "/admin/orders/edit_options", html: { class: "form-inline", method: "patch"} do |f| %>
 	<%= f.hidden_field :id, :value => id %>
 	<%= f.hidden_field :type, :value => type %>
 	<%= f.hidden_field :target, :value => target %>
-	<% if type == "text" %>
-		<%= f.text_field :details, :value => data %>
-	<% else %>
-		<%= f.select :details, options_for_select(collection, data) %>
-	<% end %>
-	<%= f.submit "Edit" %>
+	<td class="form-group">
+		<% if type == "text" %>
+			<%= f.text_field :details, { :value => data, :style => "width:inherit", :class => "form-control" } %>
+		<% else %>
+			<%= f.select :details, options_for_select(collection, data), {}, { :class => "form-control" } %>
+		<% end %>
+	</div>
+	<td>
+	<%= f.submit "수정" %>
+	</td>
 <% end %>

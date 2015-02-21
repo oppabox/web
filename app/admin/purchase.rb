@@ -2,6 +2,7 @@ ActiveAdmin.register Purchase do
   menu :priority => 2
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
+  order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
   scope proc{ "전체" }, :valid, default: true
   scope proc{ I18n.t('purchase_paid') }, :paid
@@ -223,7 +224,8 @@ ActiveAdmin.register Purchase do
   ################## filter ##########################
   filter :id
   filter :reference_number_contains, :label => "주문번호"
-  filter :status, :as => :select, :collection => Purchase::STATUSES.invert, :label_method => :status_name, :label => "결제상태"
+  filter :status, :as => :select, :collection => proc { Purchase::STATUSES.invert.map { |a,b| [t(a),b] } }, :label => "결제상태"
+  filter :orders_status, :as => :select, :collection => proc { Order::STATUSES.invert.map { |a,b| [t(a),b] } }, :label => "주문상태"
   filter :approval_datetime, :label => "구매일자"
   filter :recipient_contains, :label => "수취인"
   filter :user_email_contains, :as => :string, :label => "Email"
@@ -241,14 +243,33 @@ ActiveAdmin.register Purchase do
       status_string = Purchase::STATUSES.invert.keys
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
-    column "주문 내역(수량/무게/배송)" do |p|
+    column "주문 내역(제품/수량(무게)/배송)" do |p|
       og = OrderGroup.grouping(p.orders.valid)
       table do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
           order_group.orders.each_with_index do |order, sub_idx|
+            # making option text
+            periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end
+            options = Array.new(1){periodic}
+            order.order_option_items.each do |x|
+              options << x.option_item.name if  x.option.option_type == 1
+              options << x.option_text if  x.option.option_type == 2
+            end
+            options.compact!
+            options = options.join(", ")
+            # render
             tr do 
-              td order.item.display_name
+              td do
+                t(Order::STATUSES.invert.keys[order.status])
+              end
+              td do
+                span order.item.display_name
+                unless options == ""
+                  br
+                  small "[" + options + "]"
+                end
+              end
               td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
               if sub_idx == 0
                 td rowspan: cnt do 
@@ -303,7 +324,7 @@ ActiveAdmin.register Purchase do
   show do
     columns do
 
-      column do
+      column span: 2 do
         attributes_table do
           row :id
           row "주문번호" do |p|
@@ -358,38 +379,109 @@ ActiveAdmin.register Purchase do
           active_admin_comments
         end
       end
-
-      column do
+      column span: 3 do
         panel "Order Details" do
           table class: 'table table-bordered option_table' do
             thead do
+              th '배송'
               th 'ID'
-              th 'name'
-              th 'quantity'
-              th 'period'
-              th 'option_title'
-              th 'option_details'
+              th '상태'
+              th '상품명'
+              th '수량(무게)'
+              th class: "active", colspan: 3 do '옵션' end
+              th ''
             end
             tbody do
-              Purchase.find(params[:id]).orders.valid.each do |o|
-                  o.order_option_items.each_with_index do |ooi, idx|
+              og = OrderGroup.grouping(resource.orders.valid)
+              og.each do |order_group|
+                cnt = 0
+                order_group.orders.each do |order|
+                  cnt += order.order_option_items.count
+                end
+                order_group.orders.each_with_index do |order, idx|
+                  sub_cnt = order.order_option_items.count
+                  if sub_cnt == 0
+                    # no option
                     tr do
-                      if idx == 0
-                        td rowspan: o.order_option_items.count do o.id end
-                        td rowspan: o.order_option_items.count do o.item.display_name end
-                        td rowspan: o.order_option_items.count do o.quantity end
-                        td rowspan: o.order_option_items.count do o.order_periodic end
+                      td t(order.shipping.name)
+                      td order.id
+                      td do
+                        status_string = Order::STATUSES.invert.keys  
+                        status_tag( t(status_string[order.status]), order_status_css[order.status] )
+                      end
+                      td order.item.display_name
+                      td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
+                      td colspan: 3
+                      # actions
+                      td do
+                        case order.status
+                          when Order::STATUS_PREPARING_ORDER
+                            target = Order::STATUS_PREPARING_DELIVERY
+                          when Order::STATUS_PREPARING_DELIVERY
+                            target = Order::STATUS_ON_DELIVERY
+                          when Order::STATUS_ON_DELIVERY
+                            target = Order::STATUS_DONE
+                          else # ordering, deleted, done, canceled
+                            target = ''
+                        end
+                        unless target == ''
+                          para link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                        end
+                        
+                        unless order.status == Order::STATUS_CANCEL
+                          para link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                        end
+                      end
+                    end
+                  else
+                    order.order_option_items.each_with_index do |ooi, sub_idx|
+                      tr do
+                        if idx == 0 and sub_idx == 0
+                          td rowspan: cnt do t(order.shipping.name) end
+                        end
+                        if sub_idx == 0
+                          td rowspan: sub_cnt do order.id end
+                          td rowspan: sub_cnt do
+                            status_string = Order::STATUSES.invert.keys  
+                            status_tag( t(status_string[order.status]), order_status_css[order.status] )
+                          end
+                          td rowspan: sub_cnt do order.item.display_name end
+                          td rowspan: sub_cnt do order.quantity.to_s + ' (' + order.item.weight.to_s + ')' end
+                        end
                         td ooi.option.title
-                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
-                      else
-                        td ooi.option.title
-                        td do ooi.option_item.nil? ? '' : ooi.option_item.name end
+                        if ooi.option_item_id == -1
+                          render :partial => "/admin/orders/edit_options", :locals => { :target => "/admin/purchases/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
+                        else
+                          col = ooi.option.option_items.pluck(:name, :id)
+                          render :partial => "/admin/orders/edit_options", :locals => { :target => "/admin/purchases/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
+                        end
+                        # actions
+                        td do
+                          case order.status
+                            when Order::STATUS_PREPARING_ORDER
+                              target = Order::STATUS_PREPARING_DELIVERY
+                            when Order::STATUS_PREPARING_DELIVERY
+                              target = Order::STATUS_ON_DELIVERY
+                            when Order::STATUS_ON_DELIVERY
+                              target = Order::STATUS_DONE
+                            else # ordering, deleted, done, canceled
+                              target = ''
+                          end
+                          unless target == ''
+                            span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                          end
+                          
+                          unless order.status == Order::STATUS_CANCEL
+                            span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                          end
+                        end
                       end
                     end
                   end
                 end
               end
             end
+          end
 
         end
       end
@@ -410,5 +502,5 @@ ActiveAdmin.register Purchase do
   #   permitted << :other if resource.something?
   #   permitted
   # end
-  
+
 end

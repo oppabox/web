@@ -186,9 +186,9 @@ ActiveAdmin.register Order do
   filter :id
   filter :purchase_reference_number, :as => :string_range, :label => "주문번호"
   filter :purchase_reference_number_contains, :as => :string, :label => "주문번호"
-  filter :status, :as => :select, :collection => Order::STATUSES.invert, :label_method => :status_name, :label => "주문상태"
+  filter :status, :as => :select, :collection => proc { Order::STATUSES.invert.map { |a,b| [t(a),b] } }, :label_method => :status_name, :label => "주문상태"
   filter :purchase_approval_datetime, :as => :date_range, :label => "결제시간"
-  filter :shipping_id, :as => :select, :collection => proc {Shipping.all.map { |s| [t(s.name), s.id] }}, :label => "택배"
+  filter :shipping_id, :as => :select, :collection => proc { Shipping.all.map { |s| [t(s.name), s.id] } }, :label => "택배"
   filter :purchase_recipient_contains, :as => :string, :label => "수취인"
   filter :item, :as => :select, :label => "상품"
   filter :item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.pluck(:display_name, :id) }, :label => "박스"
@@ -330,15 +330,23 @@ ActiveAdmin.register Order do
         end
       end
       column do
-        panel "Order Details" do
-          table_for Order.find(params[:id]).order_option_items do |ooi|
-            column("Option_Title") { |ooi| ooi.option.title } 
-            column("Option_Details") do |ooi|
-              if ooi.option_item_id == -1
-                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
-              else
-                col = ooi.option.option_items.pluck(:name, :id)
-                render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
+        panel "Option Details" do
+          table class: 'table table-bordered option_table' do
+            thead do
+              th "옵션명"
+              th colspan: 2 do "옵션" end
+            end
+            tbody do
+              resource.order_option_items.each do |ooi|
+                tr do 
+                  td ooi.option.title
+                  if ooi.option_item_id == -1
+                    render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "text", :data => ooi.option_text }
+                  else
+                    col = ooi.option.option_items.pluck(:name, :id)
+                    render :partial => "edit_options", :locals => { :target => "/admin/orders/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
+                  end
+                end
               end
             end
           end
