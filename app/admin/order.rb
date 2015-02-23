@@ -24,7 +24,7 @@ ActiveAdmin.register Order do
 
   controller do
     def scoped_collection
-      super.includes(:purchase)
+      super.distinct.includes(:purchase)
     end
 
     # CSV 출력시에만 "-" 입력

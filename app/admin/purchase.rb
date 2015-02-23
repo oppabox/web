@@ -526,4 +526,10 @@ ActiveAdmin.register Purchase do
   #   permitted
   # end
 
+  controller do
+    def scoped_collection
+      super.distinct
+    end
+  end
+
 end
