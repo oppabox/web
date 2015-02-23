@@ -1,5 +1,5 @@
 ActiveAdmin.register Purchase do
-  menu :priority => 2
+  menu label: "구매 내역", :priority => 2
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
@@ -336,6 +336,9 @@ ActiveAdmin.register Purchase do
   filter :user_country_eq, :as => :string, :label => "국가"
   filter :user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
   filter :user_phonenumber_contains, :as => :string, :label => "전화번호"
+  filter :orders_item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.where(children: nil).pluck(:display_name, :id) }, :label => "박스"
+  filter :orders_item_id, :as => :select, :collection => proc { current_admin_user.items.map { |i| [i.display_name, i.id] } }, :label => "상품"
+  filter :orders_order_periodic, :as => :numeric, :label => "정기구매"
 
   ################## view ##########################
   index do 
@@ -348,13 +351,13 @@ ActiveAdmin.register Purchase do
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
     column "주문 내역(제품/수량(무게)/배송)" do |p|
-      og = OrderGroup.grouping(p.orders.valid)
+      og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
       table class: "nested_table" do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
           order_group.orders.each_with_index do |order, sub_idx|
             # making option text
-            periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end
+            periodic = if order.item.periodic or order.order_periodic > 1 then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end
             options = Array.new(1){periodic}
             order.order_option_items.each do |x|
               options << x.option_item.name if  x.option.option_type == 1
@@ -442,9 +445,6 @@ ActiveAdmin.register Purchase do
           row "주문내역" do |p|
             p.orders.valid.map{|o| o.item.display_name}.join(" / ")
           end
-          row "수량 (무게)" do |p|
-            p.orders.valid.map{|o| o.quantity.to_s + ' (' + o.item.weight.to_s + ')' }.join(" / ")
-          end
           row "수취인" do |p|
             p.recipient
           end
@@ -490,7 +490,7 @@ ActiveAdmin.register Purchase do
               th ''
             end
             tbody do
-              og = OrderGroup.grouping(resource.orders.valid)
+              og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
               og.each do |order_group|
                 cnt = 0
                 order_group.orders.each do |order|
@@ -513,7 +513,13 @@ ActiveAdmin.register Purchase do
                         status_string = Order::STATUSES.invert.keys  
                         status_tag( t(status_string[order.status]), order_status_css[order.status] )
                       end
-                      td order.item.display_name
+                      td do
+                        span order.item.display_name
+                        if order.item.periodic or order.order_periodic > 1
+                          br
+                          span "(" + t("periodoc_#{order.order_periodic}month") + ")"
+                        end
+                      end
                       td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
                       td colspan: 3
                       # actions
@@ -529,11 +535,11 @@ ActiveAdmin.register Purchase do
                             target = ''
                         end
                         unless target == ''
-                          span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                          span link_to "진행", { :controller => "admin/orders", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
                         end
                         
                         unless order.status == Order::STATUS_CANCEL
-                          span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                          span link_to "취소", { :controller => "admin/orders", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
                         end
                       end
                     end
@@ -564,23 +570,25 @@ ActiveAdmin.register Purchase do
                           render :partial => "/admin/orders/edit_options", :locals => { :target => "/admin/purchases/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
                         end
                         # actions
-                        td do
-                          case order.status
-                            when Order::STATUS_PREPARING_ORDER
-                              target = Order::STATUS_PREPARING_DELIVERY
-                            when Order::STATUS_PREPARING_DELIVERY
-                              target = Order::STATUS_ON_DELIVERY
-                            when Order::STATUS_ON_DELIVERY
-                              target = Order::STATUS_DONE
-                            else # ordering, deleted, done, canceled
-                              target = ''
-                          end
-                          unless target == ''
-                            span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
-                          end
-                          
-                          unless order.status == Order::STATUS_CANCEL
-                            span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                        if sub_idx == 0
+                          td rowspan: sub_cnt do
+                            case order.status
+                              when Order::STATUS_PREPARING_ORDER
+                                target = Order::STATUS_PREPARING_DELIVERY
+                              when Order::STATUS_PREPARING_DELIVERY
+                                target = Order::STATUS_ON_DELIVERY
+                              when Order::STATUS_ON_DELIVERY
+                                target = Order::STATUS_DONE
+                              else # ordering, deleted, done, canceled
+                                target = ''
+                            end
+                            unless target == ''
+                              span link_to "진행", { :controller => "admin/orders", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                            end
+                            
+                            unless order.status == Order::STATUS_CANCEL
+                              span link_to "취소", { :controller => "admin/orders", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                            end
                           end
                         end
                       end
@@ -610,4 +618,9 @@ ActiveAdmin.register Purchase do
   #   permitted << :other if resource.something?
   #   permitted
   # end
+  controller do
+    def scoped_collection
+      super.distinct
+    end
+  end
 end

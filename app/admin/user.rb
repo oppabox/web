@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-    menu :priority => 8
+  menu label: "유저 정보", :priority => 8
   config.batch_actions = false
 
   index do

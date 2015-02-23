@@ -1,5 +1,5 @@
 ActiveAdmin.register Box do
-	menu :priority => 5
+	menu label: "박스", :priority => 5
 	config.batch_actions = false
 
 	scope proc{''}, :top, default: true, show_count: false
