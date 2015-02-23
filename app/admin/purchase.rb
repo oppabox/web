@@ -4,6 +4,9 @@ ActiveAdmin.register Purchase do
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
+  # Convert to Euc-kr
+  require 'iconv'
+
   scope proc{ "전체" }, :valid, default: true
   scope proc{ I18n.t('purchase_paid') }, :paid
   scope proc{ I18n.t('purchase_pending') }, :pending
@@ -228,10 +231,97 @@ ActiveAdmin.register Purchase do
     send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - UPS_Shipinfo_BL.csv"
   end
 
+  ################## download inv #####################
+  collection_action :download_inv do
+    csv_builder = ActiveAdmin::CSVBuilder.new
+ 
+     # set columns
+     csv_builder.column("Connector") { |o| order.purchase.reference_number }
+     csv_builder.column("INVCurrency") { |o| "USD" }
+     csv_builder.column("INVDeclaration") { |o| "invoice" }
+     csv_builder.column("INVReasonforExport") { |o| "Sample" }
+     csv_builder.column("INVDescriptionofGoods") { |o| order.item.display_name }
+     csv_builder.column("INVHsCode") { |o| "" }
+     csv_builder.column("INVOriginCountry") { |o| "KR" }
+     csv_builder.column("INVQuantity") { |o| order.quantity }
+     csv_builder.column("INVUnitofMeasure") { |o| "EA" }
+     csv_builder.column("INVUnitPrice") { |o| order.item.sale_price }
+     csv_builder.column("INVAddComment") { |o| "" }
+     csv_builder.column("INVFreightCost") { |o| "" }
+     csv_builder.column("INVDiscountCost") { |o| "" }
+     columns = csv_builder.columns
+     # Collect the data in an Array to be transposed.
+     data = []
+     data << columns.map(&:name)
+     collection.each do |resource|
+       data << columns.map do |column|
+         call_method_or_proc_on resource, column.data
+       end
+     end
+
+     csv_output_inv = CSV.generate() do |csv|
+       data.each do |row|
+         csv << row
+       end
+     end
+
+    # render plain: csv_output
+
+    send_data csv_output_inv, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
+  end
+
+  ############ download YAMOOJIN #############
+  collection_action :yamoojin_csv do
+    csv_builder = ActiveAdmin::CSVBuilder.new
+
+    # set columns
+    csv_builder.column("수취고객명") { |o| order.purchase.recipient }
+    csv_builder.column("수취인") { |o| "" }
+    csv_builder.column("수취인 전화") { |o| "" }
+    csv_builder.column("수취인 휴대폰") { |o| order.purchase.phonenumber }
+    csv_builder.column("우편번호") { |o| order.purchase.postcode }
+    csv_builder.column("수취인 주소") { |o| order.purchase.address }
+    csv_builder.column("총중량") { |o| order.item.weight * order.quantity }
+    csv_builder.column("상품명1") { |o| order.item.display_name }
+    csv_builder.column("수량1") { |o| order.quantity }
+    csv_builder.column("물품가격") { |o| order.item.sale_price * order.quantity }
+    csv_builder.column("옵션") { |o| "" }
+    csv_builder.column("메모") { |o| "" }
+
+    columns = csv_builder.columns
+
+    # Collect the data in an Array to be transposed.
+    data = []
+    data << columns.map(&:name)
+    collection.each do |resource|
+      data << columns.map do |column|
+        call_method_or_proc_on resource, column.data
+      end
+    end
+
+    csv_output = CSV.generate() do |csv|
+      data.each do |row|
+        csv << row
+      end
+    end
+
+    # Iconv set
+    conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
+    csv_output = conv.iconv(csv_output)
+
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
+  end
+
   ################## sidebar ##########################
   sidebar :help, :only => :index do
     span do
-      link_to "Download BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
+      link_to "UPS BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
+    end
+    span do
+      link_to "UPS INV", download_inv_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
+    end
+    span do
+      link_to "KR CSV", yamoojin_csv_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
   end
 
@@ -520,5 +610,4 @@ ActiveAdmin.register Purchase do
   #   permitted << :other if resource.something?
   #   permitted
   # end
-
 end

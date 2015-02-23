@@ -133,9 +133,8 @@ ActiveAdmin.register Order do
     csv_builder.column("상품명1") { |o| o.item.display_name }
     csv_builder.column("수량1") { |o| o.quantity }
     csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
+    csv_bulider.column("옵션") { |o| ""}
     csv_builder.column("메모") { |o| "" }
-    csv_builder.column("출력매수") { |o| "" }
-    
 
     columns = csv_builder.columns
 
