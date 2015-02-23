@@ -191,7 +191,7 @@ ActiveAdmin.register Order do
   filter :shipping_id, :as => :select, :collection => proc { Shipping.all.map { |s| [t(s.name), s.id] } }, :label => "택배"
   filter :purchase_recipient_contains, :as => :string, :label => "수취인"
   filter :item, :as => :select, :label => "상품"
-  filter :item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.pluck(:display_name, :id) }, :label => "박스"
+  filter :item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.where(children: nil).pluck(:display_name, :id) }, :label => "박스"
   filter :order_periodic, :label => "정기구매"
   filter :purchase_user_country_eq, :as => :string, :label => "국가"
   filter :purchase_user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
