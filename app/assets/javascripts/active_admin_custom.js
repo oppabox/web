@@ -107,4 +107,14 @@ $(function () {
       }
     });
 	};
+
+	// invoice submit button on purchase show page
+	$("body").on("click", ".invoice_submit", function (e){
+		e.preventDefault();
+		$(this).closest("form").submit();
+	});
+
+	$("body").on("ajax:success", ".invoice_form", function (evt, data, status, xhr){
+		window.location.reload();
+	});
 })

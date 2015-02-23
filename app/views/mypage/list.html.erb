@@ -63,7 +63,14 @@
                   <td class="text-center"><%= number_with_delimiter(order.quantity) %></td>
                   <% if sub_idx == 0 %>
                     <td style="max-width:150px" rowspan="<%=cnt%>" class="text-center">
-                      <span style="white-space:normal" class="badge badge-default"><%= t(order.shipping.name) %></span><br>
+                      <span style="white-space:normal" class="badge badge-default">
+                        <%= t(order.shipping.name) %>
+                      </span>
+                      <%# tooltip for invoice %>
+                      <% unless order.invoice.nil? %>
+                        <i class="fa fa-truck" data-toggle="tooltip" title="<%= order.invoice %>" data-template='<div class="tooltip mypage_tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'></i>
+                      <% end %>
+                      <br>
                       <%= Order.change_currency(order_group.get_delivery_fee) %>
                     </td>
                     <td rowspan="<%=cnt%>" class="text-center">
@@ -120,3 +127,9 @@
     </div>
   </div>
 </div>
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

@@ -104,6 +104,20 @@ ActiveAdmin.register Purchase do
     render :json => check.to_json
   end
 
+  collection_action :edit_invoice, :method => :patch do
+    oids = []
+    params[:invoice]["oids"].split(",").each do |v|
+      oids << v
+    end
+    
+    current_admin_user.orders.where(id: oids).each do |order|
+      order.invoice = params[:invoice]["invoice"]
+      order.save
+    end
+
+    render nothing: true
+  end
+
   ########### download bl #############
   collection_action :download_bl do
     csv_builder = ActiveAdmin::CSVBuilder.new
@@ -245,7 +259,7 @@ ActiveAdmin.register Purchase do
     end
     column "주문 내역(제품/수량(무게)/배송)" do |p|
       og = OrderGroup.grouping(p.orders.valid)
-      table do
+      table class: "nested_table" do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
           order_group.orders.each_with_index do |order, sub_idx|
@@ -370,12 +384,6 @@ ActiveAdmin.register Purchase do
             span dt.strftime('%F')
             span dt.strftime('%R')
           end
-          # minors
-          row :replycd
-          row :replymsg
-          row :order_no
-          row :pay_type
-          row :seq_no
           active_admin_comments
         end
       end
@@ -405,7 +413,11 @@ ActiveAdmin.register Purchase do
                   if sub_cnt == 0
                     # no option
                     tr do
-                      td rowspan: cnt do t(order.shipping.name) end
+                      td rowspan: cnt do
+                       span t(order.shipping.name) 
+                       br
+                       render :partial => "invoice_form", :locals => { :ids => order_group.ids, :order => order }
+                     end
                       td order.id
                       td do
                         status_string = Order::STATUSES.invert.keys  
@@ -439,7 +451,11 @@ ActiveAdmin.register Purchase do
                     order.order_option_items.each_with_index do |ooi, sub_idx|
                       tr do
                         if idx == 0 and sub_idx == 0
-                          td rowspan: cnt do t(order.shipping.name) end
+                          td rowspan: cnt do
+                           span t(order.shipping.name) 
+                           br
+                           render :partial => "invoice_form", :locals => { :ids => order_group.ids, :order => order }
+                         end
                         end
                         if sub_idx == 0
                           td rowspan: sub_cnt do order.id end

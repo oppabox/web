@@ -13,6 +13,14 @@ class OrderGroup
 		@orders.empty?
 	end
 
+  def ids
+    ids = []
+    @orders.each do |o|
+      ids << o.id
+    end
+    return ids
+  end
+
 	def items
     ids = []
     @orders.each do |o|

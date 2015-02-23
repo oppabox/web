@@ -223,3 +223,14 @@ div.nested-col {
 	margin-right: 2px !important;
 	width: 156px !important;
 }
+
+.nested_table {
+	td {
+		border-bottom: none !important;
+		border-top: 1px solid #e8e8e8;
+	}
+
+	tr:first-child td {
+		border-top: none;
+	}
+}

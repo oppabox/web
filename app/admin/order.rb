@@ -278,54 +278,66 @@ ActiveAdmin.register Order do
       column do
         attributes_table do
           row :id do |o|
-            link_to o.id, admin_order_path(o)
+            o.id
           end
-          row "status" do |o|
+          row "결제상태" do |o|
             status_string = Purchase::STATUSES.invert.keys
-            status_tag( status_string[o.purchase.status], purchase_status_css[o.purchase.status] )
+            status_tag( t(status_string[o.purchase.status]), purchase_status_css[o.purchase.status] )
           end
-          row "Product" do |o|
+          row "주문상태" do |o|
+            status_string = Order::STATUSES.invert.keys
+            status_tag( t(status_string[o.purchase.status]), order_status_css[o.purchase.status] )
+          end
+          row "상품명" do |o|
             o.item.display_name
           end
-          row :order_periodic
-          row :quantity
-          row "total_weight" do |o|
+          row "정기구매" do |o|
+            o.order_periodic
+          end
+          row "수량" do |o|
+            o.quantity
+          end
+          row "총 무게" do |o|
             o.item.weight * o.quantity
           end
-          row "country" do |o|
-            o.purchase.user.country
-          end
-          row "user_id" do |o|
-            o.purchase.user_id
-          end
-          row "recipient" do |o|
+          row "수취인" do |o|
             o.purchase.recipient
           end
-          row "city" do |o|
+          row "국가" do |o|
+            o.purchase.user.country
+          end
+          row "도시" do |o|
             o.purchase.city
           end
-          row "address" do |o|
+          row "주소" do |o|
             o.purchase.address
           end
-          row "postcode" do |o|
+          row "우편번호" do |o|
             o.purchase.postcode
           end
-          row "phonenumber" do |o|
+          row "전화번호" do |o|
             o.purchase.phonenumber
           end
-          row "email" do |o|
+          row "이메일" do |o|
             o.purchase.user.email
           end
           row "결제금액" do |o|
             o.purchase.amt
           end
-          row :updated_at
-          row :created_at
-          row "Edit" do |o|
-            link_to "Edit", { :action => :edit, :id => o.id }, { :class => "btn btn-default" }
+          row "운송장" do |o|
+            oids = []
+            og = OrderGroup.grouping(o.purchase.orders)
+            og.each do |order_group|
+              ids = order_group.ids
+              if ids.include? o.id
+                oids = ids
+                break
+              end
+            end
+            render partial: "/admin/purchases/invoice_form", :locals => { :ids => oids, :order => o }
           end
-          row "Cancel" do |o|
-            link_to "return", { :action => :cancel, :id => o.id }, { :class => "btn btn-danger" }
+          row "취소" do |o|
+            link_to "취소", { :action => :cancel, :id => o.id }, { :class => "btn btn-danger" }
           end
         end
       end
