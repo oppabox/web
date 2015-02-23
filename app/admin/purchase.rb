@@ -261,13 +261,13 @@ ActiveAdmin.register Purchase do
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
     column "주문 내역(제품/수량(무게)/배송)" do |p|
-      og = OrderGroup.grouping(p.orders.valid)
+      og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
       table class: "nested_table" do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
           order_group.orders.each_with_index do |order, sub_idx|
             # making option text
-            periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end
+            periodic = if order.item.periodic or order.order_periodic > 1 then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end
             options = Array.new(1){periodic}
             order.order_option_items.each do |x|
               options << x.option_item.name if  x.option.option_type == 1
@@ -403,7 +403,7 @@ ActiveAdmin.register Purchase do
               th ''
             end
             tbody do
-              og = OrderGroup.grouping(resource.orders.valid)
+              og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
               og.each do |order_group|
                 cnt = 0
                 order_group.orders.each do |order|
@@ -442,11 +442,11 @@ ActiveAdmin.register Purchase do
                             target = ''
                         end
                         unless target == ''
-                          span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                          span link_to "진행", { :controller => "admin/orders", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
                         end
                         
                         unless order.status == Order::STATUS_CANCEL
-                          span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                          span link_to "취소", { :controller => "admin/orders", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
                         end
                       end
                     end
@@ -477,23 +477,25 @@ ActiveAdmin.register Purchase do
                           render :partial => "/admin/orders/edit_options", :locals => { :target => "/admin/purchases/#{params[:id]}", :id => ooi.id, :type => "select", :data => ooi.option_item.id, :collection => col }
                         end
                         # actions
-                        td do
-                          case order.status
-                            when Order::STATUS_PREPARING_ORDER
-                              target = Order::STATUS_PREPARING_DELIVERY
-                            when Order::STATUS_PREPARING_DELIVERY
-                              target = Order::STATUS_ON_DELIVERY
-                            when Order::STATUS_ON_DELIVERY
-                              target = Order::STATUS_DONE
-                            else # ordering, deleted, done, canceled
-                              target = ''
-                          end
-                          unless target == ''
-                            span link_to "진행", { :controller => "admin/purchases", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
-                          end
-                          
-                          unless order.status == Order::STATUS_CANCEL
-                            span link_to "취소", { :controller => "admin/purchases", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                        if sub_idx == 0
+                          td rowspan: sub_cnt do
+                            case order.status
+                              when Order::STATUS_PREPARING_ORDER
+                                target = Order::STATUS_PREPARING_DELIVERY
+                              when Order::STATUS_PREPARING_DELIVERY
+                                target = Order::STATUS_ON_DELIVERY
+                              when Order::STATUS_ON_DELIVERY
+                                target = Order::STATUS_DONE
+                              else # ordering, deleted, done, canceled
+                                target = ''
+                            end
+                            unless target == ''
+                              span link_to "진행", { :controller => "admin/orders", :action => :transition, :id => order.id, :target => target }, { :class => "btn btn-primary margin_p" }
+                            end
+                            
+                            unless order.status == Order::STATUS_CANCEL
+                              span link_to "취소", { :controller => "admin/orders", :action => :cancel, :id => order.id }, { :class => "btn btn-danger margin_p" }
+                            end
                           end
                         end
                       end

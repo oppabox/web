@@ -64,16 +64,16 @@ ActiveAdmin.register Order do
     order.save
 
     flash[:notice] = "#{order.purchase.reference_number} status is changed to #{Order::STATUSES[order.status]}."
-    redirect_to :action => :index
+    redirect_to :back
   end
   collection_action :cancel do
     order = Order.find(params[:id])
     order.status = Order::STATUS_CANCEL
-    order.cancel_transaction
+    order.cancel_transaction order.quantity
     order.save
 
     flash[:alert] = "#{order.purchase.reference_number} is cancelled."
-    redirect_to :action => :index
+    redirect_to :back
   end
   
   ########### download inv #############
