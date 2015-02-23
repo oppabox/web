@@ -1,5 +1,5 @@
 ActiveAdmin.register Purchase do
-  menu :priority => 2
+  menu label: "구매 내역", :priority => 2
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
@@ -355,9 +355,6 @@ ActiveAdmin.register Purchase do
           row "주문내역" do |p|
             p.orders.valid.map{|o| o.item.display_name}.join(" / ")
           end
-          row "수량 (무게)" do |p|
-            p.orders.valid.map{|o| o.quantity.to_s + ' (' + o.item.weight.to_s + ')' }.join(" / ")
-          end
           row "수취인" do |p|
             p.recipient
           end
@@ -426,7 +423,13 @@ ActiveAdmin.register Purchase do
                         status_string = Order::STATUSES.invert.keys  
                         status_tag( t(status_string[order.status]), order_status_css[order.status] )
                       end
-                      td order.item.display_name
+                      td do
+                        span order.item.display_name
+                        if order.item.periodic or order.order_periodic > 1
+                          br
+                          span "(" + t("periodoc_#{order.order_periodic}month") + ")"
+                        end
+                      end
                       td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
                       td colspan: 3
                       # actions

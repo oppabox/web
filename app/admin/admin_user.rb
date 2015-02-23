@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  menu :priority => 9
+  menu label: "관리자 계정", :priority => 9
   permit_params :email, :password, :password_confirmation
 
   index do

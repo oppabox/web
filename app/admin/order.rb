@@ -1,5 +1,5 @@
 ActiveAdmin.register Order do
-  menu :priority => 3
+  menu label: "주문 상세", :priority => 3
   config.sort_order = 'purchases.reference_number_desc'
   # purchase_status_css = ['', 'warning', 'error', 'yes', 'complete']
   purchase_status_css = ['', 'complete', '', 'error']

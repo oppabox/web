@@ -1,5 +1,5 @@
 ActiveAdmin.register Item do
-	menu :priority => 6
+	menu label: "아이템", :priority => 6
 
 	#################### controller ####################
 	form :partial => "form"

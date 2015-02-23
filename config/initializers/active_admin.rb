@@ -202,7 +202,7 @@ ActiveAdmin.setup do |config|
   #
     config.namespace :admin do |admin|
       admin.build_menu :default do |menu|
-        menu.add label: "Cancel/Return/Change", :priority => 4
+        menu.add label: "취소/환불/교환", :priority => 4
       end
     end
 

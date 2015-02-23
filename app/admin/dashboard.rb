@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Dashboard" do
-	menu :priority => 1
+	menu label: "요약", :priority => 1
 	content :title => "Dashboard" do
 		render "dashboard"
 	end
