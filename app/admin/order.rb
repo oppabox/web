@@ -85,7 +85,7 @@ ActiveAdmin.register Order do
     csv_builder.column("INVCurrency") { |o| "USD" }
     csv_builder.column("INVDeclaration") { |o| "invoice" }
     csv_builder.column("INVReasonforExport") { |o| "Sample" }
-    csv_builder.column("INVDescriptionofGoods") { |o| o.item.display_name }
+    csv_builder.column("INVDescriptionofGoods") { |o| ItemName.where(item_id: o.item_id, locale: 'en').pluck(:name) }
     csv_builder.column("INVHsCode") { |o| "" }
     csv_builder.column("INVOriginCountry") { |o| "KR" }
     csv_builder.column("INVQuantity") { |o| o.quantity }
