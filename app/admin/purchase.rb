@@ -381,8 +381,8 @@ ActiveAdmin.register Purchase do
             #################  make option text  ###################
             options = Array.new(1) 
             order.order_option_items.each do |x|
-            options << x.option_item.name if  x.option.option_type == 1
-            options << x.option_text if  x.option.option_type == 2
+              options << '색상 | 종류 | 사이즈: ' + x.option_item.name if  x.option.option_type == 1
+              options << '이니셜: ' + x.option_text if  x.option.option_type == 2
             end
             options.compact!
             options = options.join(", ")
