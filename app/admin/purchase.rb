@@ -279,17 +279,19 @@ ActiveAdmin.register Purchase do
               "INVAddComment",
               "INVFreightCost",
               "INVDiscountCost"]
+
+      
       collection.each do |resource|
         ### data_in ###
-        row = []
         og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
         og.each_with_index do |order_group, index|
+          row = []
           order_group.orders.each_with_index do |order, sub_idx|
             row << order.purchase.reference_number
             row << "USD"
             row << "invoice"
             row << "Sample"
-            row << ItemName.where(item_id: order.item_id, locale: 'en').pluck(:name)
+            row << ItemName.where(item_id: order.item_id, locale: 'en').take.name
             row << ""
             row << "KR"
             row << order.quantity
@@ -299,8 +301,8 @@ ActiveAdmin.register Purchase do
             row << ""
             row << ""
           end
+          csv << row
         end
-        csv << row
       end
     end
 
