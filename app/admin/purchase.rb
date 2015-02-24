@@ -233,41 +233,80 @@ ActiveAdmin.register Purchase do
 
   ################## download inv #####################
   collection_action :download_inv do
-    csv_builder = ActiveAdmin::CSVBuilder.new
+    # csv_builder = ActiveAdmin::CSVBuilder.new
  
-     # set columns
-     csv_builder.column("Connector") { |o| order.purchase.reference_number }
-     csv_builder.column("INVCurrency") { |o| "USD" }
-     csv_builder.column("INVDeclaration") { |o| "invoice" }
-     csv_builder.column("INVReasonforExport") { |o| "Sample" }
-     csv_builder.column("INVDescriptionofGoods") { |o| ItemName.where(item_id: order.item_id, locale: 'en').pluck(:name) }
-     csv_builder.column("INVHsCode") { |o| "" }
-     csv_builder.column("INVOriginCountry") { |o| "KR" }
-     csv_builder.column("INVQuantity") { |o| order.quantity }
-     csv_builder.column("INVUnitofMeasure") { |o| "EA" }
-     csv_builder.column("INVUnitPrice") { |o| order.item.sale_price }
-     csv_builder.column("INVAddComment") { |o| "" }
-     csv_builder.column("INVFreightCost") { |o| "" }
-     csv_builder.column("INVDiscountCost") { |o| "" }
-     columns = csv_builder.columns
-     # Collect the data in an Array to be transposed.
-     data = []
-     data << columns.map(&:name)
-     collection.each do |resource|
-       data << columns.map do |column|
-         call_method_or_proc_on resource, column.data
-       end
-     end
+    #  # set columns
+    # csv_builder.column("Connector") { |o| o.purchase.reference_number } 
+    # csv_builder.column("INVCurrency") { |o| "USD" }
+    # csv_builder.column("INVDeclaration") { |o| "invoice" }
+    # csv_builder.column("INVReasonforExport") { |o| "Sample" }
+    # csv_builder.column("INVDescriptionofGoods") { |o| ItemName.where(item_id: o.item_id, locale: 'en').pluck(:name) }
+    # csv_builder.column("INVHsCode") { |o| "" }
+    # csv_builder.column("INVOriginCountry") { |o| "KR" }
+    # csv_builder.column("INVQuantity") { |o| o.quantity }
+    # csv_builder.column("INVUnitofMeasure") { |o| "EA" }
+    # csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
+    # csv_builder.column("INVAddComment") { |o| "" }
+    # csv_builder.column("INVFreightCost") { |o| "" }
+    # csv_builder.column("INVDiscountCost") { |o| "" }
+    #  columns = csv_builder.columns
+    #  # Collect the data in an Array to be transposed.
+    #  data = []
+    #  data << columns.map(&:name)
+    #  collection.each do |resource|
+    #    data << columns.map do |column|
+    #      call_method_or_proc_on resource, column.data
+    #    end
+    #  end
 
-     csv_output_inv = CSV.generate() do |csv|
-       data.each do |row|
-         csv << row
-       end
-     end
+    #  csv_output_inv = CSV.generate() do |csv|
+    #    data.each do |row|
+    #      csv << row
+    #    end
+    #  end
+
+    csv_output = CSV.generate() do |csv|
+      csv << ["Connector",
+              "INVCurrency",
+              "INVDeclaration",
+              "INVReasonforExport",
+              "INVDescriptionofGoods",
+              "INVHsCode",
+              "INVOriginCountry",
+              "INVQuantity",
+              "INVUnitofMeasure",
+              "INVUnitPrice",
+              "INVAddComment",
+              "INVFreightCost",
+              "INVDiscountCost"]
+      collection.each do |resource|
+        ### data_in ###
+        row = []
+        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og.each_with_index do |order_group, index|
+          order_group.orders.each_with_index do |order, sub_idx|
+            row << order.purchase.reference_number
+            row << "USD"
+            row << "invoice"
+            row << "Sample"
+            row << ItemName.where(item_id: order.item_id, locale: 'en').pluck(:name)
+            row << ""
+            row << "KR"
+            row << order.quantity
+            row << "EA"
+            row << order.item.sale_price
+            row << ""
+            row << ""
+            row << ""
+          end
+        end
+        csv << row
+      end
+    end
 
     # render plain: csv_output
 
-    send_data csv_output_inv, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d")+" - UPS_Shipinfo_INV.csv"
   end
 
   ############ download YAMOOJIN #############
@@ -275,18 +314,18 @@ ActiveAdmin.register Purchase do
     csv_builder = ActiveAdmin::CSVBuilder.new
 
     # set columns
-    csv_builder.column("수취고객명") { |o| order.purchase.recipient }
-    csv_builder.column("수취인") { |o| "" }
-    csv_builder.column("수취인 전화") { |o| "" }
-    csv_builder.column("수취인 휴대폰") { |o| order.purchase.phonenumber }
-    csv_builder.column("우편번호") { |o| order.purchase.postcode }
-    csv_builder.column("수취인 주소") { |o| order.purchase.address }
-    csv_builder.column("총중량") { |o| order.item.weight * order.quantity }
-    csv_builder.column("상품명1") { |o| order.item.display_name }
-    csv_builder.column("수량1") { |o| order.quantity }
-    csv_builder.column("물품가격") { |o| order.item.sale_price * order.quantity }
-    csv_builder.column("옵션") { |o| "" }
-    csv_builder.column("메모") { |o| "" }
+    csv_builder.column("수취고객명") { |p| Order.p.recipient }
+    csv_builder.column("수취인") { |p| "" }
+    csv_builder.column("수취인 전화") { |p| "" }
+    csv_builder.column("수취인 휴대폰") { |p| Order.p.phonenumber }
+    csv_builder.column("우편번호") { |p| Order.p.postcode }
+    csv_builder.column("수취인 주소") { |p| Order.p.address }
+    csv_builder.column("총중량") { |p| Order.item.weight * Order.quantity }
+    csv_builder.column("상품명1") { |p| Order.item.display_name }
+    csv_builder.column("수량1") { |p| Order.quantity }
+    csv_builder.column("물품가격") { |p| Order.item.sale_price * Order.quantity }
+    csv_builder.column("옵션") { |p| "" }
+    csv_builder.column("메모") { |p| "" }
 
     columns = csv_builder.columns
 
