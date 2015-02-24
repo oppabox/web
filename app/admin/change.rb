@@ -1,6 +1,8 @@
 ActiveAdmin.register Change do
 	menu label: "교환", :parent => "취소/환불/교환"
 	config.batch_actions = false
+	# remove action items
+  config.clear_action_items!
   config.sort_order = "created_at_desc"
 	status_css = ['warning', 'yes', 'complete', 'error', '', '']
 

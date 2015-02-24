@@ -1,6 +1,8 @@
 ActiveAdmin.register Purchase do
   menu label: "주문 관리", :priority => 2
   config.sort_order = "reference_number_desc"
+  # remove action items
+  config.clear_action_items!
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
@@ -403,7 +405,7 @@ ActiveAdmin.register Purchase do
   end
 
   ################## sidebar ##########################
-  sidebar :help, :only => :index do
+  sidebar "다운로드", :only => :index do
     span do
       link_to "UPS BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
