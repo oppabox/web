@@ -39,7 +39,7 @@ ActiveAdmin.register GroupShipping do
 
 
 	################# index #################
-	index do
+	index :title => '묶음 배송 관리' do
 		column "그룹명", :name
 		column "생성일", :created_at
 		column "아이템" do |g|

@@ -197,7 +197,7 @@ ActiveAdmin.register Order do
   filter :purchase_user_email_contains, :as => :string, :label => "Email"
 
   ################ index #######################
-  index do
+  index :title => '주문 상세 확인' do
     column :id do |o|
       link_to o.id, admin_order_path(o)
     end

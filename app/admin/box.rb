@@ -111,7 +111,7 @@ ActiveAdmin.register Box do
 	end
 
 	################# index ##################
-	index do
+	index :title => '박스 관리' do
 		column :id
 		column "제품이미지" do |b|
 			tag :img, :src => "/images/box/#{b.path}.jpg", :width => "100px", :height => "100px"

@@ -1,5 +1,5 @@
 ActiveAdmin.register Purchase do
-  menu label: "구매 내역", :priority => 2
+  menu label: "주문 관리", :priority => 2
   config.sort_order = "reference_number_desc"
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
@@ -431,7 +431,7 @@ ActiveAdmin.register Purchase do
   filter :orders_order_periodic, :as => :numeric, :label => "정기구매"
 
   ################## view ##########################
-  index do 
+  index :title => '주문 관리' do 
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end

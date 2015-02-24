@@ -30,7 +30,7 @@ ActiveAdmin.register Return do
 	end
 
 	################# index #################
-	index do
+	index :title => '환불' do
 		column :id
 		column "접수상태" do |r|
 			para status_tag(t(Return::STATUSES[r.status]), status_css[r.status])
