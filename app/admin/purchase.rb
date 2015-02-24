@@ -313,44 +313,94 @@ ActiveAdmin.register Purchase do
 
   ############ download YAMOOJIN #############
   collection_action :yamoojin_csv do
-    csv_builder = ActiveAdmin::CSVBuilder.new
+    # csv_builder = ActiveAdmin::CSVBuilder.new
 
-    # set columns
-    csv_builder.column("수취고객명") { |p| Order.p.recipient }
-    csv_builder.column("수취인") { |p| "" }
-    csv_builder.column("수취인 전화") { |p| "" }
-    csv_builder.column("수취인 휴대폰") { |p| Order.p.phonenumber }
-    csv_builder.column("우편번호") { |p| Order.p.postcode }
-    csv_builder.column("수취인 주소") { |p| Order.p.address }
-    csv_builder.column("총중량") { |p| Order.item.weight * Order.quantity }
-    csv_builder.column("상품명1") { |p| Order.item.display_name }
-    csv_builder.column("수량1") { |p| Order.quantity }
-    csv_builder.column("물품가격") { |p| Order.item.sale_price * Order.quantity }
-    csv_builder.column("옵션") { |p| "" }
-    csv_builder.column("메모") { |p| "" }
+    # # set columns
+    # csv_builder.column("수취고객명") { |o| o.purchase.recipient }
+    # csv_builder.column("수취인") { |o| ""}
+    # csv_builder.column("수취인 전화") { |o| "" }
+    # csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
+    # csv_builder.column("우편번호") { |o| o.purchase.postcode }
+    # csv_builder.column("수취인 주소") { |o| o.purchase.address }
+    # csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
+    # csv_builder.column("상품명1") { |o| o.item.display_name }
+    # csv_builder.column("수량1") { |o| o.quantity }
+    # csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
+    # csv_bulider.column("옵션") { |o| ""}
+    # csv_builder.column("메모") { |o| "" }
 
-    columns = csv_builder.columns
+    # columns = csv_builder.columns
 
-    # Collect the data in an Array to be transposed.
-    data = []
-    data << columns.map(&:name)
-    collection.each do |resource|
-      data << columns.map do |column|
-        call_method_or_proc_on resource, column.data
-      end
-    end
+    # # Collect the data in an Array to be transposed.
+    # data = []
+    # data << columns.map(&:name)
+    # collection.each do |resource|
+    #   data << columns.map do |column|
+    #     call_method_or_proc_on resource, column.data
+    #   end
+    # end
+
+    # csv_output = CSV.generate() do |csv|
+    #   data.each do |row|
+    #     csv << row
+    #   end
+    # end
 
     csv_output = CSV.generate() do |csv|
-      data.each do |row|
-        csv << row
+      csv << ["수취고객명",
+              "수취인",
+              "수취인 전화",
+              "수취인 휴대폰",
+              "우편번호",
+              "수취인 주소",
+              "총중량",
+              "상품명1",
+              "수량1",
+              "물품가격",
+              "옵션",
+              "메모",]
+
+      
+      collection.each do |resource|
+        ### data_in ###
+        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og.each_with_index do |order_group, index|
+          order_group.orders.each_with_index do |order, sub_idx|
+            row = []
+            row << order.purchase.recipient
+            row << ""
+            row << ""
+            row << fix_kr_phonenumber(order.purchase.user.country, order.purchase.phonenumber)
+            row << order.purchase.postcode
+            row << order.purchase.address
+            row << order.item.weight * order.quantity
+            row << order.item.display_name
+            row << order.quantity
+            row << order.item.sale_price * order.quantity
+
+            #################  make option text  ###################
+            options = Array.new(1) 
+            order.order_option_items.each do |x|
+            options << x.option_item.name if  x.option.option_type == 1
+            options << x.option_text if  x.option.option_type == 2
+            end
+            options.compact!
+            options = options.join(", ")
+            #######################  end  ##########################
+
+            row << options
+            row << ""
+            csv << row
+          end
+        end
       end
     end
 
     # Iconv set
-    conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
-    csv_output = conv.iconv(csv_output)
+    # conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
+    # csv_output = conv.iconv(csv_output)
 
-    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
+    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
   end
 
   ################## sidebar ##########################
@@ -662,6 +712,17 @@ ActiveAdmin.register Purchase do
   controller do
     def scoped_collection
       super.distinct
+    end
+    # CSV 출력시에만 "-" 입력
+    def fix_kr_phonenumber country, number
+      if !number.nil? && country == "KR" 
+        if (number.gsub "-", "").size == 10
+          number.gsub("-","").insert(3, '-').insert(7, '-')
+        elsif number.size == 11
+          number.insert(3, '-').insert(8, '-')
+        end
+      end
+      return number
     end
   end
 end
