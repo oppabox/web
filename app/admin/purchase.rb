@@ -520,7 +520,7 @@ ActiveAdmin.register Purchase do
     end
   end
 
-  show do
+  show :title => "주문 내역" do
     columns do
 
       column span: 2 do

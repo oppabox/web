@@ -274,7 +274,7 @@ ActiveAdmin.register Order do
   end
 
   ################ show #######################
-  show do
+  show :title => '주문 상품 상세페이지' do
     columns do
       column do
         attributes_table do
