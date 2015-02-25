@@ -23,12 +23,6 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 				else
 					true
 				end
-			when normalized(Order)
-				if action == :update || action == :destroy
-					user.orders.include?(subject)
-				else
-					true
-				end
 			when normalized(Cancel)
 				if action == :update || action == :destroy
 					user.cancels.include?(subject)
@@ -55,7 +49,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 				end
 			when ActiveAdmin::Page
 				subject.name == "Dashboard"
-			when normalized(User), normalized(AdminUser), ActiveAdmin::Comment
+			when normalized(User), normalized(AdminUser), ActiveAdmin::Comment, normalized(Order)
 				# for only master admin user
 				false
 			else
