@@ -419,7 +419,7 @@ ja:
   cancel_reason_plh: "キャンセルの詳しい理由をご記入ください。"
 
   change_quantity: "交換数量"
-  reason_for_cancel: "交換理由"
+  reason_for_change: "交換理由"
   change_reasons0: "単純な心変わり"
   change_reasons1: "不良品"
   change_reasons2: "サイズが合わない"

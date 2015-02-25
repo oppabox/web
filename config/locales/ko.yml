@@ -552,7 +552,7 @@ ko:
   cancel_reason_plh: "자세한 취소 사유를 적어주십시오.(선택 사항)"
 
   change_quantity: "교환 수량"
-  reason_for_cancel: "교환 사유"
+  reason_for_change: "교환 사유"
   change_reasons0: "단순 변심"
   change_reasons1: "제품 하자"
   change_reasons2: "사이즈가 맞지 않음"

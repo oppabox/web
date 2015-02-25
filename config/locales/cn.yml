@@ -451,7 +451,7 @@ cn:
   cancel_reason_plh: "请填写具体取消原因（选填）"
 
   change_quantity: "换货数量"
-  reason_for_cancel: "换货原因"
+  reason_for_change: "换货原因"
   change_reasons0: "只是变心"
   change_reasons1: "商品有瑕疵"
   change_reasons2: "尺寸不合适"

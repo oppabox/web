@@ -417,7 +417,7 @@ en:
   cancel_reason_plh: "Please write down the reason for cancellation in detail. (optional)"
 
   change_quantity: "Quantity to change"
-  reason_for_cancel: "Reason for change"
+  reason_for_change: "Reason for change"
   change_reasons0: "Simple change of mind"
   change_reasons1: "Defective product"
   change_reasons2: "Wrong size"

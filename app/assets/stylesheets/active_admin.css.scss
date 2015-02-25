@@ -234,3 +234,15 @@ div.nested-col {
 		border-top: none;
 	}
 }
+
+// customize admin user new form
+form.admin_user {
+	label {
+		display: block;
+		color: #5e6469;
+		font-size: 1.0em;
+		font-weight: bold;
+		margin: 0;
+		line-height: 2.7;
+	}
+}
