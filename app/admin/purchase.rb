@@ -458,6 +458,7 @@ ActiveAdmin.register Purchase do
       end
 
       para Order.change_currency(my_amt)
+      hr
       para total_amt
       para opt
    end
@@ -516,8 +517,16 @@ ActiveAdmin.register Purchase do
           row "전화번호" do |p|
             p.phonenumber
           end
-          row "결제금액" do |p|
+          row "총 결제금액" do |p|
             p.amt
+          end
+          row "결제금액" do |p|
+            my_amt = 0
+            og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+            og.each do |order_group|
+              my_amt += order_group.final_order_price
+            end
+            Order.change_currency(my_amt)
           end
           row "결제결과" do |p| 
             p.pay_type
@@ -542,6 +551,7 @@ ActiveAdmin.register Purchase do
               th '상태'
               th '상품명'
               th '수량(무게)'
+              th '금액'
               th class: "active", colspan: 3 do '옵션' end
               th ''
             end
@@ -577,6 +587,14 @@ ActiveAdmin.register Purchase do
                         end
                       end
                       td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
+                      td do
+                        para Order.change_currency(order_group.product_price.to_s)
+                        hr
+                        para do
+                          i class: "fa fa-truck"
+                          span Order.change_currency(order_group.get_delivery_fee.to_s)
+                        end
+                      end
                       td colspan: 3
                       # actions
                       td do
@@ -617,6 +635,14 @@ ActiveAdmin.register Purchase do
                           end
                           td rowspan: sub_cnt do order.item.display_name end
                           td rowspan: sub_cnt do order.quantity.to_s + ' (' + order.item.weight.to_s + ')' end
+                          td rowspan: sub_cnt do
+                            para Order.change_currency(order_group.product_price.to_s)
+                            hr
+                            para do
+                              i class: "fa fa-truck"
+                              span Order.change_currency(order_group.get_delivery_fee.to_s)
+                            end
+                          end
                         end
                         td ooi.option.title
                         if ooi.option_item_id == -1
