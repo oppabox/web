@@ -4,7 +4,11 @@ module ActiveAdmin
       field = args[0]
       klass = @config.resource_class_name.constantize
       type  = klass.columns.select{|c| c.name == field.to_s}.first.try(:type)
- 
+      
+      if type.nil? and !args[1].nil? and !args[1][:as].nil? and args[1][:as] == :date_range
+        type = :datetime
+      end
+      
       if type == :datetime
         controller do
           before_filter do

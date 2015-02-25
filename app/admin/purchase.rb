@@ -190,14 +190,16 @@ ActiveAdmin.register Purchase do
     csv_builder.column("ServiceType") { |p| "Express Saver" }
     csv_builder.column("ActWeight") do |p|
       sum = 0
-      p.orders.valid.each do |o|
+      # p.orders.valid.each do |o|
+      p.filtered_orders(params[:q]).valid.each do |o|
         sum += (o.item.weight * o.quantity)
       end
       sum
     end
     csv_builder.column("NumofPackage") do |p|
       sum = 0
-      p.orders.valid.each do |o|
+      # p.orders.valid.each do |o|
+      p.filtered_orders(params[:q]).valid.each do |o|
         sum += o.quantity
       end
       sum
@@ -235,37 +237,6 @@ ActiveAdmin.register Purchase do
 
   ################## download inv #####################
   collection_action :download_inv do
-    # csv_builder = ActiveAdmin::CSVBuilder.new
- 
-    #  # set columns
-    # csv_builder.column("Connector") { |o| o.purchase.reference_number } 
-    # csv_builder.column("INVCurrency") { |o| "USD" }
-    # csv_builder.column("INVDeclaration") { |o| "invoice" }
-    # csv_builder.column("INVReasonforExport") { |o| "Sample" }
-    # csv_builder.column("INVDescriptionofGoods") { |o| ItemName.where(item_id: o.item_id, locale: 'en').pluck(:name) }
-    # csv_builder.column("INVHsCode") { |o| "" }
-    # csv_builder.column("INVOriginCountry") { |o| "KR" }
-    # csv_builder.column("INVQuantity") { |o| o.quantity }
-    # csv_builder.column("INVUnitofMeasure") { |o| "EA" }
-    # csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
-    # csv_builder.column("INVAddComment") { |o| "" }
-    # csv_builder.column("INVFreightCost") { |o| "" }
-    # csv_builder.column("INVDiscountCost") { |o| "" }
-    #  columns = csv_builder.columns
-    #  # Collect the data in an Array to be transposed.
-    #  data = []
-    #  data << columns.map(&:name)
-    #  collection.each do |resource|
-    #    data << columns.map do |column|
-    #      call_method_or_proc_on resource, column.data
-    #    end
-    #  end
-
-    #  csv_output_inv = CSV.generate() do |csv|
-    #    data.each do |row|
-    #      csv << row
-    #    end
-    #  end
 
     csv_output = CSV.generate() do |csv|
       csv << ["Connector",
@@ -285,7 +256,8 @@ ActiveAdmin.register Purchase do
       
       collection.each do |resource|
         ### data_in ###
-        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        # og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og = OrderGroup.grouping(resource.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id)))
         og.each_with_index do |order_group, index|
           order_group.orders.each_with_index do |order, sub_idx|
             row = []
@@ -333,7 +305,8 @@ ActiveAdmin.register Purchase do
       
       collection.each do |resource|
         ### data_in ###
-        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        # og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og = OrderGroup.grouping(resource.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id)))
         og.each_with_index do |order_group, index|
           order_group.orders.each_with_index do |order, sub_idx|
             row = []
@@ -396,7 +369,7 @@ ActiveAdmin.register Purchase do
   filter :user_country_eq, :as => :string, :label => "국가"
   filter :user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
   filter :user_phonenumber_contains, :as => :string, :label => "전화번호"
-  filter :orders_item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.where(children: nil).pluck(:display_name, :id) }, :label => "박스"
+  filter :orders_item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.joins(:items).select("boxes.display_name, boxes.id").distinct.pluck("boxes.display_name, boxes.id") }, :label => "박스"
   filter :orders_item_id, :as => :select, :collection => proc { current_admin_user.items.map { |i| [i.display_name, i.id] } }, :label => "상품"
   filter :orders_order_periodic, :as => :numeric, :label => "정기구매"
 
@@ -405,13 +378,15 @@ ActiveAdmin.register Purchase do
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
-    column "주문번호", :reference_number
+    column "주문번호" do |p|
+      link_to p.reference_number, admin_purchase_path(p)
+    end
     column "결제 상태" do |p|
       status_string = Purchase::STATUSES.invert.keys
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
-    column "주문 내역(제품/수량(무게)/배송)" do |p|
-      og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+    column "주문 내역(제품/수량(무게)/배송/판매)" do |p|
+      og = OrderGroup.grouping(p.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id)))
       table class: "nested_table" do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
@@ -442,6 +417,19 @@ ActiveAdmin.register Purchase do
                 td rowspan: cnt do 
                   t(order.shipping.name) 
                 end
+                if params[:q].nil? or (!params[:q].nil? and (params[:q]["orders_item_id_eq"].nil? and params[:q]["orders_item_box_id_eq"].nil?) )
+                  td rowspan: cnt do 
+                    delivery_fee = order_group.get_delivery_fee.to_s
+                    product_price = order_group.product_price.to_s
+
+                    para Order.change_currency(product_price)
+                    hr
+                    para do
+                      i class: "fa fa-truck"
+                      span Order.change_currency(delivery_fee)
+                    end
+                  end
+                end
               end
             end
           end
@@ -459,11 +447,20 @@ ActiveAdmin.register Purchase do
       para p.city
       para p.postcode
     end
-    column "결제금액(결제수단)" do |p|
-      amt = p.amt.nil? ? "" : p.amt
+    column "매출액/총 결제금액/결제수단" do |p|
+      total_amt = p.amt.nil? ? "" : p.amt
       opt = Purchase::PAY_OPTIONS.invert[p.pay_option]
-      opt = opt.nil? ? "" : opt
-      para amt + " (" + opt + ")"
+      opt = opt.nil? ? "" : "(" + opt + ")"
+      my_amt = 0
+      og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+      og.each do |order_group|
+        my_amt += order_group.final_order_price
+      end
+
+      para Order.change_currency(my_amt)
+      hr
+      para total_amt
+      para opt
    end
     column "결제시간" do |p|
       dt = p.approval_datetime.nil? ? DateTime.strptime('20000101', '%Y%m%d') : p.approval_datetime
@@ -520,8 +517,16 @@ ActiveAdmin.register Purchase do
           row "전화번호" do |p|
             p.phonenumber
           end
-          row "결제금액" do |p|
+          row "총 결제금액" do |p|
             p.amt
+          end
+          row "결제금액" do |p|
+            my_amt = 0
+            og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+            og.each do |order_group|
+              my_amt += order_group.final_order_price
+            end
+            Order.change_currency(my_amt)
           end
           row "결제결과" do |p| 
             p.pay_type
@@ -546,6 +551,7 @@ ActiveAdmin.register Purchase do
               th '상태'
               th '상품명'
               th '수량(무게)'
+              th '금액'
               th class: "active", colspan: 3 do '옵션' end
               th ''
             end
@@ -581,6 +587,14 @@ ActiveAdmin.register Purchase do
                         end
                       end
                       td order.quantity.to_s + ' (' + order.item.weight.to_s + ')'
+                      td do
+                        para Order.change_currency(order_group.product_price.to_s)
+                        hr
+                        para do
+                          i class: "fa fa-truck"
+                          span Order.change_currency(order_group.get_delivery_fee.to_s)
+                        end
+                      end
                       td colspan: 3
                       # actions
                       td do
@@ -621,6 +635,14 @@ ActiveAdmin.register Purchase do
                           end
                           td rowspan: sub_cnt do order.item.display_name end
                           td rowspan: sub_cnt do order.quantity.to_s + ' (' + order.item.weight.to_s + ')' end
+                          td rowspan: sub_cnt do
+                            para Order.change_currency(order_group.product_price.to_s)
+                            hr
+                            para do
+                              i class: "fa fa-truck"
+                              span Order.change_currency(order_group.get_delivery_fee.to_s)
+                            end
+                          end
                         end
                         td ooi.option.title
                         if ooi.option_item_id == -1
@@ -666,18 +688,6 @@ ActiveAdmin.register Purchase do
   end
 
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
   controller do
     def scoped_collection
       super.distinct

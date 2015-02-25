@@ -40,7 +40,7 @@
   <table class="table">
     <tbody>
       <tr>
-        <th class="active"><%= t('reason_for_cancel') %></th>
+        <th class="active"><%= t('reason_for_change') %></th>
         <td>
           <div class="form-group">
             <%= select_tag "change_reason", options_for_select(Change::REASONS.invert.keys.collect { |x| t(x) }, 0 ), { :class => 'form-control input-sm' } %>

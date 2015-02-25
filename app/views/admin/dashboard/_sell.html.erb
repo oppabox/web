@@ -8,7 +8,7 @@
 					박스 <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<% current_admin_user.boxes.where(children: nil).each do |b| %>
+					<% current_admin_user.boxes.joins(:items).select("boxes.display_name, boxes.id").distinct.each do |b| %>
 						<li><a href="#D_box" data-toggle="tab" data-ref="box_<%=b.id%>"><%= b.display_name %></a></li>
 					<% end %>
 				</ul>
@@ -120,13 +120,13 @@ $(document).ready(function(){
 
 			switch ($(this).attr("data-type")) {
 				case "all":
-					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str
+					url = "/admin/purchases?q%5Breference_number_contains%5D=" + str + "&scope=paid"
 					break;
 				case "box":
-					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str + "&q%5Bitem_box_id_eq%5D=" + id
+					url = "/admin/purchases?q%5Breference_number_contains%5D=" + str + "&q%5Borders_item_box_id_eq%5D=" + id + "&scope=paid"
 					break;
 				case "item":
-					url = "/admin/orders?q%5Bpurchase_reference_number_contains%5D=" + str + "&q%5Bitem_id_eq%5D=" + id
+					url = "/admin/purchases?q%5Breference_number_contains%5D=" + str + "&q%5Borders_item_id_eq%5D=" + id + "&scope=paid"
 					break;
 			}
 			

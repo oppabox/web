@@ -44,6 +44,24 @@ class Purchase < ActiveRecord::Base
   scope :cancelled,           -> { where(status: STATUS_CANCEL) }
 
 
+
+  # this code is quite ugly
+  # but is the best as long as I found
+  # to extract specific box or item
+  def filtered_orders data
+    orders = self.orders
+    unless data.nil?
+      unless data["orders_item_id_eq"].nil?
+        orders = orders.where(item_id: data["orders_item_id_eq"])
+      end
+      unless data["orders_item_box_id_eq"].nil?
+        items = Box.find(data["orders_item_box_id_eq"]).items.pluck(:id)
+        orders = orders.where(item_id: items)
+      end
+    end
+    return orders
+  end
+
   def set_reference_number
     str = 'P'
     str += DateTime.current().strftime("%Y%m%d-%H")

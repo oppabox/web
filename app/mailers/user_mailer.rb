@@ -8,9 +8,14 @@ class UserMailer < ActionMailer::Base
 			subject: "#{user.email}#{I18n.t('reset_password_mail_subject')}"
 	end
 
-	def test_mail
-		emails = User.where.not(email: nil).pluck(:email)
+	# def test_mail
+	# 	emails = User.where.not(email: nil).pluck(:email)
 
-		mail( to: emails, subject: 'Welcome!' )
+	# 	mail( to: emails, subject: 'Welcome!' )
+	# end
+	def test_mail
+		email = "dane2522@gmail.com"
+
+		mail( to: email, subject: 'Welcome!' )
 	end
 end

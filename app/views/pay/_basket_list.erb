@@ -1,29 +1,53 @@
-<table class="table">
-  <thead>
-    <tr class="active">
-      <th class="text-center"><%=t('basket_list_product_name')%></th>
-      <th class="text-center"><%=t('basket_list_price')%></th>
-      <th class="text-center">-</th>
-      <th class="text-center">-</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% if @baskets.empty? %>
+<% if @baskets.empty? %>
+  <table class="table">
     <tr class="text-center list_cell">
-      <td colspan="4">
+      <td colspan="4" style="border-top:none">
         <br><%= t('basket_list_empty') %><br>
         <br><a href="/"><%= t('more_shopping') %></a><br>
       </td>
     </tr>
-  <% else %>
-    <% @baskets.each do |b|%>
-    <tr class="text-center list_cell">
-      <td><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></td>
-      <td><%=Order.change_currency(b.item.sale_price)%></td>
-      <td><a href="/item/<%=b.item.path%>"><%= t('basket_list_order') %></a></td>
-      <td><a href="#" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></td>
-    </tr>
-    <% end %>
-  <% end %>
-  </tbody>
-</table>
+  </table>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr class="active">
+        <th class="text-center"><%=t('basket_list_product_name')%></th>
+        <th class="text-center"><%=t('basket_list_price')%></th>
+        <th class="text-center">-</th>
+        <th class="text-center">-</th>
+      </tr>
+    </thead>
+    <tbody>    
+      <% @baskets.each do |b|%>
+      <tr class="text-center list_cell">
+        <!-- <td><input type="checkbox" class="row_selectable" value="<%=b.item.id%>"></td> -->
+        <td><a href="/item/<%=b.item.path%>"><%=b.item.display_name%></a></td>
+        <td><%=Order.change_currency(b.item.sale_price)%></td>
+        <td><a href="/item/<%=b.item.path%>"><%= t('basket_list_order') %></a></td>
+        <td><a href="#" onclick="del_from_basket(<%=b.item.id%>);"><%= t('basket_list_del') %></a></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <!-- <div class="col-xs-6 col-md-6 col-xs-offset-3 col-md-offset-3">
+    <button class="btn btn-default btn-block" id="basket_list_order_btn"><%= t('basket_list_order') %></button>
+  </div> -->
+<% end %>
+<script>
+$(document).ready(function(){
+  $(".row_selectable").click(function(){
+    var tr = $(this).closest("tr");
+    if ($(this).is(":checked")) {
+      // checked
+      tr.addClass("active");
+    }
+    else {
+      tr.removeClass("active");
+    }
+  });
+  $("#basket_list_order_btn").click(function(){
+    var selected = $(".row_selectable:checked");
+    // console.log(selected);
+  });
+})
+</script>
