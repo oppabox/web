@@ -369,7 +369,7 @@ ActiveAdmin.register Purchase do
   filter :user_country_eq, :as => :string, :label => "국가"
   filter :user_country_not_eq, :as => :string, :label => "제외한 모든 국가"
   filter :user_phonenumber_contains, :as => :string, :label => "전화번호"
-  filter :orders_item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.where(children: nil).pluck(:display_name, :id) }, :label => "박스"
+  filter :orders_item_box_id, :as => :select, :collection => proc { current_admin_user.boxes.where.not(parent: nil).pluck(:display_name, :id) }, :label => "박스"
   filter :orders_item_id, :as => :select, :collection => proc { current_admin_user.items.map { |i| [i.display_name, i.id] } }, :label => "상품"
   filter :orders_order_periodic, :as => :numeric, :label => "정기구매"
 
