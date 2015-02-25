@@ -13,8 +13,10 @@ class UserMailer < ActionMailer::Base
 
 	# 	mail( to: emails, subject: 'Welcome!' )
 	# end
-	def test_mail
+	def test_mail(p,u)
 		email = "dane2522@gmail.com"
+		@purchase = p
+		@user = u
 
 		mail( to: email, subject: 'Welcome!' )
 	end
