@@ -3,7 +3,7 @@ ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation, :registration_number, :representative, :contact_email, :phonenumber
   actions :all, except: [ :show ]
   
-  index do
+  index :title => '관리자 계정 리스트' do
     id_column
     column "이메일", :email
     column "사업자등록번호", :registration_number

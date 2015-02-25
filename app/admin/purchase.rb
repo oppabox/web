@@ -1,6 +1,8 @@
 ActiveAdmin.register Purchase do
-  menu label: "구매 내역", :priority => 2
+  menu label: "주문 관리", :priority => 2
   config.sort_order = "reference_number_desc"
+  # remove action items
+  config.clear_action_items!
   status_css = ['', 'complete', 'warning', 'error']
   order_status_css = ['', '', 'warning', 'yes', 'complete', 'error', '']
 
@@ -188,14 +190,16 @@ ActiveAdmin.register Purchase do
     csv_builder.column("ServiceType") { |p| "Express Saver" }
     csv_builder.column("ActWeight") do |p|
       sum = 0
-      p.orders.valid.each do |o|
+      # p.orders.valid.each do |o|
+      p.filtered_orders(params[:q]).valid.each do |o|
         sum += (o.item.weight * o.quantity)
       end
       sum
     end
     csv_builder.column("NumofPackage") do |p|
       sum = 0
-      p.orders.valid.each do |o|
+      # p.orders.valid.each do |o|
+      p.filtered_orders(params[:q]).valid.each do |o|
         sum += o.quantity
       end
       sum
@@ -233,37 +237,6 @@ ActiveAdmin.register Purchase do
 
   ################## download inv #####################
   collection_action :download_inv do
-    # csv_builder = ActiveAdmin::CSVBuilder.new
- 
-    #  # set columns
-    # csv_builder.column("Connector") { |o| o.purchase.reference_number } 
-    # csv_builder.column("INVCurrency") { |o| "USD" }
-    # csv_builder.column("INVDeclaration") { |o| "invoice" }
-    # csv_builder.column("INVReasonforExport") { |o| "Sample" }
-    # csv_builder.column("INVDescriptionofGoods") { |o| ItemName.where(item_id: o.item_id, locale: 'en').pluck(:name) }
-    # csv_builder.column("INVHsCode") { |o| "" }
-    # csv_builder.column("INVOriginCountry") { |o| "KR" }
-    # csv_builder.column("INVQuantity") { |o| o.quantity }
-    # csv_builder.column("INVUnitofMeasure") { |o| "EA" }
-    # csv_builder.column("INVUnitPrice") { |o| o.item.sale_price }
-    # csv_builder.column("INVAddComment") { |o| "" }
-    # csv_builder.column("INVFreightCost") { |o| "" }
-    # csv_builder.column("INVDiscountCost") { |o| "" }
-    #  columns = csv_builder.columns
-    #  # Collect the data in an Array to be transposed.
-    #  data = []
-    #  data << columns.map(&:name)
-    #  collection.each do |resource|
-    #    data << columns.map do |column|
-    #      call_method_or_proc_on resource, column.data
-    #    end
-    #  end
-
-    #  csv_output_inv = CSV.generate() do |csv|
-    #    data.each do |row|
-    #      csv << row
-    #    end
-    #  end
 
     csv_output = CSV.generate() do |csv|
       csv << ["Connector",
@@ -283,7 +256,8 @@ ActiveAdmin.register Purchase do
       
       collection.each do |resource|
         ### data_in ###
-        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        # og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og = OrderGroup.grouping(resource.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id)))
         og.each_with_index do |order_group, index|
           order_group.orders.each_with_index do |order, sub_idx|
             row = []
@@ -313,38 +287,6 @@ ActiveAdmin.register Purchase do
 
   ############ download YAMOOJIN #############
   collection_action :yamoojin_csv do
-    # csv_builder = ActiveAdmin::CSVBuilder.new
-
-    # # set columns
-    # csv_builder.column("수취고객명") { |o| o.purchase.recipient }
-    # csv_builder.column("수취인") { |o| ""}
-    # csv_builder.column("수취인 전화") { |o| "" }
-    # csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
-    # csv_builder.column("우편번호") { |o| o.purchase.postcode }
-    # csv_builder.column("수취인 주소") { |o| o.purchase.address }
-    # csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
-    # csv_builder.column("상품명1") { |o| o.item.display_name }
-    # csv_builder.column("수량1") { |o| o.quantity }
-    # csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
-    # csv_bulider.column("옵션") { |o| ""}
-    # csv_builder.column("메모") { |o| "" }
-
-    # columns = csv_builder.columns
-
-    # # Collect the data in an Array to be transposed.
-    # data = []
-    # data << columns.map(&:name)
-    # collection.each do |resource|
-    #   data << columns.map do |column|
-    #     call_method_or_proc_on resource, column.data
-    #   end
-    # end
-
-    # csv_output = CSV.generate() do |csv|
-    #   data.each do |row|
-    #     csv << row
-    #   end
-    # end
 
     csv_output = CSV.generate() do |csv|
       csv << ["수취고객명",
@@ -363,7 +305,8 @@ ActiveAdmin.register Purchase do
       
       collection.each do |resource|
         ### data_in ###
-        og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        # og = OrderGroup.grouping(resource.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+        og = OrderGroup.grouping(resource.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id)))
         og.each_with_index do |order_group, index|
           order_group.orders.each_with_index do |order, sub_idx|
             row = []
@@ -403,7 +346,7 @@ ActiveAdmin.register Purchase do
   end
 
   ################## sidebar ##########################
-  sidebar :help, :only => :index do
+  sidebar "다운로드", :only => :index do
     span do
       link_to "UPS BL", download_bl_admin_purchases_path(params.slice(:q, :scope)), { :class => "btn btn-default" }
     end
@@ -431,7 +374,7 @@ ActiveAdmin.register Purchase do
   filter :orders_order_periodic, :as => :numeric, :label => "정기구매"
 
   ################## view ##########################
-  index do 
+  index :title => '주문 관리' do 
     column :id do |p|
       link_to p.id, admin_purchase_path(p)
     end
@@ -441,7 +384,9 @@ ActiveAdmin.register Purchase do
       para status_tag( t(status_string[p.status]), status_css[p.status] )
     end
     column "주문 내역(제품/수량(무게)/배송)" do |p|
-      og = OrderGroup.grouping(p.orders.valid.where(item_id: current_admin_user.items.pluck(:id)))
+      # o = p.orders.valid.where(item_id: current_admin_user.items.pluck(:id))
+      o = p.filtered_orders(params[:q]).valid.where(item_id: current_admin_user.items.pluck(:id))
+      og = OrderGroup.grouping(o)
       table class: "nested_table" do
         og.each_with_index do |order_group, index|
           cnt = order_group.orders.length
@@ -518,7 +463,7 @@ ActiveAdmin.register Purchase do
     end
   end
 
-  show do
+  show :title => "주문 내역" do
     columns do
 
       column span: 2 do
@@ -696,18 +641,6 @@ ActiveAdmin.register Purchase do
   end
 
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
   controller do
     def scoped_collection
       super.distinct

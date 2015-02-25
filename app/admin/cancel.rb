@@ -1,6 +1,8 @@
 ActiveAdmin.register Cancel do
 	menu label: "취소", :parent => "취소/환불/교환"
 	config.batch_actions = false
+	# remove action items
+  config.clear_action_items!
   config.sort_order = "created_at_desc"
 	status_css = ['warning', 'yes', 'complete', 'error', '']
 
@@ -29,7 +31,7 @@ ActiveAdmin.register Cancel do
 	end
 
 	################# index #################
-	index do
+	index :title => '취소' do
 		column :id
     column "주문번호" do |c|
       para c.order.purchase.reference_number

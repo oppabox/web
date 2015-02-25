@@ -293,7 +293,7 @@ ActiveAdmin.register Item do
 
 
 	#################### views ####################
-	index do
+	index :title => '아이템 관리' do
 		column :id
 		column "썸네일" do |i|
 			tag :img, :src => "/images/items/#{i.box.path}/#{i.path}/#{i.path}.jpg", :width => "100px", :height => "100px"

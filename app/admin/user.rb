@@ -1,8 +1,10 @@
 ActiveAdmin.register User do
   menu label: "유저 정보", :priority => 8
   config.batch_actions = false
+  # remove action items
+  config.clear_action_items!
 
-  index do
+  index :title => '유저 관리' do
     column :id
     column :option_flag
     column :name
