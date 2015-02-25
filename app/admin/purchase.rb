@@ -315,38 +315,6 @@ ActiveAdmin.register Purchase do
 
   ############ download YAMOOJIN #############
   collection_action :yamoojin_csv do
-    # csv_builder = ActiveAdmin::CSVBuilder.new
-
-    # # set columns
-    # csv_builder.column("수취고객명") { |o| o.purchase.recipient }
-    # csv_builder.column("수취인") { |o| ""}
-    # csv_builder.column("수취인 전화") { |o| "" }
-    # csv_builder.column("수취인 휴대폰") { |o| fix_kr_phonenumber(o.purchase.user.country, o.purchase.phonenumber) }
-    # csv_builder.column("우편번호") { |o| o.purchase.postcode }
-    # csv_builder.column("수취인 주소") { |o| o.purchase.address }
-    # csv_builder.column("총중량") { |o| o.item.weight * o.quantity }
-    # csv_builder.column("상품명1") { |o| o.item.display_name }
-    # csv_builder.column("수량1") { |o| o.quantity }
-    # csv_builder.column("물품가격") { |o| o.item.sale_price * o.quantity }
-    # csv_bulider.column("옵션") { |o| ""}
-    # csv_builder.column("메모") { |o| "" }
-
-    # columns = csv_builder.columns
-
-    # # Collect the data in an Array to be transposed.
-    # data = []
-    # data << columns.map(&:name)
-    # collection.each do |resource|
-    #   data << columns.map do |column|
-    #     call_method_or_proc_on resource, column.data
-    #   end
-    # end
-
-    # csv_output = CSV.generate() do |csv|
-    #   data.each do |row|
-    #     csv << row
-    #   end
-    # end
 
     csv_output = CSV.generate() do |csv|
       csv << ["수취고객명",
