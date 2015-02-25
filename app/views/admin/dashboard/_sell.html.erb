@@ -8,7 +8,7 @@
 					박스 <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<% current_admin_user.boxes.where(children: nil).each do |b| %>
+					<% current_admin_user.boxes.joins(:items).select("boxes.display_name, boxes.id").distinct.each do |b| %>
 						<li><a href="#D_box" data-toggle="tab" data-ref="box_<%=b.id%>"><%= b.display_name %></a></li>
 					<% end %>
 				</ul>
