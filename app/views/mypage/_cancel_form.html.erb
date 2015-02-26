@@ -59,7 +59,7 @@
                 <%= t(order.shipping.name) %>
               </span>
               <br>
-              <span class="cancel_shipping"><%= Order.change_currency(orders.get_delivery_fee - orders.get_delivery_fee(true)) %></span>
+              <span class="cancel_shipping"><%= Order.change_currency(orders.get_delivery_fee(true)) %></span>
             </td>
           <% end %>
           
