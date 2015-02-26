@@ -29,25 +29,33 @@ class OrderGroup
 		Item.where(id: ids)
 	end
 
-	def final_order_price
+	def final_order_price c_flag = false
 		sum = 0
 		# first get sum of items
-		sum += self.product_price
+		sum += self.product_price c_flag
 		# add shipping fee
-    sum += self.get_delivery_fee
+    sum += self.get_delivery_fee c_flag
     return sum
   end
 
-  def product_price
+  # when calculate
+  # excludes orders whose statuses are [STATUS_REQUEST, STATUS_CANCEL_DONE]
+  def product_price c_flag = false
     sum = 0
-    # first get sum of items
+    # get sum of items
     @orders.each do |o|
-      sum += o.total_price * o.quantity
+      if o.status != Order::STATUS_CANCEL
+        if c_flag and o.has_cancel? and [Cancel::STATUS_REQUEST, Cancel::STATUS_DONE].include?(o.cancel.status)
+          sum += o.total_price * (o.quantity - o.cancel.quantity)
+        else
+          sum += o.total_price * o.quantity
+        end
+      end
     end
     return sum
   end
 
-  def get_delivery_fee
+  def get_delivery_fee c_flag = false
   	if @orders.empty?
   		return nil
   	else
@@ -58,14 +66,74 @@ class OrderGroup
 	  	weights = 0
 	  	quantities = 0
 	  	@orders.each do |o|
-	  		pXq += o.total_price * o.quantity
-	  		weights += o.item.weight
-	  		quantities += o.quantity
+        if o.status != Order::STATUS_CANCEL
+          if c_flag and o.has_cancel? and [Cancel::STATUS_REQUEST, Cancel::STATUS_DONE].include?(o.cancel.status)
+            q = o.quantity - o.cancel.quantity
+            pXq += o.total_price * q
+            weights += o.item.weight * q
+            quantities += q
+          else
+            pXq += o.total_price * o.quantity
+            weights += o.item.weight
+            quantities += o.quantity
+          end
+        end
 	  	end
 
 	    fee = Shipping.calculate_box_delivery name, country, pXq, weights, quantities
 	    return fee.ceil
 	  end
+  end
+
+  # calc the product price or delivery fee
+  # suppose quantity of order is cancaled.
+  # order should be member of this group.
+  def canceled_product_price order, quantity
+    sum = 0
+    # get sum of items
+    @orders.each do |o|
+      if o.status != Order::STATUS_CANCEL
+        if o.has_cancel? and [Cancel::STATUS_REQUEST, Cancel::STATUS_DONE].include?(o.cancel.status)
+          sum += o.total_price * (o.quantity - o.cancel.quantity)
+        elsif o.id == order.id
+          sum += o.total_price * (o.quantity - quantity)
+        else
+          sum += o.total_price * o.quantity
+        end
+      end
+    end
+    return sum
+  end
+
+  def get_canceled_delivery_fee order, quantity
+    name = order.shipping.name
+    country = order.purchase.user.country
+    
+    pXq = 0
+    weights = 0
+    quantities = 0
+    @orders.each do |o|
+      if o.status != Order::STATUS_CANCEL
+        if o.has_cancel? and [Cancel::STATUS_REQUEST, Cancel::STATUS_DONE].include?(o.cancel.status)
+          q = o.quantity - o.cancel.quantity
+          pXq += o.total_price * q
+          weights += o.item.weight * q
+          quantities += q
+        elsif o.id == order.id
+          q = o.quantity - quantity
+          pXq += o.total_price * q
+          weights += o.item.weight * q
+          quantities += q
+        else
+          pXq += o.total_price * o.quantity
+          weights += o.item.weight
+          quantities += o.quantity
+        end
+      end
+    end
+
+    fee = Shipping.calculate_box_delivery name, country, pXq, weights, quantities
+    return fee.ceil
   end
 
   def self.grouping orders

@@ -25,7 +25,7 @@ class Item < ActiveRecord::Base
 
   def get_delivery_fee shipping_name, country, quantity = 1
     shipping = self.shippings.where(name: shipping_name).take
-    fee = Shipping.calculate_box_delivery shipping.name, country, nil, self.weight, quantity
+    fee = Shipping.calculate_box_delivery shipping.name, country, nil, (self.weight * quantity), quantity
     fee.ceil
   end
 

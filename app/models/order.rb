@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
     if quantity.nil?
       quantity = self.quantity
     end
-    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * quantity), self.item.weight, quantity
+    fee = Shipping.calculate_box_delivery self.shipping.name, self.purchase.user.country, (self.total_price * quantity), (self.item.weight * quantity), quantity
     fee.ceil
   end
 

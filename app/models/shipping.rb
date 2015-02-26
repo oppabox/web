@@ -12,9 +12,9 @@ class Shipping < ActiveRecord::Base
 		shipping = Shipping.where(name: name).take
 		case name
 		when 'UPS'
-			return shipping.calculate_ups country, (weight * quantity), month
+			return shipping.calculate_ups country, weight, month
 		when 'EMS'
-			return shipping.calculate_ems country, (weight * quantity), month
+			return shipping.calculate_ems country, weight, month
 		when 'FREE'
 			return 0
 		when 'STANDARD'

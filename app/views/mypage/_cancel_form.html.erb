@@ -15,24 +15,61 @@
     <thead>
       <tr class="active">
         <th class="text-center"><%= t("product_info") %></th>
-        <th class="text-center"><%= t("total_payment_billing_price") %></th>
+        <th class="text-center"><%=t('carry_quantity')%></th>
         <th class="text-center"><%= t("cancel_quantity") %></th>
+        <th class="text-center"><%= t("paid_sum") %></th>
+        <th class="text-center"><%=t("carry_total_price")%></th>
+        <th class="text-center"><%=t('shipping')%></th>
         <th class="text-center"><%= t("cancel_amount") %></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="text-center"><%= @order.item.display_name + ' / #' + @order.quantity.to_s %></td>
-        <td class="text-center"><%= Order.change_currency(@order.final_order_price) %></td>
-        <td class="text-center">
-          <% opt = Array.new %>
-          <% for i in 0..@order.quantity do %>
-            <% opt[i] = i %>
+      <% orders = nil %>
+      <% og = OrderGroup.grouping(@order.purchase.orders.valid) %>
+      <% og.each do |order_group| %>
+        <% if order_group.ids.include? @order.id %>
+          <% orders = order_group %>
+        <% end %>
+      <% end %>
+      <% cnt = orders.orders.length %>
+      <% orders.orders.each_with_index do |order, idx| %>
+        <tr>
+          <td class="text-center"><%= order.item.display_name %></td>
+          <td class="text-center"><%= order.quantity %></td>
+          <td class="text-center">
+            <% if order.id == @order.id %>
+              <% opt = Array.new %>
+              <% for i in 0..order.quantity do %>
+                <% opt[i] = i %>
+              <% end %>
+              <%= select_tag "cancel_quantity", options_for_select(opt, 0), :autofocus => 'true' %>
+            <% else %>
+              <% if order.has_cancel? %>
+                <%= order.cancel.quantity %>
+              <% else %>
+                0
+              <% end %>
+            <% end %>
+          </td>
+          <% if idx == 0 %>
+            <td class="text-center" rowspan="<%=cnt%>"><%= Order.change_currency(orders.final_order_price) %></td>
+            <td class="text-center cancel_sum" rowspan="<%=cnt%>"><%= Order.change_currency(orders.product_price(true)) %></td>
+            <td class="text-center" rowspan="<%=cnt%>">
+              <span style="white-space:normal" class="badge badge-default">
+                <%= t(order.shipping.name) %>
+              </span>
+              <br>
+              <span class="cancel_shipping"><%= Order.change_currency(orders.get_delivery_fee - orders.get_delivery_fee(true)) %></span>
+            </td>
           <% end %>
-          <%= select_tag "cancel_quantity", options_for_select(opt, 0), :autofocus => 'true' %>
-        </td>
-        <td class="text-center cancel_amount"><%= Order.change_currency(0) %></td>
-      </tr>
+          
+          <% if idx == 0 %>
+            <td class="text-center cancel_diff" rowspan="<%=cnt%>">
+              <%= Order.change_currency(orders.final_order_price - orders.final_order_price(true)) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
@@ -62,7 +99,7 @@
     <tbody>
       <tr>
         <th class="active"><%= t('cancel_amount') %></th>
-        <td class="cancel_amount" id="cancel_actual_amount"><%= Order.change_currency(0) %></td>
+        <td class="cancel_diff" id="cancel_actual_amount"><%= Order.change_currency(orders.final_order_price - orders.final_order_price(true)) %></td>
       </tr>
     </tbody>
   </table>
@@ -82,13 +119,15 @@ $('#cancel_quantity').change(function(){
   $.ajax({
     url: "/mypage/recalculate_cancel/",
     type: "POST",
-    dataType: "text",
+    dataType: "json",
     data: {
       order_id: <%= @order.id %>,
       amount: amount
     },
     success: function(data) {
-      $('.cancel_amount').html(data);
+      $('.cancel_diff').html(data["diff"]);
+      $('.cancel_sum').html(data["price"]);
+      $('.cancel_shipping').html(data["shipping"]);
     }
   })
 })
