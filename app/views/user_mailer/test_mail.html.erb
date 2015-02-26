@@ -1,11 +1,93 @@
-<body>
-  <h1>Welcome to oppabox.com</h1>
-  <p>
-    You have successfully signed up to example.com,
-   <br>
-  </p>
-  <p>
-    To login to the site, just follow this link: 'http://www.oppabox.com'.
-  </p>
-  <p>Thanks for joining and have a great day!</p>
+<body style="margin: auto; padding: 0; color: #333333; max-width: 600px">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: center">
+    <tr>
+      <td>
+       <div class="container">
+
+            <h3 style="font-size: 26px;"><%=t('paid_thanks')%></h3>
+            <hr>
+            <p style="text-align: left"><%=t('paid_datetime')%> : <span><%= @purchase.approval_datetime %></span></p>
+            <p style="text-align: left"><%=t('order_number')%> : <%=@purchase.reference_number%></p>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: center">
+              <thead>
+                <tr style="border-bottom: 2px solid #dddddd; background-color: #f5f5f5;">
+                  <th style="padding: 8px"><%=t('item_display_name')%></th>
+                  <th><%=t('carry_price')%></th>
+                  <th><%=t('carry_quantity')%></th>
+                  <th><%=t('carry_total_price')%></th>
+                  <th><%=t('shipping')%></th>
+                  <th><%=t('paid_sum')%></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% OrderGroup.grouping(@purchase.orders.valid).each_with_index do |order_group, index|%>
+                <% cnt = order_group.orders.length %>
+                <% order_group.orders.each_with_index do |order, sub_idx| %>
+                <tr>
+                  <% periodic = if order.item.periodic then "(" + t("periodoc_#{order.order_periodic}month") + ")" else nil end %>
+                  <% options = Array.new(1){periodic} %>
+                  <% order.order_option_items.each do |x| %>
+                  <% options << x.option_item.name if  x.option.option_type == 1 %>
+                  <% options << x.option_text if  x.option.option_type == 2 %>
+                  <% end %>
+                  <% options.compact! %>
+
+                  <td style="padding: 8px; border-top: 1px solid #dddddd">
+                    <span style="color: #000; font-weight: bold"><%= order.item.display_name %></span>&nbsp;<span style="font-size: 11px"><%= options.join(", ") %></span>
+                  </td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd"><%= Order.change_currency_pretty(order.total_price) %></td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd"><%= number_with_delimiter(order.quantity) %></td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd"><%= Order.change_currency_pretty(order.total_price * order.quantity) %></td>
+                  <% if sub_idx == 0 %>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" rowspan="<%=cnt%>">
+                    <%= Order.change_currency_pretty(order_group.get_delivery_fee) %>
+                  </td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" rowspan="<%=cnt%>">
+                    <%= Order.change_currency_pretty(order_group.final_order_price) %>
+                  </td>
+                  <% end %>
+                </tr>
+                <% end %>
+                <% end %>
+
+                <tr>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" rowspan="2">[<%= t('mypage_carry')%>]</td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd"><%= @purchase.recipient %></td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd"><%= @user.country %></td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" colspan="3"><%= @purchase.phonenumber %></td>
+                </tr>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd">[<%= @purchase.postcode %>]</td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" colspan="4">
+                    <%= address = "" %>
+                    <% if ["US", "CA"].include? @user.country %>
+                    <% address += @purchase.state %>
+                    <% end %>
+                    <% if !["KR"].include? @user.country %>
+                    <% address += @purchase.city %>
+                    <%= address %>
+                    <% end %>
+                  </td>
+                <tr>
+                </tr>
+                <% if @purchase.pay_option == Purchase::PAY_TYPE_VBANK %>
+                <tr>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd">[무통장 입금 계좌 정보]</td>
+                  <td style="padding: 8px; border-top: 1px solid #dddddd" colspan="5">
+                    <%=@purchase.pay_type%>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <hr>
+            <p>
+              <a href="/"><button class="btn btn-primary" style="margin-right:10px;"><%=t('go_to_home')%></button></a>
+              <a href="/mypage"><button class="btn btn-danger"><%=t('go_to_mypage')%></button></a>
+            </p>
+
+      </div>
+
+    </td>
+  </tr>
+</table>
 </body>
