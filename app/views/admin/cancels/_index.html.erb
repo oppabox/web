@@ -1,0 +1,70 @@
+<%# collection setup %>
+<% sql =  collection.to_sql %>
+<% orders = Order.joins("INNER JOIN (#{sql}) cancels ON orders.id = cancels.order_id") %>
+<% purchases =  Purchase.joins("INNER JOIN (#{orders.to_sql}) o ON purchases.id = o.purchase_id").distinct %>
+
+
+<table border="0" cellspacing="0" cellpadding="0" class="index_table index" paginator="true">
+	<thead>
+		<tr>
+			<th class="sortable col">주문번호</th>
+			<th class="sortable col col-id"><a href="/admin/cancels?order=id_desc">Id</a></th>
+			<th class="col">접수상태</th>
+			<th class="col">상품명</th>
+			<th class="col">주문수량</th>
+			<th class="sortable col"><a href="/admin/cancels?order=quantity_desc">취소수량</a></th>
+			<th class="col">취소금액</th>
+			<th class="col">취소이유</th>
+			<th class="col">신청자정보</th>
+			<th class="col">휴대번호</th>
+			<th class="col">신청시간</th>
+			<th class="col">처리시간</th>
+			<th class="col">관리</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% purchases.each do |p| %>
+			<% og = OrderGroup.grouping(orders.where("purchase_id = ?", p.id)) %>
+			<% og.each_with_index do |order_group, idx| %>
+				<% cnt = order_group.orders.count %>
+				<% order_group.orders.each_with_index do |order, sub_idx| %>
+					<% cancel = order.cancel %>
+					<tr class="<%= idx % 2 == 0 ? 'odd' : 'even' %>" id="cancel_<%=cancel.id%>">
+						<% if sub_idx == 0 %>
+						<td class="col" rowspan="<%=cnt%>"><%= order.purchase.reference_number %></td>
+						<% end %>
+						<td class="col col-id"><%= cancel.id %></td>
+						<td class="col">
+							<span class="status_tag <%=status_css[cancel.status]%>"><%= t(Cancel::STATUSES[cancel.status]) %></span>
+						</td>
+						<td class="col"><%= order.item.display_name %></td>
+						<td class="col"><%= order.quantity %></td>
+						<td class="col"><%= cancel.quantity %></td>
+						<% if sub_idx == 0 %>
+						<td class="col" rowspan="<%=cnt%>">
+							<%= Order.change_currency(order_group.final_order_price - order_group.final_order_price(true)) %>
+						</td>
+						<% end %>
+						<td class="col">
+							<p><%= t(Cancel::REASONS[cancel.reason]) %></p>
+							<p><%= cancel.reason_details %></p>
+						</td>
+						<td class="col">
+							<% u = order.purchase.user %>
+							<p><%= u.name + ' (' + u.country + ')' %></p>
+							<p><%= u.email %></p>
+						</td>
+						<td class="col"><%= order.purchase.user.phonenumber %></td>
+						<td class="col"><%= cancel.created_at.strftime("%Y-%m-%d") %></td>
+						<td class="col">
+							<%= (cancel.status == Cancel::STATUS_DONE or cancel.status == Cancel::STATUS_CANCEL) ? cancel.updated_at.strftime("%Y-%m-%d") : "심사중" %>
+						</td>
+						<td class="col">
+							<%= render :partial => "change_status", :locals => { :id => cancel.id, :collection => Cancel::STATUSES.invert.collect { |x| [I18n.t(x[0]), x[1]] }, :data => cancel.status } %>
+						</td>
+					</tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>

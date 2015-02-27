@@ -71,10 +71,10 @@
                         <i class="fa fa-truck" data-toggle="tooltip" title="<%= order.invoice %>" data-template='<div class="tooltip mypage_tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'></i>
                       <% end %>
                       <br>
-                      <%= Order.change_currency(order_group.get_delivery_fee) %>
+                      <%= Order.change_currency(order_group.get_delivery_fee(true)) %>
                     </td>
                     <td rowspan="<%=cnt%>" class="text-center">
-                      <%= Order.change_currency_pretty(order_group.final_order_price) %>
+                      <%= Order.change_currency_pretty(order_group.final_order_price(true)) %>
                     </td>
                   <% end %>
                   <td class="text-center"><%= t(Order::STATUSES[order.status]) %></td>
@@ -86,6 +86,10 @@
                           <%= t(Return::STATUSES[order.return.status]) %>
                         <% elsif order.has_cancel? %>
                           <%= t(Cancel::STATUSES[order.cancel.status]) %>
+                          <% if [Cancel::STATUS_REQUEST, Cancel::STATUS_DONE].include? order.cancel.status %>
+                          <br>
+                          (<%= t('carry_quantity') + ": " + order.cancel.quantity.to_s %>)
+                          <% end %>
                         <% else %>
                           <%= t(Change::STATUSES[order.change.status]) %>
                         <% end %>

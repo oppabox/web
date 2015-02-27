@@ -59,13 +59,32 @@ class MypageController < ApplicationController
 
   def recalculate_cancel
     order = Order.find(params[:order_id])
+
+    orders = nil
+    og = OrderGroup.grouping(order.purchase.orders.valid)
+    og.each do |order_group|
+      if order_group.ids.include? order.id
+        orders = order_group
+      end
+    end
+
+    original_price = orders.final_order_price
+    canceled_shipping = orders.get_delivery_fee(true)
+
+    # calc
+    calc_shipping = orders.get_canceled_delivery_fee(order, params[:amount].to_i)
+    calc_price = orders.canceled_product_price(order, params[:amount].to_i)
+    calc_diff = original_price - ( calc_price + calc_shipping )
+
+
     diff_quantity = order.quantity - params[:amount].to_i
     diff_shipping_fee = diff_quantity == 0 ? 0 : order.get_delivery_fee(diff_quantity)
 
-    # diff quantity만큼 구매한 것과 동일, 따라서 차액을 환불
-    rtn = Order.change_currency( order.final_order_price - (order.total_price * diff_quantity + diff_shipping_fee) )
-    puts rtn
-    render :text => rtn
+    render :json => {
+      "shipping" => Order.change_currency(calc_shipping),
+      "price" => Order.change_currency(calc_price),
+      "diff" => Order.change_currency(calc_diff),
+    }
   end
 
   def return_request

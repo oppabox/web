@@ -9,20 +9,24 @@ class Shipping < ActiveRecord::Base
 
 
 	def self.calculate_box_delivery name, country, order_price, weight, quantity, month = 1
-		shipping = Shipping.where(name: name).take
-		case name
-		when 'UPS'
-			return shipping.calculate_ups country, (weight * quantity), month
-		when 'EMS'
-			return shipping.calculate_ems country, (weight * quantity), month
-		when 'FREE'
-			return 0
-		when 'STANDARD'
-			return shipping.calculate_standard country, quantity, month, order_price
-		when 'JCOKCOK'
-			return shipping.calculate_3000 country, quantity, month, order_price
-		when 'GGANGI'
-			return shipping.calculate_2500 country, quantity, month, order_price
+		if weight == 0 or quantity == 0
+			0
+		else
+			shipping = Shipping.where(name: name).take
+			case name
+			when 'UPS'
+				return shipping.calculate_ups country, weight, month
+			when 'EMS'
+				return shipping.calculate_ems country, weight, month
+			when 'FREE'
+				return 0
+			when 'STANDARD'
+				return shipping.calculate_standard country, quantity, month, order_price
+			when 'JCOKCOK'
+				return shipping.calculate_3000 country, quantity, month, order_price
+			when 'GGANGI'
+				return shipping.calculate_2500 country, quantity, month, order_price
+			end
 		end
 	end
 

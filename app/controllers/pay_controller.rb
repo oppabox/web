@@ -170,7 +170,7 @@ class PayController < ApplicationController
     rtn = {}
     fee = 0
     shippings.each do |s|
-      rtn[s] = Shipping.calculate_box_delivery s, country, (sub_total * quantity), item.weight, quantity, month
+      rtn[s] = Shipping.calculate_box_delivery s, country, (sub_total * quantity), (item.weight * quantity), quantity, month
       if s == selected
         fee = rtn[s]
       end
