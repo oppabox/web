@@ -1,6 +1,6 @@
 <%# collection setup %>
 <% sql =  collection.to_sql %>
-<% orders = Order.includes(:purchase).joins("INNER JOIN (#{sql}) cancels ON orders.id = cancels.order_id") %>
+<% orders = Order.joins("INNER JOIN (#{sql}) cancels ON orders.id = cancels.order_id") %>
 <% purchases =  Purchase.joins("INNER JOIN (#{orders.to_sql}) o ON purchases.id = o.purchase_id").distinct %>
 
 
@@ -24,7 +24,7 @@
 	</thead>
 	<tbody>
 		<% purchases.each do |p| %>
-			<% og = OrderGroup.grouping(orders.where("purchases.id = ?", p.id)) %>
+			<% og = OrderGroup.grouping(orders.where("purchase_id = ?", p.id)) %>
 			<% og.each_with_index do |order_group, idx| %>
 				<% cnt = order_group.orders.count %>
 				<% order_group.orders.each_with_index do |order, sub_idx| %>

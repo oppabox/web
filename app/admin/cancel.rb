@@ -33,49 +33,14 @@ ActiveAdmin.register Cancel do
 	################# index #################
 	index :title => '취소' do
 		render partial: "index", :locals => { :status_css => status_css }
-		# column :id
-  #   column "주문번호" do |c|
-  #     para c.order.purchase.reference_number
-  #   end
-		# column "접수상태" do |c|
-		# 	para status_tag(t(Cancel::STATUSES[c.status]), status_css[c.status])
-		# end
-		# column '상품명' do |c|
-		# 	para c.order.item.display_name
-		# end
-		# column "주문수량" do |c|
-		# 	para c.order.quantity
-		# end
-		# column "취소수량",:quantity
-		# column "취소이유구분" do |c|
-		# 	para t(Cancel::REASONS[c.reason])
-		# end
-		# column "취소이유",:reason_details
-		# column "신청자정보" do |c|
-		# 	u = c.order.purchase.user
-		# 	para u.name + ' (' + u.country + ')'
-		# 	para u.email
-		# end
-		# column "휴대번호" do |c| 
-		# 	para c.order.purchase.user.phonenumber
-		# end
-  #   column "신청시간" do |c|
-  #     para c.created_at.strftime("%Y-%m-%d")
-  #   end
-  #   column "처리시간" do |c|
-  #     para (c.status == Cancel::STATUS_DONE or c.status == Cancel::STATUS_CANCEL) ? c.updated_at.strftime("%Y-%m-%d") : "심사중"
-  #   end
-		# column "관리" do |c|
-		# 	render :partial => "/admin/change_status", :locals => { :id => c.id, :collection => Cancel::STATUSES.invert.collect { |x| [I18n.t(x[0]), x[1]] }, :data => c.status }
-		# end
 	end
 
 	
 
 	filter :id
   filter :order_purchase_reference_number_eq, :as => :string, :label => '주문번호'
-	filter :status, :as => :select, :collection => proc{ t(Cancel::STATUSES.invert.keys) }, :label => '접수상태'
-	filter :reason, :as => :select, :collection => proc{ t(Cancel::REASONS.invert.keys) }, :label => '이유'
+	filter :status, :as => :select, :collection => proc { Cancel::STATUSES.invert.map { |a,b| [t(a),b] } }, :label => '접수상태'
+	filter :reason, :as => :select, :collection => proc { Cancel::REASONS.invert.map { |a,b| [t(a),b] } }, :label => '이유'
 	filter :order_purchase_user_name_eq, :as => :string, :label => '주문자 이름'
 	filter :order_purchase_user_phonenumber_eq, :as => :string, :label => '휴대번호'
 	filter :order_purchase_user_address_eq, :as => :string, :label => '주소'

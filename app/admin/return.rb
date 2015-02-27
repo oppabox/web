@@ -71,8 +71,8 @@ ActiveAdmin.register Return do
 
 	filter :id
   filter :order_purchase_reference_number_eq, :as => :string, :label => "주문번호"
-	filter :status, :as => :select, :collection => proc{ t(Return::STATUSES.invert.keys) }, :label => "접수상태"
-	filter :reason, :as => :select, :collection => proc{ t(Return::REASONS.invert.keys) }, :label => "이유"
+	filter :status, :as => :select, :collection => proc { Return::STATUSES.invert.map { |a,b| [t(a),b] } }, :label => "접수상태"
+	filter :reason, :as => :select, :collection => proc { Return::REASONS.invert.map { |a,b| [t(a),b] } }, :label => "이유"
 	filter :sender_eq, :as => :string, :label => '주문자 이름'
 	filter :phonenumber_eq, :as => :string, :label => '휴대번호'
 	filter :address_eq, :as => :string, :label => '주소'
