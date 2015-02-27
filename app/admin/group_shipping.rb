@@ -1,5 +1,6 @@
 ActiveAdmin.register GroupShipping do
 	menu label: "묶음 배송", :priority => 7
+	config.clear_sidebar_sections!
 	permit_params :name
 	scope_to :current_admin_user
 	form :partial => "edit"

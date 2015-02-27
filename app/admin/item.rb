@@ -13,7 +13,7 @@ ActiveAdmin.register Item do
 	end
 
 	############### create ###############	
-	collection_action :create, :method => :post do
+	collection_action :create, :title => '아이템 추가' , :method => :post do
 		data = params[:item]
 		item = Item.new
 		
