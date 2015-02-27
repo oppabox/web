@@ -105,6 +105,7 @@ class OrderGroup
   # suppose quantity of order is cancaled.
   # order should be member of this group.
   def canceled_product_price order, quantity
+    c_flag = true
     sum = 0
     # get sum of items
     @orders.each do |o|
@@ -130,6 +131,7 @@ class OrderGroup
   end
 
   def get_canceled_delivery_fee order, quantity
+    c_flag = true
     name = order.shipping.name
     country = order.purchase.user.country
     
