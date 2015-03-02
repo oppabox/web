@@ -339,10 +339,11 @@ ActiveAdmin.register Purchase do
     end
 
     # Iconv set
-    # conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
-    # csv_output = conv.iconv(csv_output)
+    conv = Iconv.new("EUC-KR//IGNORE","UTF-8")
+    csv_output = conv.iconv(csv_output)
 
-    send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
+    # send_data csv_output, :type => 'text/csv; charset=iso-8859-1; header=present', :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
+    send_data csv_output, :filename => DateTime.current().strftime("%Y%m%d") + " - Yamoojin (oppabox).csv"
   end
 
   ################## sidebar ##########################

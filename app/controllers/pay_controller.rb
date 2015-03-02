@@ -60,6 +60,7 @@ class PayController < ApplicationController
 
   def success
     @purchase = current_user.purchased_find params[:purchase_id]
+    UserMailer.purchase_success_mail(@purchase,current_user).deliver
     unless @purchase
       redirect_to '/'
     end

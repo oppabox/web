@@ -13,11 +13,12 @@ class UserMailer < ActionMailer::Base
 
 	# 	mail( to: emails, subject: 'Welcome!' )
 	# end
-	def test_mail(p,u)
-		email = "dane2522@gmail.com"
-		@purchase = p
-		@user = u
+	def purchase_success_mail(purchase,user)
+		name = user.name
+		email = user.email
+		@purchase = purchase
+		@user = user
 
-		mail( to: email, subject: 'Welcome!' )
+		mail( to: email, subject: "#{name}, Thank you for purchasing !!" )
 	end
 end
