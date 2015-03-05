@@ -154,8 +154,9 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-9">
 						<%= f.submit '수정', { type: 'reset', class: 'btn btn-primary', id: 'item_form_submit' } %>
-						<%= f.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'item_form_reset' } %>
-					</div>			
+            <%= f.submit '초기화', { type: 'reset', class: 'btn btn-default', id: 'item_form_reset' } %>
+            <%= link_to '삭제', "/admin/items/#{@item.id}", { 'data-method' => :delete, class: 'btn btn-danger', id: 'item_delete' } %>
+          </div>			
 				</div>
 			<% end %>
 		</div>

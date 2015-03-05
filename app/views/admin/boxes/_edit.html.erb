@@ -198,6 +198,7 @@
               </td>
               <td>
                 <%= link_to '수정', "/admin/items/#{item.id}/edit", { class: 'btn btn-default' } %>
+                <%= link_to '삭제', "/admin/items/#{item.id}", { 'data-method' => :delete, class: 'btn btn-danger', id: 'item_delete' } %>
               </td>
             </tr>
           <% end %>

@@ -124,6 +124,15 @@ ActiveAdmin.register Item do
 			redirect_to :back
 		end
 	end
+  
+  collection_action :destroy, :method => :delete do
+    item = Item.find(params[:id])
+    item_name = ItemName.where(item_id: item.id).first.name
+    item.destroy
+
+    flash[:notice] = "#{item_name} is successfully deleted!"
+    redirect_to "/admin/boxes/#{item.box_id}/edit"
+  end
 
 	############### update_options ###############
 	collection_action :update_options, :method => :patch do
@@ -367,6 +376,7 @@ ActiveAdmin.register Item do
 
 		column "" do |item|
 			para link_to "수정", edit_admin_item_path(item.id), { :class => "btn btn-default" }
+      para link_to "삭제", edit_admin_item_path(item.id), { :class => "btn btn-danger" }
 		end
 	end
 
