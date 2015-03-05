@@ -53,12 +53,14 @@
           </div>
         </div>
 
+        <% if current_admin_user.master %>
         <div class="form-group">
           <%= f.label :display_order, "표시 순서", { class: 'col-sm-2 control-label' } %>
           <div class="col-sm-9">
               <%= f.text_field :display_order %>
           </div> 
         </div>
+        <% end %>
 
         <div class="">
           <%= f.submit '제출', { type: 'reset', class: 'btn btn-primary', id: 'box_form_submit' } %>
