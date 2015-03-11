@@ -31,7 +31,7 @@ ActiveAdmin.register GroupShipping do
 		
 		if g.save
 			flash[:notice] = "Group Shipping #{g.name} is updated successfully!"
-			redirect_to :action => :edit, :id => g.id
+			redirect_to '/admin/group_shippings/'
 		else
 			flash[:error] = box.errors.full_messages
 			redirect_to :back

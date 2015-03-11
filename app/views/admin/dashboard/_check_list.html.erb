@@ -25,15 +25,15 @@
 						<a class="btn btn-success pull-right" href="/admin/purchases?scope=pending">Go</a>
 					</p>
 				</li>
-			<% end %>
+      <% end %>
 			<%# section for cancel request %>
 			<% unless (cnt = current_admin_user.cancels.requested.count) == 0 %>
-				<li>
+        <li>
 					<p>
 						<i class="fa fa-times fa-2x"></i>
 						<span class="text-danger"><%= cnt %></span>
 						주문 취소 요청
-						<a class="btn btn-success pull-right" href="/admin/cancels?scope=requested">Go</a>
+						<a class="btn btn-danger pull-right" href="/admin/cancels?scope=requested">Go</a>
 					</p>
 				</li>
 			<% end %>
@@ -44,7 +44,7 @@
 						<i class="fa fa-reply fa-2x"></i>
 						<span class="text-danger"><%= cnt %></span>
 						반품 요청
-						<a class="btn btn-success pull-right" href="/admin/returns?scope=requested">Go</a>
+						<a class="btn btn-danger pull-right" href="/admin/returns?scope=requested">Go</a>
 					</p>
 				</li>
 			<% end %>
@@ -55,7 +55,7 @@
 						<i class="fa fa-exchange fa-2x"></i>
 						<span class="text-danger"><%= cnt %></span>
 						교환 요청
-						<a class="btn btn-success pull-right" href="/admin/changes?scope=requested">Go</a>
+						<a class="btn btn-danger pull-right" href="/admin/changes?scope=requested">Go</a>
 					</p>
 				</li>
 			<% end %>
