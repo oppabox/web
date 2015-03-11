@@ -2,5 +2,4 @@
   <%= f.hidden_field :id, :value => id %>
   <%= f.select :status, options_for_select(collection, data) if data == 0 or (params[:controller] != "admin/cancels" and data == 1) %>
   <%= f.submit "Edit" if data == 0 or ( params[:controller] != "admin/cancels" and data == 1 )%>
-  <%= content_tag(:span, collection[data][0]) unless data == 0 or ( params[:controller] == "admin/cancels" and data == 1 ) %>
 <% end %>
