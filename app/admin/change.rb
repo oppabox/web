@@ -59,7 +59,7 @@ ActiveAdmin.register Change do
        para c.created_at.strftime("%Y-%m-%d")
     end
     column "처리시간" do |c|
-       para (c.status == Change::STATUS_DONE or c.status == Change::STATUS_CANCEL) ? c.updated_at.strftime("%Y-%m-%d") : "진행중"
+       para c.status >= Change::STATUS_DONE ? c.updated_at.strftime("%Y-%m-%d") : "심사중"
     end 
 		column "관리" do |c|
 			render :partial => "/admin/cancels/change_status", :locals => { :id => c.id, :collection => Change::STATUSES.invert.collect { |x| [I18n.t(x[0]), x[1]] }, :data => c.status }

@@ -57,7 +57,7 @@
 						<td class="col"><%= order.purchase.user.phonenumber %></td>
 						<td class="col"><%= cancel.created_at.strftime("%Y-%m-%d") %></td>
 						<td class="col">
-							<%= (cancel.status == Cancel::STATUS_DONE or cancel.status == Cancel::STATUS_CANCEL) ? cancel.updated_at.strftime("%Y-%m-%d") : "심사중" %>
+              <%= cancel.status >= Cancel::STATUS_DONE ? cancel.updated_at.strftime("%Y-%m-%d") : "심사중" %>
 						</td>
 						<td class="col">
 							<%= render :partial => "change_status", :locals => { :id => cancel.id, :collection => Cancel::STATUSES.invert.collect { |x| [I18n.t(x[0]), x[1]] }, :data => cancel.status } %>
