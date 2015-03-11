@@ -1,6 +1,6 @@
 <%= form_for :form, url: "/#{params[:controller]}/change_status", html: {method: "patch"} do |f| %>
   <%= f.hidden_field :id, :value => id %>
-  <%= f.select :status, options_for_select(collection, data) if ( params[:controller] != "cancels" and data == 1 ) or data == 0 %>
-  <%= f.submit "Edit" if ( params[:controller] != "cancels" and data == 1 ) or data == 0 %>
-  <%= content_tag(:span, collection[data][0]) unless ( params[:controller] != "cancels" and data == 1 ) or data == 0 %>
+  <%= f.select :status, options_for_select(collection, data) if data == 0 or (params[:controller] != "admin/cancels" and data == 1) %>
+  <%= f.submit "Edit" if data == 0 or ( params[:controller] != "admin/cancels" and data == 1 )%>
+  <%= content_tag(:span, collection[data][0]) unless data == 0 or ( params[:controller] == "admin/cancels" and data == 1 ) %>
 <% end %>
