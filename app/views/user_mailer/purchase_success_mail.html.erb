@@ -6,13 +6,15 @@
           <tr>
             <td>
               <div style="height:100px; padding-top:10px;">
-                <a href="http://www.oppabox.com" target="_blank"><img src="http://localhost:3000/images/mail/top_white.png" style="-moz-box-shadow: 0px 1.5px 1.3px #b4b4b4; -webkit-box-shadow: 0px 1.5px 1/3px #b4b4b4; box-shadow: 0px 1.5px 1.3px #b4b4b4;"></a>
+                <a href="http://www.oppabox.com" target="_blank"><img src="http://localhost:3000/images/mail/top_white.png" style="-moz-box-shadow: 0px 1.5px 1.3px #b4b4b4; -webkit-box-shadow: 0px 1.5px 1.3px #b4b4b4; box-shadow: 0px 1.5px 1.3px #b4b4b4;" alt="Thank you for purchasing"></a>
               </div>
             </td>
           </tr>
           <tr>
-            <td align="center" bgcolor="ffffff" style="padding-left:20px; padding-right:20px; -moz-box-shadow: 0px 1.5px 1.3px #b4b4b4; -webkit-box-shadow: 0px 1.5px 1/3px #b4b4b4; box-shadow: 0px 1.5px 1.3px #b4b4b4;">
-              <h3 style="font-size: 26px;"><%=t('paid_thanks')%></h3>
+            <td align="center" bgcolor="ffffff" style="padding-left:20px; padding-right:20px; -moz-box-shadow: 0px 1.5px 1.3px #b4b4b4; -webkit-box-shadow: 0px 1.5px 1.3px #b4b4b4; box-shadow: 0px 1.5px 1.3px #b4b4b4; font-size:12px !important;">
+              <div style="padding-top:35px;"></div>
+              <h3 style="font-weight:bold; font-size: 26px; margin:0px;"><%=t('paid_thanks')%></h3>
+              <div style="padding-top:35px;"></div>
               <div id="hr_line" style="height:2px; border-top: 1px solid #b4b4b4"></div>
               <br>
               <p style="text-align: left"><%=t('paid_datetime')%> : <span><%= @purchase.approval_datetime %></span></p>

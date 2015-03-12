@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   if ENV['OPPABOX_TEST']
     http_basic_authenticate_with name: "test", password: "oppabox1234", except: :usd_status
   end
-  before_action :login_check,       only: [:step3] 
+  before_action :login_check,       only: [:step3]
   before_action :login_check_ajax,  only: [:api_step3]
 
   def index
@@ -103,7 +103,7 @@ class HomeController < ApplicationController
     session.delete(:aggreement)
     cookies.delete(:aggreement)
   end
-   
+
   def api_step2
     ret = User.check_sign_params params[:email], params[:password], params[:password_confirm]
     if ret[:result]
@@ -123,6 +123,8 @@ class HomeController < ApplicationController
           ret[:message] = t("cannot_signup")
         else
           sign_in(user)
+          # Send to User Sign up
+          UserMailer.sign_up_mail(user).deliver
           ret[:result] = true
         end
       end
@@ -164,6 +166,12 @@ class HomeController < ApplicationController
   end
 
   def reset_password
+    #user = User.where(email: params[:reset_password_email]).take
+    #if user.provider.nil?
+    #  UserMailer.password_reset(user).deliver
+    #else
+
+    #end
   end
 
   def api_reset_password

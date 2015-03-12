@@ -21,4 +21,10 @@ class UserMailer < ActionMailer::Base
 
 		mail( to: email, subject: "#{name}, Thank you for purchasing !!" )
 	end
+
+	def sign_up_mail(user)
+		@user = user
+		mail( to: user.email, subject: "Thank you for sign up !!")
+	end
+
 end
