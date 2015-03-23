@@ -76,7 +76,7 @@ $(document).ready(function(){
 		// done callback
 		alert(data.jqXHR.responseJSON['msg']);
     // refresh page
-    // location.reload();
+    location.reload();
 	}).bind('fileuploadprogressall', function (e, data){
 		// progress bar
 		var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -188,7 +188,6 @@ $(document).ready(function(){
 		if (list.length != 0)
       $(this).fileupload('add', {files: list});
 
-    // location.reload();
 	});
 });
 </script>
