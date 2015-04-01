@@ -37,8 +37,10 @@ module ApplicationHelper
         end
 
         # customize
+        # home_view_flag = Original -> 0 , Half -> 1
+        home_view_flag = 0
         order_list = Box.order("display_order DESC").pluck(:path)[0..1]
-        if method == "box" and order_list.include? x.path
+        if home_view_flag == 1 and method == "box" and order_list.include? x.path
           size_md = 6
           size_xs = 12
         else
