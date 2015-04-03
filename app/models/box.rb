@@ -64,7 +64,9 @@ class Box < ActiveRecord::Base
 
   def self.new_box_select(current_admin_user, box_selected)
     box_list = Array.new
-    if box_selected.nil?
+    if current_admin_user.master
+      box_list = Box.where(parent_id: nil).pluck(:display_name, :id)
+    elsif box_selected.nil?
       box_list = Box.where(public_flag: true).pluck(:display_name, :id)
       box_list += Box.where(admin_user_id: current_admin_user.id).limit(1).pluck(:display_name, :id)
     else
