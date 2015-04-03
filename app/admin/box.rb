@@ -1,6 +1,6 @@
 ActiveAdmin.register Box do
 	menu label: "박스", :priority => 5
-  config.sort_order = "display_order_asc"
+  config.sort_order = "display_order_desc"
 	config.batch_actions = false
   before_filter :box_filter 
 
