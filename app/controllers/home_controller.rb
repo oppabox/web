@@ -4,10 +4,10 @@ class HomeController < ApplicationController
   end
   before_action :login_check,       only: [:step3]
   before_action :login_check_ajax,  only: [:api_step3]
+  before_action :set_main_scope,    only: [:index]
 
   def index
     @boxes = Box.top.sorted
-    Box.set_main_scope()
   end
 
   def join

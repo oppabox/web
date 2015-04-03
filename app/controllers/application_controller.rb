@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_main_scope
+    Box.set_main_scope
+  end
+
   def input_option_validation
     #validate params[:option_items]
     validate_option_items = true
