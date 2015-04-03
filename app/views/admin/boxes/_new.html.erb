@@ -16,8 +16,12 @@
           </div>
         <% end %>
 
-        <%# hidden %>
-        <%= f.hidden_field :parent, { value: params[:box_selected] } %>
+        <div class="form-group">
+          <%= f.label :parent, "박스 위치 선택", { class: 'col-sm-2 control-label' } %>
+          <div class="col-sm-9">
+            <%= f.select :parent, Box.new_box_select(current_admin_user, params['box_selected']), { prompt: "Main page", :selected => params['box_selected'] }, { class: 'form-control' } %>
+          </div>
+        </div>
 
         <div class="form-group">
           <%= f.label :display_name, "박스 이름", { class: 'col-sm-2 control-label' } %>
@@ -43,6 +47,18 @@
             </div>
           </div>
         </div>
+        
+        <% if current_admin_user.master %>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-9">
+            <div class="checkbox">
+              <%= f.label :public_flag do %>
+                <%= f.check_box :public_flag %>입점 여부
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-9">
@@ -74,6 +90,13 @@
     });
     $('#box_top_image').change(function(){
       $.image_preview($(this), $('#top_image'), 300);
+    });
+    $('#box_parent').change(function() {
+      if ($('#box_parent').val() > 0) {
+        $('#box_public_flag').attr("checked", false).attr("disabled",true);
+      } else {
+        $('#box_public_flag').attr("disabled",false);
+      }
     });
   });
 </script>

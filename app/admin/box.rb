@@ -1,8 +1,10 @@
 ActiveAdmin.register Box do
 	menu label: "박스", :priority => 5
+  config.sort_order = "display_order_asc"
 	config.batch_actions = false
+  before_filter :box_filter 
 
-	scope proc{''}, :top, default: true, show_count: false
+  scope proc{''}, :top   ,default: true, show_count: false
 
 	scope_to :current_admin_user
 
@@ -10,11 +12,15 @@ ActiveAdmin.register Box do
 		def scoped_collection
 			super.includes(:items => :item_names)
 		end
+   
+    # Master 계정이 아닌 계정에서 자신의 최상위 박스만 출력하게하는 Filter
+    def box_filter
+      current_admin_user.master ? Box.master_box_filter : Box.user_box_filter(current_admin_user)
+    end
 	end
 
 	################# new ##################
 	form :partial => "form"
-
 	collection_action :create, :method => :post do
 		data = params[:box]
 		
@@ -27,6 +33,9 @@ ActiveAdmin.register Box do
 			box.parent = Box.find(data['parent'].to_i)
 		end
 		box.admin_user = current_admin_user
+
+    # 입점 여부 default - false
+    box.public_flag = data['public_flag']
 		
 		if box.save
 			# image save
@@ -112,7 +121,8 @@ ActiveAdmin.register Box do
 
 	################# index ##################
 	index :title => '박스 관리' do
-		column :id
+    column "표시 순서", :display_order
+    column "고유번호", :id
 		column "제품이미지" do |b|
 			tag :img, :src => "/images/box/#{b.path}.jpg", :width => "100px", :height => "100px"
 		end

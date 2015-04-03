@@ -13,7 +13,7 @@ ko:
   menu_login: "로그인"
   menu_logout: "로그아웃"
   menu_signup: "회원가입"
-  menu_basket: "장바구니" 
+  menu_basket: "장바구니"
   menu_reset_password: "비밀번호 찾기"
   menu_renew_password: "비밀번호 바꾸기"
   login_email_address: "이메일 입력"
@@ -45,7 +45,7 @@ ko:
   signup_add_email_description: "국가/이메일을 입력해야 가입이 완료됩니다."
   signup_add_email_complete: "가입 완료"
   signup_complete: "가입이 완료되었습니다."
-  signup_success: "OPPABOX 회원가입이 완료되었습니다." 
+  signup_success: "OPPABOX 회원가입이 완료되었습니다."
   signup_success_home: "메인으로"
   signup_additional: "지금 배송정보를 입력하면, OPPABOX 이용이 더 편리합니다."
   signup_choice_email: "Sign up with Email" #English only. Don't tranlate!
@@ -231,7 +231,7 @@ ko:
   privacy_policy_9: "다. 재화 또는 서비스 제공"
   privacy_policy_10: "물품배송, 서비스 제공, 청구서 발송, 콘텐츠 제공, 맞춤 서비스 제공, 본인인증, 연령인증, 요금결제·정산, 채권추심 등을 목적으로 개인정보를 처리합니다."
 
-  privacy_policy_11: "라. 마케팅 및 광고에의 활용"
+  privacy_policy_11: "라. 마케팅 및 광고에의 활용 (선택시)" #이메일 수신 체크 완성되었을 시 업로드 같이 업로드
   privacy_policy_12: "신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 정보 제공 및 참여기회 제공 , 서비스의 유효성 확인, 접속빈도 파악 또는 회원의 서비스 이용에 대한 통계 등을 목적으로 개인정보를 처리합니다."
 
 

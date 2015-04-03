@@ -48,6 +48,32 @@ class Box < ActiveRecord::Base
     self.children != []
   end
 
+  def self.master_box_filter
+    scope :top, -> { where(parent_id: nil) }
+  end
+
+  def self.user_box_filter(current_admin_user)
+    # 최상위 박스만 출력
+    unless where(admin_user_id: current_admin_user.id).blank?
+      top_box_id = where(admin_user_id: current_admin_user.id).first.id 
+      scope :top, -> { where(id: top_box_id) }
+    else
+      self.master_box_filter
+    end 
+  end
+
+  def self.new_box_select(current_admin_user, box_selected)
+    box_list = Array.new
+    if box_selected.nil?
+      box_list = Box.where(public_flag: true).pluck(:display_name, :id)
+      box_list += Box.where(admin_user_id: current_admin_user.id).limit(1).pluck(:display_name, :id)
+    else
+      box_list = Box.where(id: box_selected).pluck(:display_name, :id)
+    end
+
+    return box_list
+  end
+
   protected
   def remove_images
   	# image in box dir
