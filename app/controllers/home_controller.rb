@@ -7,6 +7,7 @@ class HomeController < ApplicationController
 
   def index
     @boxes = Box.top.sorted
+    Box.set_main_scope()
   end
 
   def join

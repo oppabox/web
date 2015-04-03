@@ -48,6 +48,10 @@ class Box < ActiveRecord::Base
     self.children != []
   end
 
+  def self.set_main_scope
+    scope :top, -> { where(parent_id: nil) }
+  end
+
   def self.master_box_filter
     scope :top, -> { where(parent_id: nil) }
   end
